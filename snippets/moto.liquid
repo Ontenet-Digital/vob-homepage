@@ -1,0 +1,27 @@
+{%- comment -%}
+  Reusable motto / eyebrow with flanking lines.
+  Usage:
+    {% render 'moto', text: section.settings.moto_text %}
+    {% render 'moto', text: 'THE WORD, MADE VIVID', color: '#C4A574', class: 'hero__moto', align: 'center' %}
+  Params:
+    text   — motto copy (required)
+    color  — optional CSS color for text + lines
+    class  — optional extra class names
+    align  — left | center | right (default: center)
+{%- endcomment -%}
+{%- if text != blank -%}
+  {%- liquid
+    assign moto_align = align | default: 'center'
+    if moto_align != 'left' and moto_align != 'right' and moto_align != 'center'
+      assign moto_align = 'center'
+    endif
+  -%}
+  <p
+    class="moto moto--{{ moto_align }}{% if class != blank %} {{ class }}{% endif %}"
+    {% if color != blank %}style="--moto-color: {{ color }};"{% endif %}
+  >
+    <span class="moto__line" aria-hidden="true"></span>
+    <span class="moto__text">{{ text | escape }}</span>
+    <span class="moto__line" aria-hidden="true"></span>
+  </p>
+{%- endif -%}
