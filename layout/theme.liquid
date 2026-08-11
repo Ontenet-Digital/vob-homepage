@@ -32,7 +32,7 @@
 
     <style>
       :root{
-        --parchment:{{ settings.color_parchment | default: '#F7F2E7' }};
+        --parchment:{{ settings.color_parchment | default: '#FFFFFF' }};
         --ink:{{ settings.color_ink | default: '#251D3A' }};
         --ink-soft:{{ settings.color_ink_soft | default: '#463C68' }};
         --violet-deep:{{ settings.color_violet_deep | default: '#412773' }};
@@ -54,6 +54,6 @@
 
     {% section 'footer' %}
 
-    {{ 'theme.js' | asset_url | script_tag }}
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
   </body>
 </html>

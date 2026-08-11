@@ -32,7 +32,7 @@
   {
     "name": "Colors",
     "settings": [
-      { "type": "color", "id": "color_parchment", "label": "Parchment (page background)", "default": "#F7F2E7" },
+      { "type": "color", "id": "color_parchment", "label": "Parchment (page background)", "default": "#FFFFFF" },
       { "type": "color", "id": "color_ink", "label": "Ink (headings)", "default": "#251D3A" },
       { "type": "color", "id": "color_ink_soft", "label": "Ink soft (body text)", "default": "#463C68" },
       { "type": "color", "id": "color_violet_deep", "label": "Violet deep", "default": "#412773" },
