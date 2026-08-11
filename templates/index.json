@@ -281,6 +281,7 @@
     "video_banner": {
       "type": "video-banner",
       "settings": {
+        "video": "shopify://files/videos/vob-video.mp4",
         "video_url": "",
         "poster_url": "",
         "poster_alt": "",
@@ -288,7 +289,7 @@
         "subheading": "Vivid, faithful storytelling that holds a child’s attention and a grandparent’s heart alike.",
         "button_label": "Watch the story",
         "button_link": "#categories",
-        "ratio": "16/9",
+        "ratio": "21/9",
         "ratio_mobile": "4/5",
         "content_width": 560,
         "padding_y": 64,
@@ -377,56 +378,108 @@
         "anchor_id": "categories"
       }
     },
-    "story_section_wdy9BP": {
-      "type": "story-section",
-      "blocks": {
-        "post_XBHMd3": {
-          "type": "post",
-          "settings": {
-            "image": "shopify://shop_images/vob-product-img-1.webp",
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC04800-2-copy-2.jpg?v=1785302101&width=900",
-            "tag": "",
-            "title": "A message that resonates",
-            "text": "10 Views",
-            "link": "#"
-          }
-        },
-        "post_Kj9pXy": {
-          "type": "post",
-          "settings": {
-            "image": "shopify://shop_images/vob-product-img-2.webp",
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/preview_images/a0c5f11599484fa38f3e0a6eedcbc829.thumbnail.0000000000.jpg?v=1785303765&width=900",
-            "tag": "",
-            "title": "Bringing Scriptures to life",
-            "text": "10 Views",
-            "link": "#"
-          }
-        },
-        "post_bw6EDL": {
-          "type": "post",
-          "settings": {
-            "image": "shopify://shop_images/travel-2.webp",
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC_5847.jpg?v=1732482733&width=900",
-            "tag": "",
-            "title": "Seen, heard, and remembered",
-            "text": "11 Views",
-            "link": "#"
-          }
-        }
-      },
-      "block_order": [
-        "post_XBHMd3",
-        "post_Kj9pXy",
-        "post_bw6EDL"
-      ],
-      "name": "blog_section",
+    "hero_banner_YfkJNM": {
+      "type": "hero-banner",
+      "name": "product_details_image",
       "settings": {
-        "eyebrow": "",
-        "heading": "Testimonial",
-        "subheading": "",
-        "blog": "",
-        "post_limit": 6,
-        "anchor_id": "story-section"
+        "moto_enable": true,
+        "moto_text": "",
+        "moto_color": "#c4a574",
+        "moto_align": "inherit",
+        "moto_align_mobile": "inherit",
+        "title": "",
+        "subtitle": "",
+        "paragraph": "",
+        "trust_enable": true,
+        "trust_label": "",
+        "trust_label_color": "#c4a574",
+        "trust_text_color": "#3a3550",
+        "trust_star_color": "#f5b400",
+        "image_desktop": "shopify://shop_images/product-details-img.png",
+        "image_mobile": "shopify://shop_images/Screenshot_from_2026-08-11_20-01-32.png",
+        "image_desktop_url": "",
+        "image_mobile_url": "",
+        "image_alt": "",
+        "image_position": "center",
+        "image_position_mobile": "center",
+        "image_fit": "cover",
+        "image_zoom": 100,
+        "image_blur": 0,
+        "image_brightness": 100,
+        "bg_parallax": false,
+        "bg_color": "#ffffff",
+        "bg_gradient_enable": false,
+        "bg_gradient_start": "#2a184c",
+        "bg_gradient_mid": "#3a2568",
+        "bg_gradient_end": "#ffffff",
+        "bg_gradient_angle": 150,
+        "bg_glow_1_color": "#e4c56c",
+        "bg_glow_1_opacity": 22,
+        "bg_glow_2_color": "#7a57c0",
+        "bg_glow_2_opacity": 38,
+        "height_desktop": 100,
+        "height_mobile": 100,
+        "overlay_style": "none",
+        "overlay_style_mobile": "none",
+        "overlay_color": "#1b0f33",
+        "overlay_opacity": 55,
+        "overlay_opacity_mobile": 65,
+        "text_align": "left",
+        "text_align_mobile": "center",
+        "content_position": "middle",
+        "content_position_mobile": "top",
+        "heading_width": 660,
+        "heading_width_mobile": 900,
+        "subtitle_width": 520,
+        "subtitle_width_mobile": 900,
+        "paragraph_width": 1200,
+        "paragraph_width_mobile": 900,
+        "heading_tag": "h1",
+        "heading_font": "display",
+        "heading_color": "#000000",
+        "heading_accent_color": "#e4c56c",
+        "heading_size_desktop": 56,
+        "heading_size_mobile": 32,
+        "heading_lh_desktop": 110,
+        "heading_lh_mobile": 115,
+        "subtitle_color": "#000000",
+        "subtitle_size_desktop": 27,
+        "subtitle_size_mobile": 16,
+        "subtitle_lh_desktop": 140,
+        "subtitle_lh_mobile": 145,
+        "paragraph_color": "#6f6d68",
+        "paragraph_size_desktop": 18,
+        "paragraph_size_mobile": 16,
+        "paragraph_lh_desktop": 170,
+        "paragraph_lh_mobile": 145,
+        "text_shadow": false,
+        "moto_pt": 0,
+        "moto_pt_mobile": 0,
+        "moto_gap": 18,
+        "moto_gap_mobile": 14,
+        "heading_pt": 0,
+        "heading_pt_mobile": 0,
+        "heading_gap": 16,
+        "heading_gap_mobile": 16,
+        "subtitle_pt": 0,
+        "subtitle_pt_mobile": 0,
+        "subtitle_gap": 20,
+        "subtitle_gap_mobile": 14,
+        "paragraph_pt": 250,
+        "paragraph_pt_mobile": 340,
+        "paragraph_gap": 28,
+        "paragraph_gap_mobile": 22,
+        "trust_pt": 8,
+        "trust_pt_mobile": 6,
+        "trust_gap": 14,
+        "trust_gap_mobile": 12,
+        "show_motes": true,
+        "show_motes_mobile": true,
+        "padding_top": 84,
+        "padding_bottom": 0,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 76,
+        "anchor_id": "hero"
       }
     },
     "video-section": {
@@ -475,11 +528,132 @@
         "v3",
         "v4"
       ],
+      "name": "Video grid section",
       "settings": {
         "eyebrow": "See it come alive",
         "heading": "Stories in motion",
         "subheading": "A glimpse of Scripture brought to life — hover to watch.",
         "anchor_id": "videos"
+      }
+    },
+    "best_seller_HPw8N7": {
+      "type": "best-seller",
+      "blocks": {
+        "tab_L9ijh8": {
+          "type": "tab",
+          "settings": {
+            "label": "Tabs",
+            "collection": "kids-bible-stories™-new-testament-digital-tablet-1",
+            "products_to_show": 8
+          }
+        },
+        "tab_NQhyhw": {
+          "type": "tab",
+          "settings": {
+            "label": "Kids",
+            "collection": "kids-bible-stories™-new-testament-digital-tablet",
+            "products_to_show": 8
+          }
+        }
+      },
+      "block_order": [
+        "tab_L9ijh8",
+        "tab_NQhyhw"
+      ],
+      "name": "Best sellers",
+      "settings": {
+        "eyebrow": "Loved by families",
+        "heading": "Best Sellers",
+        "subheading": "",
+        "heading_align": "left",
+        "show_tabs": true,
+        "tab_active_bg": "#251d3a",
+        "tab_active_text": "#fdfbf3",
+        "tab_inactive_bg": "#ffffff",
+        "tab_inactive_text": "#251d3a",
+        "tab_radius": 30,
+        "columns_desktop": 4,
+        "columns_tablet": 3,
+        "columns_mobile": 2,
+        "grid_gap": 24,
+        "grid_gap_mobile": 14,
+        "card_bg": "#ffffff",
+        "card_border_color": "#ede6d6",
+        "card_radius": 10,
+        "image_ratio": "1/1",
+        "show_vendor": true,
+        "vendor_color": "#be9743",
+        "title_color": "#251d3a",
+        "title_size": 16,
+        "price_color": "#251d3a",
+        "compare_price_color": "#8b8398",
+        "show_rating": true,
+        "rating_text_color": "#be9743",
+        "show_quick_view": true,
+        "quickview_icon_color": "#251d3a",
+        "quick_add_style": "hover",
+        "quick_add_bg_color": "#251d3a",
+        "quick_add_text_color": "#fdfbf3",
+        "quick_add_radius": 30,
+        "show_image_dots": true,
+        "dot_active_color": "#be9743",
+        "show_view_all": false,
+        "bg_color": "#ffffff",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "anchor_id": "best-sellers"
+      }
+    },
+    "story_section_wdy9BP": {
+      "type": "story-section",
+      "blocks": {
+        "post_XBHMd3": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/vob-product-img-1.webp",
+            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC04800-2-copy-2.jpg?v=1785302101&width=900",
+            "tag": "",
+            "title": "A message that resonates",
+            "text": "10 Views",
+            "link": "#"
+          }
+        },
+        "post_Kj9pXy": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/vob-product-img-2.webp",
+            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/preview_images/a0c5f11599484fa38f3e0a6eedcbc829.thumbnail.0000000000.jpg?v=1785303765&width=900",
+            "tag": "",
+            "title": "Bringing Scriptures to life",
+            "text": "10 Views",
+            "link": "#"
+          }
+        },
+        "post_bw6EDL": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/travel-2.webp",
+            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC_5847.jpg?v=1732482733&width=900",
+            "tag": "",
+            "title": "Seen, heard, and remembered",
+            "text": "11 Views",
+            "link": "#"
+          }
+        }
+      },
+      "block_order": [
+        "post_XBHMd3",
+        "post_Kj9pXy",
+        "post_bw6EDL"
+      ],
+      "name": "testimonial_section",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Testimonial",
+        "subheading": "",
+        "blog": "",
+        "post_limit": 6,
+        "anchor_id": "story-section"
       }
     },
     "story-section": {
@@ -613,8 +787,10 @@
     "about",
     "video_banner",
     "categories",
-    "story_section_wdy9BP",
+    "hero_banner_YfkJNM",
     "video-section",
+    "best_seller_HPw8N7",
+    "story_section_wdy9BP",
     "story-section",
     "app",
     "usp"
