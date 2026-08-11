@@ -52,6 +52,29 @@
     }, 3800);
   })();
 
+  /* ---- Video banner: looping background video ---- */
+  (function () {
+    var videos = document.querySelectorAll('[data-vb-video]');
+    if (!videos.length) return;
+    if (reduce) {
+      videos.forEach(function (video) { video.removeAttribute('autoplay'); video.pause(); });
+      return;
+    }
+    if (!('IntersectionObserver' in window)) return;
+    /* Keep the loop off the CPU while the banner is scrolled past */
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          var p = e.target.play();
+          if (p && typeof p.catch === 'function') p.catch(function () {});
+        } else {
+          e.target.pause();
+        }
+      });
+    }, { threshold: 0.1 });
+    videos.forEach(function (video) { io.observe(video); });
+  })();
+
   /* ---- Video section: play on hover, pause on leave ---- */
   document.querySelectorAll('[data-hover-video]').forEach(function (video) {
     var item = video.closest('.vsec__item') || video;
