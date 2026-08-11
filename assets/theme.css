@@ -1,7 +1,5 @@
-
 @import "./chaion.css";
 
-/* ============ TOKENS ============ */
 :root {
     --parchment: #ffffff;
     --parchment-deep: #efe5d0;
@@ -236,8 +234,7 @@ h3 {
     z-index: 60;
     background: #ffffff;
     backdrop-filter: blur(12px);
-    padding: 0.7rem 0;
-    /* border-bottom: 1px solid var(--parchment-line); */
+    padding: 0.1rem 0;
 }
 .nav {
     display: flex;
@@ -261,7 +258,7 @@ section[id] {
     flex: none;
 }
 .brand__logo {
-    height: 42px;
+    height: 72px;
     width: auto;
 }
 .brand__word {
@@ -292,7 +289,7 @@ section[id] {
     gap: 1.9rem;
     font-family: var(--ui);
     font-weight: 600;
-    font-size: 0.98rem;
+    font-size: 1.15rem;
 }
 .nav__links a {
     position: relative;
@@ -335,6 +332,7 @@ section[id] {
         color 0.25s,
         background 0.25s;
     position: relative;
+    scale: 1.2;
 }
 .nav__icon svg {
     width: 21px;
