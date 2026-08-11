@@ -1,0 +1,288 @@
+/* ============ HEADER ============ */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    background: #ffffff;
+    backdrop-filter: blur(12px);
+    padding: 0.1rem 0;
+}
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    position: relative;
+}
+section[id] {
+    scroll-margin-top: 90px;
+}
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+.brand__mark {
+    width: 42px;
+    height: 42px;
+    color: var(--gold);
+    flex: none;
+}
+.brand__logo {
+    height: 72px;
+    width: auto;
+}
+.brand__word {
+    font-family: var(--display);
+    font-size: 1.3rem;
+    line-height: 1;
+    letter-spacing: 0.01em;
+}
+.brand__word .a {
+    color: var(--violet-deep);
+}
+.brand__word .b {
+    color: var(--gold-deep);
+}
+.brand__word small {
+    display: block;
+    font-family: var(--ui);
+    font-size: 0.56rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 0.28rem;
+}
+.nav__links {
+    display: flex;
+    align-items: center;
+    gap: 1.9rem;
+    font-family: var(--ui);
+    font-weight: 600;
+    font-size: 1.15rem;
+}
+.nav__links a {
+    position: relative;
+    color: var(--ink-soft);
+    transition: color 0.25s;
+}
+.nav__links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 1.5px;
+    background: var(--gold);
+    transition: width 0.3s var(--ease);
+}
+.nav__links a:hover::after {
+    width: 100%;
+}
+.nav__toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink);
+}
+.nav__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+.nav__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    color: var(--ink-soft);
+    transition:
+        color 0.25s,
+        background 0.25s;
+    position: relative;
+    scale: 1.2;
+}
+.nav__icon svg {
+    width: 21px;
+    height: 21px;
+}
+.nav__icon:hover {
+    background: rgba(65, 39, 115, 0.1);
+    color: var(--violet-deep);
+}
+.nav__count {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: var(--gold);
+    color: #3a2a06;
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 0.62rem;
+    display: grid;
+    place-items: center;
+    line-height: 1;
+}
+@media (max-width: 980px) {
+    .nav__links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        background: rgba(247, 242, 231, 0.98);
+        backdrop-filter: blur(12px);
+        padding: 1.4rem 1.5rem;
+        border-top: 1px solid var(--parchment-line);
+    }
+    .nav__links.open {
+        display: flex;
+    }
+    .nav__links a {
+        color: var(--ink-soft);
+    }
+    .nav__links a::after {
+        background: var(--gold);
+    }
+    .nav__toggle {
+        display: inline-flex;
+    }
+    .site-header .brand__word {
+        display: none;
+    }
+}
+
+/* Reusable motto — flanking lines (use via snippets/moto.liquid) */
+.moto {
+    --moto-color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin: 0;
+    margin-bottom: 40px;
+    color: var(--moto-color);
+}
+.moto--center {
+    justify-content: center;
+}
+.moto--left {
+    justify-content: flex-start;
+}
+.moto--right {
+    justify-content: flex-end;
+}
+.moto__text {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    line-height: 1.2;
+    margin-bottom: 40px;
+}
+.moto__line {
+    display: block;
+    width: min(52px, 12vw);
+    height: 1px;
+    background: currentColor;
+    opacity: 0.85;
+    flex: none;
+    margin-bottom: 40px;
+}
+@media (max-width: 749px) {
+    .moto__text {
+        font-size: 0.7rem;
+        letter-spacing: 0.18em;
+    }
+    .moto__line {
+        width: min(36px, 10vw);
+    }
+}
+
+/* Reusable trust badges (use via snippets/trust-badges.liquid) */
+.trust {
+    --trust-label-color: var(--gold);
+    --trust-text-color: var(--ink);
+    --trust-star-color: #f5b400;
+}
+.trust__label {
+    margin: 0 0 0.85rem;
+    font-family: var(--ui);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--trust-label-color);
+    text-align: center;
+    margin-top: 20px;
+
+}
+.trust__list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1.4rem 2rem;
+    margin: 0;
+    padding: 0;
+}
+.trust__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--trust-text-color);
+    font-family: var(--ui);
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1;
+    transition: opacity 0.25s;
+}
+a.trust__link:hover {
+    opacity: 0.75;
+}
+.trust__icon {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    object-fit: contain;
+}
+.trust__stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.12rem;
+    color: var(--trust-star-color);
+}
+.trust__star {
+    width: 15px;
+    height: 15px;
+    display: block;
+}
+.trust__star--empty {
+    opacity: 0.28;
+}
+.trust__name,
+.trust__rating {
+    white-space: nowrap;
+}
+@media (max-width: 749px) {
+    .trust__list {
+        gap: 1rem 1.35rem;
+    }
+    .trust__link {
+        font-size: 0.88rem;
+    }
+}

@@ -1,4 +1,14 @@
 @import "./chaion.css";
+@import "./header.css";
+@import "./hero.css";
+@import "./about.css";
+@import "./categories.css";
+@import "./video-section.css";
+@import "./app-section.css";
+@import "./story-section.css";
+@import "./usp-section.css";
+@import "./footer.css";
+@import "./standard-pages.css";
 
 :root {
     --parchment: #ffffff;
@@ -105,124 +115,6 @@ section {
     width: 26px;
     height: 1px;
     background: var(--gold);
-}
-
-/* Reusable motto — flanking lines (use via snippets/moto.liquid) */
-.moto {
-    --moto-color: var(--gold);
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    margin: 0;
-    color: var(--moto-color);
-}
-.moto--center {
-    justify-content: center;
-}
-.moto--left {
-    justify-content: flex-start;
-}
-.moto--right {
-    justify-content: flex-end;
-}
-.moto__text {
-    font-family: var(--serif);
-    font-size: 0.78rem;
-    font-weight: 400;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    line-height: 1.2;
-}
-.moto__line {
-    display: block;
-    width: min(52px, 12vw);
-    height: 1px;
-    background: currentColor;
-    opacity: 0.85;
-    flex: none;
-}
-@media (max-width: 749px) {
-    .moto__text {
-        font-size: 0.7rem;
-        letter-spacing: 0.18em;
-    }
-    .moto__line {
-        width: min(36px, 10vw);
-    }
-}
-
-/* Reusable trust badges (use via snippets/trust-badges.liquid) */
-.trust {
-    --trust-label-color: var(--gold);
-    --trust-text-color: var(--ink);
-    --trust-star-color: #f5b400;
-}
-.trust__label {
-    margin: 0 0 0.85rem;
-    font-family: var(--ui);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--trust-label-color);
-    text-align: center;
-}
-.trust__list {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 1.4rem 2rem;
-    margin: 0;
-    padding: 0;
-}
-.trust__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    color: var(--trust-text-color);
-    font-family: var(--ui);
-    font-size: 0.95rem;
-    font-weight: 600;
-    line-height: 1;
-    transition: opacity 0.25s;
-}
-a.trust__link:hover {
-    opacity: 0.75;
-}
-.trust__icon {
-    width: 18px;
-    height: 18px;
-    flex: none;
-    object-fit: contain;
-}
-.trust__stars {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.12rem;
-    color: var(--trust-star-color);
-}
-.trust__star {
-    width: 15px;
-    height: 15px;
-    display: block;
-}
-.trust__star--empty {
-    opacity: 0.28;
-}
-.trust__name,
-.trust__rating {
-    white-space: nowrap;
-}
-@media (max-width: 749px) {
-    .trust__list {
-        gap: 1rem 1.35rem;
-    }
-    .trust__link {
-        font-size: 0.88rem;
-    }
 }
 
 h1,

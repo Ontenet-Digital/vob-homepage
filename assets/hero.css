@@ -1,0 +1,178 @@
+/* ============ HERO (banner) ============ */
+/* Dynamic values arrive as custom properties from the section's own {% style %}
+   block (sections/hero-banner.liquid), scoped to #shopify-section-{id}.
+   The fallbacks below keep the section renderable on its own. */
+   .hero {
+    position: relative;
+    display: grid;
+    overflow: hidden;
+    min-height: var(--hero-h-fallback, 92vh);
+    align-items: var(--hero-align-items, center);
+    text-align: var(--hero-text-align, left);
+    background-color: var(--hero-bg-color, #ffffff);
+    background-image: var(
+        --hero-bg-image,
+        radial-gradient(
+            65% 85% at 84% 12%,
+            rgba(228, 197, 108, 0.22),
+            transparent 55%
+        ),
+        radial-gradient(
+            85% 100% at 8% 100%,
+            rgba(122, 87, 192, 0.38),
+            transparent 60%
+        ),
+        linear-gradient(150deg, #2a184c 0%, #3a2568 46%, #ffffff 100%)
+    );
+}
+@supports (height: 100svh) {
+    .hero {
+        min-height: var(--hero-h, 92svh);
+    }
+}
+
+.hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: block;
+}
+.hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: var(--hero-fit, cover);
+    object-position: var(--hero-focal, center center);
+    filter: var(--hero-img-filter, none);
+    transform: scale(var(--hero-img-scale, 1));
+    transform-origin: center center;
+}
+/* Parallax: clip-path makes .hero a containing block for the fixed media layer,
+   so the image holds still while the section scrolls past it. */
+.hero--parallax {
+    clip-path: inset(0);
+}
+.hero--parallax .hero__media {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+}
+@media (max-width: 749px), (prefers-reduced-motion: reduce) {
+    .hero--parallax {
+        clip-path: none;
+    }
+    .hero--parallax .hero__media {
+        position: absolute;
+        height: 100%;
+    }
+}
+.hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: var(--hero-overlay-bg, transparent);
+}
+
+.hero__deco {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    overflow: hidden;
+    pointer-events: none;
+}
+.mote {
+    position: absolute;
+    display: var(--hero-motes-display, block);
+    border-radius: 50%;
+    background: var(--gold-bright);
+    filter: blur(0.5px);
+    opacity: 0.55;
+    animation: heroFloat 7s ease-in-out infinite;
+}
+@keyframes heroFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-14px);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .mote {
+        animation: none;
+    }
+}
+
+.hero__inner {
+    position: relative;
+    z-index: 3;
+    padding: var(--hero-pt, 136px) 0 var(--hero-pb, 68px);
+}
+/* Each text element carries its own max-width plus the shared alignment margins,
+   so the heading, subtitle and paragraph can wrap at different measures while
+   still sitting flush left, centred or flush right together.
+   Order matters: the `margin` shorthand must precede `margin-inline`. */
+.hero__content {
+    max-width: 100%;
+}
+.hero__title {
+    color: var(--hero-h1-color, #fdfbf3);
+    font-family: var(--hero-h1-font, var(--display));
+    font-size: var(--hero-h1-size, 88px);
+    line-height: var(--hero-h1-lh, 1.1);
+    margin: 0 0 var(--hero-h1-gap, 22px);
+    margin-inline: var(--hero-ms, 0) var(--hero-me, auto);
+    padding-top: var(--hero-h1-pt, 0);
+    max-width: var(--hero-h1-w, 820px);
+    text-shadow: var(--hero-h1-shadow, 0 2px 30px rgba(0, 0, 0, 0.38));
+}
+/* Above the mobile breakpoint the desktop size is capped against the viewport so
+   a large setting cannot overflow a narrow laptop; at or below 749px the mobile
+   setting is honoured exactly. */
+@media (min-width: 750px) {
+    .hero__title {
+        font-size: min(var(--hero-h1-size, 88px), 9.5vw);
+    }
+}
+.hero__title em {
+    font-style: italic;
+    color: var(--hero-h1-accent, var(--gold-bright));
+}
+.hero__sub {
+    color: var(--hero-sub-color, #f0eadc);
+    font-size: var(--hero-sub-size, 22px);
+    line-height: var(--hero-sub-lh, 1.4);
+    text-shadow: var(--hero-sub-shadow, 0 1px 18px rgba(0, 0, 0, 0.34));
+    margin: 0 0 var(--hero-sub-gap, 0);
+    margin-inline: var(--hero-ms, 0) var(--hero-me, auto);
+    padding-top: var(--hero-sub-pt, 0);
+    max-width: var(--hero-sub-w, 820px);
+}
+.hero__para {
+    color: var(--hero-para-color, #e4dccb);
+    font-size: var(--hero-para-size, 18px);
+    line-height: var(--hero-para-lh, 1.7);
+    text-shadow: var(--hero-sub-shadow, 0 1px 18px rgba(0, 0, 0, 0.34));
+    margin: 0;
+    margin-inline: var(--hero-ms, 0) var(--hero-me, auto);
+    padding-top: var(--hero-para-pt, 0);
+    max-width: var(--hero-para-w, 820px);
+}
+.hero__para p {
+    margin: 0 0 0.85em;
+}
+.hero__para p:last-child {
+    margin-bottom: 0;
+}
+.hero__para a {
+    color: var(--hero-h1-accent, var(--gold-bright));
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+}
+.hero__para ul,
+.hero__para ol {
+    margin: 0 0 0.85em 1.2em;
+}
