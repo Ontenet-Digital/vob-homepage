@@ -1,0 +1,33 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "color_parchment": "#F7F2E7",
+    "color_ink": "#251D3A",
+    "color_ink_soft": "#463C68",
+    "color_violet_deep": "#412773",
+    "color_violet": "#7A57C0",
+    "color_gold": "#BE9743",
+    "color_gold_bright": "#E4C56C",
+    "color_gold_deep": "#7C5D1E"
+  },
+  "presets": {
+    "Vision of the Bible": {
+      "color_parchment": "#F7F2E7",
+      "color_ink": "#251D3A",
+      "color_ink_soft": "#463C68",
+      "color_violet_deep": "#412773",
+      "color_violet": "#7A57C0",
+      "color_gold": "#BE9743",
+      "color_gold_bright": "#E4C56C",
+      "color_gold_deep": "#7C5D1E"
+    }
+  }
+}

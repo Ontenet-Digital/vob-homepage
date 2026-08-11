@@ -1,0 +1,16 @@
+<article class="page-shell wrap">
+  <div class="article-body">
+    <nav class="breadcrumb"><a href="{{ blog.url }}">{{ blog.title }}</a> / {{ article.title }}</nav>
+    {%- if article.tags.size > 0 -%}<span class="post__tag">{{ article.tags.first }}</span>{%- endif -%}
+    <h1 style="font-size:clamp(2rem,4vw,3rem);margin:.6rem 0 1rem">{{ article.title }}</h1>
+    <p class="form-note" style="margin-bottom:1.6rem">{{ article.published_at | date: '%B %-d, %Y' }}{% if article.author != blank %} · {{ article.author }}{% endif %}</p>
+    {%- if article.image -%}
+      <img class="article-hero" src="{{ article.image | image_url: width: 1400 }}" alt="{{ article.image.alt | default: article.title | escape }}">
+    {%- endif -%}
+    <div class="rte">{{ article.content }}</div>
+  </div>
+</article>
+
+{% schema %}
+{ "name": "Article", "settings": [] }
+{% endschema %}

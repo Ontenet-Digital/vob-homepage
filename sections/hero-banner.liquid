@@ -1,0 +1,538 @@
+{%- liquid
+  assign s = section.settings
+
+  comment
+    Resolve banner artwork. An uploaded image wins; the text URL is the fallback,
+    matching the pattern used in sections/about-panels.liquid. Mobile falls back
+    to the desktop artwork when nothing mobile-specific is provided.
+  endcomment
+  assign has_desktop_img = false
+  if s.image_desktop != blank or s.image_desktop_url != blank
+    assign has_desktop_img = true
+  endif
+
+  assign has_mobile_img = false
+  if s.image_mobile != blank or s.image_mobile_url != blank
+    assign has_mobile_img = true
+  endif
+
+  comment
+    Overlay colour at two strengths. The gradients never fall to fully transparent
+    across the middle of the banner: a light photograph behind white headline text
+    is otherwise unreadable. `mid` is 45% of the chosen opacity — enough to hold
+    text legibility while the artwork still reads.
+  endcomment
+  assign overlay_base = s.overlay_color | default: '#1B0F33'
+
+  assign overlay_alpha = s.overlay_opacity | times: 0.01
+  assign overlay_alpha_mid = overlay_alpha | times: 0.45
+  assign overlay_rgba = overlay_base | color_modify: 'alpha', overlay_alpha
+  assign overlay_mid = overlay_base | color_modify: 'alpha', overlay_alpha_mid
+
+  assign overlay_alpha_m = s.overlay_opacity_mobile | times: 0.01
+  assign overlay_alpha_mid_m = overlay_alpha_m | times: 0.45
+  assign overlay_rgba_m = overlay_base | color_modify: 'alpha', overlay_alpha_m
+  assign overlay_mid_m = overlay_base | color_modify: 'alpha', overlay_alpha_mid_m
+
+  assign overlay_style_m = s.overlay_style_mobile
+  if overlay_style_m == 'inherit'
+    assign overlay_style_m = s.overlay_style
+  endif
+-%}
+
+{%- capture overlay_bg -%}
+  {%- case s.overlay_style -%}
+    {%- when 'solid' -%}{{ overlay_rgba }}
+    {%- when 'scrim_bottom' -%}linear-gradient(to top, {{ overlay_rgba }} 0%, {{ overlay_mid }} 45%, transparent 88%)
+    {%- when 'scrim_both' -%}linear-gradient(to bottom, {{ overlay_rgba }} 0%, {{ overlay_mid }} 38%, {{ overlay_mid }} 62%, {{ overlay_rgba }} 100%)
+    {%- when 'scrim_left' -%}linear-gradient(to right, {{ overlay_rgba }} 0%, {{ overlay_mid }} 52%, transparent 88%)
+  {%- endcase -%}
+{%- endcapture -%}
+
+{%- capture overlay_bg_mobile -%}
+  {%- case overlay_style_m -%}
+    {%- when 'solid' -%}{{ overlay_rgba_m }}
+    {%- when 'scrim_bottom' -%}linear-gradient(to top, {{ overlay_rgba_m }} 0%, {{ overlay_mid_m }} 45%, transparent 88%)
+    {%- when 'scrim_both' -%}linear-gradient(to bottom, {{ overlay_rgba_m }} 0%, {{ overlay_mid_m }} 38%, {{ overlay_mid_m }} 62%, {{ overlay_rgba_m }} 100%)
+    {%- when 'scrim_left' -%}linear-gradient(to right, {{ overlay_rgba_m }} 0%, {{ overlay_mid_m }} 52%, transparent 88%)
+  {%- endcase -%}
+{%- endcapture -%}
+
+{%- liquid
+  # Background layer shown behind the artwork, and on its own when no image is set
+  if s.bg_gradient_enable
+    assign glow_1_alpha = s.bg_glow_1_opacity | times: 0.01
+    assign glow_2_alpha = s.bg_glow_2_opacity | times: 0.01
+    assign glow_1 = s.bg_glow_1_color | color_modify: 'alpha', glow_1_alpha
+    assign glow_2 = s.bg_glow_2_color | color_modify: 'alpha', glow_2_alpha
+  endif
+
+  # Image treatment. Blur bleeds transparent edges into a cover-fitted image, so
+  # the scale is nudged up to compensate whenever blur is in play.
+  assign zoom_scale = s.image_zoom | times: 0.01
+  assign blur_comp = s.image_blur | times: 0.03 | plus: 1
+  assign img_scale = zoom_scale
+  if blur_comp > zoom_scale
+    assign img_scale = blur_comp
+  endif
+
+  assign img_filter = 'none'
+  if s.image_blur > 0 or s.image_brightness != 100
+    assign brightness_val = s.image_brightness | times: 0.01
+    capture img_filter
+      echo 'brightness('
+      echo brightness_val
+      echo ') blur('
+      echo s.image_blur
+      echo 'px)'
+    endcapture
+  endif
+
+  # Horizontal placement of the text column
+  case s.text_align
+    when 'center'
+      assign margin_start = 'auto'
+      assign margin_end = 'auto'
+    when 'right'
+      assign margin_start = 'auto'
+      assign margin_end = '0'
+    else
+      assign margin_start = '0'
+      assign margin_end = 'auto'
+  endcase
+
+  case s.text_align_mobile
+    when 'center'
+      assign margin_start_m = 'auto'
+      assign margin_end_m = 'auto'
+    when 'right'
+      assign margin_start_m = 'auto'
+      assign margin_end_m = '0'
+    when 'left'
+      assign margin_start_m = '0'
+      assign margin_end_m = 'auto'
+  endcase
+
+  case s.content_position
+    when 'top'
+      assign align_items = 'start'
+    when 'bottom'
+      assign align_items = 'end'
+    else
+      assign align_items = 'center'
+  endcase
+
+  case s.content_position_mobile
+    when 'top'
+      assign align_items_m = 'start'
+    when 'bottom'
+      assign align_items_m = 'end'
+    when 'middle'
+      assign align_items_m = 'center'
+  endcase
+
+  case s.heading_font
+    when 'serif'
+      assign heading_font_stack = 'var(--serif)'
+    when 'sans'
+      assign heading_font_stack = 'var(--ui)'
+    else
+      assign heading_font_stack = 'var(--display)'
+  endcase
+
+  # Focal point keywords mapped to object-position values
+  case s.image_position
+    when 'top'
+      assign focal = 'center top'
+    when 'bottom'
+      assign focal = 'center bottom'
+    when 'left'
+      assign focal = 'left center'
+    when 'right'
+      assign focal = 'right center'
+    else
+      assign focal = 'center center'
+  endcase
+
+  case s.image_position_mobile
+    when 'top'
+      assign focal_mobile = 'center top'
+    when 'bottom'
+      assign focal_mobile = 'center bottom'
+    when 'left'
+      assign focal_mobile = 'left center'
+    when 'right'
+      assign focal_mobile = 'right center'
+    else
+      assign focal_mobile = 'center center'
+  endcase
+
+  if s.text_shadow
+    assign heading_shadow = '0 2px 30px rgba(0,0,0,.38)'
+    assign sub_shadow = '0 1px 18px rgba(0,0,0,.34)'
+  else
+    assign heading_shadow = 'none'
+    assign sub_shadow = 'none'
+  endif
+
+  # Trailing gap under the subtitle only earns its space when a paragraph follows
+  assign sub_gap = 0
+  assign sub_gap_mobile = 0
+  if s.paragraph != blank
+    assign sub_gap = s.subtitle_gap
+    assign sub_gap_mobile = s.subtitle_gap_mobile
+  endif
+
+  assign heading_tag = s.heading_tag | default: 'h1'
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }} .hero{
+    --hero-h-fallback: {{ s.height_desktop }}vh;
+    --hero-h: {{ s.height_desktop }}svh;
+    --hero-bg-color: {{ s.bg_color }};
+    {% if s.bg_gradient_enable %}--hero-bg-image:
+      radial-gradient(65% 85% at 84% 12%, {{ glow_1 }}, transparent 55%),
+      radial-gradient(85% 100% at 8% 100%, {{ glow_2 }}, transparent 60%),
+      linear-gradient({{ s.bg_gradient_angle }}deg, {{ s.bg_gradient_start }} 0%, {{ s.bg_gradient_mid }} 46%, {{ s.bg_gradient_end }} 100%);
+    {% else %}--hero-bg-image: none;{% endif %}
+    --hero-focal: {{ focal }};
+    --hero-fit: {{ s.image_fit }};
+    --hero-img-scale: {{ img_scale }};
+    --hero-img-filter: {{ img_filter }};
+    --hero-align-items: {{ align_items }};
+    --hero-text-align: {{ s.text_align }};
+    --hero-h1-w: {{ s.heading_width }}px;
+    --hero-sub-w: {{ s.subtitle_width }}px;
+    --hero-para-w: {{ s.paragraph_width }}px;
+    --hero-ms: {{ margin_start }};
+    --hero-me: {{ margin_end }};
+    --hero-pt: {{ s.padding_top }}px;
+    --hero-pb: {{ s.padding_bottom }}px;
+    --hero-h1-font: {{ heading_font_stack }};
+    --hero-h1-size: {{ s.heading_size_desktop }}px;
+    --hero-h1-lh: {{ s.heading_lh_desktop | times: 0.01 }};
+    --hero-h1-color: {{ s.heading_color }};
+    --hero-h1-accent: {{ s.heading_accent_color }};
+    --hero-h1-shadow: {{ heading_shadow }};
+    --hero-h1-pt: {{ s.heading_pt }}px;
+    --hero-h1-gap: {{ s.heading_gap }}px;
+    --hero-sub-size: {{ s.subtitle_size_desktop }}px;
+    --hero-sub-lh: {{ s.subtitle_lh_desktop | times: 0.01 }};
+    --hero-sub-color: {{ s.subtitle_color }};
+    --hero-sub-shadow: {{ sub_shadow }};
+    --hero-sub-pt: {{ s.subtitle_pt }}px;
+    --hero-sub-gap: {{ sub_gap }}px;
+    --hero-para-size: {{ s.paragraph_size_desktop }}px;
+    --hero-para-lh: {{ s.paragraph_lh_desktop | times: 0.01 }};
+    --hero-para-color: {{ s.paragraph_color }};
+    --hero-para-pt: {{ s.paragraph_pt }}px;
+    {% if overlay_bg != blank %}--hero-overlay-bg: {{ overlay_bg }};{% endif %}
+  }
+
+  @media (max-width: 749px){
+    #shopify-section-{{ section.id }} .hero{
+      --hero-h-fallback: {{ s.height_mobile }}vh;
+      --hero-h: {{ s.height_mobile }}svh;
+      --hero-focal: {{ focal_mobile }};
+      --hero-pt: {{ s.padding_top_mobile }}px;
+      --hero-pb: {{ s.padding_bottom_mobile }}px;
+      --hero-h1-size: {{ s.heading_size_mobile }}px;
+      --hero-h1-lh: {{ s.heading_lh_mobile | times: 0.01 }};
+      --hero-h1-pt: {{ s.heading_pt_mobile }}px;
+      --hero-h1-gap: {{ s.heading_gap_mobile }}px;
+      --hero-sub-size: {{ s.subtitle_size_mobile }}px;
+      --hero-sub-lh: {{ s.subtitle_lh_mobile | times: 0.01 }};
+      --hero-sub-pt: {{ s.subtitle_pt_mobile }}px;
+      --hero-sub-gap: {{ sub_gap_mobile }}px;
+      --hero-para-size: {{ s.paragraph_size_mobile }}px;
+      --hero-para-lh: {{ s.paragraph_lh_mobile | times: 0.01 }};
+      --hero-para-pt: {{ s.paragraph_pt_mobile }}px;
+      --hero-h1-w: {{ s.heading_width_mobile }}px;
+      --hero-sub-w: {{ s.subtitle_width_mobile }}px;
+      --hero-para-w: {{ s.paragraph_width_mobile }}px;
+      {% if s.text_align_mobile != 'inherit' %}--hero-text-align: {{ s.text_align_mobile }};
+      --hero-ms: {{ margin_start_m }};
+      --hero-me: {{ margin_end_m }};{% endif %}
+      {% if s.content_position_mobile != 'inherit' %}--hero-align-items: {{ align_items_m }};{% endif %}
+      {% if overlay_bg_mobile != blank %}--hero-overlay-bg: {{ overlay_bg_mobile }};{% endif %}
+      {% unless s.show_motes_mobile %}--hero-motes-display: none;{% endunless %}
+    }
+  }
+{% endstyle %}
+
+<section
+  class="hero{% if s.bg_parallax and has_desktop_img or s.bg_parallax and has_mobile_img %} hero--parallax{% endif %}"
+  id="{{ s.anchor_id | default: 'hero' }}">
+  {%- if has_desktop_img or has_mobile_img -%}
+    <picture class="hero__media">
+      {%- if has_mobile_img -%}
+        {%- if s.image_mobile != blank -%}
+          <source
+            media="(max-width: 749px)"
+            srcset="{{ s.image_mobile | image_url: width: 480 }} 480w,
+                    {{ s.image_mobile | image_url: width: 750 }} 750w,
+                    {{ s.image_mobile | image_url: width: 1100 }} 1100w,
+                    {{ s.image_mobile | image_url: width: 1500 }} 1500w"
+            sizes="100vw"
+            width="{{ s.image_mobile.width }}"
+            height="{{ s.image_mobile.height }}">
+        {%- else -%}
+          <source media="(max-width: 749px)" srcset="{{ s.image_mobile_url }}">
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if s.image_desktop != blank -%}
+        <img
+          src="{{ s.image_desktop | image_url: width: 1600 }}"
+          srcset="{{ s.image_desktop | image_url: width: 640 }} 640w,
+                  {{ s.image_desktop | image_url: width: 960 }} 960w,
+                  {{ s.image_desktop | image_url: width: 1280 }} 1280w,
+                  {{ s.image_desktop | image_url: width: 1600 }} 1600w,
+                  {{ s.image_desktop | image_url: width: 2000 }} 2000w,
+                  {{ s.image_desktop | image_url: width: 2400 }} 2400w"
+          sizes="100vw"
+          width="{{ s.image_desktop.width }}"
+          height="{{ s.image_desktop.height }}"
+          alt="{{ s.image_alt | escape }}"
+          fetchpriority="high"
+          decoding="async">
+      {%- elsif s.image_desktop_url != blank -%}
+        <img src="{{ s.image_desktop_url }}" width="{{ s.image_desktop.width }}" height="{{ s.image_desktop.height }}" alt="{{ s.image_alt | escape }}" fetchpriority="high" decoding="async">
+      {%- else -%}
+        {%- comment -%} Mobile-only artwork: reuse it as the <img> so <picture> has a base. {%- endcomment -%}
+        {%- if s.image_mobile != blank -%}
+          <img src="{{ s.image_mobile | image_url: width: 1500 }}" width="{{ s.image_mobile.width }}" height="{{ s.image_mobile.height }}" alt="{{ s.image_alt | escape }}" fetchpriority="high" decoding="async">
+        {%- else -%}
+          <img src="{{ s.image_mobile_url }}" width="{{ s.image_mobile.width }}" height="{{ s.image_mobile.height }}" alt="{{ s.image_alt | escape }}" fetchpriority="high" decoding="async">
+        {%- endif -%}
+      {%- endif -%}
+    </picture>
+  {%- endif -%}
+
+  {%- if overlay_bg != blank or overlay_bg_mobile != blank -%}
+    <div class="hero__overlay" aria-hidden="true"></div>
+  {%- endif -%}
+
+  {%- if s.show_motes -%}
+    <div class="hero__deco" aria-hidden="true">
+      <span class="mote" style="top:22%;left:14%;width:8px;height:8px;animation-delay:0s"></span>
+      <span class="mote" style="top:34%;right:24%;width:6px;height:6px;animation-delay:1.2s"></span>
+      <span class="mote" style="bottom:26%;left:30%;width:5px;height:5px;animation-delay:2.1s"></span>
+    </div>
+  {%- endif -%}
+
+  <div class="hero__inner wrap">
+    <div class="hero__content">
+      {%- if s.title != blank -%}
+        <{{ heading_tag }} class="hero__title">{{ s.title }}</{{ heading_tag }}>
+      {%- endif -%}
+
+      {%- if s.subtitle != blank -%}
+        <p class="hero__sub">{{ s.subtitle }}</p>
+      {%- endif -%}
+
+      {%- if s.paragraph != blank -%}
+        <div class="hero__para">{{ s.paragraph }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "tag": "section",
+  "settings": [
+    { "type": "inline_richtext", "id": "title", "label": "Heading", "info": "Use italics to highlight a word in the accent colour.", "default": "Where Scripture opens like a <em>book</em>, and a child meets Jesus." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Vision of the Bible brings the timeless stories and truths of Scripture to life through vivid, faithful visual storytelling — made for the youngest hearts and the wisest ones alike." },
+    { "type": "richtext", "id": "paragraph", "label": "Paragraph", "info": "Optional supporting copy below the subtitle. Supports bold, italics and links." },
+
+    { "type": "header", "content": "Banner image" },
+    { "type": "image_picker", "id": "image_desktop", "label": "Desktop image", "info": "Recommended 2400 × 1400px or wider. If empty, the background below is used." },
+    { "type": "image_picker", "id": "image_mobile", "label": "Mobile image", "info": "Shown at 749px and below. Falls back to the desktop image." },
+    { "type": "text", "id": "image_desktop_url", "label": "Desktop image URL (fallback)", "info": "Used only if no desktop image is uploaded above." },
+    { "type": "text", "id": "image_mobile_url", "label": "Mobile image URL (fallback)", "info": "Used only if no mobile image is uploaded above." },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "info": "Leave blank if the banner is decorative — the heading already describes the section." },
+    {
+      "type": "select", "id": "image_position", "label": "Focal point (desktop)", "default": "center",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" },
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select", "id": "image_position_mobile", "label": "Focal point (mobile)", "default": "center",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" },
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+
+    { "type": "header", "content": "Image treatment" },
+    {
+      "type": "select", "id": "image_fit", "label": "Fit", "default": "cover",
+      "info": "Cover fills the banner and crops. Contain shows the whole image and reveals the background colour around it.",
+      "options": [
+        { "value": "cover", "label": "Cover (crop to fill)" },
+        { "value": "contain", "label": "Contain (show whole image)" }
+      ]
+    },
+    { "type": "range", "id": "image_zoom", "label": "Zoom", "min": 100, "max": 150, "step": 1, "unit": "%", "default": 100 },
+    { "type": "range", "id": "image_blur", "label": "Blur", "min": 0, "max": 20, "step": 1, "unit": "px", "default": 0, "info": "Softens a busy photo so text reads. The image is scaled up slightly to hide blurred edges." },
+    { "type": "range", "id": "image_brightness", "label": "Brightness", "min": 40, "max": 140, "step": 5, "unit": "%", "default": 100 },
+    { "type": "checkbox", "id": "bg_parallax", "label": "Parallax (image stays fixed while scrolling)", "default": false, "info": "Disabled automatically on mobile and for visitors who prefer reduced motion." },
+
+    { "type": "header", "content": "Background", "info": "Sits behind the image, and shows on its own when no image is set." },
+    { "type": "color", "id": "bg_color", "label": "Background colour", "default": "#22133D" },
+    { "type": "checkbox", "id": "bg_gradient_enable", "label": "Show gradient", "default": true },
+    { "type": "color", "id": "bg_gradient_start", "label": "Gradient start", "default": "#2A184C" },
+    { "type": "color", "id": "bg_gradient_mid", "label": "Gradient middle", "default": "#3A2568" },
+    { "type": "color", "id": "bg_gradient_end", "label": "Gradient end", "default": "#22133D" },
+    { "type": "range", "id": "bg_gradient_angle", "label": "Gradient angle", "min": 0, "max": 360, "step": 5, "unit": "°", "default": 150 },
+    { "type": "color", "id": "bg_glow_1_color", "label": "Glow 1 colour", "default": "#E4C56C", "info": "Soft light in the top-right." },
+    { "type": "range", "id": "bg_glow_1_opacity", "label": "Glow 1 opacity", "min": 0, "max": 60, "step": 2, "unit": "%", "default": 22 },
+    { "type": "color", "id": "bg_glow_2_color", "label": "Glow 2 colour", "default": "#7A57C0", "info": "Soft light in the bottom-left." },
+    { "type": "range", "id": "bg_glow_2_opacity", "label": "Glow 2 opacity", "min": 0, "max": 60, "step": 2, "unit": "%", "default": 38 },
+
+    { "type": "header", "content": "Height & overlay" },
+    { "type": "range", "id": "height_desktop", "label": "Desktop height", "min": 40, "max": 100, "step": 5, "unit": "%", "default": 100, "info": "Percentage of the viewport height." },
+    { "type": "range", "id": "height_mobile", "label": "Mobile height", "min": 40, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    {
+      "type": "select", "id": "overlay_style", "label": "Overlay style (desktop)", "default": "scrim_both",
+      "info": "The header sits over the banner with light text, so keep some darkening at the top for legibility.",
+      "options": [
+        { "value": "scrim_both", "label": "Gradient — top & bottom" },
+        { "value": "scrim_bottom", "label": "Gradient — from bottom" },
+        { "value": "scrim_left", "label": "Gradient — from left" },
+        { "value": "solid", "label": "Solid tint" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    {
+      "type": "select", "id": "overlay_style_mobile", "label": "Overlay style (mobile)", "default": "inherit",
+      "options": [
+        { "value": "inherit", "label": "Same as desktop" },
+        { "value": "scrim_both", "label": "Gradient — top & bottom" },
+        { "value": "scrim_bottom", "label": "Gradient — from bottom" },
+        { "value": "scrim_left", "label": "Gradient — from left" },
+        { "value": "solid", "label": "Solid tint" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    { "type": "color", "id": "overlay_color", "label": "Overlay colour", "default": "#1B0F33" },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay opacity (desktop)", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 55, "info": "Raise this if the heading is hard to read over a light photo." },
+    { "type": "range", "id": "overlay_opacity_mobile", "label": "Overlay opacity (mobile)", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 65, "info": "Mobile crops are tighter, so they usually need more darkening." },
+
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select", "id": "text_align", "label": "Text alignment (desktop)", "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select", "id": "text_align_mobile", "label": "Text alignment (mobile)", "default": "inherit",
+      "options": [
+        { "value": "inherit", "label": "Same as desktop" },
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select", "id": "content_position", "label": "Vertical position (desktop)", "default": "middle",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "middle", "label": "Middle" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    },
+    {
+      "type": "select", "id": "content_position_mobile", "label": "Vertical position (mobile)", "default": "inherit",
+      "options": [
+        { "value": "inherit", "label": "Same as desktop" },
+        { "value": "top", "label": "Top" },
+        { "value": "middle", "label": "Middle" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    },
+    { "type": "header", "content": "Text widths", "info": "Each element wraps at its own width. Narrowing the heading relative to the subtitle usually reads better." },
+    { "type": "range", "id": "heading_width", "label": "Heading width (desktop)", "min": 240, "max": 1200, "step": 20, "unit": "px", "default": 820 },
+    { "type": "range", "id": "heading_width_mobile", "label": "Heading width (mobile)", "min": 200, "max": 900, "step": 20, "unit": "px", "default": 600 },
+    { "type": "range", "id": "subtitle_width", "label": "Subtitle width (desktop)", "min": 240, "max": 1200, "step": 20, "unit": "px", "default": 820 },
+    { "type": "range", "id": "subtitle_width_mobile", "label": "Subtitle width (mobile)", "min": 200, "max": 900, "step": 20, "unit": "px", "default": 600 },
+    { "type": "range", "id": "paragraph_width", "label": "Paragraph width (desktop)", "min": 240, "max": 1200, "step": 20, "unit": "px", "default": 820 },
+    { "type": "range", "id": "paragraph_width_mobile", "label": "Paragraph width (mobile)", "min": 200, "max": 900, "step": 20, "unit": "px", "default": 600 },
+
+    { "type": "header", "content": "Typography" },
+    {
+      "type": "select", "id": "heading_tag", "label": "Heading level", "default": "h1",
+      "info": "Use H2 if this section is placed on a page that already has an H1.",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" }
+      ]
+    },
+    {
+      "type": "select", "id": "heading_font", "label": "Heading font", "default": "display",
+      "options": [
+        { "value": "display", "label": "Display (Fraunces)" },
+        { "value": "serif", "label": "Serif (Cardo)" },
+        { "value": "sans", "label": "Sans (Manrope)" }
+      ]
+    },
+    { "type": "color", "id": "heading_color", "label": "Heading colour", "default": "#FDFBF3" },
+    { "type": "color", "id": "heading_accent_color", "label": "Heading accent colour", "default": "#E4C56C", "info": "Applied to italic words in the heading, and to links in the paragraph." },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size (desktop)", "min": 40, "max": 120, "step": 1, "unit": "px", "default": 88 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size (mobile)", "min": 24, "max": 64, "step": 1, "unit": "px", "default": 46 },
+    { "type": "range", "id": "heading_lh_desktop", "label": "Heading line height (desktop)", "min": 100, "max": 200, "step": 5, "unit": "%", "default": 110 },
+    { "type": "range", "id": "heading_lh_mobile", "label": "Heading line height (mobile)", "min": 100, "max": 200, "step": 5, "unit": "%", "default": 115 },
+    { "type": "color", "id": "subtitle_color", "label": "Subtitle colour", "default": "#F0EADC" },
+    { "type": "range", "id": "subtitle_size_desktop", "label": "Subtitle size (desktop)", "min": 16, "max": 36, "step": 1, "unit": "px", "default": 22 },
+    { "type": "range", "id": "subtitle_size_mobile", "label": "Subtitle size (mobile)", "min": 14, "max": 28, "step": 1, "unit": "px", "default": 18 },
+    { "type": "range", "id": "subtitle_lh_desktop", "label": "Subtitle line height (desktop)", "min": 100, "max": 200, "step": 5, "unit": "%", "default": 140 },
+    { "type": "range", "id": "subtitle_lh_mobile", "label": "Subtitle line height (mobile)", "min": 100, "max": 200, "step": 5, "unit": "%", "default": 145 },
+    { "type": "color", "id": "paragraph_color", "label": "Paragraph colour", "default": "#E4DCCB" },
+    { "type": "range", "id": "paragraph_size_desktop", "label": "Paragraph size (desktop)", "min": 13, "max": 30, "step": 1, "unit": "px", "default": 18 },
+    { "type": "range", "id": "paragraph_size_mobile", "label": "Paragraph size (mobile)", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "paragraph_lh_desktop", "label": "Paragraph line height (desktop)", "min": 100, "max": 200, "step": 5, "unit": "%", "default": 170 },
+    { "type": "range", "id": "paragraph_lh_mobile", "label": "Paragraph line height (mobile)", "min": 100, "max": 200, "step": 5, "unit": "%", "default": 170 },
+    { "type": "checkbox", "id": "text_shadow", "label": "Soft shadow behind text", "default": true, "info": "Helps legibility over busy photography." },
+
+    { "type": "header", "content": "Element spacing", "info": "Listed top to bottom in the order they stack. Padding above an element and the space under the one before it add together." },
+    { "type": "range", "id": "heading_pt", "label": "Heading — padding top (desktop)", "min": 0, "max": 160, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "heading_pt_mobile", "label": "Heading — padding top (mobile)", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "heading_gap", "label": "Space under heading (desktop)", "min": 0, "max": 80, "step": 2, "unit": "px", "default": 22 },
+    { "type": "range", "id": "heading_gap_mobile", "label": "Space under heading (mobile)", "min": 0, "max": 64, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "subtitle_pt", "label": "Subtitle — padding top (desktop)", "min": 0, "max": 160, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "subtitle_pt_mobile", "label": "Subtitle — padding top (mobile)", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "subtitle_gap", "label": "Space under subtitle (desktop)", "min": 0, "max": 80, "step": 2, "unit": "px", "default": 20, "info": "Only applies when a paragraph is set." },
+    { "type": "range", "id": "subtitle_gap_mobile", "label": "Space under subtitle (mobile)", "min": 0, "max": 64, "step": 2, "unit": "px", "default": 14 },
+    { "type": "range", "id": "paragraph_pt", "label": "Paragraph — padding top (desktop)", "min": 0, "max": 600, "step": 10, "unit": "px", "default": 0 },
+    { "type": "range", "id": "paragraph_pt_mobile", "label": "Paragraph — padding top (mobile)", "min": 0, "max": 600, "step": 10, "unit": "px", "default": 0 },
+
+    { "type": "header", "content": "Decoration" },
+    { "type": "checkbox", "id": "show_motes", "label": "Show floating motes (desktop)", "default": true },
+    { "type": "checkbox", "id": "show_motes_mobile", "label": "Show floating motes (mobile)", "default": true },
+
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 136, "info": "Keep at least 100px so the heading clears the fixed header." },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 68 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Top padding (mobile)", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 112 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding (mobile)", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 56 },
+
+    { "type": "header", "content": "Options" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "hero" }
+  ],
+  "presets": [{ "name": "Hero banner" }]
+}
+{% endschema %}

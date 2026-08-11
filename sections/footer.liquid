@@ -1,0 +1,103 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="wrap">
+    {%- if section.settings.verse != blank -%}
+      <div class="verse reveal">
+        <p>{{ section.settings.verse }}</p>
+        {%- if section.settings.verse_ref != blank -%}<cite>{{ section.settings.verse_ref }}</cite>{%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="fgrid">
+      <div class="fbrand">
+        <a class="brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }} home">
+          {% render 'emblem', class: 'brand__mark' %}
+          <span class="brand__word">
+            <span class="a">{{ section.settings.brand_line_1 | default: 'Vision of the' }}</span>
+            <span class="b">{{ section.settings.brand_line_2 | default: 'Bible' }}</span>
+            {%- if section.settings.brand_tagline != blank -%}
+              <small>{{ section.settings.brand_tagline }}</small>
+            {%- endif -%}
+          </span>
+        </a>
+        {%- if section.settings.brand_text != blank -%}<p>{{ section.settings.brand_text }}</p>{%- endif -%}
+      </div>
+
+      <div class="fcol">
+        <h5>{{ section.settings.links_title | default: 'Explore' }}</h5>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'link' -%}
+            <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="fcol news">
+        <h5>{{ section.settings.news_title | default: 'Stay in the loop' }}</h5>
+        {%- if section.settings.news_text != blank -%}<p>{{ section.settings.news_text }}</p>{%- endif -%}
+        {%- form 'customer', class: 'news__form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input
+            type="email"
+            name="contact[email]"
+            aria-label="{{ 'general.newsletter_form.email_placeholder' | t }}"
+            placeholder="{{ section.settings.news_placeholder | default: 'Your email address' }}"
+            required>
+          <button class="btn btn--gold" type="submit">{{ 'general.newsletter_form.submit' | t }}</button>
+        {%- endform -%}
+        {%- if form.posted_successfully? -%}
+          <p class="news__note">{{ 'general.newsletter_form.confirmation' | t }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="copy">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}{% if section.settings.contact_email != blank %} &middot; {{ section.settings.contact_email }}{% endif %}</span>
+      <span><a href="#top">{{ section.settings.top_label | default: 'Back to top ↑' }}</a></span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "header", "content": "Scripture verse" },
+    { "type": "textarea", "id": "verse", "label": "Verse", "default": "“Train up a child in the way he should go, and when he is old he will not depart from it.”" },
+    { "type": "text", "id": "verse_ref", "label": "Reference", "default": "Proverbs 22:6" },
+    { "type": "header", "content": "Brand" },
+    { "type": "text", "id": "brand_line_1", "label": "Brand line 1", "default": "Vision of the" },
+    { "type": "text", "id": "brand_line_2", "label": "Brand line 2 (accent)", "default": "Bible" },
+    { "type": "text", "id": "brand_tagline", "label": "Tagline", "default": "Sacred stories brought to life" },
+    { "type": "textarea", "id": "brand_text", "label": "Description", "default": "Bringing the timeless stories and profound truths of the Bible to life — for the youngest hearts, the wisest ones, and the whole family in between." },
+    { "type": "header", "content": "Links column" },
+    { "type": "text", "id": "links_title", "label": "Column title", "default": "Explore" },
+    { "type": "header", "content": "Newsletter" },
+    { "type": "text", "id": "news_title", "label": "Title", "default": "Stay in the loop" },
+    { "type": "textarea", "id": "news_text", "label": "Text", "default": "Join our weekly letter for stories, scripture, and gentle encouragement." },
+    { "type": "text", "id": "news_placeholder", "label": "Input placeholder", "default": "Your email address" },
+    { "type": "header", "content": "Bottom bar" },
+    { "type": "text", "id": "contact_email", "label": "Contact email", "default": "info@visionofthebiblestore.com" },
+    { "type": "text", "id": "top_label", "label": "Back-to-top label", "default": "Back to top ↑" }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Footer link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Link" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "default": {
+    "blocks": [
+      { "type": "link", "settings": { "label": "Our Story", "link": "#about" } },
+      { "type": "link", "settings": { "label": "Collections", "link": "#categories" } },
+      { "type": "link", "settings": { "label": "Products", "link": "#products" } },
+      { "type": "link", "settings": { "label": "The App", "link": "#app" } },
+      { "type": "link", "settings": { "label": "Faith & Stories", "link": "#faith" } }
+    ]
+  }
+}
+{% endschema %}

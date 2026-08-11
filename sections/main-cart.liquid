@@ -1,0 +1,42 @@
+<div class="page-shell wrap">
+  <div class="page-head">
+    <span class="eyebrow">Your basket</span>
+    <h1>{{ 'cart.general.title' | t }}</h1>
+  </div>
+
+  {%- if cart.item_count > 0 -%}
+    {%- form 'cart', cart -%}
+      {%- for item in cart.items -%}
+        <div class="cart-row">
+          <img src="{{ item.image | image_url: width: 180 }}" alt="{{ item.title | escape }}">
+          <div>
+            <a class="cart-row__title" href="{{ item.url }}">{{ item.product.title }}</a>
+            {%- unless item.variant.title contains 'Default' -%}<div class="form-note">{{ item.variant.title }}</div>{%- endunless -%}
+            <a class="form-note" href="{{ item.url_to_remove }}">{{ 'cart.general.remove' | t }}</a>
+          </div>
+          <div class="qty">
+            <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantity">
+          </div>
+          <div class="cart-row__title">{{ item.final_line_price | money }}</div>
+        </div>
+      {%- endfor -%}
+
+      <div class="cart-foot">
+        <div class="subtotal">{{ 'cart.general.subtotal' | t }}: {{ cart.total_price | money }}</div>
+        <div style="display:flex;gap:.7rem;flex-wrap:wrap">
+          <button type="submit" name="update" class="btn btn--ghost">Update</button>
+          <button type="submit" name="checkout" class="btn btn--primary">{{ 'cart.general.checkout' | t }}</button>
+        </div>
+      </div>
+    {%- endform -%}
+  {%- else -%}
+    <div class="empty-state">
+      <p class="rte">{{ 'cart.general.empty' | t }}</p>
+      <a class="btn btn--gold" href="{{ routes.all_products_collection_url }}" style="margin-top:1.2rem">{{ 'cart.general.continue_shopping' | t }}</a>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{ "name": "Cart", "settings": [] }
+{% endschema %}

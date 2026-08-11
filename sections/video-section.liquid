@@ -1,0 +1,94 @@
+<section class="vsec wrap" id="{{ section.settings.anchor_id | default: 'videos' }}">
+  <div class="sec-head reveal">
+    {%- if section.settings.eyebrow != blank -%}<span class="eyebrow center">{{ section.settings.eyebrow }}</span>{%- endif -%}
+    {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+    {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+  </div>
+
+  <div class="vsec__grid">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign poster = blank
+        if block.settings.poster != blank
+          assign poster = block.settings.poster | image_url: width: 1400
+        elsif block.settings.poster_url != blank
+          assign poster = block.settings.poster_url
+        endif
+
+        assign video_src = blank
+        if block.settings.video != blank
+          assign video_src = block.settings.video.sources.last.url
+        elsif block.settings.video_url != blank
+          assign video_src = block.settings.video_url
+        endif
+      -%}
+
+      <div class="vsec__item reveal" {{ block.shopify_attributes }}>
+        {%- if video_src != blank -%}
+          <video
+            class="vsec__media"
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            data-hover-video
+            {% if poster != blank %}poster="{{ poster | escape }}"{% endif %}
+          >
+            <source src="{{ video_src }}" type="video/mp4">
+          </video>
+        {%- elsif poster != blank -%}
+          <img
+            class="vsec__media"
+            src="{{ poster }}"
+            alt=""
+            loading="lazy"
+            width="1400"
+            height="788"
+          >
+        {%- else -%}
+          <div class="vsec__media vsec__media--empty" aria-hidden="true"></div>
+        {%- endif -%}
+        <span class="vsec__play" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Video section",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "See it come alive" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Stories in motion" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "A glimpse of Scripture brought to life — hover to watch." },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "videos" }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        { "type": "video", "id": "video", "label": "Shopify video" },
+        { "type": "text", "id": "video_url", "label": "Video URL", "info": "Direct .mp4 (or similar) link. Used when Shopify video is empty." },
+        { "type": "image_picker", "id": "poster", "label": "Poster image" },
+        { "type": "text", "id": "poster_url", "label": "Fallback poster URL", "info": "Shown when no video is set, or as the video poster." }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Video section",
+      "blocks": [
+        { "type": "video" },
+        { "type": "video" },
+        { "type": "video" },
+        { "type": "video" }
+      ]
+    }
+  ]
+}
+{% endschema %}

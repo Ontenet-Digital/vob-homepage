@@ -1,0 +1,24 @@
+<div class="page-shell page-shell--narrow wrap">
+  <div class="page-head" style="text-align:center">
+    {% render 'emblem', class: 'brand__mark' %}
+    <h1>Your {{ shop.name }} gift card</h1>
+  </div>
+
+  <div style="text-align:center">
+    <div class="product__price" style="justify-content:center;font-size:2.4rem">{{ gift_card.balance | money }}</div>
+    {%- if gift_card.balance != gift_card.initial_value -%}
+      <p class="form-note">Original value: {{ gift_card.initial_value | money }}</p>
+    {%- endif -%}
+
+    <p class="form-note" style="margin-top:1.2rem">Gift card code</p>
+    <p style="font-family:var(--ui);font-size:1.4rem;letter-spacing:.12em;font-weight:700;color:var(--violet-deep)">{{ gift_card.code }}</p>
+
+    {%- if gift_card.expired -%}
+      <p class="errors" style="display:inline-block;margin-top:1rem">This gift card has expired.</p>
+    {%- endif -%}
+
+    <div style="margin-top:1.6rem">
+      <a class="btn btn--gold" href="{{ shop.url }}">Start shopping</a>
+    </div>
+  </div>
+</div>

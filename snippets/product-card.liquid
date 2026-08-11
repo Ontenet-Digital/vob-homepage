@@ -1,0 +1,15 @@
+{%- comment -%} Product grid card. Param: product. {%- endcomment -%}
+<a class="grid-card" href="{{ product.url }}">
+  <div class="grid-card__media">
+    {%- if product.featured_image -%}
+      <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy">
+    {%- endif -%}
+  </div>
+  <div class="grid-card__body">
+    <h3>{{ product.title }}</h3>
+    <span class="grid-card__price">
+      {%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money }}</s> {% endif -%}
+      {{ product.price | money }}
+    </span>
+  </div>
+</a>

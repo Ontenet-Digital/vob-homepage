@@ -1,0 +1,12 @@
+<div class="page-shell wrap">
+  <div class="empty-state">
+    {% render 'emblem', class: 'brand__mark' %}
+    <h1 style="font-size:clamp(2.4rem,6vw,4rem);margin:1rem 0 .6rem">{{ 'general.404.title' | t }}</h1>
+    <p class="rte">{{ 'general.404.subtext' | t }}</p>
+    <a class="btn btn--gold" href="{{ routes.root_url }}" style="margin-top:1.4rem">{{ 'general.404.link' | t }}</a>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "404", "settings": [] }
+{% endschema %}

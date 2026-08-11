@@ -1,0 +1,30 @@
+<div class="page-shell wrap">
+  <div class="page-head">
+    <span class="eyebrow">{{ 'customer.account.title' | t }}</span>
+    <h1>Hello, {{ customer.first_name | default: customer.email }}</h1>
+    <p class="form-note"><a href="{{ routes.account_logout_url }}" style="color:var(--violet-deep);font-weight:700">Log out</a> &middot; <a href="{{ routes.account_addresses_url }}" style="color:var(--violet-deep);font-weight:700">Manage addresses</a></p>
+  </div>
+
+  <h2 style="font-family:var(--display);margin-bottom:1.2rem">Order history</h2>
+  {%- if customer.orders.size > 0 -%}
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-family:var(--ui);font-size:.96rem">
+        <thead><tr style="text-align:left;color:var(--ink-soft)">
+          <th style="padding:.6rem">Order</th><th style="padding:.6rem">Date</th><th style="padding:.6rem">Total</th><th style="padding:.6rem">Status</th>
+        </tr></thead>
+        <tbody>
+          {%- for order in customer.orders -%}
+            <tr style="border-top:1px solid var(--parchment-line)">
+              <td style="padding:.6rem"><a href="{{ order.customer_url }}" style="color:var(--violet-deep);font-weight:700">{{ order.name }}</a></td>
+              <td style="padding:.6rem">{{ order.created_at | date: '%b %-d, %Y' }}</td>
+              <td style="padding:.6rem">{{ order.total_price | money }}</td>
+              <td style="padding:.6rem">{{ order.financial_status_label }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+  {%- else -%}
+    <p class="rte">You haven’t placed any orders yet.</p>
+  {%- endif -%}
+</div>
