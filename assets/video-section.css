@@ -6,14 +6,12 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-    max-width: 880px;
     margin-inline: auto;
 }
 .vsec__item {
     position: relative;
     border-radius: var(--radius-md);
     overflow: hidden;
-    border: 1px solid var(--parchment-line);
     background: linear-gradient(140deg, #3a2568, #ffffff);
     aspect-ratio: 16 / 9;
 }
