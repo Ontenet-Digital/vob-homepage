@@ -24,7 +24,7 @@
     --gold-bright: #e4c56c;
     --gold-deep: #7c5d1e;
 
-    --maxw: 1200px;
+    --maxw: 1440px;
     --ease: cubic-bezier(0.16, 0.84, 0.36, 1);
     --serif: "Cardo", Georgia, serif;
     --display: "Fraunces", Georgia, serif;
@@ -85,7 +85,7 @@ a {
     text-decoration: none;
 }
 .wrap {
-    width: min(100% - 3rem, var(--maxw));
+    width: min(100% - 4rem, var(--maxw));
     margin-inline: auto;
 }
 section {
