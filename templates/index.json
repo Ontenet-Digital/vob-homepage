@@ -278,6 +278,32 @@
         "anchor_id": "about"
       }
     },
+    "video_banner": {
+      "type": "video-banner",
+      "settings": {
+        "video_url": "",
+        "poster_url": "",
+        "poster_alt": "",
+        "heading": "See Scripture come alive",
+        "subheading": "Vivid, faithful storytelling that holds a child’s attention and a grandparent’s heart alike.",
+        "button_label": "Watch the story",
+        "button_link": "#categories",
+        "ratio": "16/9",
+        "ratio_mobile": "4/5",
+        "content_width": 560,
+        "padding_y": 64,
+        "padding_y_mobile": 32,
+        "heading_color": "#fdfbf3",
+        "heading_size": 52,
+        "heading_size_mobile": 28,
+        "subheading_color": "#f0eadc",
+        "subheading_size": 19,
+        "subheading_size_mobile": 15,
+        "overlay_color": "#1b0f33",
+        "overlay_opacity": 60,
+        "anchor_id": "video-banner"
+      }
+    },
     "categories": {
       "type": "category-collections",
       "blocks": {
@@ -585,6 +611,7 @@
     "hero",
     "hero_banner_AbyMEM",
     "about",
+    "video_banner",
     "categories",
     "story_section_wdy9BP",
     "video-section",

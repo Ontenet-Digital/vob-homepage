@@ -1,0 +1,197 @@
+{%- liquid
+  assign s = section.settings
+
+  assign poster = blank
+  if s.poster != blank
+    assign poster = s.poster | image_url: width: 1800
+  elsif s.poster_url != blank
+    assign poster = s.poster_url
+  elsif s.video != blank
+    assign poster = s.video.preview_image | image_url: width: 1800
+  endif
+
+  comment
+    Highest-quality mp4 wins: Shopify orders sources ascending by resolution.
+    A pasted URL is the fallback for videos hosted outside Shopify.
+  endcomment
+  assign video_src = blank
+  assign video_type = 'video/mp4'
+  if s.video != blank
+    for source in s.video.sources
+      if source.format == 'mp4'
+        assign video_src = source.url
+        assign video_type = source.mime_type
+      endif
+    endfor
+  elsif s.video_url != blank
+    assign video_src = s.video_url
+  endif
+
+  case s.ratio
+    when '21/9'
+      assign ratio = 2.3333
+    when '2/1'
+      assign ratio = 2.0
+    when '3/2'
+      assign ratio = 1.5
+    when '4/3'
+      assign ratio = 1.3333
+    when '1/1'
+      assign ratio = 1.0
+    else
+      assign ratio = 1.7778
+  endcase
+
+  case s.ratio_mobile
+    when '16/9'
+      assign ratio_m = 1.7778
+    when '3/2'
+      assign ratio_m = 1.5
+    when '4/3'
+      assign ratio_m = 1.3333
+    when '1/1'
+      assign ratio_m = 1.0
+    when '4/5'
+      assign ratio_m = 0.8
+    when '9/16'
+      assign ratio_m = 0.5625
+    else
+      assign ratio_m = ratio
+  endcase
+
+  assign overlay_alpha = s.overlay_opacity | times: 0.01
+  assign overlay_alpha_mid = overlay_alpha | times: 0.45
+  assign overlay_strong = s.overlay_color | color_modify: 'alpha', overlay_alpha
+  assign overlay_mid = s.overlay_color | color_modify: 'alpha', overlay_alpha_mid
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }} .vbanner{
+    --vb-ratio: {{ ratio }};
+    --vb-overlay: linear-gradient(to top, {{ overlay_strong }} 0%, {{ overlay_mid }} 42%, transparent 82%);
+    --vb-content-w: {{ s.content_width }}px;
+    --vb-pad-y: {{ s.padding_y }}px;
+    --vb-title-size: {{ s.heading_size }}px;
+    --vb-title-color: {{ s.heading_color }};
+    --vb-sub-size: {{ s.subheading_size }}px;
+    --vb-sub-color: {{ s.subheading_color }};
+  }
+
+  @media (max-width: 749px){
+    #shopify-section-{{ section.id }} .vbanner{
+      --vb-ratio: {{ ratio_m }};
+      --vb-content-w: 100%;
+      --vb-pad-y: {{ s.padding_y_mobile }}px;
+      --vb-title-size: {{ s.heading_size_mobile }}px;
+      --vb-sub-size: {{ s.subheading_size_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<section class="vbanner" id="{{ s.anchor_id | default: 'video-banner' }}">
+  {%- if video_src != blank -%}
+    <video
+      class="vbanner__media"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      tabindex="-1"
+      aria-hidden="true"
+      data-vb-video
+      {% if poster != blank %}poster="{{ poster }}"{% endif %}
+    >
+      <source src="{{ video_src }}" type="{{ video_type }}">
+    </video>
+  {%- elsif poster != blank -%}
+    <img class="vbanner__media" src="{{ poster }}" alt="{{ s.poster_alt | escape }}" loading="lazy" width="1800" height="1013">
+  {%- endif -%}
+
+  {%- if s.overlay_opacity > 0 -%}
+    <div class="vbanner__overlay" aria-hidden="true"></div>
+  {%- endif -%}
+
+  <div class="vbanner__inner">
+    <div class="vbanner__content reveal">
+      {%- if s.heading != blank -%}
+        <h2 class="vbanner__title">{{ s.heading }}</h2>
+      {%- endif -%}
+
+      {%- if s.subheading != blank -%}
+        <p class="vbanner__sub">{{ s.subheading }}</p>
+      {%- endif -%}
+
+      {%- if s.button_label != blank -%}
+        <a class="btn btn--gold vbanner__btn" href="{{ s.button_link | default: '#' }}">{{ s.button_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Video banner",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Video" },
+    { "type": "video", "id": "video", "label": "Video", "info": "Plays muted on a loop. Upload to Settings › Files, or pick a video here." },
+    { "type": "text", "id": "video_url", "label": "Video URL (fallback)", "info": "Direct .mp4 link. Used only when no video is selected above." },
+    { "type": "image_picker", "id": "poster", "label": "Poster image", "info": "Shown while the video loads, and instead of it when no video is set." },
+    { "type": "text", "id": "poster_url", "label": "Poster image URL (fallback)" },
+    { "type": "text", "id": "poster_alt", "label": "Poster alt text", "info": "Only used when the poster shows on its own, with no video." },
+
+    { "type": "header", "content": "Text" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "See Scripture come alive" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Vivid, faithful storytelling that holds a child’s attention and a grandparent’s heart alike." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Watch the story" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+
+    { "type": "header", "content": "Size" },
+    {
+      "type": "select", "id": "ratio", "label": "Aspect ratio (desktop)", "default": "16/9",
+      "info": "The video fills the full screen width. It is cropped to fill if its own shape differs.",
+      "options": [
+        { "value": "21/9", "label": "21:9 — cinematic" },
+        { "value": "2/1", "label": "2:1" },
+        { "value": "16/9", "label": "16:9 — widescreen" },
+        { "value": "3/2", "label": "3:2" },
+        { "value": "4/3", "label": "4:3" },
+        { "value": "1/1", "label": "1:1 — square" }
+      ]
+    },
+    {
+      "type": "select", "id": "ratio_mobile", "label": "Aspect ratio (mobile)", "default": "inherit",
+      "info": "16:9 is short on a phone. A taller shape gives the text more room, at the cost of cropping the sides.",
+      "options": [
+        { "value": "inherit", "label": "Same as desktop" },
+        { "value": "16/9", "label": "16:9 — widescreen" },
+        { "value": "3/2", "label": "3:2" },
+        { "value": "4/3", "label": "4:3" },
+        { "value": "1/1", "label": "1:1 — square" },
+        { "value": "4/5", "label": "4:5 — portrait" },
+        { "value": "9/16", "label": "9:16 — tall portrait" }
+      ]
+    },
+    { "type": "range", "id": "content_width", "label": "Text width (desktop)", "min": 280, "max": 900, "step": 20, "unit": "px", "default": 560 },
+    { "type": "range", "id": "padding_y", "label": "Space above & below text (desktop)", "min": 16, "max": 140, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_y_mobile", "label": "Space above & below text (mobile)", "min": 12, "max": 100, "step": 4, "unit": "px", "default": 32 },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "color", "id": "heading_color", "label": "Heading colour", "default": "#FDFBF3" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 24, "max": 88, "step": 1, "unit": "px", "default": 52 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size (mobile)", "min": 18, "max": 48, "step": 1, "unit": "px", "default": 28 },
+    { "type": "color", "id": "subheading_color", "label": "Subheading colour", "default": "#F0EADC" },
+    { "type": "range", "id": "subheading_size", "label": "Subheading size (desktop)", "min": 13, "max": 30, "step": 1, "unit": "px", "default": 19 },
+    { "type": "range", "id": "subheading_size_mobile", "label": "Subheading size (mobile)", "min": 12, "max": 22, "step": 1, "unit": "px", "default": 15 },
+
+    { "type": "header", "content": "Overlay", "info": "Darkens the bottom of the video so the text stays readable." },
+    { "type": "color", "id": "overlay_color", "label": "Overlay colour", "default": "#1B0F33" },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay strength", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 60 },
+
+    { "type": "header", "content": "Options" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "video-banner" }
+  ],
+  "presets": [{ "name": "Video banner" }]
+}
+{% endschema %}
