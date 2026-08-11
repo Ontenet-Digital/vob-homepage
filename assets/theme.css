@@ -9,6 +9,7 @@
 @import "./usp-section.css";
 @import "./footer.css";
 @import "./standard-pages.css";
+@import "./best-seller.css";
 
 :root {
     --parchment: #ffffff;
