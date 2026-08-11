@@ -102,8 +102,10 @@
           "footer-4"
         ],
         "settings": {
-          "verse": "“Train up a child in the way he should go, and when he is old he will not depart from it.”",
-          "verse_ref": "Proverbs 22:6",
+          "verse": "\"For we live by faith, not by sight.\"",
+          "verse_ref": "— 2 Corinthians 5:7",
+          "logo": "shopify://shop_images/vob-logo.png",
+          "logo_width": 80,
           "brand_line_1": "Vision of the",
           "brand_line_2": "Bible",
           "brand_tagline": "Sacred stories brought to life",
