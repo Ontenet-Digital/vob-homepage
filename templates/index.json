@@ -359,9 +359,9 @@
           "settings": {
             "image": "shopify://shop_images/vob-product-img-1.webp",
             "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC04800-2-copy-2.jpg?v=1785302101&width=900",
-            "tag": "Our Vision",
+            "tag": "",
             "title": "A message that resonates",
-            "text": "We envaion a worl where the bible's message resonates with heaven and minds - transforming lives and inspiring hope.Every scene we animate, every passage we narrate, is made to help that message land gently on a child at bedtime and just as fully on a grandparent ins a quiet chair.",
+            "text": "10 Views",
             "link": "#"
           }
         },
@@ -370,9 +370,9 @@
           "settings": {
             "image": "shopify://shop_images/vob-product-img-2.webp",
             "image_url": "https://visionofthebiblestore.com/cdn/shop/files/preview_images/a0c5f11599484fa38f3e0a6eedcbc829.thumbnail.0000000000.jpg?v=1785303765&width=900",
-            "tag": "Our story",
+            "tag": "",
             "title": "Bringing Scriptures to life",
-            "text": "Vision of the bible is devoted to bringing the timeless stories and profound truths of the bible to life. Through innovative digital experiences and stunning visual storytelling, we set out to inspire people and draw them close to the Word of God - not to sell a device, but to open a door.",
+            "text": "10 Views",
             "link": "#"
           }
         },
@@ -381,9 +381,9 @@
           "settings": {
             "image": "shopify://shop_images/travel-2.webp",
             "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC_5847.jpg?v=1732482733&width=900",
-            "tag": "What we brint to life",
+            "tag": "",
             "title": "Seen, heard, and remembered",
-            "text": "From the miracles and parables of Jesus to the courage of the disciples and the beauty of the Holy Land, we turn Scripture into smoething children can see and everyone can feel. Captivating visuals, gentle narration, easy-to-follow words - the Bible, experienced rather than merely read.",
+            "text": "11 Views",
             "link": "#"
           }
         }
@@ -396,10 +396,10 @@
       "name": "blog_section",
       "settings": {
         "eyebrow": "",
-        "heading": "",
+        "heading": "Testimonial",
         "subheading": "",
         "blog": "",
-        "post_limit": 3,
+        "post_limit": 6,
         "anchor_id": "story-section"
       }
     },
@@ -409,6 +409,7 @@
         "v1": {
           "type": "video",
           "settings": {
+            "video": "shopify://files/videos/04(1).mp4",
             "video_url": "",
             "poster": "shopify://shop_images/Artboard_6.png",
             "poster_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/hero_desktop.png?v=1786102606"
@@ -417,6 +418,7 @@
         "v2": {
           "type": "video",
           "settings": {
+            "video": "shopify://files/videos/09.mp4",
             "video_url": "",
             "poster": "shopify://shop_images/Artboard_4.png",
             "poster_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/hero_desktop.png?v=1786102606"
@@ -425,6 +427,7 @@
         "v3": {
           "type": "video",
           "settings": {
+            "video": "shopify://files/videos/08.mp4",
             "video_url": "",
             "poster": "shopify://shop_images/Artboard_2.png",
             "poster_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/hero_desktop.png?v=1786102606"
@@ -433,6 +436,7 @@
         "v4": {
           "type": "video",
           "settings": {
+            "video": "shopify://files/videos/01(1).mp4",
             "video_url": "",
             "poster": "shopify://shop_images/Artboard_1.png",
             "poster_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/hero_desktop.png?v=1786102606"
