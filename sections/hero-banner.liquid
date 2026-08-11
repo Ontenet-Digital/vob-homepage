@@ -93,24 +93,30 @@
     when 'center'
       assign margin_start = 'auto'
       assign margin_end = 'auto'
+      assign trust_justify = 'center'
     when 'right'
       assign margin_start = 'auto'
       assign margin_end = '0'
+      assign trust_justify = 'flex-end'
     else
       assign margin_start = '0'
       assign margin_end = 'auto'
+      assign trust_justify = 'flex-start'
   endcase
 
   case s.text_align_mobile
     when 'center'
       assign margin_start_m = 'auto'
       assign margin_end_m = 'auto'
+      assign trust_justify_m = 'center'
     when 'right'
       assign margin_start_m = 'auto'
       assign margin_end_m = '0'
+      assign trust_justify_m = 'flex-end'
     when 'left'
       assign margin_start_m = '0'
       assign margin_end_m = 'auto'
+      assign trust_justify_m = 'flex-start'
   endcase
 
   case s.content_position
@@ -175,12 +181,34 @@
     assign sub_shadow = 'none'
   endif
 
-  # Trailing gap under the subtitle only earns its space when a paragraph follows
+  # Trailing gap under the subtitle only earns its space when a paragraph or trust row follows
   assign sub_gap = 0
   assign sub_gap_mobile = 0
-  if s.paragraph != blank
+  if s.paragraph != blank or s.trust_enable
     assign sub_gap = s.subtitle_gap
     assign sub_gap_mobile = s.subtitle_gap_mobile
+  endif
+
+  # Trailing gap under the paragraph only when the trust row follows
+  assign para_gap = 0
+  assign para_gap_mobile = 0
+  if s.trust_enable
+    assign para_gap = s.paragraph_gap
+    assign para_gap_mobile = s.paragraph_gap_mobile
+  endif
+
+  # Moto alignment follows the text column unless overridden
+  assign moto_align = s.moto_align
+  if moto_align == 'inherit'
+    assign moto_align = s.text_align
+  endif
+  assign moto_align_mobile = s.moto_align_mobile
+  if moto_align_mobile == 'inherit'
+    if s.text_align_mobile != 'inherit'
+      assign moto_align_mobile = s.text_align_mobile
+    else
+      assign moto_align_mobile = moto_align
+    endif
   endif
 
   assign heading_tag = s.heading_tag | default: 'h1'
@@ -227,6 +255,12 @@
     --hero-para-lh: {{ s.paragraph_lh_desktop | times: 0.01 }};
     --hero-para-color: {{ s.paragraph_color }};
     --hero-para-pt: {{ s.paragraph_pt }}px;
+    --hero-para-gap: {{ para_gap }}px;
+    --hero-moto-gap: {{ s.moto_gap }}px;
+    --hero-moto-pt: {{ s.moto_pt }}px;
+    --hero-trust-pt: {{ s.trust_pt }}px;
+    --hero-trust-gap: {{ s.trust_gap }}px;
+    --hero-trust-justify: {{ trust_justify }};
     {% if overlay_bg != blank %}--hero-overlay-bg: {{ overlay_bg }};{% endif %}
   }
 
@@ -248,12 +282,18 @@
       --hero-para-size: {{ s.paragraph_size_mobile }}px;
       --hero-para-lh: {{ s.paragraph_lh_mobile | times: 0.01 }};
       --hero-para-pt: {{ s.paragraph_pt_mobile }}px;
+      --hero-para-gap: {{ para_gap_mobile }}px;
+      --hero-moto-gap: {{ s.moto_gap_mobile }}px;
+      --hero-moto-pt: {{ s.moto_pt_mobile }}px;
+      --hero-trust-pt: {{ s.trust_pt_mobile }}px;
+      --hero-trust-gap: {{ s.trust_gap_mobile }}px;
       --hero-h1-w: {{ s.heading_width_mobile }}px;
       --hero-sub-w: {{ s.subtitle_width_mobile }}px;
       --hero-para-w: {{ s.paragraph_width_mobile }}px;
       {% if s.text_align_mobile != 'inherit' %}--hero-text-align: {{ s.text_align_mobile }};
       --hero-ms: {{ margin_start_m }};
-      --hero-me: {{ margin_end_m }};{% endif %}
+      --hero-me: {{ margin_end_m }};
+      --hero-trust-justify: {{ trust_justify_m }};{% endif %}
       {% if s.content_position_mobile != 'inherit' %}--hero-align-items: {{ align_items_m }};{% endif %}
       {% if overlay_bg_mobile != blank %}--hero-overlay-bg: {{ overlay_bg_mobile }};{% endif %}
       {% unless s.show_motes_mobile %}--hero-motes-display: none;{% endunless %}
@@ -314,16 +354,18 @@
     <div class="hero__overlay" aria-hidden="true"></div>
   {%- endif -%}
 
-  {%- if s.show_motes -%}
-    <div class="hero__deco" aria-hidden="true">
-      <span class="mote" style="top:22%;left:14%;width:8px;height:8px;animation-delay:0s"></span>
-      <span class="mote" style="top:34%;right:24%;width:6px;height:6px;animation-delay:1.2s"></span>
-      <span class="mote" style="bottom:26%;left:30%;width:5px;height:5px;animation-delay:2.1s"></span>
-    </div>
-  {%- endif -%}
-
   <div class="hero__inner wrap">
     <div class="hero__content">
+      {%- if s.moto_enable and s.moto_text != blank -%}
+        {%- capture moto_class -%}hero__moto hero__moto--m-{{ moto_align_mobile }}{%- endcapture -%}
+        {% render 'moto',
+          text: s.moto_text,
+          color: s.moto_color,
+          class: moto_class,
+          align: moto_align
+        %}
+      {%- endif -%}
+
       {%- if s.title != blank -%}
         <{{ heading_tag }} class="hero__title">{{ s.title }}</{{ heading_tag }}>
       {%- endif -%}
@@ -335,6 +377,8 @@
       {%- if s.paragraph != blank -%}
         <div class="hero__para">{{ s.paragraph }}</div>
       {%- endif -%}
+
+      {% render 'trust-badges', section: section, class: 'hero__trust' %}
     </div>
   </div>
 </section>
@@ -344,12 +388,41 @@
   "name": "Hero banner",
   "tag": "section",
   "settings": [
-    { "type": "inline_richtext", "id": "title", "label": "Heading", "info": "Use italics to highlight a word in the accent colour.", "default": "Where Scripture opens like a <em>book</em>, and a child meets Jesus." },
+    { "type": "header", "content": "Motto" },
+    { "type": "checkbox", "id": "moto_enable", "label": "Show motto", "default": true },
+    { "type": "text", "id": "moto_text", "label": "Motto text", "default": "THE WORD, MADE VIVID" },
+    { "type": "color", "id": "moto_color", "label": "Motto colour", "default": "#C4A574" },
+    {
+      "type": "select", "id": "moto_align", "label": "Motto alignment (desktop)", "default": "inherit",
+      "options": [
+        { "value": "inherit", "label": "Same as text" },
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select", "id": "moto_align_mobile", "label": "Motto alignment (mobile)", "default": "inherit",
+      "options": [
+        { "value": "inherit", "label": "Same as text" },
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+
+    { "type": "inline_richtext", "id": "title", "label": "Heading", "info": "Use italics to highlight a word in the accent colour.", "default": "Where Bible stories inspire young minds and strengthen faith" },
     { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Vision of the Bible brings the timeless stories and truths of Scripture to life through vivid, faithful visual storytelling — made for the youngest hearts and the wisest ones alike." },
     { "type": "richtext", "id": "paragraph", "label": "Paragraph", "info": "Optional supporting copy below the subtitle. Supports bold, italics and links." },
 
-    { "type": "header", "content": "Banner image" },
-    { "type": "image_picker", "id": "image_desktop", "label": "Desktop image", "info": "Recommended 2400 × 1400px or wider. If empty, the background below is used." },
+    { "type": "header", "content": "Trust badges" },
+    { "type": "checkbox", "id": "trust_enable", "label": "Show trust badges", "default": true },
+    { "type": "text", "id": "trust_label", "label": "Label", "default": "TRUSTED BY FAMILIES ON" },
+    { "type": "color", "id": "trust_label_color", "label": "Label colour", "default": "#C4A574" },
+    { "type": "color", "id": "trust_text_color", "label": "Badge text colour", "default": "#3A3550" },
+    { "type": "color", "id": "trust_star_color", "label": "Star colour", "default": "#F5B400" },
+
+    { "type": "header", "content": "Banner image" },    { "type": "image_picker", "id": "image_desktop", "label": "Desktop image", "info": "Recommended 2400 × 1400px or wider. If empty, the background below is used." },
     { "type": "image_picker", "id": "image_mobile", "label": "Mobile image", "info": "Shown at 749px and below. Falls back to the desktop image." },
     { "type": "text", "id": "image_desktop_url", "label": "Desktop image URL (fallback)", "info": "Used only if no desktop image is uploaded above." },
     { "type": "text", "id": "image_mobile_url", "label": "Mobile image URL (fallback)", "info": "Used only if no mobile image is uploaded above." },
@@ -509,16 +582,26 @@
     { "type": "checkbox", "id": "text_shadow", "label": "Soft shadow behind text", "default": true, "info": "Helps legibility over busy photography." },
 
     { "type": "header", "content": "Element spacing", "info": "Listed top to bottom in the order they stack. Padding above an element and the space under the one before it add together." },
+    { "type": "range", "id": "moto_pt", "label": "Motto — padding top (desktop)", "min": 0, "max": 160, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "moto_pt_mobile", "label": "Motto — padding top (mobile)", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "moto_gap", "label": "Space under motto (desktop)", "min": 0, "max": 80, "step": 2, "unit": "px", "default": 18 },
+    { "type": "range", "id": "moto_gap_mobile", "label": "Space under motto (mobile)", "min": 0, "max": 64, "step": 2, "unit": "px", "default": 14 },
     { "type": "range", "id": "heading_pt", "label": "Heading — padding top (desktop)", "min": 0, "max": 160, "step": 2, "unit": "px", "default": 0 },
     { "type": "range", "id": "heading_pt_mobile", "label": "Heading — padding top (mobile)", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 0 },
     { "type": "range", "id": "heading_gap", "label": "Space under heading (desktop)", "min": 0, "max": 80, "step": 2, "unit": "px", "default": 22 },
     { "type": "range", "id": "heading_gap_mobile", "label": "Space under heading (mobile)", "min": 0, "max": 64, "step": 2, "unit": "px", "default": 16 },
     { "type": "range", "id": "subtitle_pt", "label": "Subtitle — padding top (desktop)", "min": 0, "max": 160, "step": 2, "unit": "px", "default": 0 },
     { "type": "range", "id": "subtitle_pt_mobile", "label": "Subtitle — padding top (mobile)", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 0 },
-    { "type": "range", "id": "subtitle_gap", "label": "Space under subtitle (desktop)", "min": 0, "max": 80, "step": 2, "unit": "px", "default": 20, "info": "Only applies when a paragraph is set." },
+    { "type": "range", "id": "subtitle_gap", "label": "Space under subtitle (desktop)", "min": 0, "max": 80, "step": 2, "unit": "px", "default": 20, "info": "Only applies when a paragraph or trust row follows." },
     { "type": "range", "id": "subtitle_gap_mobile", "label": "Space under subtitle (mobile)", "min": 0, "max": 64, "step": 2, "unit": "px", "default": 14 },
     { "type": "range", "id": "paragraph_pt", "label": "Paragraph — padding top (desktop)", "min": 0, "max": 600, "step": 10, "unit": "px", "default": 0 },
     { "type": "range", "id": "paragraph_pt_mobile", "label": "Paragraph — padding top (mobile)", "min": 0, "max": 600, "step": 10, "unit": "px", "default": 0 },
+    { "type": "range", "id": "paragraph_gap", "label": "Space under paragraph (desktop)", "min": 0, "max": 80, "step": 2, "unit": "px", "default": 28, "info": "Only applies when trust badges are shown." },
+    { "type": "range", "id": "paragraph_gap_mobile", "label": "Space under paragraph (mobile)", "min": 0, "max": 64, "step": 2, "unit": "px", "default": 22 },
+    { "type": "range", "id": "trust_pt", "label": "Trust — padding top (desktop)", "min": 0, "max": 160, "step": 2, "unit": "px", "default": 8 },
+    { "type": "range", "id": "trust_pt_mobile", "label": "Trust — padding top (mobile)", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 6 },
+    { "type": "range", "id": "trust_gap", "label": "Space under trust label (desktop)", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 14 },
+    { "type": "range", "id": "trust_gap_mobile", "label": "Space under trust label (mobile)", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 12 },
 
     { "type": "header", "content": "Decoration" },
     { "type": "checkbox", "id": "show_motes", "label": "Show floating motes (desktop)", "default": true },
@@ -533,6 +616,61 @@
     { "type": "header", "content": "Options" },
     { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "hero" }
   ],
-  "presets": [{ "name": "Hero banner" }]
+  "blocks": [
+    {
+      "type": "trust_badge",
+      "name": "Trust badge",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Trustpilot" },
+        { "type": "url", "id": "link", "label": "Link" },
+        {
+          "type": "select", "id": "icon_preset", "label": "Built-in icon", "default": "none",
+          "info": "Used when no custom icon is uploaded.",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "trustpilot", "label": "Trustpilot" },
+            { "value": "google", "label": "Google" },
+            { "value": "star", "label": "Star" }
+          ]
+        },
+        { "type": "image_picker", "id": "icon", "label": "Custom icon" },
+        { "type": "text", "id": "icon_url", "label": "Custom icon URL", "info": "Fallback if no image is uploaded." },
+        { "type": "checkbox", "id": "show_stars", "label": "Show star rating", "default": false },
+        { "type": "range", "id": "star_count", "label": "Filled stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "rating_text", "label": "Rating text", "info": "Shown instead of the label when set (e.g. 4.9/5 rated)." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner",
+      "blocks": [
+        {
+          "type": "trust_badge",
+          "settings": {
+            "label": "Trustpilot",
+            "icon_preset": "trustpilot"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "label": "Google",
+            "icon_preset": "google"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "label": "Rated",
+            "icon_preset": "none",
+            "show_stars": true,
+            "star_count": 5,
+            "rating_text": "4.9/5 rated"
+          }
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}
