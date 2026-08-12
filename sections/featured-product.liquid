@@ -1,0 +1,901 @@
+{%- comment -%}
+  Featured product showcase
+  --------------------------------------------------------------
+  A homepage "product details" section. One product is shown at a
+  time — image gallery on the left, rich details + add-to-cart +
+  share on the right — and visitors can swap to the next / previous
+  product with the arrows or dots.
+
+  Source of products:
+    • Add "Product" blocks to hand-pick and order products.
+    • If no product blocks are added, it falls back to the chosen
+      collection so the section is never empty.
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+
+  # Decide the source: hand-picked blocks win, but only count blocks
+  # that actually have a product selected. Otherwise fall back to a
+  # collection so the section still renders something.
+  assign picked = 0
+  for block in section.blocks
+    if block.settings.product != blank
+      assign picked = picked | plus: 1
+    endif
+  endfor
+
+  assign use_blocks = false
+  if picked > 0
+    assign use_blocks = true
+  endif
+
+  if use_blocks
+    assign total = picked
+  else
+    assign total = s.collection.products.size
+    if total > s.products_limit
+      assign total = s.products_limit
+    endif
+  endif
+
+  assign heading_align = s.heading_align | default: 'left'
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }} .fps{
+    --fps-bg: {{ s.bg_color | default: '#ffffff' }};
+    --fps-text: {{ s.text_color | default: '#1a1a1a' }};
+    --fps-heading: {{ s.heading_color | default: '#0a0a0a' }};
+    --fps-muted: {{ s.muted_color | default: '#6b6b6b' }};
+    --fps-border: {{ s.border_color | default: '#e6e6e6' }};
+    --fps-surface: {{ s.surface_color | default: '#f6f6f6' }};
+    --fps-price: {{ s.price_color | default: '#0a0a0a' }};
+    --fps-compare: {{ s.compare_color | default: '#9a9a9a' }};
+    --fps-btn-bg: {{ s.button_bg | default: '#111111' }};
+    --fps-btn-text: {{ s.button_text | default: '#ffffff' }};
+    --fps-accent: {{ s.accent_color | default: '#111111' }};
+    --fps-radius: {{ s.corner_radius | default: 14 }}px;
+    --fps-ratio: {{ s.image_ratio | default: '1/1' }};
+    --fps-fit: {{ s.image_fit | default: 'contain' }};
+    --fps-pad-t: {{ s.padding_top | default: 80 }}px;
+    --fps-pad-b: {{ s.padding_bottom | default: 80 }}px;
+  }
+  @media (max-width: 749px){
+    #shopify-section-{{ section.id }} .fps{
+      --fps-pad-t: {{ s.padding_top | default: 80 | times: 0.6 | round }}px;
+      --fps-pad-b: {{ s.padding_bottom | default: 80 | times: 0.6 | round }}px;
+    }
+  }
+{% endstyle %}
+
+<section
+  class="fps wrap"
+  id="{{ s.anchor_id | default: 'featured-product' }}"
+  data-fps
+  data-fps-add-behavior="{{ s.add_behavior | default: 'stay' }}"
+  data-cart-add-url="{{ routes.cart_add_url }}"
+  data-cart-url="{{ routes.cart_url }}">
+
+  {%- if s.eyebrow != blank or s.heading != blank or s.subheading != blank or total > 1 -%}
+    <div class="fps__head fps__head--{{ heading_align }}">
+      <div class="fps__head-text">
+        {%- if s.eyebrow != blank -%}<span class="fps__eyebrow">{{ s.eyebrow }}</span>{%- endif -%}
+        {%- if s.heading != blank -%}<h2 class="fps__heading">{{ s.heading }}</h2>{%- endif -%}
+        {%- if s.subheading != blank -%}<p class="fps__sub">{{ s.subheading }}</p>{%- endif -%}
+      </div>
+
+      {%- if total > 1 -%}
+        <div class="fps__nav" role="group" aria-label="Browse products">
+          <button type="button" class="fps__navbtn" data-fps-prev aria-label="Previous product">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <span class="fps__counter"><b data-fps-index>1</b> / {{ total }}</span>
+          <button type="button" class="fps__navbtn" data-fps-next aria-label="Next product">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if total > 0 -%}
+    <div class="fps__viewport" data-fps-viewport>
+      {%- if use_blocks -%}
+        {%- assign pos = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.settings.product == blank -%}{%- continue -%}{%- endif -%}
+          {%- assign pos = pos | plus: 1 -%}
+          {%- render 'featured-product-panel',
+              product: block.settings.product,
+              s: s,
+              uid: section.id,
+              index: pos,
+              custom_desc: block.settings.custom_description,
+              attrs: block.shopify_attributes -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for product in s.collection.products limit: s.products_limit -%}
+          {%- render 'featured-product-panel', product: product, s: s, uid: section.id, index: forloop.index -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- if total > 1 -%}
+      <div class="fps__dots" role="tablist" aria-label="Select product">
+        {%- for i in (1..total) -%}
+          <button type="button" class="fps__dot{% if forloop.first %} is-active{% endif %}" data-fps-dot="{{ forloop.index }}" aria-label="Show product {{ forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}></button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <div class="fps__empty">
+      <p>Add a <strong>Product</strong> block (or choose a fallback collection) in the theme editor to show product details here.</p>
+    </div>
+  {%- endif -%}
+</section>
+
+{% stylesheet %}
+.fps{
+  background: var(--fps-bg);
+  color: var(--fps-text);
+  padding-top: var(--fps-pad-t);
+  padding-bottom: var(--fps-pad-b);
+}
+
+/* ---------- Header ---------- */
+.fps__head{
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 42px;
+}
+.fps__head--center{ justify-content: center; text-align: center; }
+.fps__head--center .fps__head-text{ margin-inline: auto; }
+.fps__head-text{ max-width: 640px; }
+.fps__eyebrow{
+  font-family: var(--ui, "Manrope", system-ui, sans-serif);
+  font-weight: 700;
+  font-size: .72rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--fps-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: .85rem;
+}
+.fps__head--center .fps__eyebrow{ justify-content: center; }
+.fps__eyebrow::before{ content:""; width: 24px; height: 1px; background: currentColor; opacity: .6; }
+.fps__heading{
+  font-family: var(--display, "Fraunces", Georgia, serif);
+  font-weight: 400;
+  color: var(--fps-heading);
+  font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+  line-height: 1.06;
+  letter-spacing: -.01em;
+  margin: 0;
+}
+.fps__sub{
+  margin: .8rem 0 0;
+  color: var(--fps-muted);
+  font-size: 1.06rem;
+  line-height: 1.6;
+}
+
+/* ---------- Product nav (swap products) ---------- */
+.fps__nav{ display: inline-flex; align-items: center; gap: 12px; }
+.fps__navbtn{
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--fps-border);
+  background: var(--fps-bg);
+  color: var(--fps-heading);
+  display: grid; place-items: center;
+  cursor: pointer;
+  transition: background .25s ease, color .25s ease, transform .25s ease, border-color .25s ease;
+}
+.fps__navbtn svg{ width: 20px; height: 20px; }
+.fps__navbtn:hover{ background: var(--fps-accent); color: #fff; border-color: var(--fps-accent); transform: translateY(-2px); }
+.fps__navbtn:focus-visible{ outline: 2px solid var(--fps-accent); outline-offset: 2px; }
+.fps__counter{
+  font-family: var(--ui, "Manrope", system-ui, sans-serif);
+  font-size: .95rem; color: var(--fps-muted);
+  min-width: 48px; text-align: center;
+}
+.fps__counter b{ color: var(--fps-heading); font-weight: 700; }
+
+/* ---------- Viewport / panels ---------- */
+.fps__viewport{ position: relative; }
+.fps__product{
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: start;
+}
+.fps__product[hidden]{ display: none; }
+.fps__product:not(.is-active){ display: none; }
+.fps__product.is-active{ animation: fpsFade .5s var(--ease, cubic-bezier(.16,.84,.36,1)); }
+@keyframes fpsFade{ from{ opacity: 0; transform: translateY(10px);} to{ opacity: 1; transform: none; } }
+
+/* ---------- Gallery ---------- */
+.fps__gallery{ display: flex; flex-direction: column; gap: 14px; position: sticky; top: 24px; }
+.fps__stage{
+  position: relative;
+  aspect-ratio: var(--fps-ratio);
+  background: var(--fps-surface);
+  border: 1px solid var(--fps-border);
+  border-radius: var(--fps-radius);
+  overflow: hidden;
+}
+.fps__slide{
+  position: absolute; inset: 0;
+  opacity: 0; visibility: hidden;
+  transition: opacity .45s ease;
+}
+.fps__slide.is-active{ opacity: 1; visibility: visible; }
+.fps__slide img{ width: 100%; height: 100%; object-fit: var(--fps-fit); }
+.fps__slide--placeholder svg{ width: 100%; height: 100%; }
+
+.fps__imgnav{
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--fps-border);
+  background: rgba(255,255,255,.86);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  color: var(--fps-heading);
+  display: grid; place-items: center;
+  cursor: pointer;
+  opacity: .55;
+  transition: opacity .25s ease, background .25s ease, transform .25s ease;
+}
+.fps__imgnav svg{ width: 20px; height: 20px; }
+.fps__stage:hover .fps__imgnav{ opacity: 1; }
+.fps__imgnav:hover{ background: #fff; }
+.fps__imgnav:focus-visible{ opacity: 1; outline: 2px solid var(--fps-accent); outline-offset: 2px; }
+.fps__imgnav--prev{ left: 12px; }
+.fps__imgnav--next{ right: 12px; }
+.fps__stage-count{
+  position: absolute; right: 12px; bottom: 12px;
+  background: rgba(17,17,17,.62); color: #fff;
+  font-family: var(--ui, "Manrope", system-ui, sans-serif);
+  font-size: 12px; padding: 3px 9px; border-radius: 20px;
+  pointer-events: none;
+}
+
+.fps__thumbs{
+  display: flex; gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+}
+.fps__thumb{
+  flex: 0 0 auto;
+  width: 72px; aspect-ratio: 1;
+  border-radius: calc(var(--fps-radius) * .6);
+  border: 1px solid var(--fps-border);
+  background: var(--fps-surface);
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  opacity: .68;
+  scroll-snap-align: center;
+  transition: opacity .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.fps__thumb img{ width: 100%; height: 100%; object-fit: cover; }
+.fps__thumb:hover{ opacity: 1; }
+.fps__thumb.is-active{ opacity: 1; border-color: var(--fps-accent); box-shadow: inset 0 0 0 1px var(--fps-accent); }
+.fps__thumb:focus-visible{ outline: 2px solid var(--fps-accent); outline-offset: 2px; }
+
+/* ---------- Details ---------- */
+.fps__details{
+  display: flex; flex-direction: column; align-items: flex-start;
+  gap: 18px;
+  padding-top: 6px;
+}
+.fps__vendor{
+  font-family: var(--ui, "Manrope", system-ui, sans-serif);
+  font-weight: 700; font-size: .72rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--fps-muted);
+}
+.fps__title{
+  font-family: var(--display, "Fraunces", Georgia, serif);
+  font-weight: 400; color: var(--fps-heading);
+  font-size: clamp(1.7rem, 2.8vw, 2.5rem);
+  line-height: 1.1; letter-spacing: -.01em;
+  margin: 0;
+}
+.fps__title:focus{ outline: none; }
+.fps__price{
+  display: flex; align-items: baseline; gap: 12px;
+  font-family: var(--ui, "Manrope", system-ui, sans-serif);
+}
+.fps__price-current{ font-weight: 700; font-size: 1.5rem; color: var(--fps-price); }
+.fps__price-compare{ font-weight: 500; font-size: 1.05rem; color: var(--fps-compare); text-decoration: line-through; }
+
+.fps__rte{
+  color: var(--fps-text);
+  line-height: 1.7;
+  font-size: 1rem;
+  max-width: 54ch;
+  position: relative;
+}
+.fps__rte:not(.is-expanded).is-clamped{
+  max-height: 9.5em; overflow: hidden;
+}
+.fps__rte:not(.is-expanded).is-clamped::after{
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3.2em;
+  background: linear-gradient(to bottom, transparent, var(--fps-bg));
+}
+.fps__rte p{ margin: 0 0 .8em; }
+.fps__rte ul, .fps__rte ol{ margin: 0 0 .8em 1.2em; }
+.fps__rte a{ color: var(--fps-heading); text-decoration: underline; }
+.fps__more{
+  background: none; border: none; padding: 0;
+  font-family: var(--ui, "Manrope", system-ui, sans-serif);
+  font-weight: 700; font-size: .9rem; color: var(--fps-heading);
+  text-decoration: underline; cursor: pointer; margin-top: -6px;
+}
+
+/* Form */
+.fps__form{ width: 100%; display: flex; flex-direction: column; gap: 14px; margin-top: 2px; }
+.fps__variants{ display: flex; flex-direction: column; gap: 6px; }
+.fps__label{
+  font-family: var(--ui, "Manrope", system-ui, sans-serif);
+  font-size: .8rem; font-weight: 600; color: var(--fps-muted);
+}
+.fps__select{
+  appearance: none; -webkit-appearance: none;
+  border: 1px solid var(--fps-border);
+  border-radius: 10px;
+  padding: 12px 40px 12px 14px;
+  font-family: var(--ui, "Manrope", system-ui, sans-serif);
+  font-size: 1rem; color: var(--fps-heading);
+  background-color: var(--fps-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center;
+  min-width: 220px; cursor: pointer;
+}
+.fps__buy{ display: flex; gap: 12px; flex-wrap: wrap; align-items: stretch; width: 100%; }
+.fps__qty{
+  display: inline-flex; align-items: center;
+  border: 1px solid var(--fps-border); border-radius: 10px; overflow: hidden;
+}
+.fps__qty button{
+  width: 44px; min-height: 52px;
+  background: var(--fps-bg); border: none; cursor: pointer;
+  font-size: 1.25rem; line-height: 1; color: var(--fps-heading);
+}
+.fps__qty button:hover{ background: var(--fps-surface); }
+.fps__qty input{
+  width: 44px; text-align: center; border: none;
+  font-family: var(--ui, "Manrope", system-ui, sans-serif); font-size: 1rem;
+  color: var(--fps-heading); background: transparent;
+  -moz-appearance: textfield;
+}
+.fps__qty input::-webkit-outer-spin-button,
+.fps__qty input::-webkit-inner-spin-button{ -webkit-appearance: none; margin: 0; }
+
+.fps__add{
+  position: relative;
+  flex: 1 1 200px; min-height: 52px;
+  background: var(--fps-btn-bg); color: var(--fps-btn-text);
+  border: none; border-radius: 10px;
+  font-family: var(--ui, "Manrope", system-ui, sans-serif);
+  font-weight: 700; font-size: 1.02rem; letter-spacing: .01em;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  transition: transform .25s ease, opacity .25s ease, background .25s ease;
+}
+.fps__add:hover:not(:disabled){ transform: translateY(-2px); }
+.fps__add:focus-visible{ outline: 2px solid var(--fps-accent); outline-offset: 2px; }
+.fps__add:disabled{ opacity: .45; cursor: not-allowed; }
+.fps__add.is-loading .fps__add-label{ opacity: 0; }
+.fps__add.is-loading::after{
+  content: ""; position: absolute;
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.4); border-top-color: var(--fps-btn-text);
+  animation: fpsSpin .7s linear infinite;
+}
+@keyframes fpsSpin{ to{ transform: rotate(360deg); } }
+.fps__add.is-added{ background: #157347; }
+.fps__add-check{ display: none; width: 18px; height: 18px; }
+.fps__add.is-added .fps__add-check{ display: inline-block; }
+
+.fps__msg{ font-family: var(--ui, "Manrope", system-ui, sans-serif); font-size: .9rem; color: #b3261e; margin: 0; }
+
+/* Share */
+.fps__share{ display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 2px; }
+.fps__share-label{
+  font-family: var(--ui, "Manrope", system-ui, sans-serif);
+  font-weight: 700; font-size: .72rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--fps-muted);
+}
+.fps__share-btns{ display: flex; gap: 8px; }
+.fps__share-btn{
+  position: relative;
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--fps-border); background: var(--fps-bg);
+  color: var(--fps-heading);
+  display: grid; place-items: center; cursor: pointer;
+  transition: background .22s ease, color .22s ease, border-color .22s ease, transform .22s ease;
+}
+.fps__share-btn svg{ width: 17px; height: 17px; }
+.fps__share-btn:hover{ background: var(--fps-accent); color: #fff; border-color: var(--fps-accent); transform: translateY(-2px); }
+.fps__share-btn:focus-visible{ outline: 2px solid var(--fps-accent); outline-offset: 2px; }
+.fps__share-btn .fps__tip{
+  position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: var(--fps-heading); color: #fff;
+  font-family: var(--ui, "Manrope", system-ui, sans-serif); font-size: 11px;
+  padding: 3px 8px; border-radius: 6px; white-space: nowrap;
+  opacity: 0; pointer-events: none; transition: opacity .2s ease;
+}
+.fps__share-btn.is-copied .fps__tip{ opacity: 1; }
+
+.fps__view{
+  font-family: var(--ui, "Manrope", system-ui, sans-serif);
+  font-weight: 700; font-size: .95rem; color: var(--fps-heading);
+  display: inline-flex; align-items: center; gap: 6px;
+  border-bottom: 1px solid transparent; padding-bottom: 2px;
+  transition: gap .25s ease, opacity .25s ease;
+}
+.fps__view svg{ width: 16px; height: 16px; }
+.fps__view:hover{ gap: 10px; opacity: .75; }
+
+/* Dots */
+.fps__dots{ display: flex; justify-content: center; gap: 8px; margin-top: 30px; }
+.fps__dot{
+  width: 8px; height: 8px; border-radius: 50%;
+  border: none; background: var(--fps-border); padding: 0; cursor: pointer;
+  transition: background .25s ease, width .25s ease;
+}
+.fps__dot.is-active{ background: var(--fps-accent); width: 22px; border-radius: 20px; }
+.fps__dot:focus-visible{ outline: 2px solid var(--fps-accent); outline-offset: 2px; }
+
+.fps__empty{
+  border: 1px dashed var(--fps-border); border-radius: var(--fps-radius);
+  padding: 40px; text-align: center; color: var(--fps-muted);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 899px){
+  .fps__product{ grid-template-columns: 1fr; }
+  .fps__gallery{ position: static; top: auto; }
+  .fps__details{ padding-top: 4px; }
+  .fps__head{ margin-bottom: 28px; }
+}
+@media (max-width: 560px){
+  .fps__imgnav{ width: 38px; height: 38px; opacity: 1; }
+  .fps__add{ flex: 1 1 100%; }
+  .fps__thumb{ width: 60px; }
+}
+@media (prefers-reduced-motion: reduce){
+  .fps__product.is-active{ animation: none; }
+  .fps__slide{ transition: none; }
+}
+{% endstylesheet %}
+
+{% javascript %}
+(function () {
+  "use strict";
+
+  function readJSON(el) {
+    if (!el) return null;
+    try { return JSON.parse(el.textContent); } catch (e) { return null; }
+  }
+
+  function initSection(root) {
+    if (!root || root.__fpsInit) return;
+    root.__fpsInit = true;
+
+    var panels = Array.prototype.slice.call(root.querySelectorAll("[data-fps-product]"));
+    if (!panels.length) return;
+
+    var dots = Array.prototype.slice.call(root.querySelectorAll("[data-fps-dot]"));
+    var indexEl = root.querySelector("[data-fps-index]");
+    var prevBtn = root.querySelector("[data-fps-prev]");
+    var nextBtn = root.querySelector("[data-fps-next]");
+    var current = 0;
+
+    panels.forEach(function (p, i) { if (p.classList.contains("is-active")) current = i; });
+
+    function showProduct(i, focus) {
+      i = (i + panels.length) % panels.length;
+      panels.forEach(function (p, idx) { p.classList.toggle("is-active", idx === i); });
+      dots.forEach(function (d, idx) {
+        d.classList.toggle("is-active", idx === i);
+        d.setAttribute("aria-current", idx === i ? "true" : "false");
+      });
+      if (indexEl) indexEl.textContent = i + 1;
+      current = i;
+      if (panels[i].__checkDesc) panels[i].__checkDesc();
+      if (focus) {
+        var h = panels[i].querySelector(".fps__title");
+        if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+      }
+    }
+
+    root.__fpsShow = showProduct;
+
+    if (prevBtn) prevBtn.addEventListener("click", function () { showProduct(current - 1, true); });
+    if (nextBtn) nextBtn.addEventListener("click", function () { showProduct(current + 1, true); });
+    dots.forEach(function (d) {
+      d.addEventListener("click", function () {
+        showProduct(parseInt(d.getAttribute("data-fps-dot"), 10) - 1, true);
+      });
+    });
+
+    /* Swipe to change product on touch */
+    var vp = root.querySelector("[data-fps-viewport]");
+    if (vp) {
+      var x0 = null, y0 = null;
+      vp.addEventListener("touchstart", function (e) {
+        x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+      }, { passive: true });
+      vp.addEventListener("touchend", function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0;
+        var dy = e.changedTouches[0].clientY - y0;
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+          showProduct(dx < 0 ? current + 1 : current - 1);
+        }
+        x0 = null; y0 = null;
+      }, { passive: true });
+    }
+
+    panels.forEach(initPanel);
+  }
+
+  function initPanel(panel) {
+    if (panel.__fpsPanel) return;
+    panel.__fpsPanel = true;
+
+    /* ----- Gallery ----- */
+    var slides = Array.prototype.slice.call(panel.querySelectorAll("[data-slide]"));
+    var thumbs = Array.prototype.slice.call(panel.querySelectorAll("[data-fps-thumb]"));
+    var curEl = panel.querySelector("[data-fps-current]");
+    var imgPrev = panel.querySelector("[data-fps-img-prev]");
+    var imgNext = panel.querySelector("[data-fps-img-next]");
+    var gi = 0;
+
+    function showSlide(n) {
+      if (!slides.length) return;
+      n = (n + slides.length) % slides.length;
+      slides.forEach(function (sl, i) { sl.classList.toggle("is-active", i === n); });
+      thumbs.forEach(function (t, i) {
+        t.classList.toggle("is-active", i === n);
+        t.setAttribute("aria-current", i === n ? "true" : "false");
+      });
+      if (curEl) curEl.textContent = n + 1;
+      gi = n;
+      var active = thumbs[n];
+      if (active && active.scrollIntoView) {
+        active.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+      }
+    }
+    panel.__showSlide = showSlide;
+
+    thumbs.forEach(function (t) {
+      t.addEventListener("click", function () {
+        showSlide(parseInt(t.getAttribute("data-fps-thumb"), 10));
+      });
+    });
+    if (imgPrev) imgPrev.addEventListener("click", function () { showSlide(gi - 1); });
+    if (imgNext) imgNext.addEventListener("click", function () { showSlide(gi + 1); });
+
+    /* ----- Read more ----- */
+    var desc = panel.querySelector("[data-fps-desc]");
+    var more = panel.querySelector("[data-fps-more]");
+    panel.__checkDesc = function () {
+      if (!desc || !more) return;
+      desc.classList.add("is-clamped");
+      // Measure against the clamp; if it doesn't overflow, drop the clamp.
+      if (desc.scrollHeight - desc.clientHeight > 4) {
+        more.hidden = false;
+      } else {
+        desc.classList.remove("is-clamped");
+        more.hidden = true;
+      }
+    };
+    if (desc && more) {
+      more.addEventListener("click", function () {
+        var expanded = desc.classList.toggle("is-expanded");
+        more.textContent = expanded ? (more.getAttribute("data-less") || "Read less")
+                                     : (more.getAttribute("data-more") || "Read more");
+      });
+      requestAnimationFrame(function () {
+        if (panel.classList.contains("is-active")) panel.__checkDesc();
+      });
+    }
+
+    /* ----- Quantity stepper ----- */
+    var qtyInput = panel.querySelector("[data-fps-qty-input]");
+    panel.querySelectorAll("[data-fps-qty]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (!qtyInput) return;
+        var v = (parseInt(qtyInput.value, 10) || 1) + parseInt(btn.getAttribute("data-fps-qty"), 10);
+        if (v < 1) v = 1;
+        qtyInput.value = v;
+      });
+    });
+
+    /* ----- Variant select ----- */
+    var select = panel.querySelector("[data-fps-variant]");
+    var variants = readJSON(panel.querySelector("[data-fps-variant-json]"));
+    var priceEl = panel.querySelector("[data-fps-price]");
+    var addBtn = panel.querySelector("[data-fps-add]");
+    if (select && variants) {
+      select.addEventListener("change", function () {
+        var v = null;
+        for (var k = 0; k < variants.length; k++) {
+          if (String(variants[k].id) === String(select.value)) { v = variants[k]; break; }
+        }
+        if (!v) return;
+        if (priceEl) {
+          var html = "";
+          if (v.compare_raw && v.compare_raw > v.price_raw) {
+            html += '<s class="fps__price-compare">' + v.compare + "</s>";
+          }
+          html += '<span class="fps__price-current">' + v.price + "</span>";
+          priceEl.innerHTML = html;
+        }
+        if (addBtn) {
+          var lbl = addBtn.querySelector(".fps__add-label");
+          if (v.available) {
+            addBtn.disabled = false;
+            if (lbl) lbl.textContent = addBtn.getAttribute("data-add-label") || "Add to cart";
+          } else {
+            addBtn.disabled = true;
+            if (lbl) lbl.textContent = addBtn.getAttribute("data-soldout-label") || "Sold out";
+          }
+        }
+        if (v.media && panel.__showSlide) panel.__showSlide(v.media - 1);
+      });
+    }
+
+    /* ----- Share ----- */
+    panel.querySelectorAll("[data-fps-share]").forEach(function (btn) {
+      btn.addEventListener("click", function () { share(btn.getAttribute("data-fps-share"), panel, btn); });
+    });
+
+    /* ----- Add to cart ----- */
+    var form = panel.querySelector(".fps__form");
+    if (form) form.addEventListener("submit", onAddSubmit);
+  }
+
+  function onAddSubmit(e) {
+    var form = e.currentTarget;
+    var root = form.closest("[data-fps]");
+    if (!root) return; // let it submit normally
+    e.preventDefault();
+
+    var addUrl = root.getAttribute("data-cart-add-url") || "/cart/add";
+    if (!/\.js(\?|$)/.test(addUrl)) addUrl += ".js";
+
+    var btn = form.querySelector("[data-fps-add]");
+    var msg = form.parentNode.querySelector("[data-fps-error]");
+    if (msg) { msg.hidden = true; msg.textContent = ""; }
+    setState(btn, "loading");
+
+    fetch(addUrl, {
+      method: "POST",
+      headers: { Accept: "application/json", "X-Requested-With": "XMLHttpRequest" },
+      body: new FormData(form)
+    })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
+      .then(function (res) {
+        if (!res.ok) throw new Error((res.body && res.body.description) || "Sorry, this item could not be added.");
+        var behavior = root.getAttribute("data-fps-add-behavior") || "stay";
+        if (behavior === "cart") {
+          window.location.href = root.getAttribute("data-cart-url") || "/cart";
+          return;
+        }
+        setState(btn, "added");
+        updateCartCount(root);
+        document.dispatchEvent(new CustomEvent("cart:refresh", { bubbles: true }));
+        setTimeout(function () { setState(btn, "idle"); }, 2200);
+      })
+      .catch(function (err) {
+        setState(btn, "idle");
+        if (msg) { msg.hidden = false; msg.textContent = err.message; }
+      });
+  }
+
+  function setState(btn, state) {
+    if (!btn) return;
+    var lbl = btn.querySelector(".fps__add-label");
+    if (!btn.__label && lbl) btn.__label = lbl.textContent;
+    btn.classList.remove("is-loading", "is-added");
+    if (state === "loading") { btn.classList.add("is-loading"); btn.disabled = true; }
+    else if (state === "added") {
+      btn.classList.add("is-added"); btn.disabled = false;
+      if (lbl) lbl.textContent = btn.getAttribute("data-added-label") || "Added";
+    } else {
+      btn.disabled = false;
+      if (lbl && btn.__label) lbl.textContent = btn.__label;
+    }
+  }
+
+  function updateCartCount(root) {
+    fetch((root.getAttribute("data-cart-url") || "/cart") + ".js", { headers: { Accept: "application/json" } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (cart) {
+        if (!cart) return;
+        document.querySelectorAll("[data-cart-count]").forEach(function (el) { el.textContent = cart.item_count; });
+      })
+      .catch(function () {});
+  }
+
+  function share(network, panel, btn) {
+    var url = panel.getAttribute("data-fps-url");
+    var title = panel.getAttribute("data-fps-title") || document.title;
+    var img = panel.getAttribute("data-fps-image") || "";
+    if (img.indexOf("//") === 0) img = "https:" + img;
+
+    if (network === "copy") { copyLink(url, btn); return; }
+    if (network === "native" && navigator.share) {
+      navigator.share({ title: title, url: url }).catch(function () {});
+      return;
+    }
+    var map = {
+      facebook: "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url),
+      x: "https://twitter.com/intent/tweet?url=" + encodeURIComponent(url) + "&text=" + encodeURIComponent(title),
+      pinterest: "https://pinterest.com/pin/create/button/?url=" + encodeURIComponent(url) + "&media=" + encodeURIComponent(img) + "&description=" + encodeURIComponent(title),
+      whatsapp: "https://api.whatsapp.com/send?text=" + encodeURIComponent(title + " " + url)
+    };
+    var u = map[network];
+    if (u) window.open(u, "_blank", "noopener,noreferrer,width=620,height=540");
+  }
+
+  function copyLink(url, btn) {
+    function done() {
+      if (!btn) return;
+      btn.classList.add("is-copied");
+      setTimeout(function () { btn.classList.remove("is-copied"); }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(done).catch(fallback);
+    } else { fallback(); }
+    function fallback() {
+      var t = document.createElement("textarea");
+      t.value = url; t.setAttribute("readonly", "");
+      t.style.position = "absolute"; t.style.left = "-9999px";
+      document.body.appendChild(t); t.select();
+      try { document.execCommand("copy"); done(); } catch (e) {}
+      document.body.removeChild(t);
+    }
+  }
+
+  function boot() {
+    document.querySelectorAll("[data-fps]").forEach(initSection);
+  }
+  if (document.readyState !== "loading") boot();
+  else document.addEventListener("DOMContentLoaded", boot);
+
+  /* Shopify theme editor */
+  document.addEventListener("shopify:section:load", function (e) {
+    var el = e.target.querySelector ? e.target.querySelector("[data-fps]") : null;
+    if (e.target.matches && e.target.matches("[data-fps]")) el = e.target;
+    initSection(el);
+  });
+  document.addEventListener("shopify:block:select", function (e) {
+    var panel = e.target.closest ? e.target.closest("[data-fps-product]") : null;
+    if (!panel) return;
+    var root = panel.closest("[data-fps]");
+    if (root && root.__fpsShow) {
+      var panels = Array.prototype.slice.call(root.querySelectorAll("[data-fps-product]"));
+      root.__fpsShow(panels.indexOf(panel));
+    }
+  });
+})();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Featured product",
+  "tag": "section",
+  "class": "section-featured-product",
+  "settings": [
+    { "type": "header", "content": "Products" },
+    { "type": "paragraph", "content": "Add Product blocks to hand-pick and order products. If no blocks are added, the fallback collection below is used." },
+    { "type": "collection", "id": "collection", "label": "Fallback collection" },
+    { "type": "range", "id": "products_limit", "label": "Max products from fallback", "min": 2, "max": 12, "step": 1, "default": 6 },
+
+    { "type": "header", "content": "Heading" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Featured" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Take a closer look" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Browse the details, then swap to the next product." },
+    {
+      "type": "select", "id": "heading_align", "label": "Heading alignment", "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ]
+    },
+
+    { "type": "header", "content": "Details & cart" },
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": true },
+    { "type": "text", "id": "add_label", "label": "Add to cart label", "default": "Add to cart" },
+    { "type": "text", "id": "added_label", "label": "Added confirmation label", "default": "Added" },
+    { "type": "checkbox", "id": "show_quantity", "label": "Show quantity selector", "default": true },
+    {
+      "type": "select", "id": "add_behavior", "label": "After adding to cart", "default": "stay",
+      "options": [
+        { "value": "stay", "label": "Stay on page (show \"Added\")" },
+        { "value": "cart", "label": "Go to cart page" }
+      ]
+    },
+
+    { "type": "header", "content": "Share" },
+    { "type": "text", "id": "share_label", "label": "Share label", "default": "Share" },
+    { "type": "checkbox", "id": "share_facebook", "label": "Facebook", "default": true },
+    { "type": "checkbox", "id": "share_x", "label": "X (Twitter)", "default": true },
+    { "type": "checkbox", "id": "share_pinterest", "label": "Pinterest", "default": true },
+    { "type": "checkbox", "id": "share_whatsapp", "label": "WhatsApp", "default": false },
+    { "type": "checkbox", "id": "share_copy", "label": "Copy link", "default": true },
+    { "type": "checkbox", "id": "show_view_link", "label": "Show \"View full details\" link", "default": true },
+
+    { "type": "header", "content": "Gallery" },
+    {
+      "type": "select", "id": "image_ratio", "label": "Image shape", "default": "1/1",
+      "options": [
+        { "value": "1/1", "label": "Square" },
+        { "value": "4/5", "label": "Portrait (4:5)" },
+        { "value": "3/4", "label": "Portrait (3:4)" },
+        { "value": "4/3", "label": "Landscape (4:3)" },
+        { "value": "16/10", "label": "Wide (16:10)" }
+      ]
+    },
+    {
+      "type": "select", "id": "image_fit", "label": "Image fit", "default": "contain",
+      "options": [
+        { "value": "contain", "label": "Contain (show whole image)" },
+        { "value": "cover", "label": "Cover (fill, may crop)" }
+      ]
+    },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Body text", "default": "#1A1A1A" },
+    { "type": "color", "id": "heading_color", "label": "Headings", "default": "#0A0A0A" },
+    { "type": "color", "id": "muted_color", "label": "Muted text", "default": "#6B6B6B" },
+    { "type": "color", "id": "price_color", "label": "Price", "default": "#0A0A0A" },
+    { "type": "color", "id": "compare_color", "label": "Compare-at price", "default": "#9A9A9A" },
+    { "type": "color", "id": "border_color", "label": "Borders & lines", "default": "#E6E6E6" },
+    { "type": "color", "id": "surface_color", "label": "Image background", "default": "#F6F6F6" },
+    { "type": "color", "id": "accent_color", "label": "Accent (active thumb, dots)", "default": "#111111" },
+    { "type": "color", "id": "button_bg", "label": "Button background", "default": "#111111" },
+    { "type": "color", "id": "button_text", "label": "Button text", "default": "#FFFFFF" },
+
+    { "type": "header", "content": "Section" },
+    { "type": "range", "id": "corner_radius", "label": "Corner radius", "min": 0, "max": 28, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "featured-product" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "richtext", "id": "custom_description", "label": "Custom description", "info": "Optional. Overrides the product's own description in this section." }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Featured product",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}
