@@ -34,7 +34,7 @@
             "type": "link",
             "settings": {
               "label": "Products",
-              "link": "#products"
+              "link": "/collections/all"
             }
           },
           "header-2": {
@@ -66,18 +66,11 @@
               "link": "#about"
             }
           },
-          "footer-1": {
-            "type": "link",
-            "settings": {
-              "label": "Collections",
-              "link": "#categories"
-            }
-          },
           "footer-2": {
             "type": "link",
             "settings": {
               "label": "Products",
-              "link": "#products"
+              "link": "/collections/all"
             }
           },
           "footer-3": {
@@ -97,7 +90,6 @@
         },
         "block_order": [
           "footer-0",
-          "footer-1",
           "footer-2",
           "footer-3",
           "footer-4"
