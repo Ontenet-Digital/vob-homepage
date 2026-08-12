@@ -12,6 +12,7 @@
 @import "./standard-pages.css";
 @import "./best-seller.css";
 @import "./product-list.css";
+@import "./featured-product.css";
 
 :root {
     --parchment: #ffffff;
