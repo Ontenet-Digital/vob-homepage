@@ -1,0 +1,8 @@
+# Prevent editor/OS/sync temp files from being picked up during theme push/deploy
+*.tmp
+.*.tmp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
