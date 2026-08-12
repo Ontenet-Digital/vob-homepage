@@ -74,18 +74,13 @@
 {% endstyle %}
 
 <div class="plist wrap" data-quick-add="{{ s.quick_add_style }}">
-  {%- liquid
-    assign page_title = collection.title
-    if s.custom_heading != blank
-      assign page_title = s.custom_heading
-    endif
-  -%}
-
   {%- if s.show_breadcrumb -%}
     <nav class="plist__crumb" aria-label="Breadcrumb">
       <a href="{{ routes.root_url }}">Home</a>
       <span aria-hidden="true">/</span>
-      <span aria-current="page">{{ page_title }}</span>
+      <a href="{{ routes.collections_url }}">Collections</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{{ collection.title }}</span>
     </nav>
   {%- endif -%}
 
@@ -93,7 +88,7 @@
     {%- if s.eyebrow != blank -%}
       <span class="eyebrow{% if s.heading_align == 'center' %} center{% endif %}">{{ s.eyebrow }}</span>
     {%- endif -%}
-    <h1>{{ page_title }}</h1>
+    <h1>{{ collection.title }}</h1>
     {%- if s.show_description and collection.description != blank -%}
       <div class="plist__desc rte">{{ collection.description }}</div>
     {%- endif -%}
@@ -133,8 +128,7 @@
   "name": "Collection page",
   "settings": [
     { "type": "header", "content": "Heading" },
-    { "type": "text", "id": "custom_heading", "label": "Heading override", "default": "Products", "info": "Shown as the page title. Leave blank to use the collection name from Shopify." },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Collection", "info": "The page title always comes from the collection itself." },
     {
       "type": "select", "id": "heading_align", "label": "Heading alignment", "default": "left",
       "options": [

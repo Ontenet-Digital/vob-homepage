@@ -1,17 +1,187 @@
-{%- comment -%}
-  Shopify serves /collections as a collection index. This store uses a single
-  all-products grid at /collections/all instead — send anyone who lands here
-  straight to that page.
-{%- endcomment -%}
-<meta http-equiv="refresh" content="0;url={{ routes.all_products_collection_url }}">
-<link rel="canonical" href="{{ routes.all_products_collection_url }}">
-<div class="plist wrap">
-  <p class="plist__sub">
-    Redirecting to
-    <a href="{{ routes.all_products_collection_url }}">Products</a>…
-  </p>
+{%- liquid
+  assign s = section.settings
+
+  assign cols_desktop = s.columns_desktop | default: 4
+  assign cols_tablet = s.columns_tablet | default: 3
+  assign cols_mobile = s.columns_mobile | default: 2
+  assign gap_desktop = s.grid_gap | default: 24
+  assign gap_mobile = s.grid_gap_mobile | default: 14
+  assign pad_top = s.padding_top | default: 48
+  assign pad_bottom = s.padding_bottom | default: 72
+  assign card_radius = s.card_radius | default: 10
+  assign title_size = s.title_size | default: 18
+  assign img_ratio = s.image_ratio | default: '1/1'
+  if cols_desktop == blank or cols_desktop < 2
+    assign cols_desktop = 4
+  endif
+  if cols_tablet == blank or cols_tablet < 2
+    assign cols_tablet = 3
+  endif
+  if cols_mobile == blank or cols_mobile < 2
+    assign cols_mobile = 2
+  endif
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }}{
+    background: {{ s.bg_color | default: '#ffffff' }};
+  }
+
+  #shopify-section-{{ section.id }} .clist{
+    --plist-pad-t: {{ pad_top }}px;
+    --plist-pad-b: {{ pad_bottom }}px;
+    --bs-cols: {{ cols_desktop }};
+    --bs-gap-x: {{ gap_desktop }}px;
+    --bs-gap-y: {{ gap_desktop }}px;
+    --bs-card-bg: {{ s.card_bg | default: '#ffffff' }};
+    --bs-card-border: {{ s.card_border_color | default: '#ede6d6' }};
+    --bs-card-radius: {{ card_radius }}px;
+    --bs-img-ratio: {{ img_ratio }};
+    --bs-title-color: {{ s.title_color | default: '#251d3a' }};
+    --bs-title-size: {{ title_size }}px;
+    --bs-vendor-color: {{ s.count_color | default: '#be9743' }};
+  }
+
+  @media (max-width: 989px){
+    #shopify-section-{{ section.id }} .clist{
+      --bs-cols: {{ cols_tablet }};
+    }
+  }
+
+  @media (max-width: 749px){
+    #shopify-section-{{ section.id }} .clist{
+      --plist-pad-b: {{ pad_bottom | times: 0.65 | round }}px;
+      --bs-cols: {{ cols_mobile }};
+      --bs-gap-x: {{ gap_mobile }}px;
+      --bs-gap-y: {{ gap_mobile }}px;
+      --bs-title-size: {{ title_size | times: 0.9 | round }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="clist plist wrap">
+  {%- if s.show_breadcrumb -%}
+    <nav class="plist__crumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{{ s.heading | default: 'Products' }}</span>
+    </nav>
+  {%- endif -%}
+
+  <div class="plist__head plist__head--{{ s.heading_align }} reveal">
+    {%- if s.eyebrow != blank -%}
+      <span class="eyebrow{% if s.heading_align == 'center' %} center{% endif %}">{{ s.eyebrow }}</span>
+    {%- endif -%}
+    <h1>{{ s.heading | default: 'Products' }}</h1>
+    {%- if s.subheading != blank -%}<p class="plist__sub">{{ s.subheading }}</p>{%- endif -%}
+  </div>
+
+  {%- assign shown = 0 -%}
+  <div class="bs__grid">
+    {%- for collection in collections -%}
+      {%- liquid
+        if s.hide_empty and collection.all_products_count == 0
+          continue
+        endif
+
+        assign image = collection.featured_image
+        unless image
+          assign image = collection.products.first.featured_image
+        endunless
+
+        assign shown = shown | plus: 1
+      -%}
+      <a class="ccard reveal" href="{{ collection.url }}">
+        <div class="ccard__media">
+          {%- if image -%}
+            <img
+              class="ccard__img"
+              src="{{ image | image_url: width: 700 }}"
+              srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 700 }} 700w, {{ image | image_url: width: 1000 }} 1000w"
+              sizes="(max-width: 749px) 46vw, 320px"
+              alt="{{ image.alt | default: collection.title | escape }}"
+              width="{{ image.width }}"
+              height="{{ image.height }}"
+              loading="lazy">
+          {%- else -%}
+            <div class="ccard__img ccard__img--placeholder" aria-hidden="true"></div>
+          {%- endif -%}
+        </div>
+        <div class="ccard__body">
+          {%- if s.show_count -%}
+            <span class="ccard__count">
+              {{ collection.all_products_count }}
+              {%- if collection.all_products_count == 1 %} product{% else %} products{% endif -%}
+            </span>
+          {%- endif -%}
+          <h2 class="ccard__title">{{ collection.title }}</h2>
+          {%- if s.link_label != blank -%}
+            <span class="ccard__link">
+              {{ s.link_label }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          {%- endif -%}
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+
+  {%- if shown == 0 -%}
+    <div class="bs__empty">
+      <p>No collections to show yet. Create a collection in Shopify admin and it will appear here.</p>
+    </div>
+  {%- endif -%}
 </div>
 
 {% schema %}
-{ "name": "Collections list", "settings": [] }
+{
+  "name": "Collections list",
+  "settings": [
+    { "type": "header", "content": "Heading" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Explore" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Products" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Every way into the story — choose a collection to see what's inside." },
+    {
+      "type": "select", "id": "heading_align", "label": "Heading alignment", "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ]
+    },
+    { "type": "checkbox", "id": "show_breadcrumb", "label": "Show breadcrumb", "default": true },
+
+    { "type": "header", "content": "Grid" },
+    { "type": "range", "id": "columns_desktop", "label": "Columns — desktop", "min": 2, "max": 5, "step": 1, "default": 4 },
+    { "type": "range", "id": "columns_tablet", "label": "Columns — tablet", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "range", "id": "columns_mobile", "label": "Columns — mobile", "min": 2, "max": 4, "step": 1, "default": 2 },
+    { "type": "range", "id": "grid_gap", "label": "Grid gap — desktop", "min": 8, "max": 48, "step": 2, "unit": "px", "default": 24 },
+    { "type": "range", "id": "grid_gap_mobile", "label": "Grid gap — mobile", "min": 4, "max": 32, "step": 2, "unit": "px", "default": 14 },
+    { "type": "checkbox", "id": "hide_empty", "label": "Hide empty collections", "default": true },
+
+    { "type": "header", "content": "Card" },
+    { "type": "color", "id": "card_bg", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#EDE6D6" },
+    { "type": "range", "id": "card_radius", "label": "Card corner radius", "min": 0, "max": 32, "step": 1, "unit": "px", "default": 10 },
+    {
+      "type": "select", "id": "image_ratio", "label": "Image ratio", "default": "1/1",
+      "options": [
+        { "value": "1/1", "label": "Square" },
+        { "value": "4/5", "label": "Portrait (4:5)" },
+        { "value": "3/4", "label": "Portrait (3:4)" },
+        { "value": "5/4", "label": "Landscape (5:4)" },
+        { "value": "4/3", "label": "Landscape (4:3)" }
+      ]
+    },
+    { "type": "color", "id": "title_color", "label": "Title colour", "default": "#251D3A" },
+    { "type": "range", "id": "title_size", "label": "Title size — desktop", "min": 14, "max": 30, "step": 1, "unit": "px", "default": 18 },
+    { "type": "checkbox", "id": "show_count", "label": "Show product count", "default": true },
+    { "type": "color", "id": "count_color", "label": "Product count colour", "default": "#BE9743" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Explore", "info": "Leave empty to hide it." },
+
+    { "type": "header", "content": "Section" },
+    { "type": "color", "id": "bg_color", "label": "Background colour", "default": "#FFFFFF" },
+    { "type": "range", "id": "padding_top", "label": "Extra top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 48, "info": "Added on top of the space reserved for the fixed header." },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 }
+  ]
+}
 {% endschema %}
