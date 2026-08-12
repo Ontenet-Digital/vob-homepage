@@ -12,8 +12,8 @@
     "main": {
       "type": "main-list-collections",
       "settings": {
-        "eyebrow": "Explore",
-        "heading": "Products",
+        "eyebrow": "",
+        "heading": "Collections",
         "subheading": "Every way into the story — choose a collection to see what's inside.",
         "heading_align": "left",
         "show_breadcrumb": true,

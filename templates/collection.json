@@ -12,10 +12,10 @@
     "main": {
       "type": "main-collection",
       "settings": {
-        "eyebrow": "Collection",
+        "eyebrow": "",
         "heading_align": "left",
         "show_breadcrumb": true,
-        "show_description": true,
+        "show_description": false,
         "show_count": false,
         "columns_desktop": 4,
         "columns_tablet": 3,
