@@ -13,13 +13,10 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition:
-        transform 0.4s var(--ease),
-        box-shadow 0.4s;
+    transition: transform 0.4s var(--ease);
 }
 .story-section .post:hover {
     transform: translateY(-6px);
-    box-shadow: 0 30px 50px -28px rgba(65, 39, 115, 0.5);
 }
 .story-section .post__media {
     aspect-ratio: 16/10;
