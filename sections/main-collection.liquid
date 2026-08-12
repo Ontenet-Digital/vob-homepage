@@ -94,13 +94,18 @@
     {%- endif -%}
     {%- if s.show_count and collection.all_products_count > 0 -%}
       <p class="plist__count">
-        {{ collection.all_products_count }}
-        {%- if collection.all_products_count == 1 %} product{% else %} products{% endif -%}
+        {%- if collection.products_count != collection.all_products_count -%}
+          {{ 'collections.toolbar.results_filtered' | t: count: collection.products_count, total: collection.all_products_count }}
+        {%- else -%}
+          {{ 'collections.toolbar.results' | t: count: collection.products_count }}
+        {%- endif -%}
       </p>
     {%- endif -%}
   </div>
 
-  {%- if collection.products.size > 0 -%}
+  {%- render 'collection-toolbar', collection: collection, section_settings: s, section_id: section.id -%}
+
+  {%- if collection.products_count > 0 -%}
     {%- comment -%}
       Paginated at 50 only to stay clear of Liquid's silent 50-item cap on
       collection loops. With fewer products than that, no page links render.
@@ -118,7 +123,7 @@
     {%- endpaginate -%}
   {%- else -%}
     <div class="bs__empty">
-      <p>No products in this collection yet.</p>
+      <p>{{ 'collections.toolbar.no_results' | t }}</p>
     </div>
   {%- endif -%}
 </div>
@@ -139,6 +144,10 @@
     { "type": "checkbox", "id": "show_breadcrumb", "label": "Show breadcrumb", "default": true },
     { "type": "checkbox", "id": "show_description", "label": "Show collection description", "default": true },
     { "type": "checkbox", "id": "show_count", "label": "Show product count", "default": false },
+
+    { "type": "header", "content": "Sort & filter" },
+    { "type": "checkbox", "id": "show_sort", "label": "Show sort", "default": true },
+    { "type": "checkbox", "id": "show_price_filter", "label": "Show price filter", "default": true, "info": "Requires the Price filter to be enabled in Shopify admin → Search & Discovery → Filters." },
 
     { "type": "header", "content": "Grid" },
     { "type": "range", "id": "columns_desktop", "label": "Columns — desktop", "min": 2, "max": 5, "step": 1, "default": 4 },

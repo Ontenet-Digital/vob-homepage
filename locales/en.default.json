@@ -47,6 +47,31 @@
       "description": "Description"
     }
   },
+  "collections": {
+    "toolbar": {
+      "results": "{{ count }} products",
+      "results_filtered": "{{ count }} of {{ total }} products",
+      "price": "Price",
+      "price_min": "Min",
+      "price_max": "Max",
+      "apply": "Apply",
+      "sort": "Sort by",
+      "clear": "Clear filters",
+      "no_results": "No products match your filters. Try adjusting the price range or clear filters.",
+      "price_setup": "Enable the Price filter in Shopify admin → Search & Discovery → Filters for server-side filtering."
+    },
+    "sort": {
+      "featured": "Featured",
+      "relevant": "Most Relevant",
+      "best_selling": "Best Selling",
+      "title_asc": "Alphabetically, A–Z",
+      "title_desc": "Alphabetically, Z–A",
+      "price_asc": "Price, low to high",
+      "price_desc": "Price, high to low",
+      "date_asc": "Date, old to new",
+      "date_desc": "Date, new to old"
+    }
+  },
   "cart": {
     "general": {
       "title": "Your cart",

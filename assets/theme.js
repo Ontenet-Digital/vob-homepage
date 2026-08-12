@@ -246,4 +246,45 @@
             initTitles(e.target);
         });
     })();
+
+    /* ---- Collection page: sort + price filter form ---- */
+    (function () {
+        function initToolbar(root) {
+            var scope = root || document;
+            scope.querySelectorAll("[data-collection-filters]").forEach(function (form) {
+                if (form.dataset.collectionInit) return;
+                form.dataset.collectionInit = "1";
+
+                var sort = form.querySelector("[data-collection-sort]");
+                if (sort) {
+                    sort.addEventListener("change", function () {
+                        if (sort.value === "") sort.removeAttribute("name");
+                        else sort.setAttribute("name", "sort_by");
+                        form.submit();
+                    });
+                }
+
+                form.addEventListener("submit", function () {
+                    if (!sort) return;
+                    if (sort.value === "") sort.removeAttribute("name");
+                    else sort.setAttribute("name", "sort_by");
+
+                    var min = form.querySelector('[name*="price.gte"]');
+                    var max = form.querySelector('[name*="price.lte"]');
+                    if (min && max && min.value && max.value) {
+                        if (parseFloat(min.value) > parseFloat(max.value)) {
+                            var tmp = min.value;
+                            min.value = max.value;
+                            max.value = tmp;
+                        }
+                    }
+                });
+            });
+        }
+
+        initToolbar();
+        document.addEventListener("shopify:section:load", function (e) {
+            initToolbar(e.target);
+        });
+    })();
 })();

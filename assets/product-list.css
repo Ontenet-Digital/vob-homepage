@@ -66,6 +66,175 @@
     margin-top: 1rem;
 }
 
+/* ---- Sort & price toolbar ---- */
+.plist__toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.25rem 1.35rem;
+    border: 1px solid rgba(37, 29, 58, 0.1);
+    border-radius: var(--radius-md);
+    background: linear-gradient(180deg, #fdfbf4, #faf6ec);
+}
+.plist__toolbar-meta {
+    min-height: 1.25rem;
+}
+.plist__results {
+    font-family: var(--ui);
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin: 0;
+}
+.plist__toolbar-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem 1.4rem;
+}
+.plist__price {
+    border: none;
+    margin: 0;
+    padding: 0;
+    min-width: min(100%, 420px);
+    flex: 1 1 320px;
+}
+.plist__price-label {
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 0.55rem;
+}
+.plist__price-fields {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+}
+.plist__price-field {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.plist__price-prefix {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(calc(-50% - 0.55rem));
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    pointer-events: none;
+}
+.plist__price-input {
+    font-family: var(--ui);
+    font-size: 0.95rem;
+    width: 7.5rem;
+    padding: 0.72rem 0.75rem 0.72rem 1.65rem;
+    border: 1.5px solid rgba(37, 29, 58, 0.14);
+    border-radius: var(--radius-sm);
+    background: #fff;
+    color: var(--ink);
+}
+.plist__price-input:focus {
+    outline: 2px solid rgba(122, 87, 192, 0.35);
+    outline-offset: 1px;
+    border-color: var(--violet);
+}
+.plist__price-hint {
+    font-family: var(--ui);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-left: 0.15rem;
+}
+.plist__price-sep {
+    color: var(--ink-soft);
+    font-weight: 700;
+    padding-bottom: 1.1rem;
+}
+.plist__apply {
+    padding: 0.72rem 1.2rem;
+    margin-bottom: 1.1rem;
+    border: 1.5px solid var(--violet-deep);
+}
+.plist__price-note {
+    font-family: var(--ui);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin: 0.45rem 0 0;
+    line-height: 1.45;
+}
+.plist__sort {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    min-width: min(100%, 240px);
+    flex: 0 1 240px;
+}
+.plist__sort-label {
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+}
+.plist__sort-select {
+    font-family: var(--ui);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.72rem 2.2rem 0.72rem 0.85rem;
+    border: 1.5px solid rgba(37, 29, 58, 0.14);
+    border-radius: var(--radius-sm);
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23251D3A' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 0.85rem center;
+    color: var(--ink);
+    cursor: pointer;
+    appearance: none;
+}
+.plist__sort-select:focus {
+    outline: 2px solid rgba(122, 87, 192, 0.35);
+    outline-offset: 1px;
+    border-color: var(--violet);
+}
+.plist__active {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem 1rem;
+}
+.plist__active-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--ui);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.45rem 0.75rem;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid rgba(37, 29, 58, 0.12);
+    color: var(--ink);
+}
+.plist__active-chip:hover {
+    border-color: var(--violet);
+}
+.plist__clear {
+    font-family: var(--ui);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--violet-deep);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
 /* ---- Collection card (/collections) ---- */
 .ccard {
     display: flex;
@@ -205,5 +374,25 @@
     .plist__crumb {
         font-size: 0.78rem;
         margin-bottom: 1rem;
+    }
+    .plist__toolbar {
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .plist__toolbar-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .plist__sort,
+    .plist__price {
+        min-width: 0;
+        flex-basis: auto;
+    }
+    .plist__price-fields {
+        align-items: flex-end;
+    }
+    .plist__apply {
+        width: 100%;
+        margin-bottom: 0;
     }
 }
