@@ -70,20 +70,22 @@
 .plist__toolbar {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    padding: 1.25rem 1.35rem;
-    border: 1px solid rgba(37, 29, 58, 0.1);
-    border-radius: var(--radius-md);
-    background: linear-gradient(180deg, #fdfbf4, #faf6ec);
+    gap: 1.1rem;
+    margin-bottom: 2.5rem;
+    padding: 0 0 1.75rem;
+    border: none;
+    border-bottom: 1px solid rgba(37, 29, 58, 0.1);
+    border-radius: 0;
+    background: transparent;
 }
 .plist__toolbar-meta {
     min-height: 1.25rem;
 }
 .plist__results {
     font-family: var(--ui);
-    font-size: 0.86rem;
+    font-size: 0.84rem;
     font-weight: 600;
+    letter-spacing: 0.04em;
     color: var(--ink-soft);
     margin: 0;
 }
@@ -91,7 +93,11 @@
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
-    gap: 1rem 1.4rem;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+}
+.plist__toolbar-sort {
+    margin-left: auto;
 }
 .plist__price {
     border: none;
@@ -100,70 +106,89 @@
     min-width: min(100%, 420px);
     flex: 1 1 320px;
 }
-.plist__price-label {
+.plist__price-label,
+.plist__sort-label {
     font-family: var(--ui);
     font-weight: 700;
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--gold-deep);
-    margin-bottom: 0.55rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 0.6rem;
+}
+.plist__price-label::before,
+.plist__sort-label::before {
+    content: "";
+    width: 16px;
+    height: 1px;
+    background: var(--gold);
 }
 .plist__price-fields {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.65rem;
 }
 .plist__price-field {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 0.25rem;
 }
 .plist__price-prefix {
     position: absolute;
-    left: 0.75rem;
+    left: 0.1rem;
     top: 50%;
-    transform: translateY(calc(-50% - 0.55rem));
-    font-family: var(--ui);
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: var(--ink-soft);
+    transform: translateY(calc(-50% - 0.45rem));
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 1.02rem;
+    color: var(--gold-deep);
     pointer-events: none;
 }
 .plist__price-input {
     font-family: var(--ui);
-    font-size: 0.95rem;
-    width: 7.5rem;
-    padding: 0.72rem 0.75rem 0.72rem 1.65rem;
-    border: 1.5px solid rgba(37, 29, 58, 0.14);
-    border-radius: var(--radius-sm);
-    background: #fff;
+    font-size: 1.02rem;
+    font-weight: 600;
+    width: 7rem;
+    padding: 0.35rem 0.4rem 0.35rem 1.35rem;
+    border: none;
+    border-bottom: 1.5px solid rgba(37, 29, 58, 0.18);
+    border-radius: 0;
+    background: transparent;
     color: var(--ink);
+    transition: border-color 0.3s var(--ease);
+}
+.plist__price-input::placeholder {
+    color: rgba(37, 29, 58, 0.35);
+    font-weight: 500;
 }
 .plist__price-input:focus {
-    outline: 2px solid rgba(122, 87, 192, 0.35);
-    outline-offset: 1px;
-    border-color: var(--violet);
+    outline: none;
+    border-bottom-color: var(--gold);
 }
 .plist__price-hint {
     font-family: var(--ui);
-    font-size: 0.68rem;
-    letter-spacing: 0.08em;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--ink-soft);
-    padding-left: 0.15rem;
+    color: rgba(37, 29, 58, 0.42);
+    padding-left: 0.1rem;
 }
 .plist__price-sep {
-    color: var(--ink-soft);
-    font-weight: 700;
-    padding-bottom: 1.1rem;
+    color: var(--gold);
+    font-weight: 400;
+    padding-bottom: 0.75rem;
 }
 .plist__apply {
-    padding: 0.72rem 1.2rem;
-    margin-bottom: 1.1rem;
-    border: 1.5px solid var(--violet-deep);
+    padding: 0.55rem 1.5rem;
+    margin-bottom: 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
 }
 .plist__price-note {
     font-family: var(--ui);
@@ -175,34 +200,120 @@
 .plist__sort {
     display: flex;
     flex-direction: column;
-    gap: 0.45rem;
-    min-width: min(100%, 240px);
-    flex: 0 1 240px;
+    gap: 0.4rem;
+    min-width: min(100%, 260px);
+    flex: 0 1 260px;
 }
-.plist__sort-label {
-    font-family: var(--ui);
-    font-weight: 700;
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold-deep);
+.csort {
+    position: relative;
 }
-.plist__sort-select {
+.csort__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.4rem 0.1rem 0.4rem 0;
     font-family: var(--ui);
-    font-size: 0.95rem;
+    font-size: 1.02rem;
     font-weight: 600;
-    padding: 0.72rem 2.2rem 0.72rem 0.85rem;
-    border: 1.5px solid rgba(37, 29, 58, 0.14);
-    border-radius: var(--radius-sm);
-    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23251D3A' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 0.85rem center;
     color: var(--ink);
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid rgba(37, 29, 58, 0.18);
+    border-radius: 0;
     cursor: pointer;
-    appearance: none;
+    text-align: left;
+    transition: border-color 0.3s var(--ease);
 }
-.plist__sort-select:focus {
-    outline: 2px solid rgba(122, 87, 192, 0.35);
-    outline-offset: 1px;
-    border-color: var(--violet);
+.csort__trigger:hover,
+.csort.is-open .csort__trigger {
+    border-bottom-color: var(--gold);
+}
+.csort__trigger:focus-visible {
+    outline: none;
+    border-bottom-color: var(--gold);
+}
+.csort__value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.csort__chevron {
+    flex: none;
+    width: 12px;
+    height: 8px;
+    color: var(--gold);
+    transition: transform 0.3s var(--ease);
+}
+.csort.is-open .csort__chevron {
+    transform: rotate(180deg);
+}
+.csort__menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    z-index: 130;
+    width: fit-content;
+    max-width: calc(100vw - 1.5rem);
+    margin: 0;
+    padding: 0.45rem;
+    list-style: none;
+    background: #fff;
+    border: 1px solid rgba(37, 29, 58, 0.12);
+    border-radius: var(--radius-md);
+    box-shadow: 0 18px 40px -18px rgba(37, 29, 58, 0.3);
+    /* Fully expanded — no internal scrollbars; horizontal fit is handled by
+       the JS viewport clamping (positionMenu in theme.js). */
+    overflow: visible;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition:
+        opacity 0.22s var(--ease),
+        transform 0.22s var(--ease),
+        visibility 0s linear 0.22s;
+}
+.csort.is-open .csort__menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition:
+        opacity 0.22s var(--ease),
+        transform 0.22s var(--ease);
+}
+.csort__menu li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0.9rem;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: var(--ink);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+        background 0.2s var(--ease),
+        color 0.2s var(--ease);
+}
+.csort__menu li:hover,
+.csort__menu li.is-highlighted {
+    background: rgba(122, 87, 192, 0.08);
+    color: var(--violet-deep);
+}
+.csort__menu li.is-active {
+    color: var(--gold-deep);
+    font-weight: 500;
+}
+.csort__menu li.is-active::after {
+    content: "✓";
+    font-family: var(--ui);
+    font-size: 0.78rem;
+    color: var(--gold);
 }
 .plist__active {
     display: flex;
@@ -215,16 +326,20 @@
     align-items: center;
     gap: 0.45rem;
     font-family: var(--ui);
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     font-weight: 700;
-    padding: 0.45rem 0.75rem;
+    padding: 0.42rem 0.8rem;
     border-radius: 999px;
-    background: #fff;
-    border: 1px solid rgba(37, 29, 58, 0.12);
-    color: var(--ink);
+    background: #fdfbf3;
+    border: 1px solid rgba(190, 151, 67, 0.5);
+    color: var(--gold-deep);
+    transition:
+        border-color 0.25s var(--ease),
+        background 0.25s var(--ease);
 }
 .plist__active-chip:hover {
-    border-color: var(--violet);
+    border-color: var(--gold);
+    background: #fff;
 }
 .plist__clear {
     font-family: var(--ui);
@@ -233,6 +348,163 @@
     color: var(--violet-deep);
     text-decoration: underline;
     text-underline-offset: 2px;
+}
+
+/* ---- Filters button ---- */
+.plist__filters-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    background: transparent;
+    border: 1.5px solid rgba(37, 29, 58, 0.16);
+    border-radius: var(--radius-sm);
+    padding: 0.55rem 1.15rem;
+    cursor: pointer;
+    transition:
+        border-color 0.25s var(--ease),
+        color 0.25s var(--ease),
+        background 0.25s var(--ease),
+        transform 0.25s var(--ease);
+}
+.plist__filters-btn:hover {
+    border-color: var(--violet);
+    color: var(--violet-deep);
+    background: rgba(122, 87, 192, 0.05);
+    transform: translateY(-1px);
+}
+.plist__filters-btn svg {
+    width: 17px;
+    height: 17px;
+}
+.plist__filters-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 3px rgba(190, 151, 67, 0.2);
+    flex: none;
+}
+
+/* ---- Filters drawer ---- */
+body.drawer-locked {
+    overflow: hidden;
+}
+.plist__drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    visibility: hidden;
+    pointer-events: none;
+    /* Keep the drawer paint-visible during the exit animation, then hide it.
+       Opening sets transition-delay to 0 so it appears instantly. */
+    transition: visibility 0s linear 0.42s;
+}
+.plist__drawer.is-open {
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+}
+.plist__drawer-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(37, 29, 58, 0.4);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity 0.35s var(--ease);
+}
+.plist__drawer.is-open .plist__drawer-backdrop {
+    opacity: 1;
+}
+.plist__drawer-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    width: min(92vw, 400px);
+    display: flex;
+    flex-direction: column;
+    background: var(--parchment);
+    box-shadow: 18px 0 40px -18px rgba(37, 29, 58, 0.35);
+    transform: translateX(-100%);
+    transition: transform 0.42s var(--ease);
+}
+.plist__drawer.is-open .plist__drawer-panel {
+    transform: translateX(0);
+}
+.plist__drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.3rem 1.6rem;
+    border-bottom: 1px solid rgba(37, 29, 58, 0.1);
+}
+.plist__drawer-head h3 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 1.5rem;
+    margin: 0;
+}
+.plist__drawer-close {
+    width: 38px;
+    height: 38px;
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(37, 29, 58, 0.15);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    transition:
+        border-color 0.25s var(--ease),
+        color 0.25s var(--ease),
+        transform 0.25s var(--ease);
+}
+.plist__drawer-close svg {
+    width: 16px;
+    height: 16px;
+}
+.plist__drawer-close:hover {
+    border-color: var(--gold);
+    color: var(--gold-deep);
+    transform: rotate(90deg);
+}
+.plist__drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.6rem;
+    -webkit-overflow-scrolling: touch;
+}
+.plist__drawer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.plist__drawer .plist__price {
+    min-width: 0;
+    flex: none;
+}
+.plist__drawer .plist__sort {
+    width: 100%;
+    min-width: 0;
+    flex: none;
+}
+.plist__drawer .plist__apply {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0;
+}
+.plist__drawer .plist__price-note {
+    margin-top: 0.9rem;
 }
 
 /* ---- Collection card (/collections) ---- */
@@ -299,69 +571,83 @@
 .ccard__link {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.45rem;
+    margin-top: 0.35rem;
     font-family: var(--ui);
     font-weight: 700;
-    font-size: 0.82rem;
-    letter-spacing: 0.02em;
-    color: var(--violet-deep);
-    margin-top: 0.15rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    transition:
+        gap 0.25s var(--ease),
+        color 0.25s var(--ease);
 }
 .ccard__link svg {
     width: 15px;
     height: 15px;
-    transition: transform 0.3s var(--ease);
+    transition: transform 0.25s var(--ease);
+}
+.ccard:hover .ccard__link {
+    gap: 0.7rem;
+    color: var(--violet-deep);
 }
 .ccard:hover .ccard__link svg {
     transform: translateX(3px);
 }
 
-/* ---- Pagination (only appears past 50 products) ---- */
+/* ---- Pagination ---- */
 .plist__pagination {
-    margin-top: 3rem;
-    font-family: var(--ui);
-    font-size: 0.92rem;
+    margin-top: 2.8rem;
 }
-.plist__pagination .pagination {
+.plist__pagination .pagination,
+.plist__pagination ul {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
-.plist__pagination .page,
-.plist__pagination .prev,
-.plist__pagination .next,
-.plist__pagination .deco {
+.plist__pagination li {
+    margin: 0;
+}
+.plist__pagination a,
+.plist__pagination .page {
+    min-width: 42px;
+    height: 42px;
+    padding: 0 0.5rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 40px;
-    height: 40px;
-    padding: 0 0.7rem;
-    border-radius: var(--radius-sm);
-    color: var(--ink-soft);
-}
-.plist__pagination .page a,
-.plist__pagination .prev a,
-.plist__pagination .next a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    color: var(--ink);
-    font-weight: 600;
-}
-.plist__pagination .page:not(.current):hover,
-.plist__pagination .prev:hover,
-.plist__pagination .next:hover {
-    background: rgba(122, 87, 192, 0.09);
-}
-.plist__pagination .page.current {
-    background: var(--ink);
-    color: #fdfbf3;
+    font-family: var(--ui);
     font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(37, 29, 58, 0.14);
+    color: var(--ink);
+    transition:
+        border-color 0.25s var(--ease),
+        color 0.25s var(--ease),
+        background 0.25s var(--ease);
+}
+.plist__pagination a:hover {
+    border-color: var(--violet);
+    color: var(--violet-deep);
+}
+.plist__pagination .current {
+    background: var(--violet-deep);
+    border-color: var(--violet-deep);
+    color: #fdfbf5;
+}
+.plist__pagination .deleted {
+    border: none;
+    min-width: 0;
+    height: auto;
+    padding: 0 0.25rem;
+    color: var(--ink-soft);
 }
 
 @media (max-width: 749px) {
@@ -382,11 +668,16 @@
     .plist__toolbar-form {
         flex-direction: column;
         align-items: stretch;
+        flex-wrap: nowrap;
+    }
+    .plist__toolbar-sort {
+        width: 100%;
     }
     .plist__sort,
     .plist__price {
         min-width: 0;
         flex-basis: auto;
+        width: 100%;
     }
     .plist__price-fields {
         align-items: flex-end;
@@ -394,5 +685,14 @@
     .plist__apply {
         width: 100%;
         margin-bottom: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .plist__drawer,
+    .plist__drawer-backdrop,
+    .plist__drawer-panel,
+    .csort__menu {
+        transition: none;
     }
 }

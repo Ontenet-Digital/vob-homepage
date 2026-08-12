@@ -8,97 +8,99 @@
  * ------------------------------------------------------------
  */
 {
-  "general": {
-    "meta": {
-      "tags": "Tagged \"{{ tags }}\"",
-      "page": "Page {{ page }}"
-    },
-    "search": {
-      "search": "Search",
-      "placeholder": "Search",
-      "no_results": "No results found for \"{{ terms }}\"",
-      "results_with_count": {
-        "one": "{{ count }} result for \"{{ terms }}\"",
-        "other": "{{ count }} results for \"{{ terms }}\""
-      }
-    },
-    "pagination": {
-      "previous": "Previous",
-      "next": "Next"
-    },
-    "404": {
-      "title": "Page not found",
-      "subtext": "The page you were looking for does not exist.",
-      "link": "Continue shopping"
-    },
-    "newsletter_form": {
-      "email_placeholder": "Your email address",
-      "confirmation": "Thank you for subscribing.",
-      "submit": "Subscribe"
-    }
-  },
-  "products": {
-    "product": {
-      "add_to_cart": "Add to cart",
-      "sold_out": "Sold out",
-      "unavailable": "Unavailable",
-      "from_price": "From {{ price }}",
-      "quantity": "Quantity",
-      "description": "Description"
-    }
-  },
-  "collections": {
-    "toolbar": {
-      "results": "{{ count }} products",
-      "results_filtered": "{{ count }} of {{ total }} products",
-      "price": "Price",
-      "price_min": "Min",
-      "price_max": "Max",
-      "apply": "Apply",
-      "sort": "Sort by",
-      "clear": "Clear filters",
-      "no_results": "No products match your filters. Try adjusting the price range or clear filters.",
-      "price_setup": "Enable the Price filter in Shopify admin → Search & Discovery → Filters for server-side filtering."
-    },
-    "sort": {
-      "featured": "Featured",
-      "relevant": "Most Relevant",
-      "best_selling": "Best Selling",
-      "title_asc": "Alphabetically, A–Z",
-      "title_desc": "Alphabetically, Z–A",
-      "price_asc": "Price, low to high",
-      "price_desc": "Price, high to low",
-      "date_asc": "Date, old to new",
-      "date_desc": "Date, new to old"
-    }
-  },
-  "cart": {
     "general": {
-      "title": "Your cart",
-      "empty": "Your cart is empty",
-      "continue_shopping": "Continue shopping",
-      "subtotal": "Subtotal",
-      "checkout": "Check out",
-      "remove": "Remove",
-      "note": "Order notes"
-    }
-  },
-  "customer": {
-    "account": {
-      "title": "My account",
-      "details": "Account details"
+        "meta": {
+            "tags": "Tagged \"{{ tags }}\"",
+            "page": "Page {{ page }}"
+        },
+        "search": {
+            "search": "Search",
+            "placeholder": "Search",
+            "no_results": "No results found for \"{{ terms }}\"",
+            "results_with_count": {
+                "one": "{{ count }} result for \"{{ terms }}\"",
+                "other": "{{ count }} results for \"{{ terms }}\""
+            }
+        },
+        "pagination": {
+            "previous": "Previous",
+            "next": "Next"
+        },
+        "404": {
+            "title": "Page not found",
+            "subtext": "The page you were looking for does not exist.",
+            "link": "Continue shopping"
+        },
+        "newsletter_form": {
+            "email_placeholder": "Your email address",
+            "confirmation": "Thank you for subscribing.",
+            "submit": "Subscribe"
+        }
     },
-    "login": {
-      "title": "Login",
-      "email": "Email",
-      "password": "Password",
-      "sign_in": "Sign in"
+    "products": {
+        "product": {
+            "add_to_cart": "Add to cart",
+            "sold_out": "Sold out",
+            "unavailable": "Unavailable",
+            "from_price": "From {{ price }}",
+            "quantity": "Quantity",
+            "description": "Description"
+        }
+    },
+    "collections": {
+        "toolbar": {
+            "results": "{{ count }} products",
+            "results_filtered": "{{ count }} of {{ total }} products",
+            "filters": "Filters",
+            "close": "Close",
+            "price": "Price",
+            "price_min": "Min",
+            "price_max": "Max",
+            "apply": "Apply",
+            "sort": "Sort by",
+            "clear": "Clear filters",
+            "no_results": "No products match your filters. Try adjusting the price range or clear filters.",
+            "price_setup": "Enable the Price filter in Shopify admin → Search & Discovery → Filters for server-side filtering."
+        },
+        "sort": {
+            "featured": "Featured",
+            "relevant": "Most Relevant",
+            "best_selling": "Best Selling",
+            "title_asc": "Alphabetically, A–Z",
+            "title_desc": "Alphabetically, Z–A",
+            "price_asc": "Price, low to high",
+            "price_desc": "Price, high to low",
+            "date_asc": "Date, old to new",
+            "date_desc": "Date, new to old"
+        }
+    },
+    "cart": {
+        "general": {
+            "title": "Your cart",
+            "empty": "Your cart is empty",
+            "continue_shopping": "Continue shopping",
+            "subtotal": "Subtotal",
+            "checkout": "Check out",
+            "remove": "Remove",
+            "note": "Order notes"
+        }
+    },
+    "customer": {
+        "account": {
+            "title": "My account",
+            "details": "Account details"
+        },
+        "login": {
+            "title": "Login",
+            "email": "Email",
+            "password": "Password",
+            "sign_in": "Sign in"
+        }
+    },
+    "blogs": {
+        "article": {
+            "read_more": "Read more",
+            "posted_in": "Posted in"
+        }
     }
-  },
-  "blogs": {
-    "article": {
-      "read_more": "Read more",
-      "posted_in": "Posted in"
-    }
-  }
 }

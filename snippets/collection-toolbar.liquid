@@ -91,98 +91,114 @@
       {%- endif -%}
     </div>
 
-    <form
-      class="plist__toolbar-form"
-      action="{{ collection.url }}"
-      method="get"
-      data-collection-filters
-    >
+    <div class="plist__toolbar-form">
       {%- if show_price and range_max_cents > 0 -%}
-        <fieldset class="plist__price">
-          <legend class="plist__price-label">{{ 'collections.toolbar.price' | t }}</legend>
-          <div class="plist__price-fields">
-            <label class="plist__price-field">
-              <span class="plist__price-prefix">{{ cart.currency.symbol }}</span>
-              <input
-                type="number"
-                name="{{ min_param }}"
-                id="Filter-Price-Min-{{ sid }}"
-                class="plist__price-input"
-                min="0"
-                max="{{ range_max_display }}"
-                step="0.01"
-                inputmode="decimal"
-                placeholder="{{ range_min_display }}"
-                {% if min_value_display != blank %}value="{{ min_value_display }}"{% endif %}
-                aria-label="{{ 'collections.toolbar.price_min' | t }}"
-              >
-              <span class="plist__price-hint">{{ 'collections.toolbar.price_min' | t }}</span>
-            </label>
-            <span class="plist__price-sep" aria-hidden="true">–</span>
-            <label class="plist__price-field">
-              <span class="plist__price-prefix">{{ cart.currency.symbol }}</span>
-              <input
-                type="number"
-                name="{{ max_param }}"
-                id="Filter-Price-Max-{{ sid }}"
-                class="plist__price-input"
-                min="0"
-                max="{{ range_max_display }}"
-                step="0.01"
-                inputmode="decimal"
-                placeholder="{{ range_max_display }}"
-                {% if max_value_display != blank %}value="{{ max_value_display }}"{% endif %}
-                aria-label="{{ 'collections.toolbar.price_max' | t }}"
-              >
-              <span class="plist__price-hint">{{ 'collections.toolbar.price_max' | t }}</span>
-            </label>
-            <button type="submit" class="plist__apply btn btn--ghost">{{ 'collections.toolbar.apply' | t }}</button>
-          </div>
-          {%- unless price_filter -%}
-            <p class="plist__price-note">{{ 'collections.toolbar.price_setup' | t }}</p>
-          {%- endunless -%}
-        </fieldset>
+        <button
+          type="button"
+          class="plist__filters-btn"
+          data-filters-toggle
+          aria-controls="filter-drawer-{{ sid }}"
+          aria-expanded="false"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 6h16M7 12h10M10 18h4"/>
+            <circle cx="6" cy="6" r="1.6" fill="currentColor" stroke="none"/>
+            <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/>
+            <circle cx="18" cy="18" r="1.6" fill="currentColor" stroke="none"/>
+          </svg>
+          <span>{{ 'collections.toolbar.filters' | t }}</span>
+          {%- if price_filter_active -%}
+            <span class="plist__filters-dot" aria-hidden="true"></span>
+          {%- endif -%}
+        </button>
       {%- endif -%}
 
       {%- if show_sort -%}
-        <label class="plist__sort">
-          <span class="plist__sort-label">{{ 'collections.toolbar.sort' | t }}</span>
-          <select
-            name="sort_by"
-            class="plist__sort-select"
-            data-collection-sort
-            aria-label="{{ 'collections.toolbar.sort' | t }}"
-          >
-            {%- comment -%}
-              Most Relevant omits sort_by so Shopify uses the collection default order.
-              Featured sets sort_by=manual (the merchant-curated order).
-            {%- endcomment -%}
-            <option value=""{% if using_default_sort %} selected{% endif %}>{{ 'collections.sort.relevant' | t }}</option>
-            <option value="manual"{% if sort_by == 'manual' and using_default_sort == false %} selected{% endif %}>{{ 'collections.sort.featured' | t }}</option>
-            <option value="best-selling"{% if sort_by == 'best-selling' %} selected{% endif %}>{{ 'collections.sort.best_selling' | t }}</option>
-            <option value="title-ascending"{% if sort_by == 'title-ascending' %} selected{% endif %}>{{ 'collections.sort.title_asc' | t }}</option>
-            <option value="title-descending"{% if sort_by == 'title-descending' %} selected{% endif %}>{{ 'collections.sort.title_desc' | t }}</option>
-            <option value="price-ascending"{% if sort_by == 'price-ascending' %} selected{% endif %}>{{ 'collections.sort.price_asc' | t }}</option>
-            <option value="price-descending"{% if sort_by == 'price-descending' %} selected{% endif %}>{{ 'collections.sort.price_desc' | t }}</option>
-            <option value="created-ascending"{% if sort_by == 'created-ascending' %} selected{% endif %}>{{ 'collections.sort.date_asc' | t }}</option>
-            <option value="created-descending"{% if sort_by == 'created-descending' %} selected{% endif %}>{{ 'collections.sort.date_desc' | t }}</option>
-          </select>
-        </label>
+        <form class="plist__toolbar-sort" action="{{ collection.url }}" method="get" data-collection-filters>
+          {%- render 'collection-sort-select', sort_by: sort_by, using_default_sort: using_default_sort, sid: sid, instance: 'tb' -%}
+        </form>
       {%- endif -%}
-    </form>
-
-    {%- if price_filter_active -%}
-      <div class="plist__active">
-        <a class="plist__active-chip" href="{{ price_filter.url_to_remove }}">
-          {%- liquid
-            assign chip_min = price_filter.min_value.value | default: 0
-            assign chip_max = price_filter.max_value.value | default: price_filter.range_max
-          -%}
-          {{ chip_min | money }} – {{ chip_max | money }}
-          <span aria-hidden="true">&times;</span>
-        </a>
-        <a class="plist__clear" href="{{ collection.url }}?sort_by={{ sort_by | url_encode }}">{{ 'collections.toolbar.clear' | t }}</a>
-      </div>
-    {%- endif -%}
+    </div>
   </div>
+
+  {%- if show_price and range_max_cents > 0 -%}
+    <div class="plist__drawer" id="filter-drawer-{{ sid }}" data-filter-drawer aria-hidden="true">
+      <div class="plist__drawer-backdrop" data-filters-close></div>
+      <aside class="plist__drawer-panel" role="dialog" aria-modal="true" aria-label="{{ 'collections.toolbar.filters' | t }}">
+        <header class="plist__drawer-head">
+          <h3>{{ 'collections.toolbar.filters' | t }}</h3>
+          <button type="button" class="plist__drawer-close" data-filters-close aria-label="{{ 'collections.toolbar.close' | t }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </header>
+        <div class="plist__drawer-body">
+          <form class="plist__drawer-form" action="{{ collection.url }}" method="get" data-collection-filters>
+            <fieldset class="plist__price">
+              <legend class="plist__price-label">{{ 'collections.toolbar.price' | t }}</legend>
+              <div class="plist__price-fields">
+                <label class="plist__price-field">
+                  <span class="plist__price-prefix">{{ cart.currency.symbol }}</span>
+                  <input
+                    type="number"
+                    name="{{ min_param }}"
+                    id="Filter-Price-Min-{{ sid }}"
+                    class="plist__price-input"
+                    min="0"
+                    max="{{ range_max_display }}"
+                    step="0.01"
+                    inputmode="decimal"
+                    placeholder="{{ range_min_display }}"
+                    {% if min_value_display != blank %}value="{{ min_value_display }}"{% endif %}
+                    aria-label="{{ 'collections.toolbar.price_min' | t }}"
+                  >
+                  <span class="plist__price-hint">{{ 'collections.toolbar.price_min' | t }}</span>
+                </label>
+                <span class="plist__price-sep" aria-hidden="true">–</span>
+                <label class="plist__price-field">
+                  <span class="plist__price-prefix">{{ cart.currency.symbol }}</span>
+                  <input
+                    type="number"
+                    name="{{ max_param }}"
+                    id="Filter-Price-Max-{{ sid }}"
+                    class="plist__price-input"
+                    min="0"
+                    max="{{ range_max_display }}"
+                    step="0.01"
+                    inputmode="decimal"
+                    placeholder="{{ range_max_display }}"
+                    {% if max_value_display != blank %}value="{{ max_value_display }}"{% endif %}
+                    aria-label="{{ 'collections.toolbar.price_max' | t }}"
+                  >
+                  <span class="plist__price-hint">{{ 'collections.toolbar.price_max' | t }}</span>
+                </label>
+              </div>
+              {%- unless price_filter -%}
+                <p class="plist__price-note">{{ 'collections.toolbar.price_setup' | t }}</p>
+              {%- endunless -%}
+            </fieldset>
+
+            {%- if show_sort -%}
+              {%- render 'collection-sort-select', sort_by: sort_by, using_default_sort: using_default_sort, sid: sid, instance: 'dr' -%}
+            {%- endif -%}
+
+            {%- if price_filter_active -%}
+              <div class="plist__active">
+                <a class="plist__active-chip" href="{{ price_filter.url_to_remove }}">
+                  {%- liquid
+                    assign chip_min = price_filter.min_value.value | default: 0
+                    assign chip_max = price_filter.max_value.value | default: price_filter.range_max
+                  -%}
+                  {{ chip_min | money }} – {{ chip_max | money }}
+                  <span aria-hidden="true">&times;</span>
+                </a>
+                <a class="plist__clear" href="{{ collection.url }}?sort_by={{ sort_by | url_encode }}">{{ 'collections.toolbar.clear' | t }}</a>
+              </div>
+            {%- endif -%}
+
+            <button type="submit" class="plist__apply btn btn--gold">{{ 'collections.toolbar.apply' | t }}</button>
+          </form>
+        </div>
+      </aside>
+    </div>
+  {%- endif -%}
 {%- endif -%}
