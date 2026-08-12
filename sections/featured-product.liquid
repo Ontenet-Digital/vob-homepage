@@ -295,11 +295,12 @@
 .fps__details{
   display: flex; flex-direction: column; align-items: flex-start;
   gap: 18px;
-  padding-top: 6px;
+  padding-top: 2px;
+  align-self: center; /* vertically centre the details beside the tall image */
 }
 .fps__vendor{
   font-family: var(--ui, "Manrope", system-ui, sans-serif);
-  font-weight: 700; font-size: .72rem; letter-spacing: .18em;
+  font-weight: 700; font-size: .72rem; letter-spacing: .2em;
   text-transform: uppercase; color: var(--fps-muted);
 }
 .fps__title{
@@ -314,32 +315,35 @@
   display: flex; align-items: baseline; gap: 12px;
   font-family: var(--ui, "Manrope", system-ui, sans-serif);
 }
-.fps__price-current{ font-weight: 700; font-size: 1.5rem; color: var(--fps-price); }
+.fps__price-current{ font-weight: 700; font-size: 1.6rem; letter-spacing: -.01em; color: var(--fps-price); }
 .fps__price-compare{ font-weight: 500; font-size: 1.05rem; color: var(--fps-compare); text-decoration: line-through; }
 
+/* Description — below the buy box, always fully visible (no clamp) */
+.fps__desc{
+  width: 100%; margin-top: 4px;
+  padding-top: 20px; border-top: 1px solid var(--fps-border);
+}
 .fps__rte{
   color: var(--fps-text);
   line-height: 1.7;
   font-size: 1rem;
-  max-width: 54ch;
-  position: relative;
-}
-.fps__rte:not(.is-expanded).is-clamped{
-  max-height: 9.5em; overflow: hidden;
-}
-.fps__rte:not(.is-expanded).is-clamped::after{
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3.2em;
-  background: linear-gradient(to bottom, transparent, var(--fps-bg));
+  max-width: 58ch;
 }
 .fps__rte p{ margin: 0 0 .8em; }
 .fps__rte ul, .fps__rte ol{ margin: 0 0 .8em 1.2em; }
 .fps__rte a{ color: var(--fps-heading); text-decoration: underline; }
-.fps__more{
-  background: none; border: none; padding: 0;
-  font-family: var(--ui, "Manrope", system-ui, sans-serif);
-  font-weight: 700; font-size: .9rem; color: var(--fps-heading);
-  text-decoration: underline; cursor: pointer; margin-top: -6px;
+
+/* Trust badges — reassurance row under the buy box */
+.fps__trust{
+  list-style: none; margin: 2px 0 0; padding: 0; width: 100%;
+  display: flex; flex-wrap: wrap; gap: 11px 24px;
 }
+.fps__trust-item{
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--ui, "Manrope", system-ui, sans-serif);
+  font-size: .85rem; font-weight: 500; color: var(--fps-muted);
+}
+.fps__trust-item svg{ width: 18px; height: 18px; color: var(--fps-accent); flex: none; }
 
 /* Form */
 .fps__form{ width: 100%; display: flex; flex-direction: column; gap: 14px; margin-top: 2px; }
@@ -444,7 +448,7 @@
   transition: gap .25s ease, opacity .25s ease;
 }
 .fps__view svg{ width: 16px; height: 16px; }
-.fps__view:hover{ gap: 10px; opacity: .75; }
+.fps__view:hover{ gap: 10px; border-bottom-color: currentColor; }
 
 /* Dots */
 .fps__dots{ display: flex; justify-content: center; gap: 8px; margin-top: 30px; }
@@ -465,7 +469,7 @@
 @media (max-width: 899px){
   .fps__product{ grid-template-columns: 1fr; }
   .fps__gallery{ position: static; top: auto; }
-  .fps__details{ padding-top: 4px; }
+  .fps__details{ padding-top: 4px; align-self: start; }
   .fps__head{ margin-bottom: 28px; }
 }
 @media (max-width: 560px){
@@ -512,7 +516,6 @@
       });
       if (indexEl) indexEl.textContent = i + 1;
       current = i;
-      if (panels[i].__checkDesc) panels[i].__checkDesc();
       if (focus) {
         var h = panels[i].querySelector(".fps__title");
         if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
@@ -586,31 +589,6 @@
     });
     if (imgPrev) imgPrev.addEventListener("click", function () { showSlide(gi - 1); });
     if (imgNext) imgNext.addEventListener("click", function () { showSlide(gi + 1); });
-
-    /* ----- Read more ----- */
-    var desc = panel.querySelector("[data-fps-desc]");
-    var more = panel.querySelector("[data-fps-more]");
-    panel.__checkDesc = function () {
-      if (!desc || !more) return;
-      desc.classList.add("is-clamped");
-      // Measure against the clamp; if it doesn't overflow, drop the clamp.
-      if (desc.scrollHeight - desc.clientHeight > 4) {
-        more.hidden = false;
-      } else {
-        desc.classList.remove("is-clamped");
-        more.hidden = true;
-      }
-    };
-    if (desc && more) {
-      more.addEventListener("click", function () {
-        var expanded = desc.classList.toggle("is-expanded");
-        more.textContent = expanded ? (more.getAttribute("data-less") || "Read less")
-                                     : (more.getAttribute("data-more") || "Read more");
-      });
-      requestAnimationFrame(function () {
-        if (panel.classList.contains("is-active")) panel.__checkDesc();
-      });
-    }
 
     /* ----- Quantity stepper ----- */
     var qtyInput = panel.querySelector("[data-fps-qty-input]");
@@ -838,6 +816,12 @@
     { "type": "checkbox", "id": "share_whatsapp", "label": "WhatsApp", "default": false },
     { "type": "checkbox", "id": "share_copy", "label": "Copy link", "default": true },
     { "type": "checkbox", "id": "show_view_link", "label": "Show \"View full details\" link", "default": true },
+
+    { "type": "header", "content": "Trust badges" },
+    { "type": "checkbox", "id": "show_trust", "label": "Show trust badges", "default": true },
+    { "type": "text", "id": "trust_1", "label": "Badge 1", "default": "Secure checkout" },
+    { "type": "text", "id": "trust_2", "label": "Badge 2", "default": "Fast delivery" },
+    { "type": "text", "id": "trust_3", "label": "Badge 3", "default": "Easy 7-day returns" },
 
     { "type": "header", "content": "Gallery" },
     {
