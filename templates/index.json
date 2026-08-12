@@ -11,6 +11,51 @@
   "sections": {
     "hero": {
       "type": "hero-banner",
+      "blocks": {
+        "trust_badge_feqPDY": {
+          "type": "trust_badge",
+          "settings": {
+            "label": "Trustpilot",
+            "link": "",
+            "icon_preset": "none",
+            "icon": "shopify://shop_images/trustpilot_colored_icon_b7d3e369-055f-48b9-9c0f-c9b028b7146d.svg",
+            "icon_url": "",
+            "show_stars": false,
+            "star_count": 5,
+            "rating_text": "Trustpilot"
+          }
+        },
+        "trust_badge_NPX3n4": {
+          "type": "trust_badge",
+          "settings": {
+            "label": "Google",
+            "link": "",
+            "icon_preset": "none",
+            "icon": "shopify://shop_images/google_colored_icon_85991d17-316c-4a51-ad65-25a7b0fdb20c.svg",
+            "icon_url": "",
+            "show_stars": false,
+            "star_count": 5,
+            "rating_text": "Google"
+          }
+        },
+        "trust_badge_UnzH4W": {
+          "type": "trust_badge",
+          "settings": {
+            "label": "Rating",
+            "link": "",
+            "icon_preset": "none",
+            "icon_url": "",
+            "show_stars": true,
+            "star_count": 5,
+            "rating_text": "4.9/5 rating"
+          }
+        }
+      },
+      "block_order": [
+        "trust_badge_feqPDY",
+        "trust_badge_NPX3n4",
+        "trust_badge_UnzH4W"
+      ],
       "name": "hero_section",
       "settings": {
         "moto_enable": true,
@@ -20,7 +65,7 @@
         "moto_align_mobile": "inherit",
         "title": "Where Bible stories inspire young minds and strengthen faith",
         "subtitle": "",
-        "paragraph": "<p><br/>Vision of-the Bible brings the timeless stories and truths of Scripture to lif& through vivid, flaithfül visual storytelling — made för the youngest hearts and the wisest ones alike.<br/></p>",
+        "paragraph": "<p><br/>Vision of-the Bible brings the timeless stories and truths of Scripture to life & through vivid, faithful visual storytelling — made for the youngest hearts and the wisest ones alike.<br/></p>",
         "trust_enable": true,
         "trust_label": "TRUSTED BY FAMILIES ON",
         "trust_label_color": "#c4a574",
