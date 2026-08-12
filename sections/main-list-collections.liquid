@@ -1,20 +1,15 @@
-<div class="page-shell wrap">
-  <div class="page-head">
-    <span class="eyebrow">Explore</span>
-    <h1>{{ page_title | default: 'Collections' }}</h1>
-  </div>
-  <div class="grid-products">
-    {%- for collection in collections -%}
-      <a class="grid-card" href="{{ collection.url }}">
-        <div class="grid-card__media">
-          {%- if collection.featured_image -%}
-            <img src="{{ collection.featured_image | image_url: width: 600 }}" alt="{{ collection.title | escape }}" loading="lazy">
-          {%- endif -%}
-        </div>
-        <div class="grid-card__body"><h3>{{ collection.title }}</h3></div>
-      </a>
-    {%- endfor -%}
-  </div>
+{%- comment -%}
+  Shopify serves /collections as a collection index. This store uses a single
+  all-products grid at /collections/all instead — send anyone who lands here
+  straight to that page.
+{%- endcomment -%}
+<meta http-equiv="refresh" content="0;url={{ routes.all_products_collection_url }}">
+<link rel="canonical" href="{{ routes.all_products_collection_url }}">
+<div class="plist wrap">
+  <p class="plist__sub">
+    Redirecting to
+    <a href="{{ routes.all_products_collection_url }}">Products</a>…
+  </p>
 </div>
 
 {% schema %}

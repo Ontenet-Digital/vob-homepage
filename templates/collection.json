@@ -11,7 +11,14 @@
   "sections": {
     "main": {
       "type": "main-collection",
-      "settings": {}
+      "settings": {
+        "custom_heading": "Products",
+        "eyebrow": "",
+        "heading_align": "left",
+        "show_breadcrumb": true,
+        "show_description": false,
+        "show_count": false
+      }
     }
   },
   "order": [

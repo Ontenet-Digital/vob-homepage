@@ -1,0 +1,125 @@
+/* ============ PRODUCT LIST PAGE (/collections/all) ============
+   Product cards reuse snippets/best-seller-card.liquid and best-seller.css. */
+
+.plist {
+    /* Clears the fixed site header; the editor's padding setting adds to it. */
+    --plist-header-offset: 92px;
+    padding: calc(var(--plist-header-offset) + var(--plist-pad-t, 48px)) 0
+        var(--plist-pad-b, 72px);
+}
+
+/* ---- Breadcrumb ---- */
+.plist__crumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--ui);
+    font-size: 0.84rem;
+    color: var(--ink-soft);
+    margin-bottom: 1.4rem;
+}
+.plist__crumb span[aria-hidden] {
+    opacity: 0.45;
+}
+.plist__crumb a {
+    color: var(--violet-deep);
+    font-weight: 600;
+}
+.plist__crumb a:hover {
+    text-decoration: underline;
+}
+.plist__crumb [aria-current] {
+    font-weight: 600;
+}
+
+/* ---- Page head ---- */
+.plist__head {
+    max-width: 680px;
+    margin: 0 0 2.6rem;
+}
+.plist__head--center {
+    margin-inline: auto;
+    text-align: center;
+}
+.plist__head h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin: 0.9rem 0 0;
+}
+.plist__desc,
+.plist__sub {
+    color: var(--ink-soft);
+    font-size: 1.08rem;
+    line-height: 1.6;
+    margin-top: 0.9rem;
+}
+.plist__count {
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-top: 1rem;
+}
+
+/* ---- Pagination (only appears past 50 products) ---- */
+.plist__pagination {
+    margin-top: 3rem;
+    font-family: var(--ui);
+    font-size: 0.92rem;
+}
+.plist__pagination .pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+}
+.plist__pagination .page,
+.plist__pagination .prev,
+.plist__pagination .next,
+.plist__pagination .deco {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 0.7rem;
+    border-radius: var(--radius-sm);
+    color: var(--ink-soft);
+}
+.plist__pagination .page a,
+.plist__pagination .prev a,
+.plist__pagination .next a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: var(--ink);
+    font-weight: 600;
+}
+.plist__pagination .page:not(.current):hover,
+.plist__pagination .prev:hover,
+.plist__pagination .next:hover {
+    background: rgba(122, 87, 192, 0.09);
+}
+.plist__pagination .page.current {
+    background: var(--ink);
+    color: #fdfbf3;
+    font-weight: 700;
+}
+
+@media (max-width: 749px) {
+    .plist {
+        --plist-header-offset: 84px;
+    }
+    .plist__head {
+        margin-bottom: 1.8rem;
+    }
+    .plist__crumb {
+        font-size: 0.78rem;
+        margin-bottom: 1rem;
+    }
+}
