@@ -613,56 +613,62 @@
         "anchor_id": "best-sellers"
       }
     },
-    "story_section_wdy9BP": {
-      "type": "story-section",
+    "testimonials": {
+      "type": "testimonial-section",
       "blocks": {
-        "post_XBHMd3": {
-          "type": "post",
+        "t1": {
+          "type": "video",
           "settings": {
-            "image": "shopify://shop_images/vob-product-img-1.webp",
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC04800-2-copy-2.jpg?v=1785302101&width=900",
-            "tag": "",
-            "title": "A message that resonates",
-            "text": "10 Views",
-            "link": "#"
+            "video_url": "https://youtube.com/shorts/oE6EbDu05FI?si=Jlqo94_InsBrwomz",
+            "title": ""
           }
         },
-        "post_Kj9pXy": {
-          "type": "post",
+        "t2": {
+          "type": "video",
           "settings": {
-            "image": "shopify://shop_images/vob-product-img-2.webp",
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/preview_images/a0c5f11599484fa38f3e0a6eedcbc829.thumbnail.0000000000.jpg?v=1785303765&width=900",
-            "tag": "",
-            "title": "Bringing Scriptures to life",
-            "text": "10 Views",
-            "link": "#"
+            "video_url": "https://youtube.com/shorts/YeHYzxpzYeI?si=wCSkR5IP2hwgppS3",
+            "title": ""
           }
         },
-        "post_bw6EDL": {
-          "type": "post",
+        "t3": {
+          "type": "video",
           "settings": {
-            "image": "shopify://shop_images/travel-2.webp",
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC_5847.jpg?v=1732482733&width=900",
-            "tag": "",
-            "title": "Seen, heard, and remembered",
-            "text": "11 Views",
-            "link": "#"
+            "video_url": "https://youtube.com/shorts/XTaDHRAK9Tc?si=x7jfFaZkjL_N3dmu",
+            "title": ""
+          }
+        },
+        "t4": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://youtube.com/shorts/MSDvFvUdAD0?si=O3NLNKz0KJIiQLGh",
+            "title": ""
+          }
+        },
+        "t5": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://youtube.com/shorts/LwjkOpBhswI?si=fTiICHsjXqP26oqC",
+            "title": ""
           }
         }
       },
       "block_order": [
-        "post_XBHMd3",
-        "post_Kj9pXy",
-        "post_bw6EDL"
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
       ],
       "name": "testimonial_section",
       "settings": {
-        "eyebrow": "",
-        "heading": "Testimonial",
+        "eyebrow": "Client Testimonial",
+        "heading": "Our Community",
         "subheading": "",
-        "blog": "",
-        "post_limit": 6,
-        "anchor_id": "story-section"
+        "columns_desktop": 5,
+        "auto_titles": true,
+        "padding_top": 72,
+        "padding_bottom": 56,
+        "anchor_id": "testimonials"
       }
     },
     "story-section": {
@@ -799,7 +805,7 @@
     "featured_product_home",
     "video-section",
     "best_seller_HPw8N7",
-    "story_section_wdy9BP",
+    "testimonials",
     "story-section",
     "app",
     "usp"
