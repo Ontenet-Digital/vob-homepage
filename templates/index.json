@@ -405,7 +405,7 @@
             "title": "Shop All",
             "subtitle": "A keepsake for the family shelf",
             "link_label": "Explore",
-            "link": "https://visionofthebiblestore.com/collections/books"
+            "link": "shopify://collections/all"
           }
         }
       },
@@ -586,8 +586,8 @@
         "columns_mobile": 2,
         "grid_gap": 24,
         "grid_gap_mobile": 14,
-        "card_bg": "#ffffff",
-        "card_border_color": "#ede6d6",
+        "card_bg": "#dc0b0b",
+        "card_border_color": "#dca62d",
         "card_radius": 10,
         "image_ratio": "1/1",
         "show_vendor": true,

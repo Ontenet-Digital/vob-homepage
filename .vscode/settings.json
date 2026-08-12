@@ -11,7 +11,7 @@
         "activityBarTop.foreground": "#e7e7e7",
         "activityBarTop.inactiveForeground": "#e7e7e799",
         "commandCenter.border": "#e7e7e799",
-        "commandCenter.foreground": "#595959",
+        "commandCenter.foreground": "#e7e7e7",
         "sash.hoverBorder": "#fa1b49",
         "statusBar.background": "#dd0531",
         "statusBar.debuggingBackground": "#dd0531",
@@ -21,7 +21,7 @@
         "statusBarItem.remoteBackground": "#0e3e01",
         "statusBarItem.remoteForeground": "#e7e7e7",
         "titleBar.activeBackground": "#dd0531",
-        "titleBar.activeForeground": "#595959",
+        "titleBar.activeForeground": "#e7e7e7",
         "titleBar.inactiveBackground": "#dd053199",
         "titleBar.inactiveForeground": "#e7e7e799"
     },

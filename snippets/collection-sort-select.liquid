@@ -1,0 +1,46 @@
+{%- comment -%}
+  Custom sort dropdown (replaces the native <select>).
+  Params: sort_by (string), using_default_sort (bool), sid (string), instance (string).
+  Most Relevant omits sort_by so Shopify uses the collection default order.
+  Featured sets sort_by=manual (the merchant-curated order).
+  Renders a hidden input so the surrounding data-collection-filters form still
+  submits sort_by. Interaction is handled in assets/theme.js (data-sort-* hooks).
+{%- endcomment -%}
+{%- liquid
+  assign pairs = 'manual,featured|best-selling,best_selling|title-ascending,title_asc|title-descending,title_desc|price-ascending,price_asc|price-descending,price_desc|created-ascending,date_asc|created-descending,date_desc' | split: '|'
+  assign current_value = sort_by
+  if using_default_sort
+    assign current_value = ''
+  endif
+  assign current_label = 'collections.sort.relevant' | t
+  for pair in pairs
+    assign parts = pair | split: ','
+    if parts[0] == current_value
+      assign current_label = 'collections.sort.' | append: parts[1] | t
+    endif
+  endfor
+  assign menu_id = 'sort-menu-' | append: sid | append: '-' | append: instance
+-%}
+<div class="plist__sort csort" data-sort-control>
+  <span class="plist__sort-label">{{ 'collections.toolbar.sort' | t }}</span>
+  <button
+    type="button"
+    class="csort__trigger"
+    data-sort-trigger
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    aria-controls="{{ menu_id }}"
+    aria-label="{{ 'collections.toolbar.sort' | t }}"
+  >
+    <span class="csort__value" data-sort-current>{{ current_label }}</span>
+    <svg class="csort__chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <ul class="csort__menu" id="{{ menu_id }}" role="listbox" aria-label="{{ 'collections.toolbar.sort' | t }}" data-sort-menu>
+    <li role="option" id="{{ menu_id }}-opt-0" aria-selected="{% if current_value == '' %}true{% else %}false{% endif %}" data-sort-option="" tabindex="-1">{{ 'collections.sort.relevant' | t }}</li>
+    {%- for pair in pairs -%}
+      {%- assign parts = pair | split: ',' -%}
+      <li role="option" id="{{ menu_id }}-opt-{{ forloop.index }}" aria-selected="{% if current_value == parts[0] %}true{% else %}false{% endif %}" data-sort-option="{{ parts[0] }}" tabindex="-1">{{ 'collections.sort.' | append: parts[1] | t }}</li>
+    {%- endfor -%}
+  </ul>
+  <input type="hidden" name="sort_by" value="{{ current_value }}" data-sort-input>
+</div>
