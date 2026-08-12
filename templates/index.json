@@ -697,8 +697,8 @@
       ],
       "name": "testimonial_section",
       "settings": {
-        "eyebrow": "",
-        "heading": "Client Testimonial",
+        "eyebrow": "Client Testimonial",
+        "heading": "Our Community",
         "subheading": "",
         "columns_desktop": 5,
         "auto_titles": true,
