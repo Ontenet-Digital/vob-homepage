@@ -17,7 +17,6 @@
         "image_fit": "contain",
         "show_vendor": true,
         "show_rating": true,
-        "show_read_more": true,
         "variant_label": "Options",
         "show_quantity": true,
         "update_url": true,
