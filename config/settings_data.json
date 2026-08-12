@@ -8,113 +8,122 @@
  * ------------------------------------------------------------
  */
 {
-    "current": {
-        "favicon": "shopify://shop_images/vob-favicon.png",
-        "logo_light": "shopify://shop_images/vob-logo-2.png",
-        "color_parchment": "#FFFFFF",
-        "color_ink": "#251D3A",
-        "color_ink_soft": "#463C68",
-        "color_violet_deep": "#412773",
-        "color_violet": "#7A57C0",
-        "color_gold": "#BE9743",
-        "color_gold_bright": "#E4C56C",
-        "color_gold_deep": "#7C5D1E",
-        "sections": {
-            "header": {
-                "type": "header",
-                "blocks": {
-                    "header-0": {
-                        "type": "link",
-                        "settings": {
-                            "label": "Our Story",
-                            "link": "#about"
-                        }
-                    },
-                    "header-1": {
-                        "type": "link",
-                        "settings": {
-                            "label": "Products",
-                            "link": "/collections/all"
-                        }
-                    },
-                    "header-2": {
-                        "type": "link",
-                        "settings": {
-                            "label": "The App",
-                            "link": "#app"
-                        }
-                    }
-                },
-                "block_order": ["header-0", "header-1", "header-2"],
-                "settings": {
-                    "brand_line_1": "Vision of the",
-                    "brand_line_2": "Bible",
-                    "brand_tagline": "Sacred stories brought to life"
-                }
-            },
-            "footer": {
-                "type": "footer",
-                "blocks": {
-                    "footer-0": {
-                        "type": "link",
-                        "settings": {
-                            "label": "Our Story",
-                            "link": "#about"
-                        }
-                    },
-                    "footer-2": {
-                        "type": "link",
-                        "settings": {
-                            "label": "Products",
-                            "link": "/collections/all"
-                        }
-                    },
-                    "footer-3": {
-                        "type": "link",
-                        "settings": {
-                            "label": "The App",
-                            "link": "#app"
-                        }
-                    },
-                    "footer-4": {
-                        "type": "link",
-                        "settings": {
-                            "label": "Faith & Stories",
-                            "link": "#faith"
-                        }
-                    }
-                },
-                "block_order": ["footer-0", "footer-2", "footer-3", "footer-4"],
-                "settings": {
-                    "verse": "\"For we live by faith, not by sight.\"",
-                    "verse_ref": "— 2 Corinthians 5:7",
-                    "logo": "shopify://shop_images/vob-logo-2.png",
-                    "logo_width": 80,
-                    "brand_line_1": "Vision of the",
-                    "brand_line_2": "Bible",
-                    "brand_tagline": "Sacred stories brought to life",
-                    "brand_text": "Bringing the timeless stories and profound truths of the Bible to life — for the youngest hearts, the wisest ones, and the whole family in between.",
-                    "links_title": "Explore",
-                    "news_title": "Stay in the loop",
-                    "news_text": "Join our weekly letter for stories, scripture, and gentle encouragement.",
-                    "news_placeholder": "Your email address",
-                    "contact_email": "info@visionofthebiblestore.com",
-                    "top_label": "Back to top ↑"
-                }
+  "current": {
+    "favicon": "shopify://shop_images/vob-favicon.png",
+    "logo_light": "shopify://shop_images/vob-logo-2.png",
+    "color_parchment": "#FFFFFF",
+    "color_ink": "#251D3A",
+    "color_ink_soft": "#463C68",
+    "color_violet_deep": "#412773",
+    "color_violet": "#7A57C0",
+    "color_gold": "#BE9743",
+    "color_gold_bright": "#E4C56C",
+    "color_gold_deep": "#7C5D1E",
+    "sections": {
+      "header": {
+        "type": "header",
+        "blocks": {
+          "header-0": {
+            "type": "link",
+            "settings": {
+              "label": "Our Story",
+              "link": "#about"
             }
+          },
+          "header-1": {
+            "type": "link",
+            "settings": {
+              "label": "Products",
+              "link": "/collections/all"
+            }
+          },
+          "header-2": {
+            "type": "link",
+            "settings": {
+              "label": "The App",
+              "link": "#app"
+            }
+          }
         },
-        "content_for_index": []
-    },
-    "presets": {
-        "Vision of the Bible": {
-            "color_parchment": "#FFFFFF",
-            "color_ink": "#251D3A",
-            "color_ink_soft": "#463C68",
-            "color_violet_deep": "#412773",
-            "color_violet": "#7A57C0",
-            "color_gold": "#BE9743",
-            "color_gold_bright": "#E4C56C",
-            "color_gold_deep": "#7C5D1E"
+        "block_order": [
+          "header-0",
+          "header-1",
+          "header-2"
+        ],
+        "settings": {
+          "brand_line_1": "Vision of the",
+          "brand_line_2": "Bible",
+          "brand_tagline": "Sacred stories brought to life"
         }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "footer-0": {
+            "type": "link",
+            "settings": {
+              "label": "Our Story",
+              "link": "#about"
+            }
+          },
+          "footer-2": {
+            "type": "link",
+            "settings": {
+              "label": "Products",
+              "link": "/collections/all"
+            }
+          },
+          "footer-3": {
+            "type": "link",
+            "settings": {
+              "label": "The App",
+              "link": "#app"
+            }
+          },
+          "footer-4": {
+            "type": "link",
+            "settings": {
+              "label": "Faith & Stories",
+              "link": "#faith"
+            }
+          }
+        },
+        "block_order": [
+          "footer-0",
+          "footer-2",
+          "footer-3",
+          "footer-4"
+        ],
+        "settings": {
+          "verse": "\"For we live by faith, not by sight.\"",
+          "verse_ref": "— 2 Corinthians 5:7",
+          "logo": "shopify://shop_images/vob-logo-2.png",
+          "logo_width": 80,
+          "brand_line_1": "Vision of the",
+          "brand_line_2": "Bible",
+          "brand_tagline": "Sacred stories brought to life",
+          "brand_text": "Bringing the timeless stories and profound truths of the Bible to life — for the youngest hearts, the wisest ones, and the whole family in between.",
+          "links_title": "Explore",
+          "news_title": "Stay in the loop",
+          "news_text": "Join our weekly letter for stories, scripture, and gentle encouragement.",
+          "news_placeholder": "Your email address",
+          "contact_email": "info@visionofthebiblestore.com",
+          "top_label": "Back to top ↑"
+        }
+      }
+    },
+    "content_for_index": []
+  },
+  "presets": {
+    "Vision of the Bible": {
+      "color_parchment": "#FFFFFF",
+      "color_ink": "#251D3A",
+      "color_ink_soft": "#463C68",
+      "color_violet_deep": "#412773",
+      "color_violet": "#7A57C0",
+      "color_gold": "#BE9743",
+      "color_gold_bright": "#E4C56C",
+      "color_gold_deep": "#7C5D1E"
     }
+  }
 }

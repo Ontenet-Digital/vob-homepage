@@ -11,7 +11,41 @@
   "sections": {
     "main": {
       "type": "main-collection",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Collection",
+        "heading_align": "left",
+        "show_breadcrumb": true,
+        "show_description": true,
+        "show_count": false,
+        "columns_desktop": 4,
+        "columns_tablet": 3,
+        "columns_mobile": 2,
+        "grid_gap": 24,
+        "grid_gap_mobile": 14,
+        "card_bg": "#ffffff",
+        "card_border_color": "#ede6d6",
+        "card_radius": 10,
+        "image_ratio": "1/1",
+        "show_vendor": true,
+        "vendor_color": "#be9743",
+        "title_color": "#251d3a",
+        "title_size": 16,
+        "price_color": "#251d3a",
+        "compare_price_color": "#8b8398",
+        "show_rating": true,
+        "rating_text_color": "#be9743",
+        "show_quick_view": true,
+        "quickview_icon_color": "#251d3a",
+        "quick_add_style": "hover",
+        "quick_add_bg_color": "#251d3a",
+        "quick_add_text_color": "#fdfbf3",
+        "quick_add_radius": 30,
+        "show_image_dots": true,
+        "dot_active_color": "#be9743",
+        "bg_color": "#ffffff",
+        "padding_top": 48,
+        "padding_bottom": 72
+      }
     }
   },
   "order": [

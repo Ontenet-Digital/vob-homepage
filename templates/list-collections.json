@@ -11,7 +11,31 @@
   "sections": {
     "main": {
       "type": "main-list-collections",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Explore",
+        "heading": "Products",
+        "subheading": "Every way into the story — choose a collection to see what's inside.",
+        "heading_align": "left",
+        "show_breadcrumb": true,
+        "columns_desktop": 4,
+        "columns_tablet": 3,
+        "columns_mobile": 2,
+        "grid_gap": 24,
+        "grid_gap_mobile": 14,
+        "hide_empty": true,
+        "card_bg": "#ffffff",
+        "card_border_color": "#ede6d6",
+        "card_radius": 10,
+        "image_ratio": "1/1",
+        "title_color": "#251d3a",
+        "title_size": 18,
+        "show_count": true,
+        "count_color": "#be9743",
+        "link_label": "Explore",
+        "bg_color": "#ffffff",
+        "padding_top": 48,
+        "padding_bottom": 72
+      }
     }
   },
   "order": [
