@@ -15,9 +15,17 @@
     text-align: center;
     gap: 0.85rem;
 }
-.usp__icon {
+.usp__icon-wrap {
+    position: relative;
+    display: block;
     width: 88px;
     height: 88px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.usp__icon {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     display: block;
     border-radius: 50%;
@@ -29,6 +37,36 @@
     color: var(--ink);
     line-height: 1.2;
     max-width: 14ch;
+    transition: color 0.3s var(--ease);
+}
+/* Hover interaction: playful tilt + shine sweep (no shadows) */
+@media (hover: hover) {
+    .usp__icon-wrap {
+        transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .usp__icon-wrap::after {
+        content: "";
+        position: absolute;
+        inset: -40%;
+        background: linear-gradient(
+            115deg,
+            transparent 42%,
+            rgba(255, 255, 255, 0.55) 50%,
+            transparent 58%
+        );
+        transform: translateX(-110%);
+        transition: transform 1.5s var(--ease);
+        pointer-events: none;
+    }
+    .usp__item:hover .usp__icon-wrap {
+        transform: scale(1.06);
+    }
+    .usp__item:hover .usp__icon-wrap::after {
+        transform: translateX(110%);
+    }
+    .usp__item:hover .usp__label {
+        color: var(--gold-deep);
+    }
 }
 @media (max-width: 1023px) {
     .usp__grid {
@@ -41,8 +79,21 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 1.4rem 0.8rem;
     }
-    .usp__icon {
+    .usp__icon-wrap {
         width: 72px;
         height: 72px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .usp__icon-wrap,
+    .usp__icon-wrap::after,
+    .usp__label {
+        transition: none;
+    }
+    .usp__item:hover .usp__icon-wrap {
+        transform: none;
+    }
+    .usp__icon-wrap::after {
+        display: none;
     }
 }
