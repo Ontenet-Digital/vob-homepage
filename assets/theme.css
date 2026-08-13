@@ -1,18 +1,6 @@
-@import "./header.css";
-@import "./hero.css";
-@import "./about.css";
-@import "./categories.css";
-@import "./video-section.css";
-@import "./video-banner.css";
-@import "./app-section.css";
-@import "./story-section.css";
-@import "./testimonial-section.css";
-@import "./usp-section.css";
-@import "./footer.css";
-@import "./standard-pages.css";
-@import "./best-seller.css";
-@import "./product-list.css";
-@import "./featured-product.css";
+/* Base/global styles live here. Section & component stylesheets are loaded
+   individually from layout/theme.liquid (each gets a versioned URL via
+   asset_url, so edits propagate without stale-cache issues). */
 
 :root {
     --parchment: #ffffff;

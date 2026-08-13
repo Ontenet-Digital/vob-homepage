@@ -10,9 +10,10 @@
     window.VOB = {
         reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)")
             .matches,
+        lenis: null,
     };
 
-    new Lenis({
+    window.VOB.lenis = new Lenis({
         autoRaf: true,
         autoToggle: true,
         anchors: true,

@@ -19,6 +19,8 @@
     "color_gold": "#BE9743",
     "color_gold_bright": "#E4C56C",
     "color_gold_deep": "#7C5D1E",
+    "free_shipping_enabled": true,
+    "free_shipping_threshold": 140,
     "sections": {
       "header": {
         "type": "header",
@@ -123,7 +125,9 @@
       "color_violet": "#7A57C0",
       "color_gold": "#BE9743",
       "color_gold_bright": "#E4C56C",
-      "color_gold_deep": "#7C5D1E"
+      "color_gold_deep": "#7C5D1E",
+      "free_shipping_enabled": true,
+      "free_shipping_threshold": 140
     }
   }
 }

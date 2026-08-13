@@ -2,7 +2,7 @@
 /* Dynamic values arrive as custom properties from the section's own {% style %}
    block (sections/hero-banner.liquid), scoped to #shopify-section-{id}.
    The fallbacks below keep the section renderable on its own. */
-   .hero {
+.hero {
     position: relative;
     display: grid;
     overflow: hidden;

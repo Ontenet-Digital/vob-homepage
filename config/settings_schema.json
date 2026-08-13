@@ -1,54 +1,116 @@
 [
-  {
-    "name": "theme_info",
-    "theme_name": "Vision of the Bible",
-    "theme_author": "Vision of the Bible",
-    "theme_version": "1.0.0",
-    "theme_documentation_url": "https://visionofthebiblestore.com",
-    "theme_support_url": "https://visionofthebiblestore.com"
-  },
-  {
-    "name": "Brand",
-    "settings": [
-      {
-        "type": "image_picker",
-        "id": "favicon",
-        "label": "Favicon"
-      },
-      {
-        "type": "image_picker",
-        "id": "logo_light",
-        "label": "Logo (light, for dark header)",
-        "info": "Optional. Shown in the header over the dark hero. If empty, the wordmark is used."
-      },
-      {
-        "type": "image_picker",
-        "id": "logo_footer",
-        "label": "Footer logo",
-        "info": "Optional. If empty, a fallback wordmark is shown."
-      }
-    ]
-  },
-  {
-    "name": "Colors",
-    "settings": [
-      { "type": "color", "id": "color_parchment", "label": "Parchment (page background)", "default": "#FFFFFF" },
-      { "type": "color", "id": "color_ink", "label": "Ink (headings)", "default": "#251D3A" },
-      { "type": "color", "id": "color_ink_soft", "label": "Ink soft (body text)", "default": "#463C68" },
-      { "type": "color", "id": "color_violet_deep", "label": "Violet deep", "default": "#412773" },
-      { "type": "color", "id": "color_violet", "label": "Violet", "default": "#7A57C0" },
-      { "type": "color", "id": "color_gold", "label": "Gold", "default": "#BE9743" },
-      { "type": "color", "id": "color_gold_bright", "label": "Gold bright", "default": "#E4C56C" },
-      { "type": "color", "id": "color_gold_deep", "label": "Gold deep", "default": "#7C5D1E" }
-    ]
-  },
-  {
-    "name": "Social media",
-    "settings": [
-      { "type": "url", "id": "social_facebook", "label": "Facebook URL" },
-      { "type": "url", "id": "social_instagram", "label": "Instagram URL" },
-      { "type": "url", "id": "social_youtube", "label": "YouTube URL" },
-      { "type": "url", "id": "social_tiktok", "label": "TikTok URL" }
-    ]
-  }
+    {
+        "name": "theme_info",
+        "theme_name": "Vision of the Bible",
+        "theme_author": "Vision of the Bible",
+        "theme_version": "1.0.0",
+        "theme_documentation_url": "https://visionofthebiblestore.com",
+        "theme_support_url": "https://visionofthebiblestore.com"
+    },
+    {
+        "name": "Brand",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "favicon",
+                "label": "Favicon"
+            },
+            {
+                "type": "image_picker",
+                "id": "logo_light",
+                "label": "Logo (light, for dark header)",
+                "info": "Optional. Shown in the header over the dark hero. If empty, the wordmark is used."
+            },
+            {
+                "type": "image_picker",
+                "id": "logo_footer",
+                "label": "Footer logo",
+                "info": "Optional. If empty, a fallback wordmark is shown."
+            }
+        ]
+    },
+    {
+        "name": "Colors",
+        "settings": [
+            {
+                "type": "color",
+                "id": "color_parchment",
+                "label": "Parchment (page background)",
+                "default": "#FFFFFF"
+            },
+            {
+                "type": "color",
+                "id": "color_ink",
+                "label": "Ink (headings)",
+                "default": "#251D3A"
+            },
+            {
+                "type": "color",
+                "id": "color_ink_soft",
+                "label": "Ink soft (body text)",
+                "default": "#463C68"
+            },
+            {
+                "type": "color",
+                "id": "color_violet_deep",
+                "label": "Violet deep",
+                "default": "#412773"
+            },
+            {
+                "type": "color",
+                "id": "color_violet",
+                "label": "Violet",
+                "default": "#7A57C0"
+            },
+            {
+                "type": "color",
+                "id": "color_gold",
+                "label": "Gold",
+                "default": "#BE9743"
+            },
+            {
+                "type": "color",
+                "id": "color_gold_bright",
+                "label": "Gold bright",
+                "default": "#E4C56C"
+            },
+            {
+                "type": "color",
+                "id": "color_gold_deep",
+                "label": "Gold deep",
+                "default": "#7C5D1E"
+            }
+        ]
+    },
+    {
+        "name": "Social media",
+        "settings": [
+            { "type": "url", "id": "social_facebook", "label": "Facebook URL" },
+            {
+                "type": "url",
+                "id": "social_instagram",
+                "label": "Instagram URL"
+            },
+            { "type": "url", "id": "social_youtube", "label": "YouTube URL" },
+            { "type": "url", "id": "social_tiktok", "label": "TikTok URL" }
+        ]
+    },
+    {
+        "name": "Cart & free shipping",
+        "settings": [
+            {
+                "type": "checkbox",
+                "id": "free_shipping_enabled",
+                "label": "Enable free shipping progress bar",
+                "default": true
+            },
+            {
+                "type": "number",
+                "id": "free_shipping_threshold",
+                "label": "Free shipping threshold (currency)",
+                "default": 140,
+                "info": "The progress bar fills toward this amount; free shipping unlocks when the cart total reaches it."
+            }
+        ]
+    }
 ]
