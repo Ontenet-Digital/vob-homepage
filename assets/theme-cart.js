@@ -535,9 +535,19 @@
             });
     }
 
+    function setPageLineLoading(id, on) {
+        var item = document.querySelector('[data-cart-page-line="' + id + '"]');
+        if (!item) return;
+        item.classList.toggle("is-loading", on);
+        item.querySelectorAll("button").forEach(function (el) {
+            el.disabled = on;
+        });
+    }
+
     function pageChangeLine(id, qty) {
         if (cartPageBusy || !id) return;
         cartPageBusy = true;
+        setPageLineLoading(id, true);
         var body = new FormData();
         body.append("id", id);
         body.append("quantity", String(qty));
@@ -555,9 +565,11 @@
                     : Promise.reject(new Error("change failed"));
             })
             .then(function () {
+                setPageLineLoading(id, false);
                 refreshCartPage();
             })
             .catch(function () {
+                setPageLineLoading(id, false);
                 cartPageBusy = false;
             });
     }

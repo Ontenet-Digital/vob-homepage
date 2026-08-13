@@ -11,7 +11,7 @@
           {%- render 'free-shipping-bar' -%}
 
           {%- for item in cart.items -%}
-            <div class="cart-line">
+            <div class="cart-line" data-cart-page-line="{{ item.key }}">
               <a class="cart-line__thumb" href="{{ item.url }}" tabindex="-1" aria-hidden="true">
                 {%- if item.image -%}
                   <img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.title | escape }}" width="120" height="120" loading="lazy">
@@ -33,7 +33,9 @@
                     <span class="cart-line__qty-num">{{ item.quantity }}</span>
                     <button type="button" class="cart-line__qty-btn" data-cart-page-qty data-id="{{ item.key }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="{{ 'cart.general.quantity' | t }} +">+</button>
                   </div>
-                  <a class="cart-line__remove" href="{{ item.url_to_remove }}" data-cart-page-remove data-key="{{ item.key }}">{{ 'cart.general.remove' | t }}</a>
+                  <a class="cart-line__remove" href="{{ item.url_to_remove }}" data-cart-page-remove data-key="{{ item.key }}" aria-label="{{ 'cart.general.remove' | t }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6"/></svg>
+                  </a>
                 </div>
               </div>
             </div>
