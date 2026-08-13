@@ -5,7 +5,7 @@
 :root {
     --parchment: #ffffff;
     --parchment-deep: #efe5d0;
-    --parchment-line: #051a39;
+    --parchment-line: #e4c56c;
     --ink: #251d3a;
     --ink-soft: #463c68;
     --violet-deep: #412773;
@@ -21,6 +21,30 @@
     --serif: "Cardo", Georgia, serif;
     --display: "Fraunces", Georgia, serif;
     --ui: "Manrope", system-ui, sans-serif;
+
+    /* Responsive breakpoint system
+       FHD ≥1920 → container 1440px
+       QHD ≥1440 → container 1280px
+       HD+ ≥1280 → container 1024px
+       HD  ≥1024 → container 768px
+       tab ≥768  → 24px gutters (fluid)
+       mobile    → 16px gutters (fluid) */
+    --bp-tab: 768px;
+    --bp-hd: 1024px;
+    --bp-hdplus: 1280px;
+    --bp-qhd: 1440px;
+    --bp-fhd: 1920px;
+
+    /* Container max-widths */
+    --wrap-hd: 768px;
+    --wrap-hdplus: 1024px;
+    --wrap-qhd: 1280px;
+    --wrap-fhd: 1440px;
+
+    /* Gutters */
+    --gutter-mobile: 16px;
+    --gutter-tab: 24px;
+    --gutter: 2rem;
 
     /* Subtle, product-matched corners — squarish, not pill-like */
     --radius-xs: 2px;
@@ -55,8 +79,36 @@ a {
     text-decoration: none;
 }
 .wrap {
-    width: min(100% - 4rem, var(--maxw));
+    width: 100%;
+    max-width: 100%;
     margin-inline: auto;
+    padding-inline: var(--gutter-mobile);
+}
+@media (min-width: 768px) {
+    .wrap {
+        padding-inline: var(--gutter-tab);
+    }
+}
+@media (min-width: 1024px) {
+    .wrap {
+        width: min(100% - 4rem, var(--wrap-hd));
+        padding-inline: 0;
+    }
+}
+@media (min-width: 1280px) {
+    .wrap {
+        width: min(100% - 4rem, var(--wrap-hdplus));
+    }
+}
+@media (min-width: 1440px) {
+    .wrap {
+        width: min(100% - 4rem, var(--wrap-qhd));
+    }
+}
+@media (min-width: 1920px) {
+    .wrap {
+        width: min(100% - 4rem, var(--wrap-fhd));
+    }
 }
 section {
     position: relative;

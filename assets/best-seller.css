@@ -388,7 +388,7 @@
     color: var(--bs-compare-color, #8b8398);
 }
 
-@media (max-width: 749px) {
+@media (max-width: 767px) {
     .bs__head {
         margin-bottom: 1.8rem;
     }

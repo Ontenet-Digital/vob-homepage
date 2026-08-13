@@ -458,7 +458,7 @@ body.drawer-locked {
     transition: left 0.5s var(--ease);
 }
 
-@media (max-width: 560px) {
+@media (max-width: 767px) {
     .cdrawer__panel {
         width: 100vw;
     }

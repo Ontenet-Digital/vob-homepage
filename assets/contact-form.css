@@ -1,0 +1,202 @@
+/* ============ CONTACT FORM ============ */
+.cform {
+    margin-top: 3rem;
+    max-width: 1160px;
+    margin-inline: auto;
+}
+.cform__card {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--parchment-line);
+    background: #fff;
+    overflow: hidden;
+}
+.cform__aside {
+    background: linear-gradient(160deg, var(--violet-deep) 0%, #2e1a56 100%);
+    color: #f3ecdc;
+    padding: clamp(2.25rem, 4.5vw, 4rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+.cform__aside .eyebrow {
+    color: var(--gold-bright);
+}
+.cform__aside .eyebrow::before {
+    background: var(--gold-bright);
+}
+.cform__title {
+    color: #fbf7ec;
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+    margin: 0;
+}
+.cform__intro {
+    color: rgba(243, 236, 220, 0.85);
+    font-size: 1.08rem;
+    line-height: 1.8;
+}
+.cform__meta {
+    list-style: none;
+    margin: auto 0 0;
+    padding: 1.5rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+.cform__meta-label {
+    display: block;
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+    margin-bottom: 0.15rem;
+}
+.cform__meta a {
+    color: #f3ecdc;
+    text-decoration: underline;
+    word-break: break-all;
+}
+.cform__meta a:hover {
+    color: #fff;
+}
+
+.cform__fields {
+    padding: clamp(2.25rem, 4.5vw, 4rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+}
+.cform__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4rem;
+}
+.cform__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+.cform__label {
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+.cform__label em {
+    color: var(--gold-deep);
+    font-style: normal;
+}
+.cform__opt {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 500;
+    opacity: 0.75;
+}
+.cform__field input,
+.cform__field textarea {
+    font-family: var(--ui);
+    font-size: 1.02rem;
+    color: var(--ink);
+    padding: 1rem 1.15rem;
+    border: 1.5px solid var(--parchment-line);
+    border-radius: var(--radius-sm);
+    background: #fdfbf5;
+    width: 100%;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+.cform__field textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+.cform__field input:focus,
+.cform__field textarea:focus {
+    outline: none;
+    border-color: var(--violet);
+    box-shadow: 0 0 0 3px rgba(122, 87, 192, 0.15);
+}
+.cform__field input::placeholder,
+.cform__field textarea::placeholder {
+    color: var(--ink-soft);
+    opacity: 0.6;
+}
+
+.cform__actions {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+.cform__status {
+    font-family: var(--ui);
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+}
+.cform__status--success {
+    color: #1f6b3a;
+}
+.cform__status--error {
+    color: #8a2b2b;
+}
+
+.cform__msg {
+    padding: 0.9rem 1.1rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--ui);
+    font-size: 0.94rem;
+}
+.cform__msg--success {
+    background: #e9f7ee;
+    border: 1px solid #bfe4cc;
+    color: #1f6b3a;
+}
+.cform__msg--error {
+    background: #fdecec;
+    border: 1px solid #f3c6c6;
+    color: #8a2b2b;
+}
+.cform__msg--error ul {
+    margin: 0 0 0 1.1rem;
+}
+
+/* Tablet (768–1023): stack the card for a comfortable, airy read */
+@media (max-width: 1023px) {
+    .cform__card {
+        grid-template-columns: 1fr;
+    }
+    .cform__aside,
+    .cform__fields {
+        padding: 2rem 1.75rem;
+    }
+    .cform__aside {
+        gap: 1rem;
+    }
+}
+/* Mobile (<768): single column fields + full-width button */
+@media (max-width: 767px) {
+    .cform {
+        margin-top: 2.25rem;
+    }
+    .cform__aside,
+    .cform__fields {
+        padding: 1.5rem 1.25rem;
+    }
+    .cform__grid {
+        grid-template-columns: 1fr;
+    }
+    .cform__actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .cform__actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

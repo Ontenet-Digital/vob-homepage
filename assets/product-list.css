@@ -650,7 +650,7 @@ body.drawer-locked {
     color: var(--ink-soft);
 }
 
-@media (max-width: 749px) {
+@media (max-width: 767px) {
     .plist {
         --plist-header-offset: 84px;
     }
