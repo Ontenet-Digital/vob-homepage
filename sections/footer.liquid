@@ -47,12 +47,12 @@
       </div>
 
       <div class="fcol">
-        <h5>Quick Links</h5>
-        <a href="/pages/contact">Contact Us</a>
-        <a href="/policies/terms-of-service">Terms &amp; Condition</a>
-        <a href="/policies/privacy-policy">Privacy Policy</a>
-        <a href="/policies/refund-policy">Refund Policy</a>
-        <a href="/policies/shipping-policy">Shipping Policy</a>
+        <h5>{{ section.settings.quick_links_title | default: 'Quick Links' }}</h5>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'quick_link' -%}
+            <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+          {%- endif -%}
+        {%- endfor -%}
       </div>
 
       <div class="fcol news">
@@ -97,6 +97,8 @@
     { "type": "textarea", "id": "brand_text", "label": "Description", "default": "Bringing the timeless stories and profound truths of the Bible to life — for the youngest hearts, the wisest ones, and the whole family in between." },
     { "type": "header", "content": "Links column" },
     { "type": "text", "id": "links_title", "label": "Column title", "default": "Explore" },
+    { "type": "header", "content": "Quick Links column" },
+    { "type": "text", "id": "quick_links_title", "label": "Column title", "default": "Quick Links" },
     { "type": "header", "content": "Newsletter" },
     { "type": "text", "id": "news_title", "label": "Title", "default": "Stay in the loop" },
     { "type": "textarea", "id": "news_text", "label": "Text", "default": "Join our weekly letter for stories, scripture, and gentle encouragement." },
@@ -113,16 +115,29 @@
         { "type": "text", "id": "label", "label": "Label", "default": "Link" },
         { "type": "url", "id": "link", "label": "Link" }
       ]
+    },
+    {
+      "type": "quick_link",
+      "name": "Quick link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Link" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
     }
   ],
-  "max_blocks": 8,
+  "max_blocks": 16,
   "default": {
     "blocks": [
       { "type": "link", "settings": { "label": "Our Story", "link": "#about" } },
       { "type": "link", "settings": { "label": "Collections", "link": "#categories" } },
       { "type": "link", "settings": { "label": "Products", "link": "#products" } },
       { "type": "link", "settings": { "label": "The App", "link": "#app" } },
-      { "type": "link", "settings": { "label": "Faith & Stories", "link": "#faith" } }
+      { "type": "link", "settings": { "label": "Faith & Stories", "link": "#faith" } },
+      { "type": "quick_link", "settings": { "label": "Contact Us", "link": "/pages/contact" } },
+      { "type": "quick_link", "settings": { "label": "Terms & Condition", "link": "/policies/terms-of-service" } },
+      { "type": "quick_link", "settings": { "label": "Privacy Policy", "link": "/policies/privacy-policy" } },
+      { "type": "quick_link", "settings": { "label": "Refund Policy", "link": "/policies/refund-policy" } },
+      { "type": "quick_link", "settings": { "label": "Shipping Policy", "link": "/policies/shipping-policy" } }
     ]
   }
 }
