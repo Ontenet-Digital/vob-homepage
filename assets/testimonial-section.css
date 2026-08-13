@@ -112,8 +112,8 @@
         display: flex;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        margin-inline: -2rem;
-        padding: 0.25rem 2rem 1rem;
+        /* margin-inline: -1rem;
+        padding: 0.25rem 1rem 1rem; */
         gap: 0.9rem;
         scrollbar-width: none;
         -webkit-overflow-scrolling: touch;

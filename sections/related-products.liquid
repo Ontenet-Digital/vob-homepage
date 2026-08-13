@@ -36,10 +36,13 @@
   #shopify-section-{{ section.id }} .rel{
     --rel-cols: {{ s.columns | default: 4 }};
     --rel-cols-tablet: {{ s.columns_tablet | default: 3 }};
-    --rel-cols-mobile: {{ s.columns_mobile | default: 2 }};
+    --rel-cols-mobile: {{ s.columns_mobile | default: 1 }};
     --rel-bg: {{ s.bg_color | default: '#ffffff' }};
     --rel-pad-t: {{ s.padding_top | default: 24 }}px;
     --rel-pad-b: {{ s.padding_bottom | default: 88 }}px;
+    --rel-cta-bg: {{ s.quick_add_bg_color | default: '#251d3a' }};
+    --rel-cta-color: {{ s.quick_add_text_color | default: '#fdfbf3' }};
+    --rel-cta-radius: {{ s.quick_add_radius | default: 30 }}px;
   }
   @media (max-width: 749px){
     #shopify-section-{{ section.id }} .rel{
@@ -68,7 +71,7 @@
       {%- assign shown = 0 -%}
       {%- for p in use_list -%}
         {%- if source == 'fallback' and product != blank and p.id == product.id -%}{%- continue -%}{%- endif -%}
-        {%- render 'product-card', product: p -%}
+        {%- render 'product-card', product: p, with_cta: true -%}
         {%- assign shown = shown | plus: 1 -%}
         {%- if shown >= limit -%}{%- break -%}{%- endif -%}
       {%- endfor -%}
@@ -99,7 +102,7 @@
   gap: clamp(14px, 2vw, 22px);
 }
 @media (max-width: 989px){ .rel__grid{ grid-template-columns: repeat(var(--rel-cols-tablet, 3), minmax(0, 1fr)); } }
-@media (max-width: 620px){ .rel__grid{ grid-template-columns: repeat(var(--rel-cols-mobile, 2), minmax(0, 1fr)); } }
+@media (max-width: 620px){ .rel__grid{ grid-template-columns: repeat(var(--rel-cols-mobile, 1), minmax(0, 1fr)); } }
 {% endstylesheet %}
 
 {% javascript %}
@@ -188,7 +191,12 @@
     { "type": "header", "content": "Grid" },
     { "type": "range", "id": "columns", "label": "Columns — desktop", "min": 2, "max": 6, "step": 1, "default": 4 },
     { "type": "range", "id": "columns_tablet", "label": "Columns — tablet", "min": 2, "max": 4, "step": 1, "default": 3 },
-    { "type": "range", "id": "columns_mobile", "label": "Columns — mobile", "min": 1, "max": 3, "step": 1, "default": 2 },
+    { "type": "range", "id": "columns_mobile", "label": "Columns — mobile", "min": 1, "max": 3, "step": 1, "default": 1 },
+
+    { "type": "header", "content": "Card button" },
+    { "type": "color", "id": "quick_add_bg_color", "label": "Button background", "default": "#251D3A" },
+    { "type": "color", "id": "quick_add_text_color", "label": "Button text", "default": "#FDFBF3" },
+    { "type": "range", "id": "quick_add_radius", "label": "Button corner radius", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 30 },
 
     { "type": "header", "content": "Section" },
     { "type": "color", "id": "bg_color", "label": "Background colour", "default": "#FFFFFF" },

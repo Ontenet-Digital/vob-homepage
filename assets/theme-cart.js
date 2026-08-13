@@ -487,7 +487,7 @@
     });
 
     document.addEventListener("submit", function (e) {
-        var form = closest(e.target, ".bs-card__form");
+        var form = closest(e.target, ".bs-card__form, .grid-card__form");
         if (!form) return;
         e.preventDefault();
         quickAdd(form);
