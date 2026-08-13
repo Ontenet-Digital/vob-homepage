@@ -1,0 +1,86 @@
+{%- comment -%}
+  story_products — "Our Products" heading + product card blocks for the
+  Our Story page. Add one Product block per item.
+  Styles in assets/story-pages.css.
+{%- endcomment -%}
+
+<section class="story-products" id="{{ section.settings.anchor_id | default: 'story-products' }}">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow center">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2>{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <p>{{ section.settings.intro }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="story-products__grid">
+      {%- for block in section.blocks -%}
+        <article class="story-product reveal" {{ block.shopify_attributes }}>
+          {%- if block.settings.title != blank -%}
+            <h3>{{ block.settings.title }}</h3>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <p>{{ block.settings.text }}</p>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "story_products",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our Products" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our Products" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Three immersive ways to bring the Bible to life." },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "story-products" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "The Digital Bible" },
+        { "type": "textarea", "id": "text", "label": "Description" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "story_products",
+      "blocks": [
+        {
+          "type": "product",
+          "settings": {
+            "title": "The Digital Bible",
+            "text": "A visually rich and interactive experience, featuring stunning imagery, insightful commentary, and engaging study tools."
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "title": "The Holy Land, A Digital Travel Book",
+            "text": "An immersive journey through the Holy Land, featuring breathtaking photographs, historical narratives, and interactive maps."
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "title": "The 4 Gospels Digital Visual Bible",
+            "text": "A visually stunning exploration of the Gospels, bringing the stories of Jesus Christ to life."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
