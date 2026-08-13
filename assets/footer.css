@@ -31,7 +31,7 @@
 }
 .fgrid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1.3fr;
+    grid-template-columns: 1.5fr 1fr 1fr 1.3fr;
     gap: 2.5rem;
     padding-bottom: 2.6rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.22);
@@ -62,12 +62,12 @@
 .fcol h5 {
     font-family: var(--ui);
     font-weight: 700;
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     /* color: var(--gold-bright); */
     color: #000;
-    margin-bottom: 1.1rem;
+    margin-bottom: 0.2rem;
 }
 .fcol a {
     display: block;
