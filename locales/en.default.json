@@ -35,6 +35,10 @@
             "email_placeholder": "Your email address",
             "confirmation": "Thank you for subscribing.",
             "submit": "Subscribe"
+        },
+        "nav": {
+            "menu": "Menu",
+            "close": "Close menu"
         }
     },
     "products": {
@@ -77,6 +81,9 @@
     "cart": {
         "general": {
             "title": "Your cart",
+            "summary": "Order summary",
+            "shipping_note": "Shipping & taxes calculated at checkout.",
+            "quantity": "Quantity",
             "empty": "Your cart is empty",
             "continue_shopping": "Continue shopping",
             "subtotal": "Subtotal",

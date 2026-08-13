@@ -13,8 +13,8 @@
   # fall back gracefully — it invalidates the whole declaration, which is
   # what collapses the grid to a single full-width column.
   assign cols_desktop = s.columns_desktop | default: 4
-  assign cols_tablet = s.columns_tablet | default: 3
-  assign cols_mobile = s.columns_mobile | default: 2
+  assign cols_tablet = s.columns_tablet | default: 1
+  assign cols_mobile = s.columns_mobile | default: 1
   assign gap_desktop = s.grid_gap | default: 24
   assign gap_mobile = s.grid_gap_mobile | default: 14
   assign pad_top = s.padding_top | default: 72
@@ -27,14 +27,13 @@
   if cols_desktop == blank or cols_desktop < 2
     assign cols_desktop = 4
   endif
-  if cols_tablet == blank or cols_tablet < 2
-    assign cols_tablet = 3
+  if cols_tablet == blank or cols_tablet < 1
+    assign cols_tablet = 1
   endif
-  # Floors at 2 even if a value of 1 was saved before "Columns — mobile"
-  # required a minimum of 2 — a single full-width card per row is almost
-  # never the intended look, and the old min let it happen silently.
-  if cols_mobile == blank or cols_mobile < 2
-    assign cols_mobile = 2
+  # "Columns — mobile" and "Columns — tablet" are set to 1: a single
+  # full-width card per row on mobile + tablet (per design direction).
+  if cols_mobile == blank or cols_mobile < 1
+    assign cols_mobile = 1
   endif
 -%}
 
@@ -189,8 +188,8 @@
 
     { "type": "header", "content": "Grid" },
     { "type": "range", "id": "columns_desktop", "label": "Columns — desktop", "min": 2, "max": 5, "step": 1, "default": 4 },
-    { "type": "range", "id": "columns_tablet", "label": "Columns — tablet", "min": 2, "max": 4, "step": 1, "default": 3 },
-    { "type": "range", "id": "columns_mobile", "label": "Columns — mobile", "min": 2, "max": 4, "step": 1, "default": 2 },
+    { "type": "range", "id": "columns_tablet", "label": "Columns — tablet", "min": 1, "max": 4, "step": 1, "default": 1 },
+    { "type": "range", "id": "columns_mobile", "label": "Columns — mobile", "min": 1, "max": 4, "step": 1, "default": 1 },
     { "type": "range", "id": "grid_gap", "label": "Grid gap — desktop", "min": 8, "max": 48, "step": 2, "unit": "px", "default": 24 },
     { "type": "range", "id": "grid_gap_mobile", "label": "Grid gap — mobile", "min": 4, "max": 32, "step": 2, "unit": "px", "default": 14 },
 
