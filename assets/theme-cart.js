@@ -506,6 +506,79 @@
         refreshCart({ open: true });
     });
 
+    /* ---- Cart PAGE (full /cart page): live qty stepper + remove ---- */
+    var CART_PAGE_SECTIONS_URL = "/?sections=main-cart";
+    var cartPageBusy = false;
+
+    function refreshCartPage() {
+        fetch(CART_PAGE_SECTIONS_URL, {
+            headers: { Accept: "application/json" },
+        })
+            .then(function (r) {
+                return r.ok ? r.json() : null;
+            })
+            .then(function (data) {
+                cartPageBusy = false;
+                if (!data || !data["main-cart"]) return;
+                var main = document.getElementById("top");
+                if (!main) return;
+                var tmp = document.createElement("div");
+                tmp.innerHTML = data["main-cart"];
+                var next = tmp.querySelector(".page-shell");
+                var current = main.querySelector(".page-shell");
+                if (!next || !current) return;
+                current.replaceWith(next);
+                updateCount();
+            })
+            .catch(function () {
+                cartPageBusy = false;
+            });
+    }
+
+    function pageChangeLine(id, qty) {
+        if (cartPageBusy || !id) return;
+        cartPageBusy = true;
+        var body = new FormData();
+        body.append("id", id);
+        body.append("quantity", String(qty));
+        return fetch("/cart/change.js", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+            },
+            body: body,
+        })
+            .then(function (r) {
+                return r.ok
+                    ? r.json()
+                    : Promise.reject(new Error("change failed"));
+            })
+            .then(function () {
+                refreshCartPage();
+            })
+            .catch(function () {
+                cartPageBusy = false;
+            });
+    }
+
+    document.addEventListener("click", function (e) {
+        var qtyBtn = closest(e.target, "[data-cart-page-qty]");
+        if (qtyBtn) {
+            e.preventDefault();
+            pageChangeLine(
+                qtyBtn.getAttribute("data-id"),
+                qtyBtn.getAttribute("data-qty"),
+            );
+            return;
+        }
+        var remove = closest(e.target, "[data-cart-page-remove]");
+        if (remove) {
+            e.preventDefault();
+            pageChangeLine(remove.getAttribute("data-key"), "0");
+        }
+    });
+
     /* ---- Boot ---- */
     function boot() {
         // Delegated handlers are bound once at module scope; populate the

@@ -81,6 +81,9 @@
     "cart": {
         "general": {
             "title": "Your cart",
+            "summary": "Order summary",
+            "shipping_note": "Shipping & taxes calculated at checkout.",
+            "quantity": "Quantity",
             "empty": "Your cart is empty",
             "continue_shopping": "Continue shopping",
             "subtotal": "Subtotal",

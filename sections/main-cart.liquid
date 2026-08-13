@@ -5,30 +5,53 @@
   </div>
 
   {%- if cart.item_count > 0 -%}
-    {%- form 'cart', cart -%}
-      {%- render 'free-shipping-bar' -%}
+    {%- form 'cart', cart, class: 'cart-page' -%}
+      <div class="cart-page__grid">
+        <div class="cart-page__items">
+          {%- render 'free-shipping-bar' -%}
 
-      {%- for item in cart.items -%}
-        <div class="cart-row">
-          <img src="{{ item.image | image_url: width: 180 }}" alt="{{ item.title | escape }}">
-          <div>
-            <a class="cart-row__title" href="{{ item.url }}">{{ item.product.title }}</a>
-            {%- unless item.variant.title contains 'Default' -%}<div class="form-note">{{ item.variant.title }}</div>{%- endunless -%}
-            <a class="form-note" href="{{ item.url_to_remove }}">{{ 'cart.general.remove' | t }}</a>
-          </div>
-          <div class="qty">
-            <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantity">
-          </div>
-          <div class="cart-row__title">{{ item.final_line_price | money }}</div>
+          {%- for item in cart.items -%}
+            <div class="cart-line">
+              <a class="cart-line__thumb" href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+                {%- if item.image -%}
+                  <img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.title | escape }}" width="120" height="120" loading="lazy">
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'cart-line__thumb-ph' }}
+                {%- endif -%}
+              </a>
+              <div class="cart-line__body">
+                <div class="cart-line__top">
+                  <a class="cart-line__name" href="{{ item.url }}">{{ item.product.title }}</a>
+                  <span class="cart-line__price">{{ item.final_line_price | money }}</span>
+                </div>
+                {%- unless item.variant.title contains 'Default' -%}
+                  <p class="cart-line__variant">{{ item.variant.title }}</p>
+                {%- endunless -%}
+                <div class="cart-line__bottom">
+                  <div class="cart-line__qty">
+                    <button type="button" class="cart-line__qty-btn" data-cart-page-qty data-id="{{ item.key }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="{{ 'cart.general.quantity' | t }} -">&minus;</button>
+                    <span class="cart-line__qty-num">{{ item.quantity }}</span>
+                    <button type="button" class="cart-line__qty-btn" data-cart-page-qty data-id="{{ item.key }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="{{ 'cart.general.quantity' | t }} +">+</button>
+                  </div>
+                  <a class="cart-line__remove" href="{{ item.url_to_remove }}" data-cart-page-remove data-key="{{ item.key }}">{{ 'cart.general.remove' | t }}</a>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
         </div>
-      {%- endfor -%}
 
-      <div class="cart-foot">
-        <div class="subtotal">{{ 'cart.general.subtotal' | t }}: {{ cart.total_price | money }}</div>
-        <div style="display:flex;gap:.7rem;flex-wrap:wrap">
-          <button type="submit" name="update" class="btn btn--ghost">Update</button>
-          <button type="submit" name="checkout" class="btn btn--gold">{{ 'cart.general.checkout' | t }}</button>
-        </div>
+        <aside class="cart-page__summary">
+          <div class="cart-summary">
+            <h2 class="cart-summary__title">{{ 'cart.general.summary' | t }}</h2>
+            <div class="cart-summary__row">
+              <span>{{ 'cart.general.subtotal' | t }}</span>
+              <strong>{{ cart.total_price | money }}</strong>
+            </div>
+            <p class="cart-summary__note">{{ 'cart.general.shipping_note' | t }}</p>
+            <button type="submit" name="checkout" class="btn btn--gold cart-summary__checkout">{{ 'cart.general.checkout' | t }}</button>
+            <a class="cart-summary__continue" href="{{ routes.all_products_collection_url }}">{{ 'cart.general.continue_shopping' | t }}</a>
+          </div>
+        </aside>
       </div>
     {%- endform -%}
   {%- else -%}
