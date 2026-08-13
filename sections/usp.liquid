@@ -17,14 +17,16 @@
       -%}
       <div class="usp__item reveal" {{ block.shopify_attributes }}>
         {%- if icon_src != blank -%}
-          <img
-            class="usp__icon"
-            src="{{ icon_src }}"
-            alt=""
-            width="120"
-            height="120"
-            loading="lazy"
-          >
+          <span class="usp__icon-wrap">
+            <img
+              class="usp__icon"
+              src="{{ icon_src }}"
+              alt=""
+              width="120"
+              height="120"
+              loading="lazy"
+            >
+          </span>
         {%- endif -%}
         {%- if block.settings.label != blank -%}
           <p class="usp__label">{{ block.settings.label }}</p>
