@@ -41,33 +41,38 @@
                 {%- endif -%}
               </a>
               <div class="cdrawer__info">
-                <a class="cdrawer__name" href="{{ item.url }}">{{ item.product.title }}</a>
+                <div style="display:flex; justify-content:space-between; align-items:start; gap: 10px;">
+                  <a class="cdrawer__name" href="{{ item.url }}">{{ item.product.title }}</a>
+                  <button type="button" class="cdrawer__remove" data-remove data-id="{{ item.key }}" aria-label="{{ 'cart.drawer.remove' | t }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+              </button>
+                </div>
                 {%- unless item.variant.title contains 'Default' -%}
                   <p class="cdrawer__variant">{{ item.variant.title }}</p>
                 {%- endunless -%}
-                <p class="cdrawer__price">{{ item.final_line_price | money }}</p>
-                <div class="cdrawer__qty">
-                  <button type="button" class="cdrawer__qty-btn" data-qty-change data-id="{{ item.key }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="{{ 'cart.drawer.quantity' | t }} -">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg>
-                  </button>
-                  <input
-                    type="number"
-                    class="cdrawer__qty-input"
-                    value="{{ item.quantity }}"
-                    min="0"
-                    inputmode="numeric"
-                    data-qty-input
-                    data-id="{{ item.key }}"
-                    aria-label="{{ 'cart.drawer.quantity' | t }}"
-                  >
-                  <button type="button" class="cdrawer__qty-btn" data-qty-change data-id="{{ item.key }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="{{ 'cart.drawer.quantity' | t }} +">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-                  </button>
+                <div class="cdrawer__bottom">
+                  <div class="cdrawer__qty">
+                    <button type="button" class="cdrawer__qty-btn" data-qty-change data-id="{{ item.key }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="{{ 'cart.drawer.quantity' | t }} -">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg>
+                    </button>
+                    <input
+                      type="number"
+                      class="cdrawer__qty-input"
+                      value="{{ item.quantity }}"
+                      min="0"
+                      inputmode="numeric"
+                      data-qty-input
+                      data-id="{{ item.key }}"
+                      aria-label="{{ 'cart.drawer.quantity' | t }}"
+                    >
+                    <button type="button" class="cdrawer__qty-btn" data-qty-change data-id="{{ item.key }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="{{ 'cart.drawer.quantity' | t }} +">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                    </button>
+                  </div>
+                  <p class="cdrawer__price">{{ item.final_line_price | money }}</p>
                 </div>
               </div>
-              <button type="button" class="cdrawer__remove" data-remove data-id="{{ item.key }}" aria-label="{{ 'cart.drawer.remove' | t }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
-              </button>
+              
             </li>
           {%- endfor -%}
         </ul>

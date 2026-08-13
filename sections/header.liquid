@@ -16,11 +16,7 @@
     </a>
 
     <div class="nav__links" id="nav-links">
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'link' -%}
-          <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
-        {%- endif -%}
-      {%- endfor -%}
+      {% render 'menu-links', blocks: section.blocks %}
     </div>
 
     <div class="nav__actions">
@@ -49,6 +45,21 @@
     </div>
   </nav>
 </header>
+
+<div class="nav__drawer" id="nav-drawer" data-nav-drawer aria-hidden="true">
+  <div class="nav__drawer-backdrop" data-nav-backdrop></div>
+  <aside class="nav__drawer-panel" role="dialog" aria-modal="true" aria-label="{{ 'general.nav.menu' | t }}">
+    <header class="nav__drawer-head">
+      <h3 class="nav__drawer-title">Menu</h3>
+      <button type="button" class="nav__drawer-close" data-nav-close aria-label="{{ 'general.nav.close' | t }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </header>
+    <div class="nav__drawer-links">
+      {% render 'menu-links', blocks: section.blocks, with_arrow: true %}
+    </div>
+  </aside>
+</div>
 
 {% schema %}
 {

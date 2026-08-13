@@ -17,7 +17,7 @@
           {%- if item.object_type == 'product' -%}
             {% render 'product-card', product: item %}
           {%- else -%}
-            <a class="grid-card" href="{{ item.url }}"><div class="grid-card__body"><h3>{{ item.title }}</h3></div></a>
+            <div class="grid-card"><a class="grid-card__link" href="{{ item.url }}"><div class="grid-card__body"><h3>{{ item.title }}</h3></div></a></div>
           {%- endif -%}
         {%- endfor -%}
       </div>

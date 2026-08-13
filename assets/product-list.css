@@ -509,6 +509,45 @@ body.drawer-locked {
     margin-top: 0.9rem;
 }
 
+@media (max-width: 980px) {
+    /* Sort select lives in the filter drawer on mobile — hide it from the
+       toolbar / first fold. */
+    .plist__toolbar-sort {
+        display: none;
+    }
+    /* Mobile: the filter drawer becomes a bottom sheet. Height hugs the
+       content but never exceeds 50dvh; entry/exit slides from/to the bottom. */
+    .plist__drawer-panel {
+        top: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 70dvh;
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        box-shadow: 0 -18px 40px -18px rgba(37, 29, 58, 0.35);
+        transform: translateY(100%);
+    }
+    .plist__drawer.is-open .plist__drawer-panel {
+        transform: translateY(0);
+    }
+    .plist__drawer-body {
+        padding-bottom: calc(1.6rem + env(safe-area-inset-bottom));
+    }
+    /* While the sort dropdown is open, lock the drawer body so scrolling
+       moves the menu instead of the whole sheet (nested-scroll fix). */
+    .plist__drawer--sort-open .plist__drawer-body {
+        overflow: hidden;
+    }
+    /* Keep the in-drawer sort menu comfortably inside the sheet, and let it
+       scroll internally without chaining to the drawer body. */
+    .plist__drawer .csort__menu {
+        max-width: calc(100vw - 4rem);
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
 /* ---- Collection card (/collections) ---- */
 .ccard {
     display: flex;

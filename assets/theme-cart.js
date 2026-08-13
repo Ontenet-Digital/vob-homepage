@@ -388,6 +388,17 @@
                 // stale refs are dropped by currentDrawer()/currentToggle().
                 state.drawer = next;
                 if (wasOpen || opts.open) {
+                    // Only a FRESH open (drawer was closed and we're opening it,
+                    // e.g. first add-to-cart) gets the entry animation: force a
+                    // style recalc so the browser records the drawer's closed
+                    // state before we animate it open — otherwise the transition
+                    // is skipped and the drawer appears instantly. When the
+                    // drawer is ALREADY open (qty/remove/add from inside it), we
+                    // skip the reflow so the re-rendered panel renders directly
+                    // in the open state and never slides out of view.
+                    if (opts.open && !wasOpen) {
+                        void next.offsetWidth;
+                    }
                     next.classList.add("is-open");
                     next.setAttribute("aria-hidden", "false");
                     var toggle = currentToggle();
@@ -487,7 +498,7 @@
     });
 
     document.addEventListener("submit", function (e) {
-        var form = closest(e.target, ".bs-card__form");
+        var form = closest(e.target, ".bs-card__form, .grid-card__form");
         if (!form) return;
         e.preventDefault();
         quickAdd(form);
@@ -504,6 +515,91 @@
     });
     document.addEventListener("cart:open", function () {
         refreshCart({ open: true });
+    });
+
+    /* ---- Cart PAGE (full /cart page): live qty stepper + remove ---- */
+    var CART_PAGE_SECTIONS_URL = "/?sections=main-cart";
+    var cartPageBusy = false;
+
+    function refreshCartPage() {
+        fetch(CART_PAGE_SECTIONS_URL, {
+            headers: { Accept: "application/json" },
+        })
+            .then(function (r) {
+                return r.ok ? r.json() : null;
+            })
+            .then(function (data) {
+                cartPageBusy = false;
+                if (!data || !data["main-cart"]) return;
+                var main = document.getElementById("top");
+                if (!main) return;
+                var tmp = document.createElement("div");
+                tmp.innerHTML = data["main-cart"];
+                var next = tmp.querySelector(".page-shell");
+                var current = main.querySelector(".page-shell");
+                if (!next || !current) return;
+                current.replaceWith(next);
+                updateCount();
+            })
+            .catch(function () {
+                cartPageBusy = false;
+            });
+    }
+
+    function setPageLineLoading(id, on) {
+        var item = document.querySelector('[data-cart-page-line="' + id + '"]');
+        if (!item) return;
+        item.classList.toggle("is-loading", on);
+        item.querySelectorAll("button").forEach(function (el) {
+            el.disabled = on;
+        });
+    }
+
+    function pageChangeLine(id, qty) {
+        if (cartPageBusy || !id) return;
+        cartPageBusy = true;
+        setPageLineLoading(id, true);
+        var body = new FormData();
+        body.append("id", id);
+        body.append("quantity", String(qty));
+        return fetch("/cart/change.js", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+            },
+            body: body,
+        })
+            .then(function (r) {
+                return r.ok
+                    ? r.json()
+                    : Promise.reject(new Error("change failed"));
+            })
+            .then(function () {
+                setPageLineLoading(id, false);
+                refreshCartPage();
+            })
+            .catch(function () {
+                setPageLineLoading(id, false);
+                cartPageBusy = false;
+            });
+    }
+
+    document.addEventListener("click", function (e) {
+        var qtyBtn = closest(e.target, "[data-cart-page-qty]");
+        if (qtyBtn) {
+            e.preventDefault();
+            pageChangeLine(
+                qtyBtn.getAttribute("data-id"),
+                qtyBtn.getAttribute("data-qty"),
+            );
+            return;
+        }
+        var remove = closest(e.target, "[data-cart-page-remove]");
+        if (remove) {
+            e.preventDefault();
+            pageChangeLine(remove.getAttribute("data-key"), "0");
+        }
     });
 
     /* ---- Boot ---- */

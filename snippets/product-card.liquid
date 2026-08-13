@@ -1,15 +1,37 @@
-{%- comment -%} Product grid card. Param: product. {%- endcomment -%}
-<a class="grid-card" href="{{ product.url }}">
-  <div class="grid-card__media">
-    {%- if product.featured_image -%}
-      <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy">
-    {%- endif -%}
-  </div>
-  <div class="grid-card__body">
-    <h3>{{ product.title }}</h3>
-    <span class="grid-card__price">
-      {%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money }}</s> {% endif -%}
-      {{ product.price | money }}
-    </span>
-  </div>
-</a>
+{%- comment -%} Product grid card. Params: product, with_cta (optional). {%- endcomment -%}
+{%- liquid
+  assign multi_variant = false
+  unless product.has_only_default_variant
+    assign multi_variant = true
+  endunless
+-%}
+<div class="grid-card">
+  <a class="grid-card__link" href="{{ product.url }}">
+    <div class="grid-card__media">
+      {%- if product.featured_image -%}
+        <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" loading="lazy">
+      {%- endif -%}
+    </div>
+    <div class="grid-card__body">
+      <h3>{{ product.title }}</h3>
+      <span class="grid-card__price">
+        {%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money }}</s> {% endif -%}
+        {{ product.price | money }}
+      </span>
+    </div>
+  </a>
+  {%- if with_cta -%}
+    <div class="grid-card__cta">
+      {%- if multi_variant -%}
+        <a class="grid-card__btn" href="{{ product.url }}">Select options</a>
+      {%- elsif product.available == false -%}
+        <a class="grid-card__btn grid-card__btn--disabled" href="{{ product.url }}">{{ 'products.product.sold_out' | t }}</a>
+      {%- else -%}
+        {%- form 'product', product, class: 'grid-card__form' -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <button type="submit" class="grid-card__btn">{{ 'products.product.add_to_cart' | t }}</button>
+        {%- endform -%}
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>

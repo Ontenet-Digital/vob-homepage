@@ -1,0 +1,19 @@
+{%- comment -%}
+  Nav links (menu items) shared by the desktop inline nav and the mobile
+  bottom-sheet drawer so the block list stays a single source of truth.
+  Expects `blocks` (pass `section.blocks` from header.liquid). Pass
+  `with_arrow: true` to render each link as a label + trailing gold arrow
+  (used by the mobile menu drawer).
+{%- endcomment -%}
+{%- for block in blocks -%}
+  {%- if block.type == 'link' -%}
+    {%- if with_arrow -%}
+      <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
+        <span class="nav__link-label">{{ block.settings.label }}</span>
+        <span class="nav__link-arrow">{% render 'icon-arrow' %}</span>
+      </a>
+    {%- else -%}
+      <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
