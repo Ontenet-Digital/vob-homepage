@@ -1,0 +1,327 @@
+/* ============ STORY PAGE SECTIONS (story_*) ============ */
+/* Shared styles for all sections whose names begin with "story_" —
+   the Our Story landing page (templates/page.our-story.json).
+   Loaded from layout/theme.liquid after about.css. */
+
+.story-hero,
+.story-intro,
+.story-mission,
+.story-products,
+.story-founder,
+.story-cta,
+.story-quote {
+    /* Section-scoped palette — white backgrounds per theme convention */
+    --story-bg: #ffffff;
+    --story-card: #ffffff;
+    --story-line: #e8dec9;
+    --story-ink: #2f2922;
+    --story-ink-soft: #5c5348;
+    --story-gold: #c7a45c;
+    --story-gold-deep: #8a6a24;
+    --story-umber: #2b2118;
+    --story-cream: #f7f1e2;
+    --story-radius: 18px;
+}
+
+/* ---------- story_hero ---------- */
+.story-hero {
+    position: relative;
+    min-height: 64vh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background: linear-gradient(160deg, #3d2e1c 0%, #2a1f14 52%, #1a130c 100%);
+    color: var(--story-cream);
+}
+.story-hero__media {
+    position: absolute;
+    inset: 0;
+}
+.story-hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.story-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(24, 17, 9, 0.74) 0%,
+        rgba(24, 17, 9, 0.34) 42%,
+        rgba(24, 17, 9, 0.16) 100%
+    );
+}
+/* `.story-hero__inner` doubles as `.wrap` → vertical padding must use the
+   padding-block property (never the shorthand) to keep the gutters. */
+.story-hero__inner {
+    position: relative;
+    z-index: 2;
+    padding-block: clamp(128px, 16vh, 200px) clamp(48px, 7vh, 92px);
+}
+.story-kicker {
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--story-gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+.story-kicker::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: var(--story-gold);
+}
+.story-hero__title {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 6.5vw, 5.2rem);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    color: var(--story-cream);
+    max-width: 12ch;
+    margin: 0.95rem 0 0;
+}
+.story-hero__sub {
+    margin-top: 1.1rem;
+    max-width: 42ch;
+    color: rgba(247, 241, 226, 0.85);
+    font-size: 1.08rem;
+}
+
+/* ---------- story_intro / story_founder (image & text card) ---------- */
+.story-intro,
+.story-founder {
+    background: var(--story-bg);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+}
+.story-card {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    gap: clamp(1.8rem, 4vw, 3.5rem);
+    align-items: center;
+    border-radius: var(--story-radius);
+    padding: clamp(1.4rem, 3.5vw, 2.6rem);
+}
+.story-card--flip .story-card__media {
+    order: 2;
+}
+.story-card__media img,
+.story-card__media-empty {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: calc(var(--story-radius) - 6px);
+}
+.story-card__media-empty {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(160deg, #efe4cd, #e1d0ad);
+    color: var(--story-gold-deep);
+    font-size: 2.2rem;
+}
+.story-card__copy .eyebrow {
+    margin-bottom: 1rem;
+}
+.story-card__copy h2 {
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    margin-bottom: 1.1rem;
+}
+.story-card__text {
+    color: var(--story-ink-soft);
+    font-size: 1.08rem;
+}
+.story-card__text p {
+    margin-bottom: 0.9em;
+}
+.story-card__text p:last-child {
+    margin-bottom: 0;
+}
+.story-card__sub {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.22rem;
+    line-height: 1.3;
+    color: var(--story-gold-deep);
+    margin-bottom: 1rem;
+}
+
+/* ---------- story_mission ---------- */
+.story-mission {
+    background: var(--story-bg);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+}
+.story-mission__inner {
+    text-align: center;
+    max-width: 780px;
+    margin-inline: auto;
+}
+.story-mission__inner .ornament {
+    margin: 0 auto 1.6rem;
+}
+.story-mission__inner h2 {
+    font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+    margin: 1rem 0 1.1rem;
+}
+.story-mission__text {
+    color: var(--story-ink-soft);
+    font-size: 1.14rem;
+    max-width: 640px;
+    margin-inline: auto;
+}
+.story-mission__text p {
+    margin-bottom: 0.9em;
+}
+.story-mission__text p:last-child {
+    margin-bottom: 0;
+}
+
+/* ---------- story_products ---------- */
+.story-products {
+    background: var(--story-bg);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+}
+.story-products__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.3rem;
+}
+.story-product {
+    background: var(--story-card);
+    border-radius: var(--story-radius);
+    padding: 1.9rem 1.7rem 2.1rem;
+    transition: transform 0.4s var(--ease);
+}
+.story-product:hover {
+    transform: translateY(-4px);
+}
+.story-product h3 {
+    font-size: 1.28rem;
+    line-height: 1.15;
+    margin-bottom: 0.7rem;
+}
+.story-product p {
+    color: var(--story-ink-soft);
+    font-size: 1rem;
+}
+
+/* ---------- story_cta ---------- */
+.story-cta {
+    background: var(--story-bg);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+}
+.story-cta__panel {
+    text-align: center;
+    color: var(--story-cream);
+    background:
+        radial-gradient(70% 90% at 50% 0%, rgba(199, 164, 92, 0.18), transparent 60%),
+        linear-gradient(160deg, #3d2e1c 0%, #2a1f14 52%, #1a130c 100%);
+    border-radius: var(--story-radius);
+    padding: clamp(3rem, 7vw, 5rem) clamp(1.5rem, 5vw, 4rem);
+}
+.story-cta__heading {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+    color: rgba(247, 241, 226, 0.92);
+}
+.story-cta__panel h2 {
+    color: var(--story-cream);
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    margin: 0.6rem 0 2.4rem;
+}
+.story-cta__home {
+    width: 122px;
+    height: 122px;
+    margin-inline: auto;
+    border-radius: 50%;
+    border: 1px solid rgba(231, 213, 172, 0.55);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    color: var(--story-cream);
+    font-family: var(--ui);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    transition:
+        background 0.3s var(--ease),
+        border-color 0.3s var(--ease),
+        transform 0.3s var(--ease);
+}
+.story-cta__home svg {
+    width: 26px;
+    height: 26px;
+}
+.story-cta__home:hover {
+    background: rgba(231, 213, 172, 0.12);
+    border-color: var(--story-gold);
+    transform: translateY(-3px);
+}
+
+/* ---------- story_quote ---------- */
+.story-quote {
+    background: var(--story-bg);
+    padding-block: clamp(3rem, 6vw, 5.5rem);
+}
+.story-quote__inner {
+    text-align: center;
+    max-width: 820px;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 3vw, 2rem);
+}
+.story-quote__mark {
+    display: block;
+    font-family: var(--display);
+    font-size: 4.4rem;
+    line-height: 0.6;
+    color: var(--story-gold);
+    margin-bottom: 1.1rem;
+}
+.story-quote__inner blockquote {
+    font-family: var(--display);
+    font-size: clamp(1.35rem, 3vw, 1.95rem);
+    line-height: 1.42;
+    color: var(--story-ink);
+    font-weight: 400;
+    font-optical-sizing: auto;
+}
+.story-quote__inner figcaption {
+    margin-top: 1.5rem;
+    font-family: var(--ui);
+    font-size: 0.95rem;
+    color: var(--story-ink-soft);
+    letter-spacing: 0.04em;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1023px) {
+    .story-card {
+        grid-template-columns: 1fr;
+    }
+    .story-card--flip .story-card__media {
+        order: 0;
+    }
+    .story-products__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 767px) {
+    .story-hero {
+        min-height: 74vh;
+    }
+    .story-products__grid {
+        grid-template-columns: 1fr;
+    }
+    .story-cta__home {
+        width: 104px;
+        height: 104px;
+    }
+}

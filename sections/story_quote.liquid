@@ -1,0 +1,29 @@
+{%- comment -%}
+  story_quote — large centred testimonial quote for the Our Story page.
+  Styles in assets/story-pages.css.
+{%- endcomment -%}
+
+<section class="story-quote" id="{{ section.settings.anchor_id | default: 'story-quote' }}">
+  <figure class="story-quote__inner wrap reveal">
+    <span class="story-quote__mark" aria-hidden="true">“</span>
+    {%- if section.settings.text != blank -%}
+      <blockquote>{{ section.settings.text }}</blockquote>
+    {%- endif -%}
+    {%- if section.settings.author != blank -%}
+      <figcaption>— {{ section.settings.author }}</figcaption>
+    {%- endif -%}
+  </figure>
+</section>
+
+{% schema %}
+{
+  "name": "story_quote",
+  "tag": "section",
+  "settings": [
+    { "type": "textarea", "id": "text", "label": "Quote", "default": "I’ve been using this digital Bible for a month now, and a great option to my physical copy. It’s very, very simple to use. It’s a truly inspiring tool for spiritual growth." },
+    { "type": "text", "id": "author", "label": "Author", "default": "Sarah M." },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "story-quote" }
+  ],
+  "presets": [{ "name": "story_quote" }]
+}
+{% endschema %}

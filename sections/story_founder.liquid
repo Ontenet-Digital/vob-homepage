@@ -1,0 +1,64 @@
+{%- comment -%}
+  story_founder — "About Emilio Roso" image & text card for the Our Story page.
+  Portrait on the right (flipped), narrative on the left.
+  Styles in assets/story-pages.css.
+{%- endcomment -%}
+
+<section class="story-founder" id="{{ section.settings.anchor_id | default: 'story-founder' }}">
+  <div class="wrap">
+    <div class="story-card story-card--flip reveal">
+    <div class="story-card__media">
+      {%- if section.settings.image != blank -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 900 }}"
+          alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+          loading="lazy"
+          decoding="async"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}">
+      {%- elsif section.settings.image_url != blank -%}
+        <img
+          src="{{ section.settings.image_url }}"
+          alt="{{ section.settings.heading | escape }}"
+          loading="lazy"
+          decoding="async"
+          width="900"
+          height="1125">
+      {%- else -%}
+        <div class="story-card__media-empty" aria-hidden="true"><span>✦</span></div>
+      {%- endif -%}
+    </div>
+    <div class="story-card__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2>{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="story-card__sub">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="story-card__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "story_founder",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "About Emilio Roso" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A Journey Through Light and Legacy" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "A Vision Beyond Borders" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "My artistic journey has been fueled by a passion to convey the indescribable beauty and spiritual resonance of Israel to audiences worldwide. Every photograph is a bridge to the past, a mirror of the present, and a beacon for divine contemplation.\n\nThis collection is not just a series of images but a passage to enlightenment, beckoning viewers to embark on their own voyage of discovery and inspiration, illuminated by the diverse hues and historical depth of this sacred land. Each snapshot is a testament to Israel’s timeless legacy.\n\nWandering through its landscapes, I sought to capture the sacred interplay of light and shadow, the vibrant palette of seasons, and the quiet whispers of history echoing through the air. It stands as a celebration of unity and spirituality, presenting a curated collection of photographs that offer a sanctuary for the soul and a feast for the eyes." },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_url", "label": "Image URL (fallback)" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "story-founder" }
+  ],
+  "presets": [{ "name": "story_founder" }]
+}
+{% endschema %}
