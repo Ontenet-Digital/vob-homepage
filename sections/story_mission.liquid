@@ -1,0 +1,33 @@
+{%- comment -%}
+  story_mission — "Our Mission" centred statement for the Our Story page.
+  Styles in assets/story-pages.css.
+{%- endcomment -%}
+
+<section class="story-mission" id="{{ section.settings.anchor_id | default: 'story-mission' }}">
+  <div class="story-mission__inner wrap reveal">
+    <div class="ornament" aria-hidden="true"><span></span><b>✦</b><span></span></div>
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="eyebrow center">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2>{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <div class="story-mission__text">{{ section.settings.text }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "story_mission",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our Mission" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our Mission" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "To inspire and educate through captivating visual storytelling, fostering a deeper understanding and appreciation of the Bible and its enduring message." },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "story-mission" }
+  ],
+  "presets": [{ "name": "story_mission" }]
+}
+{% endschema %}

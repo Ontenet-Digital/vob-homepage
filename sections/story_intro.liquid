@@ -1,0 +1,60 @@
+{%- comment -%}
+  story_intro — "The Story" image & text card for the Our Story page.
+  Optional portrait on the left, narrative on the right.
+  Styles in assets/story-pages.css.
+{%- endcomment -%}
+
+<section class="story-intro" id="{{ section.settings.anchor_id | default: 'story-intro' }}">
+  <div class="wrap">
+    <div class="story-card reveal">
+    <div class="story-card__media">
+      {%- if section.settings.image != blank -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 900 }}"
+          alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+          loading="lazy"
+          decoding="async"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}">
+      {%- elsif section.settings.image_url != blank -%}
+        <img
+          src="{{ section.settings.image_url }}"
+          alt="{{ section.settings.heading | escape }}"
+          loading="lazy"
+          decoding="async"
+          width="900"
+          height="1125">
+      {%- else -%}
+        <div class="story-card__media-empty" aria-hidden="true"><span>✦</span></div>
+      {%- endif -%}
+    </div>
+    <div class="story-card__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2>{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="story-card__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "story_intro",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our Story" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Story" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Vision of The Bible is a company born from the profound artistic journey of Emilio Roso. Driven by a lifelong passion to capture the essence of Israel and its profound spiritual significance, Emilio’s photography transcends mere imagery. Each photograph is a window into history, a reflection of the present, and an invitation for viewers to connect with the divine.\n\nFounded on this vision, Vision of The Bible offers a collection of immersive digital experiences designed to bring the Bible to life. From the breathtaking landscapes of the Holy Land to the profound narratives of the Gospels, our products invite you to embark on a journey of faith and discovery." },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_url", "label": "Image URL (fallback)" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "story-intro" }
+  ],
+  "presets": [{ "name": "story_intro" }]
+}
+{% endschema %}
