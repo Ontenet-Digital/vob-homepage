@@ -34,6 +34,16 @@
                 // these guarantees the menu never causes page overflow.
                 var vw = document.documentElement.clientWidth;
                 var vh = document.documentElement.clientHeight;
+                var vTop = 0;
+                // Inside a scrollable drawer body (e.g. the mobile filter
+                // bottom sheet) clamp vertically to that visible region so
+                // the menu is never clipped by its overflow.
+                var scroller = ctl.closest(".plist__drawer-body");
+                if (scroller) {
+                    var sr = scroller.getBoundingClientRect();
+                    vTop = Math.max(sr.top, 0);
+                    vh = Math.min(sr.bottom, vh);
+                }
 
                 var x = 0;
                 var maxX = vw - EDGE - ctlRect.left - mw;
@@ -41,17 +51,41 @@
                 if (x < EDGE - ctlRect.left) x = EDGE - ctlRect.left;
                 menu.style.left = x + "px";
 
-                var top = tr.bottom - ctlRect.top + 8;
-                var bottom = ctlRect.top + top + mh;
-                if (bottom > vh - EDGE) {
-                    var up = tr.top - ctlRect.top - mh - 8;
-                    top =
-                        up < EDGE - ctlRect.top
-                            ? vh - EDGE - mh - ctlRect.top
-                            : up;
+                // Vertical: keep the menu inside [regionTop, regionBottom].
+                // Open below the trigger when the full list fits; otherwise
+                // flip it ABOVE the select button so it is never cut off at
+                // the bottom of the sheet. If there isn't room to sit fully
+                // above the trigger, pin the list to the top of the visible
+                // region (it overlays the trigger) so the whole list stays
+                // visible. Only if the list is taller than the entire region
+                // is the height capped so it scrolls internally.
+                var regionTop = vTop + EDGE;
+                var regionBottom = vh - EDGE;
+                var gap = 8;
+                var below = tr.bottom - ctlRect.top + gap;
+                var above = tr.top - ctlRect.top - mh - gap;
+                var top;
+                if (ctlRect.top + below + mh <= regionBottom) {
+                    // Fits below the trigger → normal dropdown.
+                    top = below;
+                } else {
+                    // Cut off at the bottom → render above the select button.
+                    top = above;
+                    if (ctlRect.top + top < regionTop) {
+                        // Not enough room above the trigger; pin to the top of
+                        // the visible region so nothing is clipped.
+                        top = regionTop - ctlRect.top;
+                    }
                 }
-                if (top < EDGE - ctlRect.top) top = EDGE - ctlRect.top;
                 menu.style.top = top + "px";
+                if (ctlRect.top + top + mh > regionBottom) {
+                    var maxH = regionBottom - (ctlRect.top + top);
+                    menu.style.maxHeight = Math.max(maxH, 40) + "px";
+                    menu.style.overflowY = "auto";
+                } else {
+                    menu.style.maxHeight = "";
+                    menu.style.overflowY = "";
+                }
             }
 
             function selectedIndex() {
@@ -59,6 +93,21 @@
                     return o.getAttribute("aria-selected") === "true";
                 });
                 return idx < 0 ? 0 : idx;
+            }
+
+            /* While the sort menu is open inside the filter drawer, lock the
+               drawer body's scroll so the gesture scrolls the MENU — not the
+               whole sheet (avoids the nested-scroll "drawer scrollbar" bug). */
+            function drawerHost() {
+                return ctl.closest(".plist__drawer");
+            }
+            function lockDrawerBody() {
+                var d = drawerHost();
+                if (d) d.classList.add("plist__drawer--sort-open");
+            }
+            function unlockDrawerBody() {
+                var d = drawerHost();
+                if (d) d.classList.remove("plist__drawer--sort-open");
             }
 
             function setActive(i) {
@@ -77,6 +126,7 @@
             function close() {
                 ctl.classList.remove("is-open");
                 trigger.setAttribute("aria-expanded", "false");
+                unlockDrawerBody();
                 document.removeEventListener("click", onDocClick);
             }
 
@@ -85,6 +135,7 @@
                 positionMenu();
                 ctl.classList.add("is-open");
                 trigger.setAttribute("aria-expanded", "true");
+                lockDrawerBody();
                 setTimeout(function () {
                     document.addEventListener("click", onDocClick);
                 }, 0);

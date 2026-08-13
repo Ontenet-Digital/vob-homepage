@@ -51,6 +51,28 @@ body.drawer-locked {
     transform: translateX(0);
 }
 
+@media (max-width: 980px) {
+    /* Mobile: the cart drawer becomes a bottom sheet (96dvh). Entry/exit
+       slides from/to the bottom; desktop keeps the right-side slide-in. */
+    .cdrawer__panel {
+        top: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 96dvh;
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        box-shadow: 0 -18px 40px -18px rgba(37, 29, 58, 0.35);
+        transform: translateY(100%);
+    }
+    .cdrawer.is-open .cdrawer__panel {
+        transform: translateY(0);
+    }
+    .cdrawer__foot {
+        padding-bottom: calc(0.9rem + env(safe-area-inset-bottom));
+    }
+}
+
 .cdrawer__head {
     display: flex;
     align-items: center;
@@ -204,6 +226,11 @@ body.drawer-locked {
     .cdrawer__item.is-loading::before {
         animation: none;
         border-top-color: var(--gold);
+    }
+    .cdrawer,
+    .cdrawer__backdrop,
+    .cdrawer__panel {
+        transition: none;
     }
 }
 .cdrawer__thumb {

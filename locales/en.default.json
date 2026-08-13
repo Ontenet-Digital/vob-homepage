@@ -35,6 +35,10 @@
             "email_placeholder": "Your email address",
             "confirmation": "Thank you for subscribing.",
             "submit": "Subscribe"
+        },
+        "nav": {
+            "menu": "Menu",
+            "close": "Close menu"
         }
     },
     "products": {
