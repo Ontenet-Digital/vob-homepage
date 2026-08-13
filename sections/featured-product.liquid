@@ -321,7 +321,9 @@
         if (!res.ok) throw new Error((res.body && res.body.description) || "Sorry, this item could not be added.");
         var behavior = root.getAttribute("data-fps-add-behavior") || "stay";
         if (behavior === "cart") {
-          window.location.href = root.getAttribute("data-cart-url") || "/cart";
+          updateCartCount(root);
+          document.dispatchEvent(new CustomEvent("cart:refresh", { bubbles: true }));
+          document.dispatchEvent(new CustomEvent("cart:open", { bubbles: true }));
           return;
         }
         setState(btn, "added");
@@ -456,7 +458,7 @@
       "type": "select", "id": "add_behavior", "label": "After adding to cart", "default": "stay",
       "options": [
         { "value": "stay", "label": "Stay on page (show \"Added\")" },
-        { "value": "cart", "label": "Go to cart page" }
+        { "value": "cart", "label": "Open cart drawer" }
       ]
     },
 

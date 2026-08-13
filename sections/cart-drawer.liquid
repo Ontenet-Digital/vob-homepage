@@ -1,0 +1,107 @@
+{%- comment -%}
+  Slide-out cart drawer (right side). Server-rendered from the `cart` object and
+  refreshed via the Sections Rendering API (`fetch('/?sections=cart-drawer')`) in
+  assets/theme-cart.js. Styling in assets/cart-drawer.css (gold-forward).
+{%- endcomment -%}
+
+<div class="cdrawer" id="cart-drawer" data-cart-drawer aria-hidden="true">
+  <div class="cdrawer__backdrop" data-cart-drawer-close></div>
+  <aside class="cdrawer__panel" role="dialog" aria-modal="true" aria-labelledby="cart-drawer-title">
+    <header class="cdrawer__head">
+      <h3 id="cart-drawer-title" class="cdrawer__title">
+        {{ 'cart.drawer.title' | t }}
+        {%- if cart.item_count > 0 -%}
+          <span class="cdrawer__count">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </h3>
+      <button type="button" class="cdrawer__close" data-cart-drawer-close aria-label="{{ 'cart.drawer.close' | t }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </header>
+
+    <div class="cdrawer__tabs" role="tablist" aria-label="{{ 'cart.drawer.tabs_label' | t }}">
+      <button type="button" class="cdrawer__tab is-active" id="cdrawer-tab-cart" role="tab" aria-selected="true" aria-controls="cdrawer-panel-cart" data-cart-tab="cart">{{ 'cart.drawer.tab_cart' | t }}</button>
+      <button type="button" class="cdrawer__tab" id="cdrawer-tab-recent" role="tab" aria-selected="false" aria-controls="cdrawer-panel-recent" data-cart-tab="recent">{{ 'cart.drawer.tab_recent' | t }}</button>
+    </div>
+
+    <div class="cdrawer__tabs-body">
+      <div class="cdrawer__tabpanel is-active" id="cdrawer-panel-cart" role="tabpanel" aria-labelledby="cdrawer-tab-cart" data-cart-panel="cart">
+      {%- if cart.item_count > 0 -%}
+      <div class="cdrawer__body">
+        {%- render 'free-shipping-bar' -%}
+
+        <ul class="cdrawer__items">
+          {%- for item in cart.items -%}
+            <li class="cdrawer__item" data-line-item="{{ item.key }}">
+              <a class="cdrawer__thumb" href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+                {%- if item.image -%}
+                  <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" width="80" height="80" loading="lazy">
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'cdrawer__thumb-ph' }}
+                {%- endif -%}
+              </a>
+              <div class="cdrawer__info">
+                <a class="cdrawer__name" href="{{ item.url }}">{{ item.product.title }}</a>
+                {%- unless item.variant.title contains 'Default' -%}
+                  <p class="cdrawer__variant">{{ item.variant.title }}</p>
+                {%- endunless -%}
+                <p class="cdrawer__price">{{ item.final_line_price | money }}</p>
+                <div class="cdrawer__qty">
+                  <button type="button" class="cdrawer__qty-btn" data-qty-change data-id="{{ item.key }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="{{ 'cart.drawer.quantity' | t }} -">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg>
+                  </button>
+                  <input
+                    type="number"
+                    class="cdrawer__qty-input"
+                    value="{{ item.quantity }}"
+                    min="0"
+                    inputmode="numeric"
+                    data-qty-input
+                    data-id="{{ item.key }}"
+                    aria-label="{{ 'cart.drawer.quantity' | t }}"
+                  >
+                  <button type="button" class="cdrawer__qty-btn" data-qty-change data-id="{{ item.key }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="{{ 'cart.drawer.quantity' | t }} +">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+              </div>
+              <button type="button" class="cdrawer__remove" data-remove data-id="{{ item.key }}" aria-label="{{ 'cart.drawer.remove' | t }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+              </button>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <footer class="cdrawer__foot">
+        <div class="cdrawer__subtotal">
+          <span>{{ 'cart.drawer.subtotal' | t }}</span>
+          <strong data-cart-total>{{ cart.total_price | money }}</strong>
+        </div>
+        <p class="cdrawer__note">{{ 'cart.drawer.shipping_note' | t }}</p>
+        <form action="{{ routes.cart_url }}" method="post">
+          <button type="submit" name="checkout" class="btn btn--gold cdrawer__checkout">{{ 'cart.drawer.checkout' | t }}</button>
+        </form>
+        <button type="button" class="cdrawer__continue" data-cart-drawer-close>{{ 'cart.drawer.continue_shopping' | t }}</button>
+      </footer>
+    {%- else -%}
+      <div class="cdrawer__empty">
+        <p>{{ 'cart.drawer.empty' | t }}</p>
+        <a class="btn btn--gold" href="{{ routes.all_products_collection_url }}">{{ 'cart.general.continue_shopping' | t }}</a>
+      </div>
+      {%- endif -%}
+      </div>
+
+      <div class="cdrawer__tabpanel" id="cdrawer-panel-recent" role="tabpanel" aria-labelledby="cdrawer-tab-recent" data-cart-panel="recent" data-cart-recent data-recent-title="{{ 'cart.drawer.recent_title' | t }}" data-recent-empty="{{ 'cart.drawer.recent_empty' | t }}" data-rv-add-label="{{ 'cart.drawer.rv_add' | t }}" data-rv-sold-label="{{ 'cart.drawer.rv_sold' | t }}">
+        {%- comment -%} Recently viewed cards are rendered client-side by assets/theme-cart.js. {%- endcomment -%}
+      </div>
+    </div>
+  </aside>
+</div>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": []
+}
+{% endschema %}

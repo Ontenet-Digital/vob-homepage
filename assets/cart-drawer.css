@@ -1,0 +1,586 @@
+/* ============ CART DRAWER (right slide-in) + free-shipping bar ============ */
+/* Mirrors the filter-drawer pattern (product-list.css .plist__drawer) but slides
+   in from the RIGHT. Gold-forward: accents, borders, fills and hover states use
+   the brand gold family; violet only as subtle body text. */
+
+body.drawer-locked {
+    overflow: hidden;
+}
+
+.cdrawer {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    visibility: hidden;
+    pointer-events: none;
+    /* Keep the drawer paint-visible during the exit animation, then hide it. */
+    transition: visibility 0s linear 0.42s;
+}
+.cdrawer.is-open {
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+}
+.cdrawer__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(37, 29, 58, 0.4);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity 0.35s var(--ease);
+}
+.cdrawer.is-open .cdrawer__backdrop {
+    opacity: 1;
+}
+.cdrawer__panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    width: min(92vw, 420px);
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #fffdf6, var(--parchment));
+    box-shadow: -18px 0 40px -18px rgba(37, 29, 58, 0.35);
+    transform: translateX(100%);
+    transition: transform 0.42s var(--ease);
+}
+.cdrawer.is-open .cdrawer__panel {
+    transform: translateX(0);
+}
+
+.cdrawer__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.95rem 1.4rem;
+    border-bottom: 1px solid rgba(190, 151, 67, 0.25);
+}
+.cdrawer__title {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 1.3rem;
+    margin: 0;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.cdrawer__count {
+    font-family: var(--ui);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #3a2a06;
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+    border-radius: 999px;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 6px;
+    display: inline-grid;
+    place-items: center;
+}
+.cdrawer__close {
+    width: 34px;
+    height: 34px;
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(190, 151, 67, 0.35);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    transition:
+        border-color 0.25s var(--ease),
+        color 0.25s var(--ease),
+        transform 0.25s var(--ease);
+}
+.cdrawer__close svg {
+    width: 16px;
+    height: 16px;
+}
+.cdrawer__close:hover {
+    border-color: var(--gold);
+    color: var(--gold-deep);
+    transform: rotate(90deg);
+}
+
+/* ---- Tabs (Cart / Recently viewed) ---- */
+.cdrawer__tabs {
+    display: flex;
+    gap: 1.2rem;
+    padding: 0 1.4rem;
+    border-bottom: 1px solid rgba(190, 151, 67, 0.25);
+}
+.cdrawer__tab {
+    appearance: none;
+    border: none;
+    background: none;
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding: 0.75rem 0.2rem 0.65rem;
+    margin-bottom: -1px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition:
+        color 0.2s var(--ease),
+        border-color 0.2s var(--ease);
+}
+.cdrawer__tab:hover {
+    color: var(--gold-deep);
+}
+.cdrawer__tab.is-active {
+    color: var(--gold-deep);
+    border-bottom-color: var(--gold);
+}
+.cdrawer__tabs-body {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+    overflow: hidden;
+}
+.cdrawer__tabpanel {
+    display: none;
+    width: 100%;
+    min-height: 0;
+}
+.cdrawer__tabpanel.is-active {
+    display: flex;
+    flex-direction: column;
+}
+
+.cdrawer__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 1.4rem;
+    -webkit-overflow-scrolling: touch;
+}
+.cdrawer__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.cdrawer__item {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 0.8rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(190, 151, 67, 0.16);
+    align-items: start;
+    position: relative;
+}
+.cdrawer__item.is-loading {
+    opacity: 0.55;
+    pointer-events: none;
+}
+.cdrawer__item.is-loading::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 2px solid rgba(190, 151, 67, 0.3);
+    border-top-color: var(--gold-deep);
+    border-radius: 50%;
+    z-index: 3;
+    animation: cdrawer-spin 0.7s linear infinite;
+}
+@keyframes cdrawer-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .cdrawer__item.is-loading::before {
+        animation: none;
+        border-top-color: var(--gold);
+    }
+}
+.cdrawer__thumb {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid rgba(190, 151, 67, 0.3);
+    background: linear-gradient(180deg, #fdfbf4, #f4ecda);
+    flex: none;
+}
+.cdrawer__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.cdrawer__thumb-ph {
+    width: 100%;
+    height: 100%;
+}
+.cdrawer__info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+.cdrawer__name {
+    font-family: var(--display);
+    font-size: 0.9rem;
+    line-height: 1.15;
+    color: var(--ink);
+    transition: color 0.25s var(--ease);
+}
+.cdrawer__name:hover {
+    color: var(--gold-deep);
+}
+.cdrawer__variant {
+    font-family: var(--ui);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+}
+.cdrawer__price {
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--gold-deep);
+    margin-top: 0.1rem;
+}
+.cdrawer__qty {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    margin-top: 0.4rem;
+    border: 1px solid rgba(190, 151, 67, 0.35);
+    border-radius: var(--radius-sm);
+    width: fit-content;
+}
+.cdrawer__qty-btn {
+    width: 26px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    transition:
+        color 0.2s,
+        background 0.2s;
+}
+.cdrawer__qty-btn svg {
+    width: 12px;
+    height: 12px;
+}
+.cdrawer__qty-btn:hover {
+    color: var(--gold-deep);
+    background: rgba(190, 151, 67, 0.12);
+}
+.cdrawer__qty-input {
+    width: 34px;
+    border: none;
+    text-align: center;
+    font-family: var(--ui);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--ink);
+    background: transparent;
+    padding: 0;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+.cdrawer__qty-input::-webkit-outer-spin-button,
+.cdrawer__qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.cdrawer__qty-input:focus {
+    outline: 1.5px solid var(--gold);
+    outline-offset: 1px;
+    border-radius: 2px;
+}
+.cdrawer__remove {
+    grid-column: 3;
+    justify-self: end;
+    align-self: start;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(190, 151, 67, 0.3);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition:
+        color 0.2s,
+        border-color 0.2s,
+        background 0.2s;
+}
+.cdrawer__remove svg {
+    width: 14px;
+    height: 14px;
+}
+.cdrawer__remove:hover {
+    color: var(--gold-deep);
+    border-color: var(--gold);
+    background: rgba(190, 151, 67, 0.1);
+}
+
+.cdrawer__foot {
+    border-top: 1px solid rgba(190, 151, 67, 0.25);
+    padding: 0.8rem 1.3rem 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    background: linear-gradient(180deg, #fffdf6, var(--parchment));
+}
+.cdrawer__subtotal {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-family: var(--ui);
+}
+.cdrawer__subtotal span {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+}
+.cdrawer__subtotal strong {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--gold-deep);
+}
+.cdrawer__note {
+    font-family: var(--ui);
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    margin: -0.05rem 0 0.1rem;
+}
+.cdrawer__checkout {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.95rem;
+    padding: 0.65rem 1rem;
+}
+.cdrawer__continue {
+    border: none;
+    background: none;
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 0.76rem;
+    color: var(--gold-deep);
+    cursor: pointer;
+    padding: 0.2rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+}
+.cdrawer__continue:hover {
+    color: var(--ink);
+}
+.cdrawer__empty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    text-align: center;
+    padding: 3rem 1.6rem;
+}
+.cdrawer__empty p {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    color: var(--ink);
+}
+
+/* ---- Free-shipping progress bar (drawer + /cart page) ---- */
+.fsbar {
+    margin-bottom: 0.9rem;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid rgba(190, 151, 67, 0.35);
+    border-radius: var(--radius-sm);
+    background: linear-gradient(180deg, #fffdf3, #fdf6e3);
+}
+.fsbar__msg {
+    font-family: var(--ui);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
+}
+.fsbar__msg strong {
+    color: var(--gold-deep);
+    font-weight: 800;
+}
+.fsbar__check {
+    color: var(--gold-deep);
+    font-weight: 900;
+}
+.fsbar__track {
+    position: relative;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(190, 151, 67, 0.22);
+    overflow: visible;
+}
+.fsbar__fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+    transition: width 0.5s var(--ease);
+}
+.fsbar__marker {
+    position: absolute;
+    top: 50%;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--gold-bright);
+    border: 2.5px solid #fff;
+    box-shadow: 0 1px 4px rgba(124, 93, 30, 0.4);
+    transform: translate(-50%, -50%);
+    transition: left 0.5s var(--ease);
+}
+
+@media (max-width: 560px) {
+    .cdrawer__panel {
+        width: 100vw;
+    }
+}
+
+/* ---- Recently viewed (tab) ---- */
+.cdrawer__recent {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 1.4rem 1.2rem;
+    -webkit-overflow-scrolling: touch;
+}
+.cdrawer__recent-head {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 1.05rem;
+    margin: 0 0 0.8rem;
+    color: var(--ink);
+}
+.cdrawer__rv {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+.cdrawer__rv-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid rgba(190, 151, 67, 0.16);
+}
+.cdrawer__rv-item:last-child {
+    border-bottom: none;
+}
+.cdrawer__rv-link {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+.cdrawer__rv-thumb {
+    width: 56px;
+    height: 56px;
+    flex: none;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid rgba(190, 151, 67, 0.3);
+    background: linear-gradient(180deg, #fdfbf4, #f4ecda);
+}
+.cdrawer__rv-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.cdrawer__rv-thumb-ph {
+    width: 100%;
+    height: 100%;
+}
+.cdrawer__rv-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+.cdrawer__rv-title {
+    font-family: var(--display);
+    font-size: 0.88rem;
+    line-height: 1.2;
+    color: var(--ink);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.cdrawer__rv-price {
+    font-family: var(--ui);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--gold-deep);
+}
+.cdrawer__rv-price s {
+    color: var(--ink-soft);
+    font-weight: 500;
+    margin-right: 0.3rem;
+}
+.cdrawer__rv-add {
+    flex: none;
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--gold);
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+    color: #3a2a06;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+        transform 0.25s var(--ease),
+        opacity 0.25s;
+}
+.cdrawer__rv-add:hover {
+    transform: translateY(-1px);
+}
+.cdrawer__rv-add.is-loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+.cdrawer__rv-add.is-disabled {
+    opacity: 0.55;
+    pointer-events: none;
+    background: transparent;
+    color: var(--ink-soft);
+    border-color: rgba(190, 151, 67, 0.35);
+}
+.cdrawer__rv-none {
+    font-family: var(--ui);
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    border: 1px dashed rgba(190, 151, 67, 0.4);
+    border-radius: var(--radius-sm);
+    padding: 1.4rem 1rem;
+    text-align: center;
+}

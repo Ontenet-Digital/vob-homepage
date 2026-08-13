@@ -218,6 +218,12 @@
     color: var(--ink);
 }
 
+/* Free-shipping bar on the full /cart page (styles shared with the cart drawer) */
+body.template-cart .fsbar {
+    max-width: 640px;
+    margin: 0 0 2rem;
+}
+
 /* Blog list */
 .article-body {
     max-width: 760px;
