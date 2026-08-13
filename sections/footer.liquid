@@ -46,6 +46,15 @@
         {%- endfor -%}
       </div>
 
+      <div class="fcol">
+        <h5>Quick Links</h5>
+        <a href="/pages/contact">Contact Us</a>
+        <a href="/policies/terms-of-service">Terms &amp; Condition</a>
+        <a href="/policies/privacy-policy">Privacy Policy</a>
+        <a href="/policies/refund-policy">Refund Policy</a>
+        <a href="/policies/shipping-policy">Shipping Policy</a>
+      </div>
+
       <div class="fcol news">
         <h5>{{ section.settings.news_title | default: 'Stay in the loop' }}</h5>
         {%- if section.settings.news_text != blank -%}<p>{{ section.settings.news_text }}</p>{%- endif -%}
