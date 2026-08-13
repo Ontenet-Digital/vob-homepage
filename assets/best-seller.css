@@ -283,6 +283,32 @@
     opacity: 0.6;
     pointer-events: none;
 }
+.bs-card__cta-btn.is-loading {
+    opacity: 0.75;
+    pointer-events: none;
+}
+.bs-card__cta-btn.is-loading::after {
+    content: "";
+    display: inline-block;
+    vertical-align: -2px;
+    width: 12px;
+    height: 12px;
+    margin-left: 0.5rem;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: bs-spin 0.7s linear infinite;
+}
+@keyframes bs-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .bs-card__cta-btn.is-loading::after {
+        animation: none;
+    }
+}
 
 [data-quick-add="none"] .bs-card__cta {
     display: none;

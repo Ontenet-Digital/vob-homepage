@@ -83,6 +83,31 @@
             "checkout": "Check out",
             "remove": "Remove",
             "note": "Order notes"
+        },
+        "free_shipping": {
+            "remaining": "You're {{ amount }} away from",
+            "free": "FREE shipping",
+            "threshold": "Free shipping on orders over {{ amount }}",
+            "unlocked": "You've unlocked FREE shipping!",
+            "aria": "Free shipping progress"
+        },
+        "drawer": {
+            "title": "Your cart",
+            "close": "Close cart",
+            "empty": "Your cart is empty",
+            "continue_shopping": "Continue shopping",
+            "checkout": "Check out",
+            "subtotal": "Subtotal",
+            "shipping_note": "Shipping & taxes calculated at checkout.",
+            "remove": "Remove",
+            "quantity": "Quantity",
+            "tabs_label": "Cart sections",
+            "tab_cart": "Cart",
+            "tab_recent": "Recently viewed",
+            "recent_title": "Recently viewed",
+            "recent_empty": "Recently viewed products will appear here.",
+            "rv_add": "Add to cart",
+            "rv_sold": "Sold out"
         }
     },
     "customer": {

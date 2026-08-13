@@ -1,0 +1,59 @@
+{%- comment -%}
+  Free-shipping progress bar.
+  Reads global settings (free_shipping_enabled, free_shipping_threshold) plus the
+  `cart` object. Reused in the cart drawer (sections/cart-drawer.liquid) and on the
+  /cart page (sections/main-cart.liquid). Gold-forward styling in cart-drawer.css /
+  standard-pages.css (.fsbar*).
+{%- endcomment -%}
+
+{%- liquid
+  assign fs_enabled = settings.free_shipping_enabled | default: true
+  assign fs_threshold = settings.free_shipping_threshold | default: 140 | times: 1
+  assign fs_hidden = false
+  if fs_enabled == false or fs_threshold == blank or fs_threshold <= 0
+    assign fs_hidden = true
+  endif
+-%}
+
+{%- unless fs_hidden -%}
+  {%- liquid
+    assign threshold_cents = fs_threshold | times: 100
+    assign remaining = threshold_cents | minus: cart.total_price
+    assign remaining_money = remaining | money
+    assign threshold_money = threshold_cents | money
+    assign pct = cart.total_price | times: 100.0 | divided_by: threshold_cents
+    if pct > 100
+      assign pct = 100
+    endif
+    if pct < 0
+      assign pct = 0
+    endif
+  -%}
+
+  <div class="fsbar" data-fs-bar>
+    <p class="fsbar__msg">
+      {%- if remaining > 0 -%}
+        {%- if cart.item_count > 0 -%}
+          {{ 'cart.free_shipping.remaining' | t: amount: remaining_money }} <strong>{{ 'cart.free_shipping.free' | t }}</strong>
+        {%- else -%}
+          {{ 'cart.free_shipping.threshold' | t: amount: threshold_money }}
+        {%- endif -%}
+      {%- else -%}
+        <span class="fsbar__check" aria-hidden="true">&#10003;</span> {{ 'cart.free_shipping.unlocked' | t }}
+      {%- endif -%}
+    </p>
+    <div
+      class="fsbar__track"
+      role="progressbar"
+      aria-label="{{ 'cart.free_shipping.aria' | t }}"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="{{ pct | round }}"
+    >
+      <span class="fsbar__fill" style="width: {{ pct | round }}%"></span>
+      {%- if remaining > 0 -%}
+        <span class="fsbar__marker" style="left: {{ pct | round }}%"></span>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endunless -%}

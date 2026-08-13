@@ -6,6 +6,8 @@
 
   {%- if cart.item_count > 0 -%}
     {%- form 'cart', cart -%}
+      {%- render 'free-shipping-bar' -%}
+
       {%- for item in cart.items -%}
         <div class="cart-row">
           <img src="{{ item.image | image_url: width: 180 }}" alt="{{ item.title | escape }}">
@@ -25,7 +27,7 @@
         <div class="subtotal">{{ 'cart.general.subtotal' | t }}: {{ cart.total_price | money }}</div>
         <div style="display:flex;gap:.7rem;flex-wrap:wrap">
           <button type="submit" name="update" class="btn btn--ghost">Update</button>
-          <button type="submit" name="checkout" class="btn btn--primary">{{ 'cart.general.checkout' | t }}</button>
+          <button type="submit" name="checkout" class="btn btn--gold">{{ 'cart.general.checkout' | t }}</button>
         </div>
       </div>
     {%- endform -%}
