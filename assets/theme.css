@@ -23,6 +23,7 @@
     --ui: "Manrope", system-ui, sans-serif;
 
     /* Responsive breakpoint system
+       2K  ≥2560 → container 1920px
        FHD ≥1920 → container 1440px
        QHD ≥1440 → container 1280px
        HD+ ≥1280 → container 1024px
@@ -34,12 +35,14 @@
     --bp-hdplus: 1280px;
     --bp-qhd: 1440px;
     --bp-fhd: 1920px;
+    --bp-2k: 2560px;
 
     /* Container max-widths */
     --wrap-hd: 768px;
     --wrap-hdplus: 1024px;
     --wrap-qhd: 1280px;
     --wrap-fhd: 1440px;
+    --wrap-2k: 1920px;
 
     /* Gutters */
     --gutter-mobile: 16px;
@@ -108,6 +111,11 @@ a {
 @media (min-width: 1920px) {
     .wrap {
         width: min(100% - 4rem, var(--wrap-fhd));
+    }
+}
+@media (min-width: 2560px) {
+    .wrap {
+        width: min(100% - 4rem, var(--wrap-2k));
     }
 }
 section {

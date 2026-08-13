@@ -7,7 +7,9 @@
 .plist {
     /* Clears the fixed site header; the editor's padding setting adds to it. */
     --plist-header-offset: 92px;
-    padding: calc(var(--plist-header-offset) + var(--plist-pad-t, 48px)) 0
+    /* padding-block (not the padding shorthand) so .wrap's inline gutters
+       survive on mobile/tablet — same convention as .page-shell */
+    padding-block: calc(var(--plist-header-offset) + var(--plist-pad-t, 48px))
         var(--plist-pad-b, 72px);
 }
 

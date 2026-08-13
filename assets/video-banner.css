@@ -64,6 +64,11 @@
         width: min(100% - 4rem, var(--wrap-fhd));
     }
 }
+@media (min-width: 2560px) {
+    .vbanner__inner {
+        width: min(100% - 4rem, var(--wrap-2k));
+    }
+}
 .vbanner__content {
     max-width: var(--vb-content-w, 560px);
 }

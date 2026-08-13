@@ -109,7 +109,7 @@
 .hero__inner {
     position: relative;
     z-index: 3;
-    padding: var(--hero-pt, 136px) 0 var(--hero-pb, 68px);
+    padding-block: var(--hero-pt, 136px) var(--hero-pb, 68px);
 }
 /* Each text element carries its own max-width plus the shared alignment margins,
    so the heading, subtitle and paragraph can wrap at different measures while

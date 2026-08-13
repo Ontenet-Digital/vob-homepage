@@ -1,6 +1,6 @@
 /* ============ USP ============ */
 .usp {
-    padding: 4.5rem 0 3rem;
+    padding-block: 4.5rem 3rem;
 }
 .usp__grid {
     display: grid;

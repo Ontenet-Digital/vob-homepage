@@ -1,6 +1,6 @@
 /* ============ CLIENT TESTIMONIAL (vertical YouTube reels) ============ */
 .testi {
-    padding: var(--testi-pt, 4.5rem) 0 var(--testi-pb, 3.5rem);
+    padding-block: var(--testi-pt, 4.5rem) var(--testi-pb, 3.5rem);
 }
 .testi__grid {
     display: grid;

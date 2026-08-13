@@ -1,6 +1,6 @@
 /* ============ ABOUT ============ */
 .about {
-    padding: 6rem 0 3rem;
+    padding-block: 6rem 3rem;
 }
 .about__rotator {
     font-family: var(--display);
