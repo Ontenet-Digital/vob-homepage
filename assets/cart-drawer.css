@@ -277,13 +277,19 @@ body.drawer-locked {
     font-weight: 700;
     font-size: 0.9rem;
     color: var(--gold-deep);
-    margin-top: 0.1rem;
+    margin: 0;
+}
+.cdrawer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.5rem;
 }
 .cdrawer__qty {
     display: inline-flex;
     align-items: center;
     gap: 0.15rem;
-    margin-top: 0.4rem;
     border: 1px solid rgba(190, 151, 67, 0.35);
     border-radius: var(--radius-sm);
     width: fit-content;
@@ -315,7 +321,7 @@ body.drawer-locked {
     border: none;
     text-align: center;
     font-family: var(--ui);
-    font-size: 0.9rem;
+    font-size: 0.65rem;
     font-weight: 700;
     color: var(--ink);
     background: transparent;
@@ -334,6 +340,7 @@ body.drawer-locked {
     border-radius: 2px;
 }
 .cdrawer__remove {
+    flex-shrink: 0;
     grid-column: 3;
     justify-self: end;
     align-self: start;

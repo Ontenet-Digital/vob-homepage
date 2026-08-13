@@ -388,6 +388,17 @@
                 // stale refs are dropped by currentDrawer()/currentToggle().
                 state.drawer = next;
                 if (wasOpen || opts.open) {
+                    // Only a FRESH open (drawer was closed and we're opening it,
+                    // e.g. first add-to-cart) gets the entry animation: force a
+                    // style recalc so the browser records the drawer's closed
+                    // state before we animate it open — otherwise the transition
+                    // is skipped and the drawer appears instantly. When the
+                    // drawer is ALREADY open (qty/remove/add from inside it), we
+                    // skip the reflow so the re-rendered panel renders directly
+                    // in the open state and never slides out of view.
+                    if (opts.open && !wasOpen) {
+                        void next.offsetWidth;
+                    }
                     next.classList.add("is-open");
                     next.setAttribute("aria-hidden", "false");
                     var toggle = currentToggle();

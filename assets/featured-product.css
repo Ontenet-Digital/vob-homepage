@@ -503,9 +503,6 @@
         transform: rotate(360deg);
     }
 }
-.fps__add.is-added {
-    background: #157347;
-}
 .fps__add-check {
     display: none;
     width: 18px;
