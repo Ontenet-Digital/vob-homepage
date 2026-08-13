@@ -58,7 +58,7 @@
     width: 100%;
     height: 100vh;
 }
-@media (max-width: 749px), (prefers-reduced-motion: reduce) {
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
     .hero--parallax {
         clip-path: none;
     }
@@ -109,7 +109,7 @@
 .hero__inner {
     position: relative;
     z-index: 3;
-    padding: var(--hero-pt, 136px) 0 var(--hero-pb, 68px);
+    padding-block: var(--hero-pt, 136px) var(--hero-pb, 68px);
 }
 /* Each text element carries its own max-width plus the shared alignment margins,
    so the heading, subtitle and paragraph can wrap at different measures while
@@ -130,9 +130,9 @@
     text-shadow: var(--hero-h1-shadow, 0 2px 30px rgba(0, 0, 0, 0.38));
 }
 /* Above the mobile breakpoint the desktop size is capped against the viewport so
-   a large setting cannot overflow a narrow laptop; at or below 749px the mobile
+   a large setting cannot overflow a narrow laptop; at or below 767px the mobile
    setting is honoured exactly. */
-@media (min-width: 750px) {
+@media (min-width: 768px) {
     .hero__title {
         font-size: min(var(--hero-h1-size, 88px), 9.5vw);
     }

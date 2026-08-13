@@ -1,6 +1,6 @@
 /* ============ STORY SECTION ============ */
 .story-section {
-    padding: 4.5rem 0 3rem;
+    padding-block: 4.5rem 3rem;
 }
 .story-section .blog__grid {
     display: grid;
@@ -57,7 +57,7 @@
     color: var(--ink-soft);
     flex: 1;
 }
-@media (max-width: 980px) {
+@media (max-width: 1023px) {
     .story-section .blog__grid {
         grid-template-columns: 1fr;
     }

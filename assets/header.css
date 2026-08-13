@@ -178,7 +178,7 @@ section[id] {
     flex: none;
     margin-bottom: 40px;
 }
-@media (max-width: 749px) {
+@media (max-width: 767px) {
     .moto__text {
         font-size: 0.7rem;
         letter-spacing: 0.18em;
@@ -253,8 +253,7 @@ a.trust__link:hover {
     white-space: nowrap;
 }
 
-@media (max-width: 980px) {
-    /* Hide the inline desktop nav; the bottom-sheet drawer takes over. */
+@media (max-width: 1023px) {
     .nav__links {
         display: none;
     }
@@ -408,21 +407,7 @@ a.trust__link:hover {
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .nav__drawer,
-    .nav__drawer-backdrop,
-    .nav__drawer-panel,
-    .nav__drawer-links a,
-    .nav__link-arrow {
-        transition: none;
-    }
-    .nav__drawer-links a {
-        opacity: 1;
-        transform: none;
-    }
-}
-
-@media (max-width: 749px) {
+@media (max-width: 767px) {
     .trust__list {
         gap: 1rem 1.35rem;
     }

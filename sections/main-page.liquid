@@ -4,8 +4,40 @@
     <h1>{{ page.title }}</h1>
   </div>
   <div class="rte">{{ page.content }}</div>
+
+  {%- comment -%}
+    Render app blocks (e.g. contact / form builder apps like Glood, Hulk,
+    Vitals, etc.) that are added to this section in the theme editor.
+    Without this loop, app blocks are never output and forms silently disappear.
+  {%- endcomment -%}
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when '@app' -%}
+        {%- render block -%}
+    {%- endcase -%}
+  {%- endfor -%}
 </div>
 
+{%- comment -%}
+  Native redesigned contact form — rendered in a wider container (outside the
+  narrow page shell) so the card feels spacious and comfortable to read.
+  Submits via AJAX to the Shopify /contact endpoint (assets/theme-contact.js).
+{%- endcomment -%}
+{%- if page.handle == 'contact' -%}
+  <div class="page-shell page-shell--contact wrap">
+    {% render 'contact-form' %}
+  </div>
+{%- endif -%}
+
 {% schema %}
-{ "name": "Page", "settings": [] }
+{
+  "name": "Page",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "max_blocks": 1
+}
 {% endschema %}

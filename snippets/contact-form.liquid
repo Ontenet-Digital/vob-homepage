@@ -1,0 +1,103 @@
+{%- comment -%}
+  Native contact form — no app required.
+  Submits to the Shopify /contact endpoint via AJAX (assets/theme-contact.js).
+  Rendered on the contact page from sections/main-page.liquid.
+{%- endcomment -%}
+
+{%- assign contact_email = shop.email | default: shop.customer_email -%}
+
+{%- form 'contact', class: 'cform', data-contact-form: '' -%}
+  <div class="cform__card">
+    <div class="cform__aside">
+      <span class="eyebrow">Get in touch</span>
+      <h2 class="cform__title">We'd love to hear from you</h2>
+      <p class="cform__intro">
+        A question about a title, an order, or a story just for you? Send us a
+        note and our team will reply within one business day.
+      </p>
+
+      <ul class="cform__meta">
+        {%- if contact_email != blank -%}
+          <li>
+            <span class="cform__meta-label">Email</span>
+            <a href="mailto:info@visionofthebiblestore.com">info@visionofthebiblestore.com</a>
+          </li>
+        {%- endif -%}
+        <li>
+          <span class="cform__meta-label">Response time</span>
+          Within 1 business day
+        </li>
+      </ul>
+    </div>
+
+    <div class="cform__fields">
+      {%- if form.posted_successfully? -%}
+        <div class="cform__msg cform__msg--success" data-contact-success role="status">
+          Thanks for reaching out — we'll be in touch soon.
+        </div>
+      {%- endif -%}
+
+      {%- if form.errors -%}
+        <div class="cform__msg cform__msg--error" data-contact-errors role="alert">
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+
+      <div class="cform__grid">
+        <label class="cform__field">
+          <span class="cform__label">Name <em>*</em></span>
+          <input
+            type="text"
+            name="contact[name]"
+            value="{{ form.name | escape }}"
+            autocomplete="name"
+            placeholder="Jane Doe"
+            required>
+        </label>
+        <label class="cform__field">
+          <span class="cform__label">Email <em>*</em></span>
+          <input
+            type="email"
+            name="contact[email]"
+            value="{{ form.email | escape }}"
+            autocomplete="email"
+            placeholder="jane@example.com"
+            required>
+        </label>
+      </div>
+
+      <label class="cform__field">
+        <span class="cform__label">Phone <span class="cform__opt">(optional)</span></span>
+        <input
+          type="tel"
+          name="contact[phone]"
+          value="{{ form.phone | escape }}"
+          autocomplete="tel"
+          placeholder="+1 (555) 000-0000">
+      </label>
+
+      <label class="cform__field">
+        <span class="cform__label">Subject</span>
+        <input
+          type="text"
+          name="contact[subject]"
+          value="{{ form.subject | escape }}"
+          placeholder="How can we help?">
+      </label>
+
+      <label class="cform__field">
+        <span class="cform__label">Message <em>*</em></span>
+        <textarea
+          name="contact[body]"
+          rows="5"
+          placeholder="Tell us a little more…"
+          required>{{ form.body | escape }}</textarea>
+      </label>
+
+      <div class="cform__actions">
+        <button class="btn btn--gold" type="submit" data-contact-submit>Send message</button>
+        <span class="cform__status" data-contact-status role="status" aria-live="polite"></span>
+      </div>
+    </div>
+  </div>
+{%- endform -%}
