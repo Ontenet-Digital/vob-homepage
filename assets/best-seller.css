@@ -5,7 +5,7 @@
    renderable on its own. Tabs are pure CSS (radio + label), no JS. */
 
 .bs {
-    padding: var(--bs-pad-t, 72px) 0 var(--bs-pad-b, 72px);
+    padding-block: var(--bs-pad-t, 72px) var(--bs-pad-b, 72px);
     background: var(--bs-bg, #fff);
 }
 

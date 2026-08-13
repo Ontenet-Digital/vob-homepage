@@ -60,6 +60,13 @@
         --gold:{{ settings.color_gold | default: '#BE9743' }};
         --gold-bright:{{ settings.color_gold_bright | default: '#E4C56C' }};
         --gold-deep:{{ settings.color_gold_deep | default: '#7C5D1E' }};
+        --wrap-hd:{{ settings.layout_wrap_hd | default: 768 | append: 'px' }};
+        --wrap-hdplus:{{ settings.layout_wrap_hdplus | default: 1024 | append: 'px' }};
+        --wrap-qhd:{{ settings.layout_wrap_qhd | default: 1280 | append: 'px' }};
+        --wrap-fhd:{{ settings.layout_wrap_fhd | default: 1440 | append: 'px' }};
+        --wrap-2k:{{ settings.layout_wrap_2k | default: 1920 | append: 'px' }};
+        --gutter-tab:{{ settings.layout_gutter_tab | default: 24 | append: 'px' }};
+        --gutter-mobile:{{ settings.layout_gutter_mobile | default: 16 | append: 'px' }};
       }
     </style>
   </head>

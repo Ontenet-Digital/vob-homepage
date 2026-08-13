@@ -1,6 +1,6 @@
 /* ============ CATEGORIES ============ */
 .cats {
-    padding: 5rem 0 3rem;
+    padding-block: 5rem 3rem;
 }
 
 .cats .cats__grid {

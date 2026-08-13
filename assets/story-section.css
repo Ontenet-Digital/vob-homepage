@@ -1,6 +1,6 @@
 /* ============ STORY SECTION ============ */
 .story-section {
-    padding: 4.5rem 0 3rem;
+    padding-block: 4.5rem 3rem;
 }
 .story-section .blog__grid {
     display: grid;

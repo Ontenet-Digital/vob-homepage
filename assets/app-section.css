@@ -1,7 +1,7 @@
 
 /* ============ APP SECTION ============ */
 .apps {
-    padding: 5rem 0;
+    padding-block: 5rem;
 }
 .apps__panel {
     background: linear-gradient(160deg, var(--violet-deep), #331e5b);

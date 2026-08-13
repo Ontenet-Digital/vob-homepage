@@ -83,6 +83,90 @@
         ]
     },
     {
+        "name": "Layout & breakpoints",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Container widths",
+                "info": "Each desktop resolution tier's content container max-width. Tablet (≥768px) and Mobile (<768px) stay fluid and only use the gutters below."
+            },
+            {
+                "type": "range",
+                "id": "layout_wrap_2k",
+                "label": "2K — container (≥2560px viewport)",
+                "default": 1920,
+                "min": 1200,
+                "max": 2560,
+                "step": 20,
+                "unit": "px"
+            },
+            {
+                "type": "range",
+                "id": "layout_wrap_fhd",
+                "label": "FHD — container (≥1920px viewport)",
+                "default": 1440,
+                "min": 1000,
+                "max": 1920,
+                "step": 10,
+                "unit": "px"
+            },
+            {
+                "type": "range",
+                "id": "layout_wrap_qhd",
+                "label": "QHD — container (≥1440px viewport)",
+                "default": 1280,
+                "min": 900,
+                "max": 1440,
+                "step": 10,
+                "unit": "px"
+            },
+            {
+                "type": "range",
+                "id": "layout_wrap_hdplus",
+                "label": "HD+ — container (≥1280px viewport)",
+                "default": 1024,
+                "min": 800,
+                "max": 1280,
+                "step": 8,
+                "unit": "px"
+            },
+            {
+                "type": "range",
+                "id": "layout_wrap_hd",
+                "label": "HD — container (≥1024px viewport)",
+                "default": 768,
+                "min": 600,
+                "max": 1024,
+                "step": 8,
+                "unit": "px"
+            },
+            {
+                "type": "header",
+                "content": "Gutters (fluid tiers)"
+            },
+            {
+                "type": "range",
+                "id": "layout_gutter_tab",
+                "label": "Tablet gutter (≥768px)",
+                "default": 24,
+                "min": 8,
+                "max": 64,
+                "step": 2,
+                "unit": "px"
+            },
+            {
+                "type": "range",
+                "id": "layout_gutter_mobile",
+                "label": "Mobile gutter (<768px)",
+                "default": 16,
+                "min": 8,
+                "max": 64,
+                "step": 2,
+                "unit": "px"
+            }
+        ]
+    },
+    {
         "name": "Social media",
         "settings": [
             { "type": "url", "id": "social_facebook", "label": "Facebook URL" },
