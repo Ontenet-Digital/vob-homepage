@@ -113,6 +113,20 @@
 /* ---------- Viewport / panels ---------- */
 .fps__viewport {
     position: relative;
+    /* Gap kept between the outgoing and incoming slides during a swap */
+    --fps-slide-gap: 24px;
+}
+/* Clip only while swapping so the sliding panel can't overflow the layout;
+   removed when idle so the sticky gallery keeps working. */
+.fps__viewport.is-swapping {
+    overflow: hidden;
+}
+/* overflow:hidden on the viewport turns it into a scroll container, which
+   would shove the sticky gallery down by its 24px offset during the slide.
+   Pin the image back to the top for the duration of the swap. */
+.fps__viewport.is-swapping .fps__gallery {
+    position: static;
+    top: auto;
 }
 .fps__product {
     display: grid;
@@ -123,21 +137,40 @@
 .fps__product[hidden] {
     display: none;
 }
-.fps__product:not(.is-active) {
+/* .is-measuring must be excluded so height measurement can lay the panel out */
+.fps__product:not(.is-active):not(.is-enter):not(.is-measuring) {
     display: none;
 }
-.fps__product.is-active {
-    animation: fpsFade 0.5s var(--ease, cubic-bezier(0.16, 0.84, 0.36, 1));
+
+/* Directional slide for product swaps. Both panels get .is-sliding (transition);
+   the incoming panel also gets .is-enter so it overlays the outgoing one. */
+.fps__product.is-enter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: grid;
+    z-index: 1;
 }
-@keyframes fpsFade {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: none;
-    }
+.fps__product.is-sliding {
+    transition:
+        transform 0.55s var(--ease, cubic-bezier(0.16, 0.84, 0.36, 1)),
+        opacity 0.55s var(--ease, cubic-bezier(0.16, 0.84, 0.36, 1));
+    will-change: transform, opacity;
+}
+
+/* Used only to measure every panel's height so the viewport can reserve the
+   tallest one — this keeps the section and the pagination dots from jumping
+   when swapping between products of different heights. Hidden + out of flow
+   so nothing is seen while measuring. */
+.fps__product.is-measuring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: grid;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 /* ---------- Gallery ---------- */
@@ -312,7 +345,7 @@
 }
 .fps__price-current {
     font-weight: 700;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     letter-spacing: -0.01em;
     color: var(--fps-price);
 }
@@ -663,6 +696,9 @@
     .fps__head {
         margin-bottom: 28px;
     }
+    .fps__price-current {
+        font-size: 1.2rem;
+    }
 }
 @media (max-width: 767px) {
     .fps__imgnav {
@@ -676,10 +712,13 @@
     .fps__thumb {
         width: 60px;
     }
+    .fps__price-current {
+        font-size: 1.1rem;
+    }
 }
 @media (prefers-reduced-motion: reduce) {
-    .fps__product.is-active {
-        animation: none;
+    .fps__product.is-sliding {
+        transition: none;
     }
     .fps__slide {
         transition: none;

@@ -18,7 +18,8 @@
     aspect-ratio: 9 / 16;
     border-radius: var(--radius-md);
     overflow: hidden;
-    background: #fdfbf4;
+    /* background: #fdfbf4; */
+    background: #000;
     transition: transform 0.4s var(--ease);
 }
 .testi__card:hover .testi__media {

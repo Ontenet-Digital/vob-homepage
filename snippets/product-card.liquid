@@ -1,37 +1,126 @@
-{%- comment -%} Product grid card. Params: product, with_cta (optional). {%- endcomment -%}
+{%- comment -%}
+  Product grid card — the single reusable product card across the whole theme
+  (collection page, best sellers, recommendations, search). Params:
+    product   (Product)       required
+    settings  (object, opt.)  section.settings map with the card settings below.
+
+  The card's look is driven by the --bs-* custom properties (assets/best-seller.css)
+  which each hosting section sets from its own settings; when none are set, the
+  fallbacks there match the collection page defaults. The boolean flags below
+  default to true and only turn off when the caller explicitly sets them false,
+  so the card renders fully even when called without a settings map (e.g. search).
+{%- endcomment -%}
 {%- liquid
+  assign s = settings
+  assign rating = product.metafields.reviews.rating.value.rating
+  assign alt_image = product.media[1]
+  assign has_alt_image = false
+  if alt_image
+    assign has_alt_image = true
+  endif
   assign multi_variant = false
   unless product.has_only_default_variant
     assign multi_variant = true
   endunless
+
+  assign show_vendor = true
+  if s.show_vendor == false
+    assign show_vendor = false
+  endif
+  assign show_rating = true
+  if s.show_rating == false
+    assign show_rating = false
+  endif
+  assign show_quick_view = true
+  if s.show_quick_view == false
+    assign show_quick_view = false
+  endif
+  assign show_image_dots = true
+  if s.show_image_dots == false
+    assign show_image_dots = false
+  endif
+  assign quick_add_style = s.quick_add_style | default: 'hover'
 -%}
-<div class="grid-card">
-  <a class="grid-card__link" href="{{ product.url }}">
-    <div class="grid-card__media">
+<div class="bs-card reveal">
+  <div class="bs-card__media">
+    <a href="{{ product.url }}" class="bs-card__media-link" aria-label="{{ product.title | escape }}" tabindex="-1">
       {%- if product.featured_image -%}
-        <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" loading="lazy">
-      {%- endif -%}
-    </div>
-    <div class="grid-card__body">
-      <h3>{{ product.title }}</h3>
-      <span class="grid-card__price">
-        {%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money }}</s> {% endif -%}
-        {{ product.price | money }}
-      </span>
-    </div>
-  </a>
-  {%- if with_cta -%}
-    <div class="grid-card__cta">
-      {%- if multi_variant -%}
-        <a class="grid-card__btn" href="{{ product.url }}">Select options</a>
-      {%- elsif product.available == false -%}
-        <a class="grid-card__btn grid-card__btn--disabled" href="{{ product.url }}">{{ 'products.product.sold_out' | t }}</a>
+        <img
+          class="bs-card__img bs-card__img--primary"
+          src="{{ product.featured_image | image_url: width: 700 }}"
+          srcset="{{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 700 }} 700w, {{ product.featured_image | image_url: width: 1000 }} 1000w"
+          sizes="(max-width: 749px) 46vw, 320px"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          width="{{ product.featured_image.width }}"
+          height="{{ product.featured_image.height }}"
+          loading="lazy">
       {%- else -%}
-        {%- form 'product', product, class: 'grid-card__form' -%}
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-          <button type="submit" class="grid-card__btn btn--sweep-animation">{{ 'products.product.add_to_cart' | t }}</button>
-        {%- endform -%}
+        <div class="bs-card__img bs-card__img--placeholder" aria-hidden="true"></div>
       {%- endif -%}
-    </div>
-  {%- endif -%}
+      {%- if has_alt_image -%}
+        <img
+          class="bs-card__img bs-card__img--alt"
+          src="{{ alt_image | image_url: width: 700 }}"
+          alt=""
+          width="{{ alt_image.width }}"
+          height="{{ alt_image.height }}"
+          loading="lazy"
+          aria-hidden="true">
+      {%- endif -%}
+    </a>
+
+    {%- if product.available == false -%}
+      <span class="bs-card__badge bs-card__badge--sold-out">{{ 'products.product.sold_out' | t }}</span>
+    {%- elsif rating != blank and show_rating -%}
+      <span class="bs-card__badge bs-card__badge--rating">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.97 6.31 6.78.82-5 4.78 1.36 6.84L12 17.9l-6.11 3.35 1.36-6.84-5-4.78 6.78-.82L12 2.5z"/></svg>
+        {{ rating }}
+      </span>
+    {%- endif -%}
+
+    {%- if show_quick_view -%}
+      <a href="{{ product.url }}" class="bs-card__quickview" aria-label="Quick view — {{ product.title | escape }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+          <path d="M1.4 12S5 5.2 12 5.2 22.6 12 22.6 12 19 18.8 12 18.8 1.4 12 1.4 12z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </a>
+    {%- endif -%}
+
+    {%- if has_alt_image and show_image_dots -%}
+      <span class="bs-card__dots" aria-hidden="true">
+        {%- for media in product.media limit: 5 -%}
+          <span class="bs-card__dot{% if forloop.first %} is-active{% endif %}"></span>
+        {%- endfor -%}
+      </span>
+    {%- endif -%}
+
+    {%- if quick_add_style != 'none' -%}
+      <div class="bs-card__cta">
+        {%- if multi_variant -%}
+          <a href="{{ product.url }}" class="bs-card__cta-btn">Select options</a>
+        {%- elsif product.available == false -%}
+          <a href="{{ product.url }}" class="bs-card__cta-btn bs-card__cta-btn--disabled">{{ 'products.product.sold_out' | t }}</a>
+        {%- else -%}
+          {%- form 'product', product, class: 'bs-card__form' -%}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <button type="submit" class="bs-card__cta-btn btn--sweep-animation">{{ 'products.product.add_to_cart' | t }}</button>
+          {%- endform -%}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="bs-card__body">
+    {%- if show_vendor and product.vendor != blank -%}
+      <span class="bs-card__vendor">{{ product.vendor }}</span>
+    {%- endif -%}
+    <h3 class="bs-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    <span class="bs-card__price">
+      {%- if product.compare_at_price > product.price -%}
+        <s class="bs-card__price-compare">{{ product.compare_at_price | money }}</s>
+      {%- endif -%}
+      <span class="bs-card__price-current">{{ product.price | money }}</span>
+    </span>
+  </div>
 </div>

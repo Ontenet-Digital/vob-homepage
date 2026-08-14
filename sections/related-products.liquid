@@ -40,9 +40,22 @@
     --rel-bg: {{ s.bg_color | default: '#ffffff' }};
     --rel-pad-t: {{ s.padding_top | default: 24 }}px;
     --rel-pad-b: {{ s.padding_bottom | default: 88 }}px;
-    --rel-cta-bg: {{ s.quick_add_bg_color | default: '#251d3a' }};
-    --rel-cta-color: {{ s.quick_add_text_color | default: '#fdfbf3' }};
-    --rel-cta-radius: {{ s.quick_add_radius | default: 30 }}px;
+    /* Card custom properties read by snippets/product-card.liquid (styles in best-seller.css) */
+    --bs-card-bg: {{ s.card_bg | default: '#ffffff' }};
+    --bs-card-border: {{ s.card_border_color | default: '#ede6d6' }};
+    --bs-card-radius: {{ s.card_radius | default: 10 }}px;
+    --bs-img-ratio: {{ s.image_ratio | default: '1/1' }};
+    --bs-vendor-color: {{ s.vendor_color | default: '#be9743' }};
+    --bs-title-color: {{ s.title_color | default: '#251d3a' }};
+    --bs-title-size: {{ s.title_size | default: 16 }}px;
+    --bs-price-color: {{ s.price_color | default: '#251d3a' }};
+    --bs-compare-color: {{ s.compare_price_color | default: '#8b8398' }};
+    --bs-rating-color: {{ s.rating_text_color | default: '#be9743' }};
+    --bs-quickview-color: {{ s.quickview_icon_color | default: '#251d3a' }};
+    --bs-cta-bg: {{ s.quick_add_bg_color | default: '#251d3a' }};
+    --bs-cta-color: {{ s.quick_add_text_color | default: '#fdfbf3' }};
+    --bs-cta-radius: {{ s.quick_add_radius | default: 30 }}px;
+    --bs-dot-active: {{ s.dot_active_color | default: '#be9743' }};
   }
   @media (max-width: 749px){
     #shopify-section-{{ section.id }} .rel{
@@ -71,7 +84,7 @@
       {%- assign shown = 0 -%}
       {%- for p in use_list -%}
         {%- if source == 'fallback' and product != blank and p.id == product.id -%}{%- continue -%}{%- endif -%}
-        {%- render 'product-card', product: p, with_cta: true -%}
+        {%- render 'product-card', product: p, settings: s -%}
         {%- assign shown = shown | plus: 1 -%}
         {%- if shown >= limit -%}{%- break -%}{%- endif -%}
       {%- endfor -%}
@@ -128,6 +141,9 @@
         var incoming = doc.querySelector("[data-rel]");
         if (!incoming) { el.hidden = true; return; }
         el.innerHTML = incoming.innerHTML;
+        /* Cards are injected after theme-reveal.js has already run, so reveal
+           them immediately instead of leaving them stuck at opacity 0. */
+        el.querySelectorAll(".reveal").forEach(function (n) { n.classList.add("in"); });
         el.removeAttribute("data-rel-fetch");
         el.hidden = !hasCards(el);
       })
@@ -193,10 +209,53 @@
     { "type": "range", "id": "columns_tablet", "label": "Columns — tablet", "min": 2, "max": 4, "step": 1, "default": 3 },
     { "type": "range", "id": "columns_mobile", "label": "Columns — mobile", "min": 1, "max": 3, "step": 1, "default": 1 },
 
-    { "type": "header", "content": "Card button" },
+    { "type": "header", "content": "Card" },
+    { "type": "color", "id": "card_bg", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#EDE6D6" },
+    { "type": "range", "id": "card_radius", "label": "Card corner radius", "min": 0, "max": 32, "step": 1, "unit": "px", "default": 10 },
+    {
+      "type": "select", "id": "image_ratio", "label": "Image ratio", "default": "1/1",
+      "options": [
+        { "value": "1/1", "label": "Square" },
+        { "value": "4/5", "label": "Portrait (4:5)" },
+        { "value": "3/4", "label": "Portrait (3:4)" },
+        { "value": "5/4", "label": "Landscape (5:4)" },
+        { "value": "4/3", "label": "Landscape (4:3)" }
+      ]
+    },
+
+    { "type": "header", "content": "Product info" },
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": true },
+    { "type": "color", "id": "vendor_color", "label": "Vendor colour", "default": "#BE9743" },
+    { "type": "color", "id": "title_color", "label": "Title colour", "default": "#251D3A" },
+    { "type": "range", "id": "title_size", "label": "Title size — desktop", "min": 13, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    { "type": "color", "id": "price_color", "label": "Price colour", "default": "#251D3A" },
+    { "type": "color", "id": "compare_price_color", "label": "Compare-at price colour", "default": "#8B8398" },
+
+    { "type": "header", "content": "Rating badge", "info": "Shown automatically when a product has a review rating (e.g. via a reviews app)." },
+    { "type": "checkbox", "id": "show_rating", "label": "Show rating badge", "default": true },
+    { "type": "color", "id": "rating_text_color", "label": "Badge text & star colour", "default": "#BE9743" },
+
+    { "type": "header", "content": "Quick view" },
+    { "type": "checkbox", "id": "show_quick_view", "label": "Show quick view icon", "default": true },
+    { "type": "color", "id": "quickview_icon_color", "label": "Icon colour", "default": "#251D3A" },
+
+    { "type": "header", "content": "Quick add" },
+    {
+      "type": "select", "id": "quick_add_style", "label": "Add to cart button", "default": "hover",
+      "options": [
+        { "value": "hover", "label": "Show on hover (always on touch devices)" },
+        { "value": "always", "label": "Always visible" },
+        { "value": "none", "label": "Hidden" }
+      ]
+    },
     { "type": "color", "id": "quick_add_bg_color", "label": "Button background", "default": "#251D3A" },
     { "type": "color", "id": "quick_add_text_color", "label": "Button text", "default": "#FDFBF3" },
     { "type": "range", "id": "quick_add_radius", "label": "Button corner radius", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 30 },
+
+    { "type": "header", "content": "Image dots", "info": "A decorative indicator shown when a product has more than one image." },
+    { "type": "checkbox", "id": "show_image_dots", "label": "Show image dots", "default": true },
+    { "type": "color", "id": "dot_active_color", "label": "Active dot colour", "default": "#BE9743" },
 
     { "type": "header", "content": "Section" },
     { "type": "color", "id": "bg_color", "label": "Background colour", "default": "#FFFFFF" },

@@ -94,8 +94,8 @@ a {
 }
 @media (min-width: 1024px) {
     .wrap {
-        width: min(100% - 4rem, var(--wrap-hd));
-        padding-inline: 0;
+        /* width: min(100% - 4rem, var(--wrap-hd)); */
+        padding-inline: var(--gutter-tab);
     }
 }
 @media (min-width: 1280px) {

@@ -20,6 +20,26 @@
   assign cols = s.columns | default: 4
   assign cols_tablet = s.columns_tablet | default: 3
   assign cols_mobile = s.columns_mobile | default: 1
+
+  # Card behaviour flags — default on, only off when explicitly false (mirrors
+  # snippets/product-card.liquid) so the JS builder respects the settings.
+  assign show_vendor = true
+  if s.show_vendor == false
+    assign show_vendor = false
+  endif
+  assign show_rating = true
+  if s.show_rating == false
+    assign show_rating = false
+  endif
+  assign show_quick_view = true
+  if s.show_quick_view == false
+    assign show_quick_view = false
+  endif
+  assign show_image_dots = true
+  if s.show_image_dots == false
+    assign show_image_dots = false
+  endif
+  assign quick_add_style = s.quick_add_style | default: 'hover'
 -%}
 
 {% style %}
@@ -30,9 +50,22 @@
     --rv-bg: {{ s.bg_color | default: '#ffffff' }};
     --rv-pad-t: {{ s.padding_top | default: 24 }}px;
     --rv-pad-b: {{ s.padding_bottom | default: 72 }}px;
-    --rv-cta-bg: {{ s.quick_add_bg_color | default: '#251d3a' }};
-    --rv-cta-color: {{ s.quick_add_text_color | default: '#fdfbf3' }};
-    --rv-cta-radius: {{ s.quick_add_radius | default: 30 }}px;
+    /* Card custom properties read by the JS-built cards (styles in best-seller.css) */
+    --bs-card-bg: {{ s.card_bg | default: '#ffffff' }};
+    --bs-card-border: {{ s.card_border_color | default: '#ede6d6' }};
+    --bs-card-radius: {{ s.card_radius | default: 10 }}px;
+    --bs-img-ratio: {{ s.image_ratio | default: '1/1' }};
+    --bs-vendor-color: {{ s.vendor_color | default: '#be9743' }};
+    --bs-title-color: {{ s.title_color | default: '#251d3a' }};
+    --bs-title-size: {{ s.title_size | default: 16 }}px;
+    --bs-price-color: {{ s.price_color | default: '#251d3a' }};
+    --bs-compare-color: {{ s.compare_price_color | default: '#8b8398' }};
+    --bs-rating-color: {{ s.rating_text_color | default: '#be9743' }};
+    --bs-quickview-color: {{ s.quickview_icon_color | default: '#251d3a' }};
+    --bs-cta-bg: {{ s.quick_add_bg_color | default: '#251d3a' }};
+    --bs-cta-color: {{ s.quick_add_text_color | default: '#fdfbf3' }};
+    --bs-cta-radius: {{ s.quick_add_radius | default: 30 }}px;
+    --bs-dot-active: {{ s.dot_active_color | default: '#be9743' }};
   }
   @media (max-width: 749px){
     #shopify-section-{{ section.id }} .rvp{
@@ -48,6 +81,11 @@
   data-rv
   data-rv-key="vob:recently-viewed:v1"
   data-rv-limit="{{ s.products_limit | default: 4 }}"
+  data-rv-show-vendor="{{ show_vendor }}"
+  data-rv-show-rating="{{ show_rating }}"
+  data-rv-show-quickview="{{ show_quick_view }}"
+  data-rv-show-dots="{{ show_image_dots }}"
+  data-rv-quick-add="{{ quick_add_style }}"
   hidden>
 
   <div class="rvp__head rvp__head--{{ s.heading_align | default: 'left' }}">
@@ -65,6 +103,9 @@
       "title": {{ product.title | json }},
       "image": {{ product.featured_image | image_url: width: 600 | json }},
       "image_alt": {{ product.featured_image.alt | default: product.title | json }},
+      "image_2": {% if product.media[1] %}{{ product.media[1] | image_url: width: 600 | json }}{% else %}null{% endif %},
+      "media_count": {{ product.media.size | json }},
+      "rating": {{ product.metafields.reviews.rating.value.rating | json }},
       "price": {{ product.price | money | json }},
       "compare": {% if product.compare_at_price > product.price %}{{ product.compare_at_price | money | json }}{% else %}null{% endif %},
       "vendor": {{ product.vendor | json }},
@@ -133,28 +174,69 @@
     });
   }
 
-  function cardHTML(it) {
+  var STAR_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.97 6.31 6.78.82-5 4.78 1.36 6.84L12 17.9l-6.11 3.35 1.36-6.84-5-4.78 6.78-.82L12 2.5z"/></svg>';
+  var EYE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M1.4 12S5 5.2 12 5.2 22.6 12 22.6 12 19 18.8 12 18.8 1.4 12 1.4 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+
+  /* Builds the same bs-card markup as snippets/product-card.liquid (styles in
+     best-seller.css). cfg carries the card settings from the data-* attributes. */
+  function cardHTML(it, cfg) {
+    var url = esc(it.url);
+    var title = esc(it.title || "");
+    var altText = esc(it.image_alt || it.title || "");
     var media = it.image
-      ? '<div class="grid-card__media"><img src="' + esc(it.image) + '" alt="' + esc(it.image_alt || it.title) + '" loading="lazy"></div>'
-      : '<div class="grid-card__media"></div>';
-    var price = '<span class="grid-card__price">' +
-      (it.compare ? "<s>" + esc(it.compare) + "</s> " : "") +
-      esc(it.price || "") + "</span>";
-    var cta;
+      ? '<img class="bs-card__img bs-card__img--primary" src="' + esc(it.image) + '" alt="' + altText + '" loading="lazy">'
+      : '<div class="bs-card__img bs-card__img--placeholder" aria-hidden="true"></div>';
+    var altImg = it.image_2
+      ? '<img class="bs-card__img bs-card__img--alt" src="' + esc(it.image_2) + '" alt="" loading="lazy" aria-hidden="true">'
+      : "";
+    var badge = "";
     if (it.available === false) {
-      cta = '<a class="grid-card__btn grid-card__btn--disabled" href="' + esc(it.url) + '">Sold out</a>';
-    } else if (it.multi_variant) {
-      cta = '<a class="grid-card__btn" href="' + esc(it.url) + '">Select options</a>';
-    } else if (it.variant_id) {
-      cta = '<form class="grid-card__form" action="/cart/add" method="post"><input type="hidden" name="id" value="' + esc(it.variant_id) + '"><button type="submit" class="grid-card__btn btn--sweep-animation">Add to cart</button></form>';
-    } else {
-      // Stale snapshot without variant info — fall back to the product link.
-      cta = '<a class="grid-card__btn" href="' + esc(it.url) + '">View</a>';
+      badge = '<span class="bs-card__badge bs-card__badge--sold-out">Sold out</span>';
+    } else if (cfg.showRating && it.rating) {
+      badge = '<span class="bs-card__badge bs-card__badge--rating">' + STAR_SVG + esc(it.rating) + "</span>";
     }
-    return '<div class="grid-card" role="listitem">' +
-      '<a class="grid-card__link" href="' + esc(it.url) + '">' + media +
-      '<div class="grid-card__body"><h3>' + esc(it.title) + "</h3>" + price + "</div></a>" +
-      '<div class="grid-card__cta">' + cta + "</div></div>";
+    var quickview = cfg.showQuickView
+      ? '<a href="' + url + '" class="bs-card__quickview" aria-label="Quick view — ' + title + '">' + EYE_SVG + "</a>"
+      : "";
+    var dots = "";
+    if (cfg.showDots && it.media_count > 1) {
+      var n = Math.min(parseInt(it.media_count, 10) || 0, 5);
+      var d = "";
+      for (var i = 0; i < n; i++) {
+        d += '<span class="bs-card__dot' + (i === 0 ? " is-active" : "") + '"></span>';
+      }
+      dots = '<span class="bs-card__dots" aria-hidden="true">' + d + "</span>";
+    }
+    var cta = "";
+    if (cfg.quickAdd !== "none") {
+      var ctaInner;
+      if (it.available === false) {
+        ctaInner = '<a class="bs-card__cta-btn bs-card__cta-btn--disabled" href="' + url + '">Sold out</a>';
+      } else if (it.multi_variant) {
+        ctaInner = '<a class="bs-card__cta-btn" href="' + url + '">Select options</a>';
+      } else if (it.variant_id) {
+        ctaInner = '<form class="bs-card__form" action="/cart/add" method="post"><input type="hidden" name="id" value="' + esc(it.variant_id) + '"><button type="submit" class="bs-card__cta-btn btn--sweep-animation">Add to cart</button></form>';
+      } else {
+        // Stale snapshot without variant info — fall back to the product link.
+        ctaInner = '<a class="bs-card__cta-btn" href="' + url + '">View</a>';
+      }
+      cta = '<div class="bs-card__cta">' + ctaInner + "</div>";
+    }
+    var vendor = (cfg.showVendor && it.vendor)
+      ? '<span class="bs-card__vendor">' + esc(it.vendor) + "</span>"
+      : "";
+    var price = '<span class="bs-card__price">' +
+      (it.compare ? '<s class="bs-card__price-compare">' + esc(it.compare) + "</s>" : "") +
+      '<span class="bs-card__price-current">' + esc(it.price || "") + "</span></span>";
+    return '<div class="bs-card reveal" role="listitem">' +
+      '<div class="bs-card__media">' +
+        '<a href="' + url + '" class="bs-card__media-link" aria-label="' + title + '" tabindex="-1">' + media + altImg + "</a>" +
+        badge + quickview + dots + cta +
+      "</div>" +
+      '<div class="bs-card__body">' + vendor +
+        '<h3 class="bs-card__title"><a href="' + url + '">' + title + "</a></h3>" + price +
+      "</div>" +
+    "</div>";
   }
 
   function initSection(root) {
@@ -167,6 +249,13 @@
     var limit = parseInt(root.getAttribute("data-rv-limit"), 10) || 4;
     var CAP = 20;
     var designMode = !!(window.Shopify && window.Shopify.designMode);
+    var cfg = {
+      showVendor: root.getAttribute("data-rv-show-vendor") !== "false",
+      showRating: root.getAttribute("data-rv-show-rating") !== "false",
+      showQuickView: root.getAttribute("data-rv-show-quickview") !== "false",
+      showDots: root.getAttribute("data-rv-show-dots") !== "false",
+      quickAdd: root.getAttribute("data-rv-quick-add") || "hover"
+    };
 
     if (!grid) return;
 
@@ -201,7 +290,10 @@
       return;
     }
 
-    grid.innerHTML = toShow.map(cardHTML).join("");
+    grid.innerHTML = toShow.map(function (it) { return cardHTML(it, cfg); }).join("");
+    /* Cards are injected after theme-reveal.js has already run, so reveal
+       them immediately instead of leaving them stuck at opacity 0. */
+    grid.querySelectorAll(".reveal").forEach(function (n) { n.classList.add("in"); });
     root.hidden = false;
   }
 
@@ -256,10 +348,53 @@
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 },
     { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "recently-viewed" },
 
-    { "type": "header", "content": "Card button" },
+    { "type": "header", "content": "Card" },
+    { "type": "color", "id": "card_bg", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#EDE6D6" },
+    { "type": "range", "id": "card_radius", "label": "Card corner radius", "min": 0, "max": 32, "step": 1, "unit": "px", "default": 10 },
+    {
+      "type": "select", "id": "image_ratio", "label": "Image ratio", "default": "1/1",
+      "options": [
+        { "value": "1/1", "label": "Square" },
+        { "value": "4/5", "label": "Portrait (4:5)" },
+        { "value": "3/4", "label": "Portrait (3:4)" },
+        { "value": "5/4", "label": "Landscape (5:4)" },
+        { "value": "4/3", "label": "Landscape (4:3)" }
+      ]
+    },
+
+    { "type": "header", "content": "Product info" },
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": true },
+    { "type": "color", "id": "vendor_color", "label": "Vendor colour", "default": "#BE9743" },
+    { "type": "color", "id": "title_color", "label": "Title colour", "default": "#251D3A" },
+    { "type": "range", "id": "title_size", "label": "Title size — desktop", "min": 13, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    { "type": "color", "id": "price_color", "label": "Price colour", "default": "#251D3A" },
+    { "type": "color", "id": "compare_price_color", "label": "Compare-at price colour", "default": "#8B8398" },
+
+    { "type": "header", "content": "Rating badge", "info": "Shown automatically when a product has a review rating (e.g. via a reviews app)." },
+    { "type": "checkbox", "id": "show_rating", "label": "Show rating badge", "default": true },
+    { "type": "color", "id": "rating_text_color", "label": "Badge text & star colour", "default": "#BE9743" },
+
+    { "type": "header", "content": "Quick view" },
+    { "type": "checkbox", "id": "show_quick_view", "label": "Show quick view icon", "default": true },
+    { "type": "color", "id": "quickview_icon_color", "label": "Icon colour", "default": "#251D3A" },
+
+    { "type": "header", "content": "Quick add" },
+    {
+      "type": "select", "id": "quick_add_style", "label": "Add to cart button", "default": "hover",
+      "options": [
+        { "value": "hover", "label": "Show on hover (always on touch devices)" },
+        { "value": "always", "label": "Always visible" },
+        { "value": "none", "label": "Hidden" }
+      ]
+    },
     { "type": "color", "id": "quick_add_bg_color", "label": "Button background", "default": "#251D3A" },
     { "type": "color", "id": "quick_add_text_color", "label": "Button text", "default": "#FDFBF3" },
-    { "type": "range", "id": "quick_add_radius", "label": "Button corner radius", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 30 }
+    { "type": "range", "id": "quick_add_radius", "label": "Button corner radius", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 30 },
+
+    { "type": "header", "content": "Image dots", "info": "A decorative indicator shown when a product has more than one image." },
+    { "type": "checkbox", "id": "show_image_dots", "label": "Show image dots", "default": true },
+    { "type": "color", "id": "dot_active_color", "label": "Active dot colour", "default": "#BE9743" }
   ],
   "presets": [
     { "name": "Recently viewed" }
