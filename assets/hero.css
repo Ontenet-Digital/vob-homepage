@@ -111,6 +111,15 @@
     z-index: 3;
     padding-block: var(--hero-pt, 136px) var(--hero-pb, 68px);
 }
+/* Short landscape viewports (small laptops, landscape tablets): the fixed opaque
+   header sits over the hero's top ~76px, and vertically-centred content can rise
+   behind it, hiding the eyebrow/moto. Reserve the header height as top padding so
+   centred content clears it. `max()` keeps a larger editor padding_top intact. */
+@media (min-width: 750px) and (max-height: 640px) {
+    .hero__inner {
+        padding-top: max(var(--hero-pt, 0px), 76px);
+    }
+}
 /* Each text element carries its own max-width plus the shared alignment margins,
    so the heading, subtitle and paragraph can wrap at different measures while
    still sitting flush left, centred or flush right together.
@@ -128,14 +137,6 @@
     padding-top: var(--hero-h1-pt, 0);
     max-width: var(--hero-h1-w, 820px);
     text-shadow: var(--hero-h1-shadow, 0 2px 30px rgba(0, 0, 0, 0.38));
-}
-/* Above the mobile breakpoint the desktop size is capped against the viewport so
-   a large setting cannot overflow a narrow laptop; at or below 767px the mobile
-   setting is honoured exactly. */
-@media (min-width: 768px) {
-    .hero__title {
-        font-size: min(var(--hero-h1-size, 88px), 9.5vw);
-    }
 }
 .hero__title em {
     font-style: italic;
@@ -175,4 +176,25 @@
 .hero__para ul,
 .hero__para ol {
     margin: 0 0 0.85em 1.2em;
+}
+/* 750–1279px: scale the desktop editor sizes down so the hero text fits narrower
+   laptops/tablets. Mobile editor sizes apply at ≤749px (section style block), so
+   this range would otherwise be served the full desktop size. */
+@media (min-width: 750px) and (max-width: 1279px) {
+    .hero__title {
+        font-size: min(calc(var(--hero-h1-size, 88px) * 0.72), 9.5vw);
+    }
+    .hero__sub {
+        font-size: calc(var(--hero-sub-size, 22px) * 0.85);
+    }
+    .hero__para {
+        font-size: calc(var(--hero-para-size, 18px) * 0.9);
+    }
+}
+/* At ≥1280px the desktop size is capped against the viewport so a large setting
+   cannot overflow a narrower laptop. */
+@media (min-width: 1280px) {
+    .hero__title {
+        font-size: min(var(--hero-h1-size, 88px), 9.5vw);
+    }
 }
