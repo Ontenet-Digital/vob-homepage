@@ -26,7 +26,7 @@
 /* ---------- story_hero ---------- */
 .story-hero {
     position: relative;
-    min-height: 64vh;
+    min-height: 56vh;
     display: flex;
     align-items: flex-end;
     overflow: hidden;
@@ -57,7 +57,7 @@
 .story-hero__inner {
     position: relative;
     z-index: 2;
-    padding-block: clamp(128px, 16vh, 200px) clamp(48px, 7vh, 92px);
+    padding-block: clamp(88px, 11vh, 150px) clamp(40px, 6vh, 72px);
 }
 .story-kicker {
     font-family: var(--ui);
@@ -79,7 +79,7 @@
 .story-hero__title {
     font-family: var(--display);
     font-weight: 400;
-    font-size: clamp(2.6rem, 6.5vw, 5.2rem);
+    font-size: clamp(2.2rem, 5.5vw, 4.4rem);
     line-height: 1.02;
     letter-spacing: -0.01em;
     color: var(--story-cream);
@@ -87,25 +87,31 @@
     margin: 0.95rem 0 0;
 }
 .story-hero__sub {
-    margin-top: 1.1rem;
+    margin-top: 0.9rem;
     max-width: 42ch;
     color: rgba(247, 241, 226, 0.85);
-    font-size: 1.08rem;
+    font-size: 1rem;
 }
 
 /* ---------- story_intro / story_founder (image & text card) ---------- */
 .story-intro,
 .story-founder {
     background: var(--story-bg);
-    padding-block: clamp(3rem, 6vw, 4.5rem);
+    padding-block: clamp(2rem, 4vw, 3.25rem);
 }
 .story-card {
     display: grid;
-    grid-template-columns: 5fr 6fr;
-    gap: clamp(1.8rem, 4vw, 3.5rem);
+    /* image column 5 / text column 7 */
+    grid-template-columns: 5fr 7fr;
+    gap: clamp(1.4rem, 3vw, 2.5rem);
     align-items: center;
     border-radius: var(--story-radius);
-    padding: clamp(1.4rem, 3.5vw, 2.6rem);
+    padding: clamp(1rem, 2.5vw, 1.8rem);
+}
+/* flipped card mirrors the split so the image still gets 5 cols
+   (now on the right) and the text keeps 7 cols (on the left). */
+.story-card--flip {
+    grid-template-columns: 7fr 5fr;
 }
 .story-card--flip .story-card__media {
     order: 2;
@@ -113,7 +119,8 @@
 .story-card__media img,
 .story-card__media-empty {
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4/5;
+    height: auto;
     object-fit: cover;
     border-radius: calc(var(--story-radius) - 6px);
 }
@@ -125,18 +132,18 @@
     font-size: 2.2rem;
 }
 .story-card__copy .eyebrow {
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
 }
 .story-card__copy h2 {
-    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
-    margin-bottom: 1.1rem;
+    font-size: clamp(1.55rem, 2.7vw, 2.15rem);
+    margin-bottom: 0.9rem;
 }
 .story-card__text {
     color: var(--story-ink-soft);
-    font-size: 1.08rem;
+    font-size: 1.02rem;
 }
 .story-card__text p {
-    margin-bottom: 0.9em;
+    margin-bottom: 0.8em;
 }
 .story-card__text p:last-child {
     margin-bottom: 0;
@@ -144,32 +151,32 @@
 .story-card__sub {
     font-family: var(--display);
     font-style: italic;
-    font-size: 1.22rem;
+    font-size: 1.08rem;
     line-height: 1.3;
     color: var(--story-gold-deep);
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 }
 
 /* ---------- story_mission ---------- */
 .story-mission {
     background: var(--story-bg);
-    padding-block: clamp(3rem, 6vw, 4.5rem);
+    padding-block: clamp(2rem, 4vw, 3.25rem);
 }
 .story-mission__inner {
     text-align: center;
-    max-width: 780px;
+    max-width: 760px;
     margin-inline: auto;
 }
 .story-mission__inner .ornament {
-    margin: 0 auto 1.6rem;
+    margin: 0 auto 1.3rem;
 }
 .story-mission__inner h2 {
-    font-size: clamp(1.9rem, 3.4vw, 2.8rem);
-    margin: 1rem 0 1.1rem;
+    font-size: clamp(1.65rem, 2.8vw, 2.3rem);
+    margin: 0.85rem 0 0.9rem;
 }
 .story-mission__text {
     color: var(--story-ink-soft);
-    font-size: 1.14rem;
+    font-size: 1.05rem;
     max-width: 640px;
     margin-inline: auto;
 }
@@ -183,7 +190,7 @@
 /* ---------- story_products ---------- */
 .story-products {
     background: var(--story-bg);
-    padding-block: clamp(3rem, 6vw, 4.5rem);
+    padding-block: clamp(2rem, 4vw, 3.25rem);
 }
 .story-products__grid {
     display: grid;
@@ -212,7 +219,7 @@
 /* ---------- story_cta ---------- */
 .story-cta {
     background: var(--story-bg);
-    padding-block: clamp(3rem, 6vw, 4.5rem);
+    padding-block: clamp(2rem, 4vw, 3.25rem);
 }
 .story-cta__panel {
     text-align: center;
@@ -232,7 +239,7 @@
 .story-cta__panel h2 {
     color: var(--story-cream);
     font-size: clamp(2rem, 4.5vw, 3.4rem);
-    margin: 0.6rem 0 2.4rem;
+    margin: 0.6rem 0 1.9rem;
 }
 .story-cta__home {
     width: 122px;
@@ -269,7 +276,7 @@
 /* ---------- story_quote ---------- */
 .story-quote {
     background: var(--story-bg);
-    padding-block: clamp(3rem, 6vw, 5.5rem);
+    padding-block: clamp(2.5rem, 5vw, 4rem);
 }
 .story-quote__inner {
     text-align: center;
@@ -315,7 +322,7 @@
 }
 @media (max-width: 767px) {
     .story-hero {
-        min-height: 74vh;
+        min-height: 64vh;
     }
     .story-products__grid {
         grid-template-columns: 1fr;
