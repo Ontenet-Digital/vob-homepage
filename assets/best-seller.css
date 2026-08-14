@@ -270,6 +270,19 @@
     cursor: pointer;
 }
 
+/* Between the tablet→desktop grid switch (990px) and the wide-desktop container
+   breakpoint (1440px) the product cards are 4 columns, so each card is narrow
+   (~175–240px) but the button above kept its large desktop padding — it looked
+   oversized. Shrink it to the same compact sizing as mobile in that range.
+   Applies to every product card site-wide (Best Sellers, collections, related
+   products, recently viewed) since they all share this class. */
+@media (min-width: 990px) and (max-width: 1440px) {
+    .bs-card__cta-btn {
+        font-size: 0.8rem;
+        padding: 0.58rem 0.8rem;
+    }
+}
+
 /* Hover fill (sweep-up animation) lives in the reusable `btn--sweep-animation`
    class (theme.css). It is applied to the add-to-cart <button> in the markup so
    the fill never applies to "Select options"/sold-out links. */
