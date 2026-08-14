@@ -12,7 +12,16 @@
     "main": {
       "type": "policy",
       "settings": {
-        "eyebrow": "Privacy"
+        "eyebrow": "",
+        "show_ornament": true,
+        "show_updated": true,
+        "show_toc": true,
+        "show_contact": true,
+        "contact_title": "Questions about this policy?",
+        "contact_text": "We’re here to help. Reach out and our team will gladly answer any questions.",
+        "contact_label": "Contact us",
+        "contact_url": "shopify://pages/contact",
+        "anchor_id": "policy"
       }
     }
   },
