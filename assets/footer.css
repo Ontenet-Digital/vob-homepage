@@ -31,7 +31,9 @@
 }
 .fgrid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1.3fr;
+    /* grid-template-columns: 1.5fr 1fr 1fr 1.3fr; */
+    grid-template-columns: repeat(2, 1fr);
+
     gap: 2.5rem;
     padding-bottom: 2.6rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.22);
@@ -62,8 +64,8 @@
 .fcol h5 {
     font-family: var(--ui);
     font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 0.18em;
+    font-size: 1rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     /* color: var(--gold-bright); */
     color: #000;
@@ -74,7 +76,7 @@
     color: #000;
     font-family: var(--ui);
     font-size: 0.86rem;
-    padding: 0.3rem 0;
+    padding: 0.12rem 0;
     transition: color 0.2s;
 }
 .fcol a:hover {
