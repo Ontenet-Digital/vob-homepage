@@ -155,23 +155,113 @@
     var indexEl = root.querySelector("[data-fps-index]");
     var prevBtn = root.querySelector("[data-fps-prev]");
     var nextBtn = root.querySelector("[data-fps-next]");
+    var viewport = root.querySelector("[data-fps-viewport]");
     var current = 0;
+    var animating = false;
+    var pending = null;
+    var SLIDE_MS = 580; /* matches the .is-sliding transition (0.55s) */
+    var slideGap = 24; /* horizontal gap kept between slides during a swap */
+    if (viewport) {
+      var g = parseFloat(getComputedStyle(viewport).getPropertyValue("--fps-slide-gap"));
+      if (!isNaN(g)) slideGap = g;
+    }
 
     panels.forEach(function (p, i) { if (p.classList.contains("is-active")) current = i; });
 
-    function showProduct(i, focus) {
-      i = (i + panels.length) % panels.length;
-      panels.forEach(function (p, idx) { p.classList.toggle("is-active", idx === i); });
+    /* Reserve the tallest panel's height so the section and the pagination
+       dots don't jump when swapping between products of different heights. */
+    function measureHeights() {
+      return panels.map(function (p) {
+        p.classList.add("is-measuring");
+        var h = p.offsetHeight;
+        p.classList.remove("is-measuring");
+        return h;
+      });
+    }
+    function fixViewportHeight() {
+      if (!viewport) return;
+      var hs = measureHeights();
+      if (!hs.length) return;
+      var maxH = Math.max.apply(null, hs);
+      if (maxH > 0) viewport.style.height = maxH + "px";
+    }
+    fixViewportHeight();
+    window.addEventListener("load", fixViewportHeight);
+    var resizeTimer = null;
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(fixViewportHeight, 150);
+    });
+
+    function focusPanel(i) {
+      var h = panels[i].querySelector(".fps__title");
+      if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+    }
+
+    function showProduct(target, focus) {
+      var count = panels.length;
+      if (!count) return;
+      var i = ((target % count) + count) % count;
+      if (i === current) {
+        if (focus) focusPanel(i);
+        return;
+      }
+      /* A tap during an active slide is queued and runs right after. */
+      if (animating) { pending = i; return; }
+
+      var out = panels[current];
+      var inn = panels[i];
+
+      /* Direction of travel: forward (right → left) or backward (left → right). */
+      var fwd = ((i - current) % count + count) % count;
+      var back = ((current - i) % count + count) % count;
+      var dir = fwd <= back ? 1 : -1;
+
+      /* The outgoing stays in flow (its height keeps the layout stable while
+         sliding); the incoming is overlaid and slides in from the side. */
+      out.classList.add("is-sliding");
+      inn.classList.add("is-sliding", "is-enter");
+      if (viewport) viewport.classList.add("is-swapping");
+
+      /* Each panel over-travels by the gap, so the two slides stay visually
+         separated (a constant gap) as they cross instead of touching. */
+      var offIn = dir > 0
+        ? "translateX(calc(100% + " + slideGap + "px))"
+        : "translateX(calc(-100% - " + slideGap + "px))";
+      var offOut = dir > 0
+        ? "translateX(calc(-100% - " + slideGap + "px))"
+        : "translateX(calc(100% + " + slideGap + "px))";
+
+      out.style.transform = "translateX(0px)";
+      inn.style.transform = offIn;
+      void out.offsetWidth; /* reflow so the starting positions apply */
+
+      out.style.transform = offOut;
+      inn.style.transform = "translateX(0px)";
+
       dots.forEach(function (d, idx) {
         d.classList.toggle("is-active", idx === i);
         d.setAttribute("aria-current", idx === i ? "true" : "false");
       });
       if (indexEl) indexEl.textContent = i + 1;
       current = i;
-      if (focus) {
-        var h = panels[i].querySelector(".fps__title");
-        if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
-      }
+      animating = true;
+
+      window.setTimeout(function () {
+        out.classList.remove("is-active", "is-sliding");
+        inn.classList.add("is-active");
+        inn.classList.remove("is-enter", "is-sliding");
+        out.style.transform = "";
+        inn.style.transform = "";
+        if (viewport) viewport.classList.remove("is-swapping");
+        animating = false;
+        if (pending !== null) {
+          var p = pending; pending = null;
+          showProduct(p, focus);
+        } else if (focus) {
+          focusPanel(i);
+        }
+      }, SLIDE_MS);
     }
 
     root.__fpsShow = showProduct;
