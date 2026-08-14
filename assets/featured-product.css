@@ -30,7 +30,7 @@
     font-size: 0.72rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--fps-muted);
+    color: #c4a574;
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;

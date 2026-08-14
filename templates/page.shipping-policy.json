@@ -12,8 +12,16 @@
     "main": {
       "type": "policy",
       "settings": {
-        "eyebrow": "Shipping & Delivery",
-        "show_toc": false
+        "eyebrow": "",
+        "show_ornament": true,
+        "show_updated": true,
+        "show_toc": false,
+        "show_contact": true,
+        "contact_title": "Questions about this policy?",
+        "contact_text": "We’re here to help. Reach out and our team will gladly answer any questions.",
+        "contact_label": "Contact us",
+        "contact_url": "",
+        "anchor_id": "policy"
       }
     }
   },
