@@ -12,8 +12,12 @@
 
     var headings = body.querySelectorAll("h2");
     if (!headings.length) {
-        var card = toc.closest(".policy__toc-card") || toc.closest(".policy__toc");
-        if (card) card.style.display = "none";
+        // No section headings: hide the TOC entirely and let the content
+        // expand to the full layout width.
+        var grid = toc.closest(".policy__grid");
+        var nav = toc.closest(".policy__toc");
+        if (nav) nav.style.display = "none";
+        if (grid) grid.classList.add("policy__grid--no-toc");
         return;
     }
 
