@@ -1,0 +1,53 @@
+{%- comment -%}
+  app_hero — "The App" top banner.
+  Centered eyebrow, headline, intro paragraph and two store buttons
+  (Apple Store / Google Play). Styles in assets/app-page.css.
+{%- endcomment -%}
+
+<section class="app-hero" id="{{ section.settings.anchor_id | default: 'app-hero' }}">
+  <div class="wrap app-hero__inner reveal">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="eyebrow center">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h1 class="app-hero__title">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <p class="app-hero__text">{{ section.settings.text }}</p>
+    {%- endif -%}
+
+    <div class="stores">
+      {%- if section.settings.appstore_link != blank -%}
+        <a class="store" href="{{ section.settings.appstore_link }}"{% if section.settings.appstore_link contains 'http' %} target="_blank" rel="noopener"{% endif %}>
+          <span class="s"><b>{{ section.settings.appstore_label | default: 'Apple Store' }}</b></span>
+          <svg class="store__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+        </a>
+      {%- endif -%}
+      {%- if section.settings.googleplay_link != blank -%}
+        <a class="store" href="{{ section.settings.googleplay_link }}"{% if section.settings.googleplay_link contains 'http' %} target="_blank" rel="noopener"{% endif %}>
+          <span class="s"><b>{{ section.settings.googleplay_label | default: 'Google Play' }}</b></span>
+          <svg class="store__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "app_hero",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The App" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Explore the Holy Land: Bible's Visual Journey" },
+    { "type": "textarea", "id": "text", "label": "Intro text", "default": "Uncover the wonders of the Holy Land through inspiring visual adventures. Join our cinematic journey through all 66 books, guided tours, and daily inspiration. Deepen your spiritual connection with the ORI — Vision of the Bible. Experience the Bible like never before!" },
+    { "type": "header", "content": "App stores" },
+    { "type": "url", "id": "appstore_link", "label": "Apple Store link" },
+    { "type": "text", "id": "appstore_label", "label": "Apple Store label", "default": "Apple Store" },
+    { "type": "url", "id": "googleplay_link", "label": "Google Play link" },
+    { "type": "text", "id": "googleplay_label", "label": "Google Play label", "default": "Google Play" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "app-hero" }
+  ],
+  "presets": [{ "name": "app_hero" }]
+}
+{% endschema %}

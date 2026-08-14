@@ -1,0 +1,60 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "app_hero": {
+      "type": "app_hero",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Explore the Holy Land: Bible's Visual Journey",
+        "text": "Uncover the wonders of the Holy Land through inspiring visual adventures. Join our cinematic journey through all 66 books, guided tours, and daily inspiration. Deepen your spiritual connection with the ORI — Vision of the Bible. Experience the Bible like never before!",
+        "appstore_link": "https://apps.apple.com/us/app/vision-of-the-bible/id1570619920",
+        "appstore_label": "Apple Store",
+        "googleplay_link": "https://play.google.com/store/apps/details?id=com.obs.oribible&hl=en_US&pli=1",
+        "googleplay_label": "Google Play",
+        "anchor_id": "app-hero"
+      }
+    },
+    "app_preview": {
+      "type": "app_preview",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Every book, brought to life",
+        "intro": "Browse all 66 books — cinematic chapters, guided tours and daily inspiration, all in one app.",
+        "phone_left": "shopify://shop_images/230x499bb_2.webp",
+        "phone_left_alt": "ORI app screenshot",
+        "phone_main": "shopify://shop_images/230x499bb_1.webp",
+        "phone_main_alt": "ORI app screenshot",
+        "phone_right": "shopify://shop_images/230x499bb.webp",
+        "phone_right_alt": "ORI app screenshot",
+        "anchor_id": "app-preview"
+      }
+    },
+    "app_about": {
+      "type": "app_about",
+      "settings": {
+        "eyebrow": "",
+        "heading": "About ORI",
+        "lede": "Where faith and history intertwine, unveiling the Holy Land's secrets through mesmerizing cinematic storytelling.",
+        "text": "Our team includes filmmakers, historians, and clergy from different denominations, all committed to sharing the wisdom of the Bible with everyone.\n\nDiscover the stories of all 66 books of the Bible like never before with our cinematic presentations. We make learning engaging and memorable by using moving footage, aerial shots, and beautiful locations. Join our guided tour series, Travel Samaria, to virtually experience sacred sites like Jerusalem and Capernaum.\n\nWe know how important it is to understand the Bible, so we've created a complete experience with scripture, music, images, and words. Whether you are young or old, our journey will deepen your faith and knowledge.\n\nCome with us on this transformative quest to explore the Holy Land and connect with its timeless wisdom. Together, let's embark on a journey of faith and discovery that you can carry with you wherever you go. Start your adventure with ORI Vision of the Bible today and experience the power of the scriptures firsthand.",
+        "image": "shopify://shop_images/about-img.jpg",
+        "image_url": "",
+        "button_label": "Explore More",
+        "button_link": "",
+        "anchor_id": "app-about"
+      }
+    }
+  },
+  "order": [
+    "app_hero",
+    "app_preview",
+    "app_about"
+  ]
+}

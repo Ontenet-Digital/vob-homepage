@@ -1,0 +1,289 @@
+/* ============ APP PAGE SECTIONS (app_*) ============ */
+/* "The App" landing page (templates/page.app.json).
+   Composed of app_hero, app_preview, app_about.
+   Loaded from layout/theme.liquid after story-pages.css. */
+
+.app-hero,
+.app-preview,
+.app-about {
+    /* Section-scoped warm palette — matches the theme's cream/gold/umber
+       language from story-pages.css. */
+    --app-bg: #ffffff;
+    --app-cream: #ffffff;
+    --app-ink: #2f2922;
+    --app-ink-soft: #5c5348;
+    --app-gold: #ffffff;
+    --app-gold-deep: #8a6a24;
+    --app-umber: #1f1a14;
+    --app-amber: #ffffff;
+    --app-radius: 18px;
+}
+
+/* ---------- app_hero (top banner) ---------- */
+.app-hero {
+    /* background:
+        radial-gradient(70% 90% at 50% 0%, rgba(199, 164, 92, 0.14), transparent 62%),
+        var(--app-cream); */
+    padding-block: clamp(4.5rem, 9vw, 8rem) clamp(3.5rem, 7vw, 5.5rem);
+    text-align: center;
+}
+.app-hero__inner {
+    max-width: 900px;
+    margin-inline: auto;
+}
+.app-hero__inner .eyebrow {
+    justify-content: center;
+}
+.app-hero__title {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.3rem, 5vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--app-ink);
+    max-width: 20ch;
+    margin: 1.1rem auto 1.2rem;
+}
+.app-hero__text {
+    color: var(--app-ink-soft);
+    font-size: 1.15rem;
+    line-height: 1.65;
+    max-width: 740px;
+    margin: 0 auto 2.3rem;
+}
+.app-hero .stores {
+    justify-content: center;
+}
+.app-hero .store {
+    background: var(--app-umber);
+    color: #fbf6ea;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 999px;
+    padding: 0.95rem 1.9rem;
+    /* transition:
+        transform 0.3s var(--ease),
+        box-shadow 0.3s var(--ease); */
+}
+.app-hero .store:hover {
+    transform: translateY(-2px);
+    /* box-shadow: 0 16px 34px -22px rgba(31, 26, 20, 0.8); */
+}
+.app-hero .store svg {
+    width: 15px;
+    height: 15px;
+    color: #fbf6ea;
+    flex-shrink: 0;
+}
+.app-hero .store .s {
+    display: block;
+    font-family: var(--ui);
+    font-weight: 800;
+    font-size: 1rem;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: none;
+    opacity: 1;
+}
+.app-hero .store .s b {
+    font-size: 1rem;
+}
+
+/* ---------- app_preview (phone collage) ---------- */
+.app-preview {
+    background: var(--app-bg);
+    padding-block: clamp(3.5rem, 7vw, 6rem);
+}
+.app-preview .sec-head {
+    margin-bottom: 0.5rem;
+}
+.app-preview__collage {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: clamp(0.6rem, 2.5vw, 1.8rem);
+    padding-block: clamp(1rem, 3vw, 2.5rem) 0.5rem;
+}
+
+/* phone frame */
+.app-phone {
+    position: relative;
+    width: min(36vw, 238px);
+    aspect-ratio: 9 / 19.2;
+    background: #100d09;
+    border-radius: 40px;
+    padding: 10px;
+    /* box-shadow:
+        0 60px 80px -48px rgba(31, 26, 20, 0.7),
+        inset 0 0 0 1.5px rgba(255, 255, 255, 0.07); */
+    flex-shrink: 0;
+}
+
+.app-phone:hover{
+    scale: 1.02;
+    transition: all 0.3s ease-in-out;
+}
+
+.app-phone--side {
+    width: min(22vw, 148px);
+}
+.app-phone--left {
+    transform: rotate(-7deg) translateY(1.6rem);
+}
+.app-phone--right {
+    transform: rotate(7deg) translateY(1.6rem);
+}
+.app-phone--main {
+    width: min(38vw, 252px);
+    z-index: 2;
+}
+.app-phone__screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    overflow: hidden;
+    background: #1a1611;
+    display: flex;
+    flex-direction: column;
+}
+.app-phone__notch {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 34%;
+    height: 15px;
+    background: #100d09;
+    border-radius: 0 0 10px 10px;
+    z-index: 3;
+}
+.app-phone__shot {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 30px;
+}
+
+/* phone placeholder — shown when no screenshot is uploaded */
+.app-phone__placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(165deg, #241d13, #1a1611);
+    color: rgba(246, 237, 217, 0.35);
+    font-size: 2.2rem;
+}
+
+/* ---------- app_about ---------- */
+.app-about {
+    background: var(--app-cream);
+    padding-block: clamp(3.5rem, 7vw, 6rem);
+}
+.app-about .sec-head {
+    margin-bottom: 0;
+}
+.app-about__lede {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.12rem, 2.2vw, 1.45rem);
+    line-height: 1.42;
+    color: var(--app-gold-deep);
+    max-width: 640px;
+    margin: 0.4rem auto 0;
+}
+.app-about__grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: clamp(1.8rem, 4vw, 3.5rem);
+    align-items: center;
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+}
+.app-about__media img,
+.app-about__media-empty {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--app-radius);
+}
+.app-about__media-empty {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(160deg, #ece0c4, #dcc9a3);
+    color: var(--app-gold-deep);
+    font-size: 2.4rem;
+}
+.app-about__copy {
+    display: flex;
+    flex-direction: column;
+}
+.app-about__text {
+    color: var(--app-ink-soft);
+    font-size: 1.06rem;
+    line-height: 1.72;
+}
+.app-about__text p {
+    margin-bottom: 1em;
+}
+.app-about__text p:last-child {
+    margin-bottom: 0;
+}
+.app-about__cta {
+    margin-top: 2.2rem;
+    text-align: center;
+}
+.app-about__btn {
+    background: var(--app-umber);
+    color: #fbf6ea;
+    border-radius: 14px;
+    padding: 1rem 2.1rem;
+    /* transition:
+        transform 0.3s var(--ease),
+        box-shadow 0.3s var(--ease); */
+}
+.app-about__btn:hover {
+    transform: translateY(-2px);
+    /* box-shadow: 0 16px 34px -22px rgba(31, 26, 20, 0.8); */
+}
+.app-about__btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1023px) {
+    .app-preview__collage {
+        gap: 0.6rem;
+    }
+    .app-phone {
+        width: min(32vw, 212px);
+    }
+    .app-phone--side {
+        width: min(21vw, 138px);
+    }
+    .app-phone--main {
+        width: min(38vw, 236px);
+    }
+    .app-about__grid {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 767px) {
+    .app-preview__collage {
+        gap: 0.5rem;
+    }
+    .app-phone {
+        width: min(58vw, 220px);
+    }
+    .app-phone--side {
+        display: none;
+    }
+    .app-phone--main {
+        width: min(66vw, 246px);
+    }
+    .app-hero .store {
+        padding: 0.85rem 1.2rem;
+    }
+}

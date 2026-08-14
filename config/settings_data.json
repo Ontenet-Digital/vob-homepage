@@ -93,7 +93,7 @@
             "type": "quick_link",
             "settings": {
               "label": "Contact Us",
-              "link": "/pages/contact"
+              "link": "shopify://pages/contact"
             }
           },
           "footer-6": {
