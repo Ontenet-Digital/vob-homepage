@@ -12,7 +12,8 @@
     "main": {
       "type": "policy",
       "settings": {
-        "eyebrow": "Shipping & Delivery"
+        "eyebrow": "Shipping & Delivery",
+        "show_toc": false
       }
     }
   },

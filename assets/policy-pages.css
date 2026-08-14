@@ -70,6 +70,14 @@
         grid-column: 1 / -1;
         max-width: none;
     }
+    /* When the TOC is empty/hidden (no section headings on the page),
+       collapse the layout to a single full-width content column. */
+    .policy__grid--no-toc {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .policy__grid--no-toc > .policy__body {
+        max-width: none;
+    }
 }
 
 /* ---------- Table of contents ---------- */
