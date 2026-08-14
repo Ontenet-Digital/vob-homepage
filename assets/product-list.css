@@ -1,6 +1,6 @@
 /* ============ PRODUCT LIST PAGES (/collections and /collections/:handle) ============
    The product cards themselves are the homepage ones: markup from
-   snippets/best-seller-card.liquid, styles from best-seller.css. Both read the
+   snippets/product-card.liquid, styles from best-seller.css. Both read the
    --bs-* custom properties that each section's own {% style %} block sets, so
    only the page shell, the collection cards and pagination live here. */
 

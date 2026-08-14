@@ -138,7 +138,7 @@
           {%- if coll != blank and coll.products.size > 0 -%}
             <div class="bs__grid">
               {%- for product in coll.products limit: block.settings.products_to_show -%}
-                {%- render 'best-seller-card', product: product, settings: s -%}
+                {%- render 'product-card', product: product, settings: s -%}
               {%- endfor -%}
             </div>
             {%- if s.show_view_all -%}

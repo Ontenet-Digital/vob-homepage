@@ -31,8 +31,8 @@
     background: {{ s.bg_color | default: '#ffffff' }};
   }
 
-  /* The card markup (snippets/best-seller-card.liquid) and its styles live with
-     the Best sellers section — these are the custom properties it reads. */
+  /* The card markup (snippets/product-card.liquid) and its styles live with the
+     Best sellers section — these are the custom properties it reads. */
   #shopify-section-{{ section.id }} .plist{
     --plist-pad-t: {{ pad_top }}px;
     --plist-pad-b: {{ pad_bottom }}px;
@@ -113,7 +113,7 @@
     {%- paginate collection.products by 50 -%}
       <div class="bs__grid">
         {%- for product in collection.products -%}
-          {%- render 'best-seller-card', product: product, settings: s -%}
+          {%- render 'product-card', product: product, settings: s -%}
         {%- endfor -%}
       </div>
 
