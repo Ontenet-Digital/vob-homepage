@@ -88,13 +88,53 @@
               "label": "Faith & Stories",
               "link": "#faith"
             }
+          },
+          "footer-5": {
+            "type": "quick_link",
+            "settings": {
+              "label": "Contact Us",
+              "link": "/pages/contact"
+            }
+          },
+          "footer-6": {
+            "type": "quick_link",
+            "settings": {
+              "label": "Terms & Condition",
+              "link": "shopify://pages/terms-of-service"
+            }
+          },
+          "footer-7": {
+            "type": "quick_link",
+            "settings": {
+              "label": "Privacy Policy",
+              "link": "shopify://pages/privacy-policy"
+            }
+          },
+          "footer-8": {
+            "type": "quick_link",
+            "settings": {
+              "label": "Refund Policy",
+              "link": "shopify://pages/refund-policy"
+            }
+          },
+          "footer-9": {
+            "type": "quick_link",
+            "settings": {
+              "label": "Shipping Policy",
+              "link": "shopify://pages/shipping-policy"
+            }
           }
         },
         "block_order": [
           "footer-0",
           "footer-2",
           "footer-3",
-          "footer-4"
+          "footer-4",
+          "footer-5",
+          "footer-6",
+          "footer-7",
+          "footer-8",
+          "footer-9"
         ],
         "settings": {
           "verse": "\"For we live by faith, not by sight.\"",
@@ -106,12 +146,17 @@
           "brand_tagline": "Sacred stories brought to life",
           "brand_text": "Bringing the timeless stories and profound truths of the Bible to life — for the youngest hearts, the wisest ones, and the whole family in between.",
           "links_title": "Explore",
+          "quick_links_title": "Quick Links",
           "news_title": "Stay in the loop",
           "news_text": "Join our weekly letter for stories, scripture, and gentle encouragement.",
           "news_placeholder": "Your email address",
           "contact_email": "info@visionofthebiblestore.com",
           "top_label": "Back to top ↑"
         }
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {}
       }
     },
     "content_for_index": []
