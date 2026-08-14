@@ -8,157 +8,196 @@
  * ------------------------------------------------------------
  */
 {
-    "sections": {
-        "main": {
-            "type": "main-product",
-            "settings": {
-                "show_breadcrumb": true,
-                "image_ratio": "1/1",
-                "image_fit": "contain",
-                "show_vendor": true,
-                "show_rating": true,
-                "description_heading": "Details",
-                "variant_label": "Options",
-                "show_quantity": true,
-                "update_url": true,
-                "add_label": "Add to cart",
-                "added_label": "Added",
-                "show_sale_badge": true,
-                "sale_badge_text": "Save",
-                "show_meta": true,
-                "in_stock_text": "In stock, ready to ship",
-                "show_sku": false,
-                "meta_note": "",
-                "share_label": "Share",
-                "share_facebook": true,
-                "share_x": true,
-                "share_pinterest": true,
-                "share_whatsapp": false,
-                "share_copy": true,
-                "bg_color": "#ffffff",
-                "text_color": "#463c68",
-                "heading_color": "#251d3a",
-                "muted_color": "#8b8398",
-                "vendor_color": "#7c5d1e",
-                "price_color": "#412773",
-                "compare_color": "#8b8398",
-                "accent_color": "#be9743",
-                "border_color": "#ede6d6",
-                "surface_color": "#ffffff",
-                "surface_color_2": "#ffffff",
-                "button_bg": "#000000",
-                "button_text": "#fdfbf5",
-                "corner_radius": 6,
-                "padding_top": 140,
-                "padding_top_mobile": 104,
-                "padding_bottom": 72,
-                "anchor_id": "product"
-            }
-        },
-        "recently_viewed": {
-            "type": "recently-viewed",
-            "settings": {
-                "eyebrow": "Keep exploring",
-                "heading": "Recently viewed",
-                "subheading": "",
-                "heading_align": "center",
-                "products_limit": 4,
-                "columns": 4,
-                "columns_tablet": 3,
-                "columns_mobile": 1,
-                "bg_color": "#ffffff",
-                "padding_top": 0,
-                "padding_bottom": 72,
-                "anchor_id": "recently-viewed",
-                "quick_add_bg_color": "#000000",
-                "quick_add_text_color": "#FFFFFF",
-                "quick_add_radius": 10
-            }
-        },
-        "related_products": {
-            "type": "related-products",
-            "settings": {
-                "eyebrow": "You may also like",
-                "heading": "More to discover",
-                "subheading": "",
-                "heading_align": "center",
-                "intent": "related",
-                "products_limit": 4,
-                "fallback_collection": "",
-                "columns": 4,
-                "columns_tablet": 3,
-                "columns_mobile": 1,
-                "quick_add_bg_color": "#000000",
-                "quick_add_text_color": "#FFFFFF",
-                "quick_add_radius": 10,
-                "bg_color": "#ffffff",
-                "padding_top": 24,
-                "padding_bottom": 88,
-                "anchor_id": "related-products"
-            }
-        },
-        "usp_c44ngE": {
-            "type": "usp",
-            "blocks": {
-                "usp_JT9hm7": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/06-christian-values.png?v=1786112101",
-                        "label": "Christian Values"
-                    }
-                },
-                "usp_kxTpDp": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/01-safe-screentime.png?v=1786112102",
-                        "label": "Safe Screentime"
-                    }
-                },
-                "usp_zBCUyH": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/02-scripture-rooted.png?v=1786112102",
-                        "label": "Scripture-Rooted"
-                    }
-                },
-                "usp_GW3Mzh": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/03-biblical-learning.png?v=1786112101",
-                        "label": "Biblical Learning"
-                    }
-                },
-                "usp_fGYqGr": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/04-faith-building.png?v=1786112101",
-                        "label": "Faith-Building"
-                    }
-                },
-                "usp_fFFMd7": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/05-sacred-stories.png?v=1786112101",
-                        "label": "Sacred Stories"
-                    }
-                }
-            },
-            "block_order": [
-                "usp_JT9hm7",
-                "usp_kxTpDp",
-                "usp_zBCUyH",
-                "usp_GW3Mzh",
-                "usp_fGYqGr",
-                "usp_fFFMd7"
-            ],
-            "name": "USP",
-            "settings": {
-                "eyebrow": "Why families choose us",
-                "heading": "Built for peace of mind",
-                "subheading": "Simple promises that travel with every order.",
-                "anchor_id": "usp"
-            }
-        }
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "show_breadcrumb": true,
+        "image_ratio": "1/1",
+        "image_fit": "contain",
+        "show_vendor": false,
+        "show_rating": true,
+        "description_heading": "Details",
+        "variant_label": "Options",
+        "show_quantity": true,
+        "update_url": true,
+        "add_label": "Add to cart",
+        "added_label": "Added",
+        "show_sale_badge": true,
+        "sale_badge_text": "Save",
+        "show_meta": true,
+        "in_stock_text": "In stock, ready to ship",
+        "show_sku": false,
+        "meta_note": "",
+        "share_label": "Share",
+        "share_facebook": true,
+        "share_x": true,
+        "share_pinterest": true,
+        "share_whatsapp": false,
+        "share_copy": true,
+        "bg_color": "#ffffff",
+        "text_color": "#463c68",
+        "heading_color": "#251d3a",
+        "muted_color": "#8b8398",
+        "vendor_color": "#7c5d1e",
+        "price_color": "#72643f",
+        "compare_color": "#8b8398",
+        "accent_color": "#be9743",
+        "border_color": "#ede6d6",
+        "surface_color": "#ffffff",
+        "surface_color_2": "#ffffff",
+        "button_bg": "#000000",
+        "button_text": "#fdfbf5",
+        "corner_radius": 6,
+        "padding_top": 140,
+        "padding_top_mobile": 104,
+        "padding_bottom": 72,
+        "anchor_id": "product"
+      }
     },
-    "order": ["main", "recently_viewed", "related_products", "usp_c44ngE"]
+    "recently_viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "eyebrow": "Keep exploring",
+        "heading": "Recently viewed",
+        "subheading": "",
+        "heading_align": "center",
+        "products_limit": 4,
+        "columns": 4,
+        "columns_tablet": 3,
+        "columns_mobile": 1,
+        "bg_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 72,
+        "anchor_id": "recently-viewed",
+        "card_bg": "#ffffff",
+        "card_border_color": "#ede6d6",
+        "card_radius": 10,
+        "image_ratio": "1/1",
+        "show_vendor": false,
+        "vendor_color": "#be9743",
+        "title_color": "#251d3a",
+        "title_size": 16,
+        "price_color": "#72643F",
+        "compare_price_color": "#8b8398",
+        "show_rating": true,
+        "rating_text_color": "#be9743",
+        "show_quick_view": true,
+        "quickview_icon_color": "#251d3a",
+        "quick_add_style": "hover",
+        "quick_add_bg_color": "#000000",
+        "quick_add_text_color": "#ffffff",
+        "quick_add_radius": 30,
+        "show_image_dots": true,
+        "dot_active_color": "#be9743"
+      }
+    },
+    "related_products": {
+      "type": "related-products",
+      "settings": {
+        "eyebrow": "You may also like",
+        "heading": "More to discover",
+        "subheading": "",
+        "heading_align": "center",
+        "intent": "related",
+        "products_limit": 4,
+        "fallback_collection": "",
+        "columns": 4,
+        "columns_tablet": 3,
+        "columns_mobile": 1,
+        "card_bg": "#ffffff",
+        "card_border_color": "#ede6d6",
+        "card_radius": 10,
+        "image_ratio": "1/1",
+        "show_vendor": false,
+        "vendor_color": "#be9743",
+        "title_color": "#251d3a",
+        "title_size": 16,
+        "price_color": "#72643F",
+        "compare_price_color": "#8b8398",
+        "show_rating": true,
+        "rating_text_color": "#be9743",
+        "show_quick_view": true,
+        "quickview_icon_color": "#251d3a",
+        "quick_add_style": "hover",
+        "quick_add_bg_color": "#000000",
+        "quick_add_text_color": "#ffffff",
+        "quick_add_radius": 30,
+        "show_image_dots": true,
+        "dot_active_color": "#be9743",
+        "bg_color": "#ffffff",
+        "padding_top": 24,
+        "padding_bottom": 88,
+        "anchor_id": "related-products"
+      }
+    },
+    "usp_c44ngE": {
+      "type": "usp",
+      "blocks": {
+        "usp_JT9hm7": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/06-christian-values.png?v=1786112101",
+            "label": "Christian Values"
+          }
+        },
+        "usp_kxTpDp": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/01-safe-screentime.png?v=1786112102",
+            "label": "Safe Screentime"
+          }
+        },
+        "usp_zBCUyH": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/02-scripture-rooted.png?v=1786112102",
+            "label": "Scripture-Rooted"
+          }
+        },
+        "usp_GW3Mzh": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/03-biblical-learning.png?v=1786112101",
+            "label": "Biblical Learning"
+          }
+        },
+        "usp_fGYqGr": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/04-faith-building.png?v=1786112101",
+            "label": "Faith-Building"
+          }
+        },
+        "usp_fFFMd7": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/05-sacred-stories.png?v=1786112101",
+            "label": "Sacred Stories"
+          }
+        }
+      },
+      "block_order": [
+        "usp_JT9hm7",
+        "usp_kxTpDp",
+        "usp_zBCUyH",
+        "usp_GW3Mzh",
+        "usp_fGYqGr",
+        "usp_fFFMd7"
+      ],
+      "name": "USP",
+      "settings": {
+        "eyebrow": "Why families choose us",
+        "heading": "Built for peace of mind",
+        "subheading": "Simple promises that travel with every order.",
+        "anchor_id": "usp"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "recently_viewed",
+    "related_products",
+    "usp_c44ngE"
+  ]
 }
