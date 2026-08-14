@@ -680,6 +680,41 @@
     color: var(--fps-muted);
 }
 
+/* ---------- Desktop: fit the showcase to the viewport ----------
+   On desktop the section should read as one screen. Scale the product image
+   with the viewport height and tighten the vertical rhythm so the section
+   stays inside the viewport on every device ratio (FHD / QHD / HD+ / HD). */
+@media (min-width: 1024px) {
+    .fps {
+        /* Compact vertical padding — respects a smaller merchant setting */
+        padding-top: min(var(--fps-pad-t), clamp(32px, 5vh, 56px));
+        padding-bottom: min(var(--fps-pad-b), clamp(32px, 5vh, 56px));
+    }
+    .fps__head {
+        margin-bottom: clamp(20px, 3vh, 34px);
+    }
+    .fps__details {
+        gap: 14px;
+    }
+    .fps__view {
+        margin-top: 24px;
+    }
+    .fps__dots {
+        margin-top: 24px;
+    }
+    /* Keep the image + thumbnails inside the viewport (safety net — the
+       stage height above already keeps the gallery well under this cap). */
+    .fps__gallery {
+        max-height: calc(100vh - 220px);
+    }
+    /* Scale the image height from the viewport height instead of the fixed
+       ratio, so the showcase stays compact on shorter devices. */
+    .fps__stage {
+        aspect-ratio: auto;
+        height: clamp(220px, calc(100vh - 420px), 640px);
+    }
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1023px) {
     .fps__product {
