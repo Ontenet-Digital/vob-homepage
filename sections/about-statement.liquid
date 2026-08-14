@@ -1,0 +1,154 @@
+{%- comment -%}
+  about-statement — warm mission section for the homepage.
+  Warm cream/gold surface with a soft golden glow behind two decorative
+  product images. Split layout: copy left, products right. Products not linked.
+  Styles in assets/about-statement.css.
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign glow1_alpha = s.glow_1_opacity | times: 0.01
+  assign glow2_alpha = s.glow_2_opacity | times: 0.01
+  assign glow_1 = s.glow_1_color | color_modify: 'alpha', glow1_alpha
+  assign glow_2 = s.glow_2_color | color_modify: 'alpha', glow2_alpha
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }} .about-statement{
+    --as-bg: {{ s.bg_color }};
+    --as-bg2: {{ s.bg_color_2 }};
+    --as-bg-angle: {{ s.bg_angle }}deg;
+    --as-glow-1: {{ glow_1 }};
+    --as-glow-2: {{ glow_2 }};
+    --as-eyebrow-color: {{ s.eyebrow_color }};
+    --as-accent: {{ s.accent_color }};
+    --as-heading-color: {{ s.heading_color }};
+    --as-text-color: {{ s.text_color }};
+    --as-pt: {{ s.padding_top }}px;
+    --as-pb: {{ s.padding_bottom }}px;
+  }
+  @media (max-width: 767px){
+    #shopify-section-{{ section.id }} .about-statement{
+      --as-pt: {{ s.padding_top_mobile }}px;
+      --as-pb: {{ s.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<section class="about-statement" id="{{ s.anchor_id | default: 'about' }}">
+  <div class="about-statement__bg" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="about-statement__grid">
+      <div class="about-statement__copy reveal">
+        {%- if s.eyebrow != blank -%}
+          <p class="about-statement__eyebrow">
+            <span class="about-statement__line" aria-hidden="true"></span>
+            <span class="about-statement__eyebrow-text">{{ s.eyebrow | escape }}</span>
+            <span class="about-statement__line" aria-hidden="true"></span>
+          </p>
+        {%- endif -%}
+
+        {%- if s.title != blank -%}
+          <h2 class="about-statement__title">{{ s.title }}</h2>
+        {%- endif -%}
+
+        {%- if s.paragraph != blank -%}
+          <div class="about-statement__para">{{ s.paragraph }}</div>
+        {%- endif -%}
+
+        {%- if s.verse != blank -%}
+          <blockquote class="about-statement__verse">
+            <p>{{ s.verse | escape }}</p>
+            {%- if s.verse_ref != blank -%}
+              <cite>{{ s.verse_ref | escape }}</cite>
+            {%- endif -%}
+          </blockquote>
+        {%- endif -%}
+      </div>
+
+      <div class="about-statement__visual reveal">
+        <div class="about-statement__products">
+          {%- comment -%} Secondary product — offset behind, rotated {%- endcomment -%}
+          <div class="about-statement__product about-statement__product--secondary">
+            {%- if s.image_2 != blank -%}
+              <img
+                src="{{ s.image_2 | image_url: width: 640 }}"
+                width="{{ s.image_2.width }}"
+                height="{{ s.image_2.height }}"
+                alt="{{ s.image_2_alt | escape }}"
+                loading="lazy"
+                decoding="async">
+            {%- elsif s.image_2_url != blank -%}
+              <img src="{{ s.image_2_url }}" alt="{{ s.image_2_alt | escape }}" loading="lazy" decoding="async" width="640" height="640">
+            {%- endif -%}
+          </div>
+
+          {%- comment -%} Primary product — front and centre {%- endcomment -%}
+          <div class="about-statement__product about-statement__product--primary">
+            {%- if s.image_1 != blank -%}
+              <img
+                src="{{ s.image_1 | image_url: width: 900 }}"
+                srcset="{{ s.image_1 | image_url: width: 450 }} 450w,
+                        {{ s.image_1 | image_url: width: 900 }} 900w,
+                        {{ s.image_1 | image_url: width: 1300 }} 1300w"
+                sizes="(min-width: 768px) 520px, 76vw"
+                width="{{ s.image_1.width }}"
+                height="{{ s.image_1.height }}"
+                alt="{{ s.image_1_alt | escape }}"
+                loading="lazy"
+                decoding="async">
+            {%- elsif s.image_1_url != blank -%}
+              <img src="{{ s.image_1_url }}" alt="{{ s.image_1_alt | escape }}" loading="lazy" decoding="async" width="900" height="900">
+            {%- endif -%}
+          </div>
+        </div>
+
+        <span class="about-statement__ground" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Mission statement",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "OUR MISSION" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow colour", "default": "#BE9743" },
+    { "type": "inline_richtext", "id": "title", "label": "Heading", "info": "Use italics to highlight a word in the accent colour.", "default": "Connecting people to God's Word through stories and learning." },
+    { "type": "color", "id": "accent_color", "label": "Accent colour (italic word)", "default": "#BE9743" },
+    { "type": "color", "id": "heading_color", "label": "Heading colour", "default": "#251D3A" },
+    { "type": "color", "id": "text_color", "label": "Paragraph colour", "default": "#463C68" },
+    { "type": "richtext", "id": "paragraph", "label": "Paragraph", "info": "Optional supporting copy. Supports bold, italics and links." },
+    { "type": "text", "id": "verse", "label": "Scripture verse", "default": "Your word is a lamp to my feet and a light to my path." },
+    { "type": "text", "id": "verse_ref", "label": "Verse reference", "default": "Psalm 119:105" },
+
+    { "type": "header", "content": "Products" },
+    { "type": "image_picker", "id": "image_1", "label": "Primary product image", "info": "Shown front and centre on the right." },
+    { "type": "text", "id": "image_1_url", "label": "Primary image URL (fallback)", "info": "Used only if no image is uploaded above." },
+    { "type": "text", "id": "image_1_alt", "label": "Primary image alt text" },
+    { "type": "image_picker", "id": "image_2", "label": "Secondary product image", "info": "Shown behind, slightly rotated." },
+    { "type": "text", "id": "image_2_url", "label": "Secondary image URL (fallback)", "info": "Used only if no image is uploaded above." },
+    { "type": "text", "id": "image_2_alt", "label": "Secondary image alt text" },
+
+    { "type": "header", "content": "Background & rays" },
+    { "type": "color", "id": "bg_color", "label": "Background colour (top)", "default": "#FFFFFF" },
+    { "type": "color", "id": "bg_color_2", "label": "Background colour (bottom)", "default": "#F2E3C0" },
+    { "type": "range", "id": "bg_angle", "label": "Gradient angle", "min": 0, "max": 360, "step": 5, "unit": "°", "default": 180 },
+    { "type": "color", "id": "glow_1_color", "label": "Glow 1 colour", "default": "#E4C56C", "info": "Soft light in the top-left." },
+    { "type": "range", "id": "glow_1_opacity", "label": "Glow 1 opacity", "min": 0, "max": 60, "step": 2, "unit": "%", "default": 30 },
+    { "type": "color", "id": "glow_2_color", "label": "Glow 2 colour", "default": "#F3E4C3", "info": "Soft light in the bottom-right." },
+    { "type": "range", "id": "glow_2_opacity", "label": "Glow 2 opacity", "min": 0, "max": 60, "step": 2, "unit": "%", "default": 50 },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "padding_top", "label": "Top padding (desktop)", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (desktop)", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Top padding (mobile)", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding (mobile)", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 72 },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "about" }
+  ],
+  "presets": [{ "name": "Mission statement" }]
+}
+{% endschema %}

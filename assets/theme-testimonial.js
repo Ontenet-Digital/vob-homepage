@@ -31,6 +31,22 @@
         true,
     );
 
+    /* Only one reel plays at a time. Track the card currently holding an
+       iframe, and remember each card's facade + thumbnail so a later click on
+       another card can restore the previous one to its click-to-play state. */
+    var playingMedia = null;
+    var facadeCache = new WeakMap();
+
+    function restoreFacade(media) {
+        var saved = facadeCache.get(media);
+        if (!saved) return;
+        media.innerHTML = "";
+        // The nodes were only detached, so re-appending restores the card.
+        if (saved.thumb) media.appendChild(saved.thumb);
+        if (saved.facade) media.appendChild(saved.facade);
+        facadeCache.delete(media);
+    }
+
     document.addEventListener("click", function (e) {
         var facade = e.target.closest
             ? e.target.closest("[data-yt-facade]")
@@ -39,6 +55,20 @@
         var id = facade.getAttribute("data-yt-id");
         var media = facade.parentNode;
         if (!id || !media) return;
+
+        // Stop any other video that is still playing (only one at a time).
+        if (
+            playingMedia &&
+            playingMedia !== media &&
+            playingMedia.isConnected
+        ) {
+            restoreFacade(playingMedia);
+        }
+
+        facadeCache.set(media, {
+            facade: facade,
+            thumb: media.querySelector(".testi__thumb"),
+        });
 
         var iframe = document.createElement("iframe");
         iframe.className = "testi__iframe";
@@ -54,6 +84,7 @@
         iframe.setAttribute("allowfullscreen", "");
         media.innerHTML = "";
         media.appendChild(iframe);
+        playingMedia = media;
     });
 
     /* Cards left without a title borrow the video's own YouTube title */
