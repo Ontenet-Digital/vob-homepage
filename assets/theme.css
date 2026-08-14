@@ -345,3 +345,7 @@ h3 {
 /* body div {
     border: 1px solid red;
 } */
+
+.plist__toolbar-form .plist__sort-label {
+    display: none;
+}

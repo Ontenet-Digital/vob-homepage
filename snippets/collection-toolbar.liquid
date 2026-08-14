@@ -20,7 +20,7 @@
     assign using_default_sort = true
   endif
 
-  assign price_filter = nil
+  assign price_filter = null
   for filter in collection.filters
     if filter.type == 'price_range'
       assign price_filter = filter
@@ -29,12 +29,12 @@
   endfor
 
   assign range_max_cents = 0
-  assign range_min_cents = nil
+  assign range_min_cents = null
   if price_filter
     assign range_max_cents = price_filter.range_max
   else
     for product in collection.products limit: 250
-      if range_min_cents == nil or product.price < range_min_cents
+      if range_min_cents == null or product.price < range_min_cents
         assign range_min_cents = product.price
       endif
       if product.price > range_max_cents
@@ -79,17 +79,19 @@
 
 {%- if show_sort or show_price -%}
   <div class="plist__toolbar reveal" data-collection-toolbar>
-    <div class="plist__toolbar-meta">
-      {%- if collection.products_count != collection.all_products_count -%}
-        <p class="plist__results">
-          {{ 'collections.toolbar.results_filtered' | t: count: collection.products_count, total: collection.all_products_count }}
-        </p>
-      {%- elsif collection.products_count > 0 -%}
-        <p class="plist__results">
-          {{ 'collections.toolbar.results' | t: count: collection.products_count }}
-        </p>
-      {%- endif -%}
-    </div>
+    {% comment %}
+      <div class="plist__toolbar-meta">
+        {%- if collection.products_count != collection.all_products_count -%}
+          <p class="plist__results">
+            {{ 'collections.toolbar.results_filtered' | t: count: collection.products_count, total: collection.all_products_count }}
+          </p>
+        {%- elsif collection.products_count > 0 -%}
+          <p class="plist__results">
+            {{ 'collections.toolbar.results' | t: count: collection.products_count }}
+          </p>
+        {%- endif -%}
+      </div>
+    {% endcomment %}
 
     <div class="plist__toolbar-form">
       {%- if show_price and range_max_cents > 0 -%}
@@ -100,7 +102,14 @@
           aria-controls="filter-drawer-{{ sid }}"
           aria-expanded="false"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
             <path d="M4 6h16M7 12h10M10 18h4"/>
             <circle cx="6" cy="6" r="1.6" fill="currentColor" stroke="none"/>
             <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/>
@@ -115,7 +124,12 @@
 
       {%- if show_sort -%}
         <form class="plist__toolbar-sort" action="{{ collection.url }}" method="get" data-collection-filters>
-          {%- render 'collection-sort-select', sort_by: sort_by, using_default_sort: using_default_sort, sid: sid, instance: 'tb' -%}
+          {%- render 'collection-sort-select',
+            sort_by: sort_by,
+            using_default_sort: using_default_sort,
+            sid: sid,
+            instance: 'tb'
+          -%}
         </form>
       {%- endif -%}
     </div>
@@ -124,11 +138,30 @@
   {%- if show_price and range_max_cents > 0 -%}
     <div class="plist__drawer" id="filter-drawer-{{ sid }}" data-filter-drawer aria-hidden="true">
       <div class="plist__drawer-backdrop" data-filters-close></div>
-      <aside class="plist__drawer-panel" role="dialog" aria-modal="true" aria-label="{{ 'collections.toolbar.filters' | t }}">
+      <aside
+        class="plist__drawer-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="{{ 'collections.toolbar.filters' | t }}"
+      >
         <header class="plist__drawer-head">
           <h3>{{ 'collections.toolbar.filters' | t }}</h3>
-          <button type="button" class="plist__drawer-close" data-filters-close aria-label="{{ 'collections.toolbar.close' | t }}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          <button
+            type="button"
+            class="plist__drawer-close"
+            data-filters-close
+            aria-label="{{ 'collections.toolbar.close' | t }}"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="M6 6l12 12M18 6L6 18"/>
+            </svg>
           </button>
         </header>
         <div class="plist__drawer-body">
@@ -148,7 +181,9 @@
                     step="0.01"
                     inputmode="decimal"
                     placeholder="{{ range_min_display }}"
-                    {% if min_value_display != blank %}value="{{ min_value_display }}"{% endif %}
+                    {% if min_value_display != blank %}
+                      value="{{ min_value_display }}"
+                    {% endif %}
                     aria-label="{{ 'collections.toolbar.price_min' | t }}"
                   >
                   <span class="plist__price-hint">{{ 'collections.toolbar.price_min' | t }}</span>
@@ -166,7 +201,9 @@
                     step="0.01"
                     inputmode="decimal"
                     placeholder="{{ range_max_display }}"
-                    {% if max_value_display != blank %}value="{{ max_value_display }}"{% endif %}
+                    {% if max_value_display != blank %}
+                      value="{{ max_value_display }}"
+                    {% endif %}
                     aria-label="{{ 'collections.toolbar.price_max' | t }}"
                   >
                   <span class="plist__price-hint">{{ 'collections.toolbar.price_max' | t }}</span>
@@ -178,7 +215,12 @@
             </fieldset>
 
             {%- if show_sort -%}
-              {%- render 'collection-sort-select', sort_by: sort_by, using_default_sort: using_default_sort, sid: sid, instance: 'dr' -%}
+              {%- render 'collection-sort-select',
+                sort_by: sort_by,
+                using_default_sort: using_default_sort,
+                sid: sid,
+                instance: 'dr'
+              -%}
             {%- endif -%}
 
             {%- if price_filter_active -%}
@@ -191,7 +233,9 @@
                   {{ chip_min | money }} – {{ chip_max | money }}
                   <span aria-hidden="true">&times;</span>
                 </a>
-                <a class="plist__clear" href="{{ collection.url }}?sort_by={{ sort_by | url_encode }}">{{ 'collections.toolbar.clear' | t }}</a>
+                <a class="plist__clear" href="{{ collection.url }}?sort_by={{ sort_by | url_encode }}">
+                  {{- 'collections.toolbar.clear' | t -}}
+                </a>
               </div>
             {%- endif -%}
 
