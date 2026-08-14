@@ -453,12 +453,12 @@
 }
 
 .fps__add {
-    position: relative;
+    --btn-sweep-ink: var(--fps-btn-bg);
     flex: 1 1 200px;
     min-height: 52px;
     background: var(--fps-btn-bg);
     color: var(--fps-btn-text);
-    border: none;
+    border: 1px solid var(--fps-btn-bg);
     border-radius: 10px;
     font-family: var(--ui, "Manrope", system-ui, sans-serif);
     font-weight: 700;
@@ -472,11 +472,14 @@
     transition:
         transform 0.25s ease,
         opacity 0.25s ease,
-        background 0.25s ease;
+        color 0.35s ease;
 }
 .fps__add:hover:not(:disabled) {
     transform: translateY(-2px);
 }
+
+/* Hover fill (sweep-up animation) lives in the reusable `btn--sweep-animation`
+   class (theme.css). */
 .fps__add:focus-visible {
     outline: 2px solid var(--fps-accent);
     outline-offset: 2px;

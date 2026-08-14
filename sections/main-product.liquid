@@ -58,7 +58,6 @@
     --pdp-surface: {{ s.surface_color | default: '#ffffff' }};
     --pdp-surface-2: {{ s.surface_color_2 | default: '#ffffff' }};
     --pdp-btn-bg: {{ s.button_bg | default: '#000000' }};
-    --pdp-btn-bg-hover: {{ s.button_bg_hover | default: '#4d2f82' }};
     --pdp-btn-text: {{ s.button_text | default: '#fdfbf5' }};
     --pdp-radius: {{ s.corner_radius | default: 6 }}px;
     --pdp-ratio: {{ s.image_ratio | default: '1/1' }};
@@ -214,7 +213,7 @@
 
             <button
               type="submit"
-              class="pdp__add"
+              class="pdp__add btn--sweep-animation"
               data-pdp-add
               data-add-label="{{ s.add_label | default: 'Add to cart' | escape }}"
               data-added-label="{{ s.added_label | default: 'Added' | escape }}"
@@ -489,14 +488,17 @@
 .pdp__qty input::-webkit-outer-spin-button, .pdp__qty input::-webkit-inner-spin-button{ -webkit-appearance: none; margin: 0; }
 
 .pdp__add{
-  position: relative; flex: 1 1 220px; min-height: 54px;
+  --btn-sweep-ink: var(--pdp-btn-bg);
+  flex: 1 1 220px; min-height: 54px;
   background: var(--pdp-btn-bg); color: var(--pdp-btn-text);
-  border: none; border-radius: var(--pdp-radius);
+  border: 1px solid var(--pdp-btn-bg); border-radius: var(--pdp-radius);
   font-family: var(--ui, "Manrope", system-ui, sans-serif); font-weight: 700; font-size: 1.04rem; letter-spacing: .01em;
   cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  transition: transform .25s ease, opacity .25s ease, background .25s ease;
+  transition: transform .25s ease, opacity .25s ease, color .35s ease;
 }
-.pdp__add:hover:not(:disabled){ transform: translateY(-2px); background: var(--pdp-btn-bg-hover); }
+.pdp__add:hover:not(:disabled){ transform: translateY(-2px); }
+/* Hover fill (sweep-up animation) lives in the reusable `btn--sweep-animation`
+   class (theme.css). */
 .pdp__add:focus-visible{ outline: 2px solid var(--pdp-accent); outline-offset: 2px; }
 .pdp__add:disabled{ opacity: .45; cursor: not-allowed; }
 .pdp__add.is-loading .pdp__add-label{ opacity: 0; }
@@ -885,7 +887,6 @@
     { "type": "color", "id": "surface_color", "label": "Image background (top)", "default": "#FFFFFF" },
     { "type": "color", "id": "surface_color_2", "label": "Image background (bottom)", "default": "#FFFFFF" },
     { "type": "color", "id": "button_bg", "label": "Add to cart background", "default": "#412773" },
-    { "type": "color", "id": "button_bg_hover", "label": "Add to cart hover", "default": "#4D2F82" },
     { "type": "color", "id": "button_text", "label": "Add to cart text", "default": "#FDFBF5" },
 
     { "type": "header", "content": "Section" },
