@@ -334,7 +334,7 @@
         "heading": "See Scripture come alive",
         "subheading": "Vivid, faithful storytelling that holds a child’s attention and a grandparent’s heart alike.",
         "button_label": "Watch the story",
-        "button_link": "#categories",
+        "button_link": "shopify://pages/our-story",
         "ratio": "21/9",
         "ratio_mobile": "4/5",
         "content_width": 560,
