@@ -47,7 +47,6 @@
                 "surface_color": "#ffffff",
                 "surface_color_2": "#ffffff",
                 "button_bg": "#000000",
-                "button_bg_hover": "#4d2f82",
                 "button_text": "#fdfbf5",
                 "corner_radius": 6,
                 "padding_top": 140,

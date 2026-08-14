@@ -257,6 +257,7 @@
     display: block;
 }
 .bs-card__cta-btn {
+    --btn-sweep-ink: var(--bs-cta-bg, #251d3a);
     display: block;
     width: 100%;
     text-align: center;
@@ -265,20 +266,23 @@
     font-size: 0.86rem;
     letter-spacing: 0.01em;
     padding: 0.72rem 1rem;
-    border: none;
+    border: 1px solid var(--bs-cta-bg, #251d3a);
     border-radius: var(--bs-cta-radius, 30px);
     background: var(--bs-cta-bg, #251d3a);
     color: var(--bs-cta-color, #fdfbf3);
     cursor: pointer;
-    /* box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.35); */
     transition:
         transform 0.25s var(--ease),
-        /* box-shadow 0.25s var(--ease), */ opacity 0.25s var(--ease);
+        color 0.35s var(--ease),
+        opacity 0.25s var(--ease);
 }
 .bs-card__cta-btn:hover {
     transform: translateY(-2px);
-    /* box-shadow: 0 14px 28px -10px rgba(0, 0, 0, 0.4); */
 }
+
+/* Hover fill (sweep-up animation) lives in the reusable `btn--sweep-animation`
+   class (theme.css). It is applied to the add-to-cart <button> in the markup so
+   the fill never applies to "Select options"/sold-out links. */
 .bs-card__cta-btn--disabled {
     opacity: 0.6;
     pointer-events: none;

@@ -211,6 +211,7 @@
     display: block;
 }
 .grid-card__btn {
+    --btn-sweep-ink: var(--rv-cta-bg, var(--rel-cta-bg, var(--violet-deep)));
     display: block;
     width: 100%;
     text-align: center;
@@ -219,7 +220,7 @@
     font-size: 0.86rem;
     letter-spacing: 0.01em;
     padding: 0.72rem 1rem;
-    border: none;
+    border: 1px solid var(--rv-cta-bg, var(--rel-cta-bg, var(--violet-deep)));
     border-radius: var(
         --rv-cta-radius,
         var(--rel-cta-radius, var(--radius-sm))
@@ -229,11 +230,16 @@
     cursor: pointer;
     transition:
         transform 0.25s var(--ease),
+        color 0.35s var(--ease),
         opacity 0.25s var(--ease);
 }
 .grid-card__btn:hover {
     transform: translateY(-2px);
 }
+
+/* Hover fill (sweep-up animation) lives in the reusable `btn--sweep-animation`
+   class (theme.css). It is applied to the add-to-cart <button> in the markup so
+   the fill never applies to "Select options"/sold-out links. */
 .grid-card__btn--disabled {
     opacity: 0.6;
     pointer-events: none;

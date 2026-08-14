@@ -146,7 +146,7 @@
     } else if (it.multi_variant) {
       cta = '<a class="grid-card__btn" href="' + esc(it.url) + '">Select options</a>';
     } else if (it.variant_id) {
-      cta = '<form class="grid-card__form" action="/cart/add" method="post"><input type="hidden" name="id" value="' + esc(it.variant_id) + '"><button type="submit" class="grid-card__btn">Add to cart</button></form>';
+      cta = '<form class="grid-card__form" action="/cart/add" method="post"><input type="hidden" name="id" value="' + esc(it.variant_id) + '"><button type="submit" class="grid-card__btn btn--sweep-animation">Add to cart</button></form>';
     } else {
       // Stale snapshot without variant info — fall back to the product link.
       cta = '<a class="grid-card__btn" href="' + esc(it.url) + '">View</a>';
