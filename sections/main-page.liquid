@@ -18,17 +18,6 @@
   {%- endfor -%}
 </div>
 
-{%- comment -%}
-  Native redesigned contact form — rendered in a wider container (outside the
-  narrow page shell) so the card feels spacious and comfortable to read.
-  Submits via AJAX to the Shopify /contact endpoint (assets/theme-contact.js).
-{%- endcomment -%}
-{%- if page.handle == 'contact' -%}
-  <div class="page-shell page-shell--contact wrap">
-    {% render 'contact-form' %}
-  </div>
-{%- endif -%}
-
 {% schema %}
 {
   "name": "Page",
