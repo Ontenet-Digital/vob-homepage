@@ -165,11 +165,8 @@
 .grid-card__link {
     display: block;
     color: inherit;
-    transition: transform 0.4s var(--ease);
 }
-.grid-card__link:hover {
-    transform: translateY(-3px);
-}
+
 .grid-card__media {
     aspect-ratio: 1/1;
     display: grid;
@@ -228,13 +225,6 @@
     background: var(--rv-cta-bg, var(--rel-cta-bg, var(--violet-deep)));
     color: var(--rv-cta-color, var(--rel-cta-color, #fdfbf5));
     cursor: pointer;
-    transition:
-        transform 0.25s var(--ease),
-        color 0.35s var(--ease),
-        opacity 0.25s var(--ease);
-}
-.grid-card__btn:hover {
-    transform: translateY(-2px);
 }
 
 /* Hover fill (sweep-up animation) lives in the reusable `btn--sweep-animation`
