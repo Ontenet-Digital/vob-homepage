@@ -159,10 +159,6 @@
 .about-statement__product {
     position: absolute;
     margin: 0;
-    border-radius: 22px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.4);
-    border: 1px solid rgba(190, 151, 67, 0.35);
 }
 .about-statement__product img {
     display: block;
@@ -206,8 +202,5 @@
     }
     .about-statement__verse p {
         font-size: 1.16rem;
-    }
-    .about-statement__product {
-        border-radius: 16px;
     }
 }
