@@ -271,13 +271,6 @@
     background: var(--bs-cta-bg, #251d3a);
     color: var(--bs-cta-color, #fdfbf3);
     cursor: pointer;
-    transition:
-        transform 0.25s var(--ease),
-        color 0.35s var(--ease),
-        opacity 0.25s var(--ease);
-}
-.bs-card__cta-btn:hover {
-    transform: translateY(-2px);
 }
 
 /* Hover fill (sweep-up animation) lives in the reusable `btn--sweep-animation`
@@ -379,16 +372,16 @@
 }
 .bs-card__price {
     font-family: var(--ui);
-    font-weight: 800;
-    font-size: 1.02rem;
+    font-weight: 500;
+    font-size: 0.8rem;
     color: var(--bs-price-color, #251d3a);
     display: inline-flex;
     align-items: baseline;
     gap: 0.55rem;
 }
 .bs-card__price-compare {
-    font-weight: 500;
-    font-size: 0.86rem;
+    font-weight: 400;
+    font-size: 0.75rem;
     color: var(--bs-compare-color, #8b8398);
 }
 

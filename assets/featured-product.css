@@ -469,13 +469,6 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    transition:
-        transform 0.25s ease,
-        opacity 0.25s ease,
-        color 0.35s ease;
-}
-.fps__add:hover:not(:disabled) {
-    transform: translateY(-2px);
 }
 
 /* Hover fill (sweep-up animation) lives in the reusable `btn--sweep-animation`
