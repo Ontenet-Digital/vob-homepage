@@ -12,9 +12,72 @@
     "main": {
       "type": "main-page",
       "settings": {}
+    },
+    "usp_wr9BzA": {
+      "type": "usp",
+      "blocks": {
+        "usp_hCJiEp": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/06-christian-values.png?v=1786112101",
+            "label": "Christian Values"
+          }
+        },
+        "usp_3t9xaq": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/01-safe-screentime.png?v=1786112102",
+            "label": "Safe Screentime"
+          }
+        },
+        "usp_R74crc": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/02-scripture-rooted.png?v=1786112102",
+            "label": "Scripture-Rooted"
+          }
+        },
+        "usp_FV7xap": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/03-biblical-learning.png?v=1786112101",
+            "label": "Biblical Learning"
+          }
+        },
+        "usp_3yJTpa": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/04-faith-building.png?v=1786112101",
+            "label": "Faith-Building"
+          }
+        },
+        "usp_D4ntnB": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/05-sacred-stories.png?v=1786112101",
+            "label": "Sacred Stories"
+          }
+        }
+      },
+      "block_order": [
+        "usp_hCJiEp",
+        "usp_3t9xaq",
+        "usp_R74crc",
+        "usp_FV7xap",
+        "usp_3yJTpa",
+        "usp_D4ntnB"
+      ],
+      "name": "USP",
+      "settings": {
+        "eyebrow": "Why families choose us",
+        "heading": "Built for peace of mind",
+        "subheading": "Simple promises that travel with every order.",
+        "anchor_id": "usp"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "usp_wr9BzA"
   ]
 }
