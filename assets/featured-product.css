@@ -718,7 +718,7 @@
 /* ---------- Responsive ---------- */
 @media (max-width: 1023px) {
     .fps__product {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
     .fps__gallery {
         position: static;
@@ -736,6 +736,26 @@
     }
 }
 @media (max-width: 767px) {
+    .fps__head {
+        margin-bottom: 18px;
+        gap: 12px;
+    }
+    .fps__nav {
+        margin-left: auto;
+        gap: 6px;
+    }
+    .fps__navbtn {
+        width: 36px;
+        height: 36px;
+    }
+    .fps__navbtn svg {
+        width: 16px;
+        height: 16px;
+    }
+    .fps__counter {
+        min-width: 32px;
+        font-size: 0.85rem;
+    }
     .fps__imgnav {
         width: 38px;
         height: 38px;
@@ -749,6 +769,12 @@
     }
     .fps__price-current {
         font-size: 1.1rem;
+    }
+    .fps__thumbs {
+        scrollbar-width: none;
+    }
+    .fps__thumbs::-webkit-scrollbar {
+        display: none;
     }
 }
 @media (prefers-reduced-motion: reduce) {
