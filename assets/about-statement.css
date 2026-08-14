@@ -1,0 +1,213 @@
+/* ============ ABOUT STATEMENT — warm full-viewport split ============ */
+/* Warm cream/gold mission section: editorial copy left, two decorative
+   product images right. Fills the viewport height like the hero. Dynamic
+   values arrive from the section's own {% style %} block scoped to
+   #shopify-section-{id}. */
+.about-statement {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    display: grid;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(
+        var(--as-bg-angle, 180deg),
+        var(--as-bg, #ffffff) 0%,
+        var(--as-bg2, #f2e3c0) 100%
+    );
+    padding-block: var(--as-pt, 96px) var(--as-pb, 96px);
+}
+@supports (height: 100svh) {
+    .about-statement {
+        min-height: 100svh;
+    }
+}
+
+/* Warm glows */
+.about-statement__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(
+            46% 54% at 18% 52%,
+            var(--as-glow-1, rgba(228, 197, 108, 0.16)),
+            transparent 66%
+        ),
+        radial-gradient(
+            50% 62% at 100% 100%,
+            var(--as-glow-2, rgba(243, 228, 195, 0.4)),
+            transparent 66%
+        );
+    pointer-events: none;
+}
+
+/* Split grid */
+.about-statement__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(2.2rem, 5vw, 4.5rem);
+    align-items: center;
+}
+
+/* Copy column */
+.about-statement__copy {
+    max-width: 600px;
+}
+.about-statement__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+    font-family: var(--ui);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--as-eyebrow-color, var(--gold));
+    margin: 0;
+}
+.about-statement__line {
+    width: 34px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.55;
+}
+.about-statement__title {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2rem, 3.6vw, 3.2rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--as-heading-color, var(--ink));
+    margin: 1.3rem 0 0;
+}
+.about-statement__title em {
+    font-style: italic;
+    color: var(--as-accent, var(--gold));
+}
+.about-statement__para {
+    margin: 1.3rem 0 0;
+    color: var(--as-text-color, var(--ink-soft));
+    font-size: 1.12rem;
+    line-height: 1.7;
+    max-width: 54ch;
+}
+.about-statement__para p {
+    margin: 0 0 0.85em;
+}
+.about-statement__para p:last-child {
+    margin-bottom: 0;
+}
+
+/* Scripture pull-quote with a gold left rule */
+.about-statement__verse {
+    margin: 2.2rem 0 0;
+    padding-left: 1.4rem;
+    border-left: 2px solid rgba(190, 151, 67, 0.5);
+}
+.about-statement__verse p {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.28rem;
+    line-height: 1.5;
+    color: var(--gold-deep);
+    margin: 0;
+}
+.about-statement__verse cite {
+    display: block;
+    margin-top: 0.55rem;
+    font-family: var(--ui);
+    font-style: normal;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(124, 93, 30, 0.75);
+}
+
+/* Visual column */
+.about-statement__visual {
+    position: relative;
+}
+.about-statement__ground {
+    position: absolute;
+    left: 50%;
+    bottom: 5%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 24%;
+    background: radial-gradient(
+        50% 50% at 50% 50%,
+        rgba(190, 151, 67, 0.28),
+        transparent 70%
+    );
+    filter: blur(14px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Two-product composition */
+.about-statement__products {
+    position: relative;
+    z-index: 2;
+    aspect-ratio: 1 / 0.9;
+    width: 100%;
+    max-width: 560px;
+    margin-inline: auto;
+}
+.about-statement__product {
+    position: absolute;
+    margin: 0;
+    border-radius: 22px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(190, 151, 67, 0.35);
+}
+.about-statement__product img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.about-statement__product--primary {
+    z-index: 2;
+    right: 2%;
+    top: 4%;
+    width: 58%;
+    height: 82%;
+}
+.about-statement__product--secondary {
+    z-index: 1;
+    left: 0;
+    bottom: 4%;
+    width: 44%;
+    height: 72%;
+    transform: rotate(-8deg);
+    opacity: 0.95;
+}
+
+@media (max-width: 1023px) {
+    .about-statement__grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    .about-statement__copy {
+        max-width: 560px;
+    }
+}
+
+@media (max-width: 767px) {
+    .about-statement__title {
+        font-size: clamp(1.9rem, 8.2vw, 2.5rem);
+    }
+    .about-statement__para {
+        font-size: 1.02rem;
+    }
+    .about-statement__verse p {
+        font-size: 1.16rem;
+    }
+    .about-statement__product {
+        border-radius: 16px;
+    }
+}
