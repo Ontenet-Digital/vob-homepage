@@ -1,0 +1,89 @@
+{%- comment -%}
+  policy — elegant legal / policy page layout for Privacy Policy, Terms &
+  Conditions, Refund Policy and Shipping Policy pages. Warm story-page vibe:
+  centered eyebrow kicker, Fraunces display title, gold ornament, "last updated"
+  meta, optional sticky table of contents, richly styled RTE body, and a
+  contact CTA panel. Styles: assets/policy-pages.css (loaded from
+  layout/theme.liquid). TOC + scrollspy: assets/theme-policy.js.
+
+  Assign one of the page.*-policy templates (or add this section to any page
+  template) to the relevant policy pages in Pages admin. The heading uses the
+  page title and the body renders the page content as entered in admin.
+{%- endcomment -%}
+
+<section class="policy" id="{{ section.settings.anchor_id | default: 'policy' }}">
+  <div class="wrap">
+    <div class="policy__shell">
+
+      <header class="policy__head reveal">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="eyebrow center">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        <h1 class="policy__title">{{ page.title }}</h1>
+        {%- if section.settings.show_updated and page.published_at != blank -%}
+          <p class="policy__updated">Last updated {{ page.published_at | date: '%B %d, %Y' }}</p>
+        {%- endif -%}
+        {%- if section.settings.show_ornament -%}
+          <div class="ornament" aria-hidden="true"><span></span><b>✦</b><span></span></div>
+        {%- endif -%}
+      </header>
+
+      <div class="policy__grid">
+        {%- if section.settings.show_toc -%}
+          <nav class="policy__toc reveal" aria-label="Table of contents">
+            <details class="policy__toc-card" open>
+              <summary class="policy__toc-head">
+                <span class="policy__toc-kicker">Contents</span>
+                <svg class="policy__toc-chev" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 5l4 4 4-4"/>
+                </svg>
+              </summary>
+              <ol class="policy__toc-list" id="policy-toc"></ol>
+            </details>
+          </nav>
+        {%- endif -%}
+
+        <div class="policy__body reveal" data-policy-body>
+          {{ page.content }}
+        </div>
+      </div>
+
+      {%- if section.settings.show_contact -%}
+        <aside class="policy__contact reveal">
+          <div class="policy__contact-inner">
+            <h2 class="policy__contact-title">{{ section.settings.contact_title }}</h2>
+            {%- if section.settings.contact_text != blank -%}
+              <p class="policy__contact-text">{{ section.settings.contact_text }}</p>
+            {%- endif -%}
+            <a class="btn btn--primary" href="{{ section.settings.contact_url | default: '/pages/contact' }}">{{ section.settings.contact_label }}</a>
+          </div>
+        </aside>
+      {%- endif -%}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Policy page",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Policies" },
+    { "type": "checkbox", "id": "show_ornament", "label": "Show gold ornament", "default": true },
+    { "type": "checkbox", "id": "show_updated", "label": "Show 'Last updated' date", "default": true },
+    { "type": "checkbox", "id": "show_toc", "label": "Show table of contents", "default": true },
+    {
+      "type": "header",
+      "content": "Contact panel"
+    },
+    { "type": "checkbox", "id": "show_contact", "label": "Show contact panel", "default": true },
+    { "type": "text", "id": "contact_title", "label": "Panel heading", "default": "Questions about this policy?" },
+    { "type": "textarea", "id": "contact_text", "label": "Panel text", "default": "We’re here to help. Reach out and our team will gladly answer any questions." },
+    { "type": "text", "id": "contact_label", "label": "Button label", "default": "Contact us" },
+    { "type": "url", "id": "contact_url", "label": "Button link" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "policy" }
+  ],
+  "presets": [{ "name": "Policy page" }]
+}
+{% endschema %}
