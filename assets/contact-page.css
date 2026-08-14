@@ -42,6 +42,35 @@
   margin-inline: auto;
 }
 
+/* Tablet & mobile: force the header centered to align with the site's
+   breakpoints, regardless of the desktop align choice. */
+@media (max-width: 1023px) {
+  .contact-page__head {
+    text-align: center;
+  }
+  /* Balance the eyebrow's trailing gold line when it is centered without the
+     `.center` modifier (i.e. when the desktop align is left). */
+  .contact-page__head .eyebrow::after {
+    content: "";
+    width: 26px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .contact-page__subtitle {
+    margin-inline: auto;
+  }
+}
+
+/* Mobile: scale the heading down so it sits comfortably at small sizes */
+@media (max-width: 767px) {
+  .contact-page__title {
+    font-size: clamp(2.1rem, 8vw, 2.9rem);
+  }
+  .contact-page__subtitle {
+    font-size: 1rem;
+  }
+}
+
 /* The native form card sits below the header; keep its top margin tidy */
 .contact-page .cform {
   margin-top: 1.5rem;

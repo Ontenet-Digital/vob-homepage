@@ -12,14 +12,78 @@
     "main": {
       "type": "contact-page",
       "settings": {
+        "show_header": false,
         "eyebrow": "Vision of the Bible",
         "title": "Contact",
         "subtitle": "",
         "align": "left"
       }
+    },
+    "usp_GQ9HER": {
+      "type": "usp",
+      "blocks": {
+        "usp_BAKcyN": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/06-christian-values.png?v=1786112101",
+            "label": "Christian Values"
+          }
+        },
+        "usp_z7R6Dm": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/01-safe-screentime.png?v=1786112102",
+            "label": "Safe Screentime"
+          }
+        },
+        "usp_QMUJTU": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/02-scripture-rooted.png?v=1786112102",
+            "label": "Scripture-Rooted"
+          }
+        },
+        "usp_bexmck": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/03-biblical-learning.png?v=1786112101",
+            "label": "Biblical Learning"
+          }
+        },
+        "usp_ydmX6n": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/04-faith-building.png?v=1786112101",
+            "label": "Faith-Building"
+          }
+        },
+        "usp_QC74dm": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/05-sacred-stories.png?v=1786112101",
+            "label": "Sacred Stories"
+          }
+        }
+      },
+      "block_order": [
+        "usp_BAKcyN",
+        "usp_z7R6Dm",
+        "usp_QMUJTU",
+        "usp_bexmck",
+        "usp_ydmX6n",
+        "usp_QC74dm"
+      ],
+      "name": "USP",
+      "settings": {
+        "eyebrow": "Why families choose us",
+        "heading": "Built for peace of mind",
+        "subheading": "Simple promises that travel with every order.",
+        "anchor_id": "usp"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "usp_GQ9HER"
   ]
 }
