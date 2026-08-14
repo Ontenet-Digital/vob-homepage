@@ -1,4 +1,3 @@
-
 /* ============ APP SECTION ============ */
 .apps {
     padding-block: 5rem;
@@ -141,5 +140,23 @@
     .apps__grid {
         grid-template-columns: 1fr;
         gap: 2.4rem;
+    }
+}
+
+.phones.mobile--hidden {
+    display: none;
+}
+
+.phones.desktop--hidden {
+    display: flex;
+    margin: 2rem 0;
+}
+
+@media (min-width: 768px) {
+    .phones.mobile--hidden {
+        display: flex;
+    }
+    .phones.desktop--hidden {
+        display: none;
     }
 }
