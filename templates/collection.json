@@ -17,7 +17,7 @@
         "show_breadcrumb": true,
         "show_description": false,
         "show_count": false,
-        "show_sort": true,
+        "show_sort": false,
         "show_price_filter": true,
         "columns_desktop": 4,
         "columns_tablet": 1,
