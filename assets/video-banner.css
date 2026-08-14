@@ -94,3 +94,37 @@
         font-size: 0.92rem;
     }
 }
+
+/* ============ MOBILE VIDEO (≤767px) ============ */
+.vbanner__media--mobile {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    /* Swap to the mobile clip when one is set; otherwise the desktop video
+       stays and simply fills the fullscreen banner (cropped). */
+    .vbanner--has-mobile .vbanner__media--desktop {
+        display: none;
+    }
+    .vbanner__media--mobile {
+        display: block;
+    }
+
+    /* Fullscreen banner. svh = small viewport height: it stays put when the
+       mobile browser bar hides, so the section never jumps. vh is the fallback. */
+    .vbanner {
+        height: 100vh;
+        min-height: 100vh;
+    }
+    @supports (height: 100svh) {
+        .vbanner {
+            height: calc(100svh - 70px);
+            min-height: calc(100svh - 70px);
+        }
+    }
+    /* The ratio pseudo-element previously sized the height; neutralize it so
+       the explicit height above wins. The media is absolute inset:0 + cover. */
+    .vbanner::before {
+        height: auto;
+    }
+}
