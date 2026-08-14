@@ -8,7 +8,7 @@
     {%- endif -%}
 
     <div class="fgrid">
-      <div class="fbrand">
+      {% comment %} <div class="fbrand">
         <a class="brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }} home">
           {%- if section.settings.logo != blank -%}
             {%- assign logo_width = section.settings.logo_width | default: 220 -%}
@@ -35,16 +35,16 @@
           {%- endif -%}
         </a>
         {%- if section.settings.brand_text != blank -%}<p>{{ section.settings.brand_text }}</p>{%- endif -%}
-      </div>
+      </div> {% endcomment %}
 
-      <div class="fcol">
+      {% comment %} <div class="fcol">
         <h5>{{ section.settings.links_title | default: 'Explore' }}</h5>
         {%- for block in section.blocks -%}
           {%- if block.type == 'link' -%}
             <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
           {%- endif -%}
         {%- endfor -%}
-      </div>
+      </div> {% endcomment %}
 
       <div class="fcol">
         <h5>{{ section.settings.quick_links_title | default: 'Quick Links' }}</h5>
