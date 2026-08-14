@@ -197,7 +197,7 @@
     font-size: 1.08rem;
     line-height: 1.8;
     max-width: 780px;
-    margin-inline: auto;
+    /* margin-inline: auto; */
 }
 /* Reveal safety: the policy body is a very tall element and the theme's
    scroll-reveal may fail to trigger for it, leaving all content invisible.
