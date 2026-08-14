@@ -415,4 +415,7 @@ a.trust__link:hover {
     .trust__link {
         font-size: 0.88rem;
     }
+    .moto {
+        margin-bottom: 0px;
+    }
 }
