@@ -194,6 +194,9 @@
 }
 
 @media (max-width: 767px) {
+    .about-statement__copy {
+        text-align: center;
+    }
     .about-statement__title {
         font-size: clamp(1.9rem, 8.2vw, 2.5rem);
     }
