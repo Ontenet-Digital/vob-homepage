@@ -90,8 +90,9 @@
 @media (max-width: 767px) {
     .vbanner__btn {
         margin-top: 1.1rem;
-        padding: 0.8rem 1.4rem;
-        font-size: 0.92rem;
+        padding: 0.6rem 1.4rem;
+        font-size: 0.9rem;
+        line-height: 1.2;
     }
 }
 
