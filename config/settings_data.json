@@ -29,7 +29,7 @@
             "type": "link",
             "settings": {
               "label": "Our Story",
-              "link": "#about"
+              "link": "shopify://pages/our-story"
             }
           },
           "header-1": {
@@ -43,7 +43,7 @@
             "type": "link",
             "settings": {
               "label": "The App",
-              "link": "#app"
+              "link": "shopify://pages/the-app"
             }
           }
         },
