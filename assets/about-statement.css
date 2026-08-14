@@ -16,10 +16,11 @@
         var(--as-bg2, #f2e3c0) 100%
     );
     padding-block: var(--as-pt, 96px) var(--as-pb, 96px);
+    padding-top: 0px;
 }
 @supports (height: 100svh) {
     .about-statement {
-        min-height: 100svh;
+        min-height: 65svh;
     }
 }
 
