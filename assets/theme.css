@@ -240,7 +240,7 @@ h3 {
     isolation: isolate;
     overflow: hidden;
     border: 1px solid var(--btn-sweep-ink, currentColor);
-    transition: color 0.35s var(--ease);
+    transition: color 1.2s var(--ease);
 }
 .btn--sweep-animation::before {
     content: "";
@@ -251,7 +251,7 @@ h3 {
     width: 150%;
     height: 200%;
     border-radius: 50%;
-    background: #fff;
+    background: white;
     /* Rest hidden ABOVE the element; entry (hover) rises from BELOW via
        btn-sweep-in; exit (theme-fill.js adds .is-fill-out) continues UP past
        the top via btn-sweep-out so the element's background is revealed from
@@ -260,10 +260,10 @@ h3 {
 }
 .btn--sweep-animation:hover:not(:disabled)::before,
 .btn--sweep-animation:focus-visible:not(:disabled)::before {
-    animation: btn-sweep-in 0.5s cubic-bezier(0.3, 1, 0.3, 1) forwards;
+    animation: btn-sweep-in 1s cubic-bezier(0.3, 1, 0.3, 1) forwards;
 }
 .btn--sweep-animation.is-fill-out::before {
-    animation: btn-sweep-out 0.5s cubic-bezier(0.3, 1, 0.3, 1) forwards;
+    animation: btn-sweep-out 1s cubic-bezier(0.3, 1, 0.3, 1) forwards;
 }
 .btn--sweep-animation:hover:not(:disabled),
 .btn--sweep-animation:focus-visible:not(:disabled) {
