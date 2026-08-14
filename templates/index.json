@@ -326,7 +326,8 @@
     "video_banner": {
       "type": "video-banner",
       "settings": {
-        "video": "shopify://files/videos/vob-video.mp4",
+        "video": "shopify://files/videos/Video Compress.mp4",
+        "video_mobile": "shopify://files/videos/Video Compress Mobile.mp4",
         "video_url": "",
         "poster_url": "",
         "poster_alt": "",
@@ -482,7 +483,7 @@
         "text_color": "#463c68",
         "heading_color": "#251d3a",
         "muted_color": "#8b8398",
-        "price_color": "#72643F",
+        "price_color": "#72643f",
         "compare_color": "#8b8398",
         "border_color": "#ede6d6",
         "surface_color": "#ffffff",
@@ -598,7 +599,7 @@
         "vendor_color": "#be9743",
         "title_color": "#251d3a",
         "title_size": 20,
-        "price_color": "#72643F",
+        "price_color": "#72643f",
         "compare_price_color": "#8b8398",
         "show_rating": true,
         "rating_text_color": "#be9743",

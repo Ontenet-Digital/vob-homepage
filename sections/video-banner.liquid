@@ -27,6 +27,21 @@
     assign video_src = s.video_url
   endif
 
+  comment
+    Mobile clip - shown on screens 767px and below. Rendered as its own <video>
+    so it can autoplay independently; CSS swaps which one is visible.
+  endcomment
+  assign video_src_mobile = blank
+  assign video_type_mobile = 'video/mp4'
+  if s.video_mobile != blank
+    for source in s.video_mobile.sources
+      if source.format == 'mp4'
+        assign video_src_mobile = source.url
+        assign video_type_mobile = source.mime_type
+      endif
+    endfor
+  endif
+
   case s.ratio
     when '21/9'
       assign ratio = 2.3333
@@ -88,10 +103,10 @@
   }
 {% endstyle %}
 
-<section class="vbanner" id="{{ s.anchor_id | default: 'video-banner' }}">
+<section class="vbanner{% if video_src_mobile != blank %} vbanner--has-mobile{% endif %}" id="{{ s.anchor_id | default: 'video-banner' }}">
   {%- if video_src != blank -%}
     <video
-      class="vbanner__media"
+      class="vbanner__media vbanner__media--desktop"
       autoplay
       muted
       loop
@@ -106,6 +121,23 @@
     </video>
   {%- elsif poster != blank -%}
     <img class="vbanner__media" src="{{ poster }}" alt="{{ s.poster_alt | escape }}" loading="lazy" width="1800" height="1013">
+  {%- endif -%}
+
+  {%- if video_src_mobile != blank -%}
+    <video
+      class="vbanner__media vbanner__media--mobile"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      tabindex="-1"
+      aria-hidden="true"
+      data-vb-video
+      {% if poster != blank %}poster="{{ poster }}"{% endif %}
+    >
+      <source src="{{ video_src_mobile }}" type="{{ video_type_mobile }}">
+    </video>
   {%- endif -%}
 
   {%- if s.overlay_opacity > 0 -%}
@@ -136,6 +168,7 @@
   "settings": [
     { "type": "header", "content": "Video" },
     { "type": "video", "id": "video", "label": "Video", "info": "Plays muted on a loop. Upload to Settings › Files, or pick a video here." },
+    { "type": "video", "id": "video_mobile", "label": "Video (mobile)", "info": "Shown at 767px and below. If empty, the desktop video is used, fullscreen." },
     { "type": "text", "id": "video_url", "label": "Video URL (fallback)", "info": "Direct .mp4 link. Used only when no video is selected above." },
     { "type": "image_picker", "id": "poster", "label": "Poster image", "info": "Shown while the video loads, and instead of it when no video is set." },
     { "type": "text", "id": "poster_url", "label": "Poster image URL (fallback)" },

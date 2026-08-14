@@ -12,7 +12,6 @@
     "main": {
       "type": "contact-page",
       "settings": {
-        "show_header": false,
         "eyebrow": "Vision of the Bible",
         "title": "Contact",
         "subtitle": "",
