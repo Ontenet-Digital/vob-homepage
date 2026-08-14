@@ -222,6 +222,81 @@ h3 {
     transform: translateY(-2px);
 }
 
+/* Reusable PETL-style "sweep fill" hover animation.
+   Add `btn--sweep-animation` to ANY element (button, link, div…) and set ONE
+   custom property — --btn-sweep-ink (the element's own background colour) — to
+   get the complete effect:
+     - a white circle sweeps UP from the bottom on hover (btn-sweep-in),
+     - on hover-out it continues UP past the top so the element's own background
+       is revealed from the bottom (btn-sweep-out, driven by theme-fill.js),
+     - the text turns --btn-sweep-ink and a 1px solid border in that colour is
+       drawn.
+   The fill is white by default. Example:
+     class="btn btn--sweep-animation" style="--btn-sweep-ink:#251d3a"
+   or in CSS: .my-cta { --btn-sweep-ink: var(--some-bg); }
+   Respects prefers-reduced-motion (instant colour swap, no movement). */
+.btn--sweep-animation {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid var(--btn-sweep-ink, currentColor);
+    transition: color 0.35s var(--ease);
+}
+.btn--sweep-animation::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: -25%;
+    bottom: -50%;
+    width: 150%;
+    height: 200%;
+    border-radius: 50%;
+    background: #fff;
+    /* Rest hidden ABOVE the element; entry (hover) rises from BELOW via
+       btn-sweep-in; exit (theme-fill.js adds .is-fill-out) continues UP past
+       the top via btn-sweep-out so the element's background is revealed from
+       the bottom — matches PETL. */
+    transform: translateY(-75%);
+}
+.btn--sweep-animation:hover:not(:disabled)::before,
+.btn--sweep-animation:focus-visible:not(:disabled)::before {
+    animation: btn-sweep-in 0.5s cubic-bezier(0.3, 1, 0.3, 1) forwards;
+}
+.btn--sweep-animation.is-fill-out::before {
+    animation: btn-sweep-out 0.5s cubic-bezier(0.3, 1, 0.3, 1) forwards;
+}
+.btn--sweep-animation:hover:not(:disabled),
+.btn--sweep-animation:focus-visible:not(:disabled) {
+    color: var(--btn-sweep-ink, currentColor);
+}
+@keyframes btn-sweep-in {
+    from {
+        transform: translateY(75%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+@keyframes btn-sweep-out {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-75%);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .btn--sweep-animation::before,
+    .btn--sweep-animation.is-fill-out::before {
+        animation: none;
+    }
+    .btn--sweep-animation:hover:not(:disabled)::before,
+    .btn--sweep-animation:focus-visible:not(:disabled)::before {
+        animation: none;
+        transform: translateY(0);
+    }
+}
+
 .ornament {
     display: flex;
     align-items: center;

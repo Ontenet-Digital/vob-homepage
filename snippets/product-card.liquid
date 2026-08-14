@@ -29,7 +29,7 @@
       {%- else -%}
         {%- form 'product', product, class: 'grid-card__form' -%}
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-          <button type="submit" class="grid-card__btn">{{ 'products.product.add_to_cart' | t }}</button>
+          <button type="submit" class="grid-card__btn btn--sweep-animation">{{ 'products.product.add_to_cart' | t }}</button>
         {%- endform -%}
       {%- endif -%}
     </div>
