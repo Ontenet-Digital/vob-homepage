@@ -32,8 +32,8 @@
   data-fps-url="{{ shop.url }}{{ product.url }}"
   data-fps-title="{{ product.title | escape }}"
   data-fps-image="{{ product.featured_image | image_url: width: 1200 }}"
-  {{ attrs }}>
-
+  {{ attrs }}
+>
   {%- comment -%} ---------------- LEFT: gallery ---------------- {%- endcomment -%}
   <div class="fps__gallery">
     <div class="fps__stage">
@@ -47,7 +47,8 @@
               alt="{{ m.alt | default: product.title | escape }}"
               width="{{ m.width }}"
               height="{{ m.height }}"
-              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            >
           </div>
         {%- endfor -%}
       {%- else -%}
@@ -58,10 +59,30 @@
 
       {%- if has_gallery -%}
         <button type="button" class="fps__imgnav fps__imgnav--prev" data-fps-img-prev aria-label="Previous image">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
         </button>
         <button type="button" class="fps__imgnav fps__imgnav--next" data-fps-img-next aria-label="Next image">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M9 6l6 6-6 6"/>
+          </svg>
         </button>
         <span class="fps__stage-count"><span data-fps-current>1</span> / {{ media.size }}</span>
       {%- endif -%}
@@ -70,7 +91,16 @@
     {%- if has_gallery -%}
       <div class="fps__thumbs" role="list" aria-label="Product images">
         {%- for m in media -%}
-          <button type="button" class="fps__thumb{% if forloop.first %} is-active{% endif %}" data-fps-thumb="{{ forloop.index0 }}" role="listitem" aria-label="Show image {{ forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}>
+          <button
+            type="button"
+            class="fps__thumb{% if forloop.first %} is-active{% endif %}"
+            data-fps-thumb="{{ forloop.index0 }}"
+            role="listitem"
+            aria-label="Show image {{ forloop.index }}"
+            {% if forloop.first %}
+              aria-current="true"
+            {% endif %}
+          >
             <img src="{{ m | image_url: width: 200 }}" alt="" width="200" height="200" loading="lazy">
           </button>
         {%- endfor -%}
@@ -101,17 +131,28 @@
           <label class="fps__label" for="fps-variant-{{ uid }}-{{ index }}">Options</label>
           <select id="fps-variant-{{ uid }}-{{ index }}" class="fps__select" name="id" data-fps-variant>
             {%- for v in product.variants -%}
-              <option value="{{ v.id }}"{% if v == variant %} selected{% endif %}{% unless v.available %} disabled{% endunless %}>
-                {{ v.title }} — {{ v.price | money }}{% unless v.available %} ({{ 'products.product.sold_out' | t }}){% endunless %}
+              <option
+                value="{{ v.id }}"
+                {% if v == variant %}
+                  selected
+                {% endif -%}
+                {% unless v.available %}
+                  disabled
+                {% endunless %}
+              >
+                {{ v.title }} — {{ v.price | money -}}
+                {%- unless v.available %} ({{ 'products.product.sold_out' | t }}){% endunless %}
               </option>
             {%- endfor -%}
           </select>
         </div>
-        <script type="application/json" data-fps-variant-json>[
-          {%- for v in product.variants -%}
-            {"id":{{ v.id }},"available":{{ v.available }},"price":{{ v.price | money | json }},"price_raw":{{ v.price }},"compare":{{ v.compare_at_price | money | json }},"compare_raw":{{ v.compare_at_price | default: 0 }},"media":{{ v.featured_media.position | default: 0 }}}{% unless forloop.last %},{% endunless %}
-          {%- endfor -%}
-        ]</script>
+        <script type="application/json" data-fps-variant-json>
+          [
+            {%- for v in product.variants -%}
+              {"id":{{ v.id }},"available":{{ v.available }},"price":{{ v.price | money | json }},"price_raw":{{ v.price }},"compare":{{ v.compare_at_price | money | json }},"compare_raw":{{ v.compare_at_price | default: 0 }},"media":{{ v.featured_media.position | default: 0 }}}{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          ]
+        </script>
       {%- else -%}
         <input type="hidden" name="id" value="{{ variant.id }}" data-fps-id>
       {%- endunless -%}
@@ -120,7 +161,15 @@
         {%- if s.show_quantity -%}
           <div class="fps__qty">
             <button type="button" data-fps-qty="-1" aria-label="Decrease quantity">&minus;</button>
-            <input type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="Quantity" data-fps-qty-input>
+            <input
+              type="number"
+              name="quantity"
+              value="1"
+              min="1"
+              inputmode="numeric"
+              aria-label="Quantity"
+              data-fps-qty-input
+            >
             <button type="button" data-fps-qty="1" aria-label="Increase quantity">+</button>
           </div>
         {%- endif -%}
@@ -132,9 +181,29 @@
           data-add-label="{{ s.add_label | default: 'Add to cart' | escape }}"
           data-added-label="{{ s.added_label | default: 'Added' | escape }}"
           data-soldout-label="{{ 'products.product.sold_out' | t | escape }}"
-          {% unless product.available %}disabled{% endunless %}>
-          <svg class="fps__add-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-          <span class="fps__add-label">{% if product.available %}{{ s.add_label | default: 'Add to cart' }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+          {% unless product.available %}
+            disabled
+          {% endunless %}
+        >
+          <svg
+            class="fps__add-check"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+          <span class="fps__add-label">
+            {%- if product.available -%}
+              {{- s.add_label | default: 'Add to cart' -}}
+            {%- else -%}
+              {{- 'products.product.sold_out' | t -}}
+            {%- endif -%}
+          </span>
         </button>
       </div>
     {%- endform -%}
@@ -146,19 +215,49 @@
         <ul class="fps__trust">
           {%- if s.trust_1 != blank -%}
             <li class="fps__trust-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/>
+              </svg>
               <span>{{ s.trust_1 }}</span>
             </li>
           {%- endif -%}
           {%- if s.trust_2 != blank -%}
             <li class="fps__trust-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h11v9H3z"/><path d="M14 9h4l3 3v3h-7z"/><circle cx="7.5" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3 6h11v9H3z"/><path d="M14 9h4l3 3v3h-7z"/><circle cx="7.5" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/>
+              </svg>
               <span>{{ s.trust_2 }}</span>
             </li>
           {%- endif -%}
           {%- if s.trust_3 != blank -%}
             <li class="fps__trust-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/></svg>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/>
+              </svg>
               <span>{{ s.trust_3 }}</span>
             </li>
           {%- endif -%}
@@ -168,7 +267,10 @@
 
     {%- if desc != blank -%}
       <div class="fps__desc">
-        <div class="fps__rte rte">{{ desc | truncate: 201, '' }}</div>
+        <div class="fps__rte rte">
+          {% comment %} {{ desc | truncate: 201, '' }} {% endcomment %}
+          Vision of the Bible brings timeless stories & profound truths to life via digital media & stunning visuals, inspiring connection to God's Word.
+        </div>
       </div>
     {%- endif -%}
 
@@ -178,31 +280,51 @@
     {%- endif -%}
     {%- if show_share -%}
       <div class="fps__share">
-        {%- if s.share_label != blank -%}<span class="fps__share-label">{{ s.share_label }}</span>{%- endif -%}
+        {%- if s.share_label != blank -%}
+          <span class="fps__share-label">{{ s.share_label }}</span>
+        {%- endif -%}
         <div class="fps__share-btns">
           {%- if s.share_facebook -%}
             <button type="button" class="fps__share-btn" data-fps-share="facebook" aria-label="Share on Facebook">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.87.24-1.46 1.5-1.46H17V4c-.3-.04-1.3-.13-2.46-.13-2.43 0-4.1 1.49-4.1 4.22V10H7.7v3h2.74v8h3.06z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.87.24-1.46 1.5-1.46H17V4c-.3-.04-1.3-.13-2.46-.13-2.43 0-4.1 1.49-4.1 4.22V10H7.7v3h2.74v8h3.06z"/>
+              </svg>
             </button>
           {%- endif -%}
           {%- if s.share_x -%}
             <button type="button" class="fps__share-btn" data-fps-share="x" aria-label="Share on X">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 3H22l-7.06 8.06L23 21h-6.56l-5.14-6.72L5.4 21H2.3l7.55-8.63L2 3h6.72l4.65 6.15L18.9 3zm-1.15 16.13h1.7L7.34 4.77H5.5l12.25 14.36z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.9 3H22l-7.06 8.06L23 21h-6.56l-5.14-6.72L5.4 21H2.3l7.55-8.63L2 3h6.72l4.65 6.15L18.9 3zm-1.15 16.13h1.7L7.34 4.77H5.5l12.25 14.36z"/>
+              </svg>
             </button>
           {%- endif -%}
           {%- if s.share_pinterest -%}
             <button type="button" class="fps__share-btn" data-fps-share="pinterest" aria-label="Save to Pinterest">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.3 2C6.9 2 4 5.5 4 9.2c0 1.7 1 3.86 2.5 4.55.23.11.35.06.4-.16.04-.16.24-.94.32-1.22a.33.33 0 0 0-.09-.37c-.5-.6-.8-1.36-.8-2.24 0-2.88 2.16-5.46 5.62-5.46 3.07 0 4.75 1.87 4.75 4.37 0 3.29-1.45 6.06-3.62 6.06-1.19 0-2.09-.99-1.8-2.2.34-1.45 1-3.01 1-4.06 0-.94-.5-1.72-1.54-1.72-1.22 0-2.2 1.26-2.2 2.95 0 1.08.36 1.8.36 1.8l-1.47 6.2c-.43 1.84-.06 4.09-.03 4.32.02.13.19.16.26.06.11-.14 1.5-1.86 1.97-3.58.13-.48.77-3 .77-3 .38.73 1.5 1.36 2.69 1.36 3.54 0 5.95-3.23 5.95-7.55C20.4 5.06 17.34 2 12.3 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12.3 2C6.9 2 4 5.5 4 9.2c0 1.7 1 3.86 2.5 4.55.23.11.35.06.4-.16.04-.16.24-.94.32-1.22a.33.33 0 0 0-.09-.37c-.5-.6-.8-1.36-.8-2.24 0-2.88 2.16-5.46 5.62-5.46 3.07 0 4.75 1.87 4.75 4.37 0 3.29-1.45 6.06-3.62 6.06-1.19 0-2.09-.99-1.8-2.2.34-1.45 1-3.01 1-4.06 0-.94-.5-1.72-1.54-1.72-1.22 0-2.2 1.26-2.2 2.95 0 1.08.36 1.8.36 1.8l-1.47 6.2c-.43 1.84-.06 4.09-.03 4.32.02.13.19.16.26.06.11-.14 1.5-1.86 1.97-3.58.13-.48.77-3 .77-3 .38.73 1.5 1.36 2.69 1.36 3.54 0 5.95-3.23 5.95-7.55C20.4 5.06 17.34 2 12.3 2z"/>
+              </svg>
             </button>
           {%- endif -%}
           {%- if s.share_whatsapp -%}
             <button type="button" class="fps__share-btn" data-fps-share="whatsapp" aria-label="Share on WhatsApp">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.29-.77.96-.94 1.16-.17.2-.35.22-.64.07-1.63-.81-2.7-1.45-3.77-3.28-.29-.5.29-.46.82-1.53.09-.18.05-.34-.02-.48-.07-.15-.67-1.6-.92-2.19-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.29-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49 3.03 1.31 3.03.87 3.58.82.55-.05 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.34zM12 2C6.5 2 2 6.5 2 12c0 1.85.5 3.58 1.38 5.06L2 22l5.09-1.33A9.94 9.94 0 0 0 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.6 0-3.1-.43-4.38-1.19l-.31-.19-3.02.79.81-2.94-.2-.31A8.23 8.23 0 0 1 3.7 12c0-4.58 3.72-8.3 8.3-8.3s8.3 3.72 8.3 8.3-3.72 8.3-8.3 8.3z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.5 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.29-.77.96-.94 1.16-.17.2-.35.22-.64.07-1.63-.81-2.7-1.45-3.77-3.28-.29-.5.29-.46.82-1.53.09-.18.05-.34-.02-.48-.07-.15-.67-1.6-.92-2.19-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.29-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49 3.03 1.31 3.03.87 3.58.82.55-.05 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.34zM12 2C6.5 2 2 6.5 2 12c0 1.85.5 3.58 1.38 5.06L2 22l5.09-1.33A9.94 9.94 0 0 0 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.6 0-3.1-.43-4.38-1.19l-.31-.19-3.02.79.81-2.94-.2-.31A8.23 8.23 0 0 1 3.7 12c0-4.58 3.72-8.3 8.3-8.3s8.3 3.72 8.3 8.3-3.72 8.3-8.3 8.3z"/>
+              </svg>
             </button>
           {%- endif -%}
           {%- if s.share_copy -%}
             <button type="button" class="fps__share-btn" data-fps-share="copy" aria-label="Copy link">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l2-2A5 5 0 0 0 12 4l-1.15 1.14"/><path d="M14 11a5 5 0 0 0-7.07 0l-2 2A5 5 0 0 0 12 20l1.14-1.14"/></svg>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M10 13a5 5 0 0 0 7.07 0l2-2A5 5 0 0 0 12 4l-1.15 1.14"/><path d="M14 11a5 5 0 0 0-7.07 0l-2 2A5 5 0 0 0 12 20l1.14-1.14"/>
+              </svg>
               <span class="fps__tip">Copied</span>
             </button>
           {%- endif -%}
