@@ -1,8 +1,8 @@
 /*!
- * theme-fill.js — PETL-style circular-fill hover for the reusable
+ * theme-fill.js — circular-fill hover for the reusable
  * `btn--sweep-animation` class (see theme.css).
  *
- * The white fill sweeps UP on both hover entry AND hover exit (matches PETL):
+ * The white fill sweeps UP on both hover entry AND hover exit:
  *   - Entry is pure CSS: `:hover`/`:focus-visible` runs `btn-sweep-in`
  *     (from BELOW the element up to covering it) — white comes from the bottom.
  *   - Exit: this file adds `.is-fill-out` on mouseleave/focusout, which runs

@@ -222,7 +222,7 @@ h3 {
     transform: translateY(-2px);
 }
 
-/* Reusable PETL-style "sweep fill" hover animation.
+/* Reusable "sweep fill" hover animation.
    Add `btn--sweep-animation` to ANY element (button, link, div…) and set ONE
    custom property — --btn-sweep-ink (the element's own background colour) — to
    get the complete effect:
@@ -255,7 +255,7 @@ h3 {
     /* Rest hidden ABOVE the element; entry (hover) rises from BELOW via
        btn-sweep-in; exit (theme-fill.js adds .is-fill-out) continues UP past
        the top via btn-sweep-out so the element's background is revealed from
-       the bottom — matches PETL. */
+       the bottom. */
     transform: translateY(-75%);
 }
 .btn--sweep-animation:hover:not(:disabled)::before,
