@@ -80,9 +80,9 @@
   data-cart-add-url="{{ routes.cart_add_url }}"
   data-cart-url="{{ routes.cart_url }}"
   data-product-url="{{ product.url }}"
-  data-history="{{ s.update_url | default: true }}">
+  data-history="{{ s.update_url | default: true }}"
+>
   <div class="pdp__inner wrap">
-
     {%- if s.show_breadcrumb -%}
       <nav class="pdp__crumb" aria-label="Breadcrumb">
         <a href="{{ routes.root_url }}">Home</a>
@@ -102,7 +102,11 @@
           {%- if media.size > 0 -%}
             {%- for m in media -%}
               {%- assign img = m.preview_image -%}
-              <div class="pdp__slide{% if forloop.first %} is-active{% endif %}" data-pdp-slide="{{ forloop.index0 }}" data-media-id="{{ m.id }}">
+              <div
+                class="pdp__slide{% if forloop.first %} is-active{% endif %}"
+                data-pdp-slide="{{ forloop.index0 }}"
+                data-media-id="{{ m.id }}"
+              >
                 <img
                   src="{{ img | image_url: width: 1200 }}"
                   srcset="{{ img | image_url: width: 600 }} 600w, {{ img | image_url: width: 1000 }} 1000w, {{ img | image_url: width: 1400 }} 1400w, {{ img | image_url: width: 1800 }} 1800w"
@@ -111,7 +115,10 @@
                   width="{{ img.width }}"
                   height="{{ img.height }}"
                   loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                  {% if forloop.first %}fetchpriority="high"{% endif %}>
+                  {% if forloop.first %}
+                    fetchpriority="high"
+                  {% endif %}
+                >
               </div>
             {%- endfor -%}
           {%- else -%}
@@ -121,15 +128,38 @@
           {%- endif -%}
 
           {%- if on_sale and s.show_sale_badge -%}
-            <span class="pdp__badge" data-pdp-badge data-word="{{ s.sale_badge_text | default: 'Save' | escape }}">{{ s.sale_badge_text | default: 'Save' }} {{ saved_pct }}%</span>
+            <span class="pdp__badge" data-pdp-badge data-word="{{ s.sale_badge_text | default: 'Save' | escape }}">
+              {{- s.sale_badge_text | default: 'Save' }}
+              {{ saved_pct }}%</span
+            >
           {%- endif -%}
 
           {%- if has_gallery -%}
             <button type="button" class="pdp__imgnav pdp__imgnav--prev" data-pdp-img-prev aria-label="Previous image">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M15 18l-6-6 6-6"/>
+              </svg>
             </button>
             <button type="button" class="pdp__imgnav pdp__imgnav--next" data-pdp-img-next aria-label="Next image">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M9 6l6 6-6 6"/>
+              </svg>
             </button>
             <span class="pdp__stage-count"><span data-pdp-current>1</span> / {{ media.size }}</span>
           {%- endif -%}
@@ -139,7 +169,17 @@
           <div class="pdp__thumbs" role="list" aria-label="Product images">
             {%- for m in media -%}
               {%- assign img = m.preview_image -%}
-              <button type="button" class="pdp__thumb{% if forloop.first %} is-active{% endif %}" data-pdp-thumb="{{ forloop.index0 }}" data-media-id="{{ m.id }}" role="listitem" aria-label="Show image {{ forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}>
+              <button
+                type="button"
+                class="pdp__thumb{% if forloop.first %} is-active{% endif %}"
+                data-pdp-thumb="{{ forloop.index0 }}"
+                data-media-id="{{ m.id }}"
+                role="listitem"
+                aria-label="Show image {{ forloop.index }}"
+                {% if forloop.first %}
+                  aria-current="true"
+                {% endif %}
+              >
                 <img src="{{ img | image_url: width: 200 }}" alt="" width="200" height="200" loading="lazy">
               </button>
             {%- endfor -%}
@@ -160,10 +200,21 @@
           <div class="pdp__rating" aria-label="Rated {{ rating }} out of 5">
             <span class="pdp__stars" aria-hidden="true">
               {%- for i in (1..5) -%}
-                <svg class="pdp__star{% if i <= rating_round %} is-on{% endif %}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.97 6.31 6.78.82-5 4.78 1.36 6.84L12 17.9l-6.11 3.35 1.36-6.84-5-4.78 6.78-.82L12 2.5z"/></svg>
+                <svg
+                  class="pdp__star{% if i <= rating_round %} is-on{% endif %}"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M12 2.5l2.97 6.31 6.78.82-5 4.78 1.36 6.84L12 17.9l-6.11 3.35 1.36-6.84-5-4.78 6.78-.82L12 2.5z"/>
+                </svg>
               {%- endfor -%}
             </span>
-            {%- if rating_count != blank -%}<span class="pdp__rating-count">{{ rating_count }} review{% if rating_count != 1 %}s{% endif %}</span>{%- endif -%}
+            {%- if rating_count != blank -%}
+              <span class="pdp__rating-count">
+                {{- rating_count }} review{% if rating_count != 1 %}s{% endif -%}
+              </span>
+            {%- endif -%}
           </div>
         {%- endif -%}
 
@@ -172,32 +223,63 @@
             <s class="pdp__price-compare">{{ product.compare_at_price | money }}</s>
           {%- endif -%}
           <span class="pdp__price-current">{{ product.price | money }}</span>
-          {%- if on_sale -%}<span class="pdp__price-save" data-pdp-save>{{ s.sale_badge_text | default: 'Save' }} {{ saved_pct }}%</span>{%- endif -%}
+          {%- if on_sale -%}
+            <span class="pdp__price-save" data-pdp-save>
+              {{- s.sale_badge_text | default: 'Save' }}
+              {{ saved_pct }}%</span
+            >
+          {%- endif -%}
         </div>
 
-        {%- comment -%} Description moved below the buy box so a long description
-            never pushes "Add to cart" down the page. {%- endcomment -%}
+        {%- comment -%}
+          Description moved below the buy box so a long description
+          never pushes "Add to cart" down the page.
+        {%- endcomment -%}
 
         {%- form 'product', product, class: 'pdp__form', novalidate: 'novalidate' -%}
           {%- unless product.has_only_default_variant -%}
             <div class="pdp__variants">
-              <label class="pdp__label" for="pdp-variant-{{ section.id }}">{{ s.variant_label | default: 'Options' }}</label>
+              <label class="pdp__label" for="pdp-variant-{{ section.id }}">
+                {{- s.variant_label | default: 'Options' -}}
+              </label>
               <div class="pdp__select-wrap">
                 <select id="pdp-variant-{{ section.id }}" class="pdp__select" name="id" data-pdp-variant>
                   {%- for v in product.variants -%}
-                    <option value="{{ v.id }}"{% if v == variant %} selected{% endif %}{% unless v.available %} disabled{% endunless %}>
-                      {{ v.title }} — {{ v.price | money }}{% unless v.available %} · {{ 'products.product.sold_out' | t }}{% endunless %}
+                    <option
+                      value="{{ v.id }}"
+                      {% if v == variant %}
+                        selected
+                      {% endif -%}
+                      {% unless v.available %}
+                        disabled
+                      {% endunless %}
+                    >
+                      {{ v.title }} — {{ v.price | money -}}
+                      {%- unless v.available %} · {{ 'products.product.sold_out' | t }}{% endunless %}
                     </option>
                   {%- endfor -%}
                 </select>
-                <svg class="pdp__select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                <svg
+                  class="pdp__select-caret"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M6 9l6 6 6-6"/>
+                </svg>
               </div>
             </div>
-            <script type="application/json" data-pdp-variant-json>[
-              {%- for v in product.variants -%}
-                {"id":{{ v.id }},"available":{{ v.available }},"price":{{ v.price | money | json }},"price_raw":{{ v.price }},"compare":{{ v.compare_at_price | money | json }},"compare_raw":{{ v.compare_at_price | default: 0 }},"media":{{ v.featured_media.position | default: 0 }},"sku":{{ v.sku | json }},"title":{{ v.title | json }}}{% unless forloop.last %},{% endunless %}
-              {%- endfor -%}
-            ]</script>
+            <script type="application/json" data-pdp-variant-json>
+              [
+                {%- for v in product.variants -%}
+                  {"id":{{ v.id }},"available":{{ v.available }},"price":{{ v.price | money | json }},"price_raw":{{ v.price }},"compare":{{ v.compare_at_price | money | json }},"compare_raw":{{ v.compare_at_price | default: 0 }},"media":{{ v.featured_media.position | default: 0 }},"sku":{{ v.sku | json }},"title":{{ v.title | json }}}{% unless forloop.last %},{% endunless %}
+                {%- endfor -%}
+              ]
+            </script>
           {%- else -%}
             <input type="hidden" name="id" value="{{ variant.id }}" data-pdp-id>
           {%- endunless -%}
@@ -206,7 +288,16 @@
             {%- if s.show_quantity -%}
               <div class="pdp__qty" role="group" aria-label="Quantity">
                 <button type="button" data-pdp-qty="-1" aria-label="Decrease quantity">&minus;</button>
-                <input type="number" name="quantity" value="1" min="1" step="1" inputmode="numeric" aria-label="Quantity" data-pdp-qty-input>
+                <input
+                  type="number"
+                  name="quantity"
+                  value="1"
+                  min="1"
+                  step="1"
+                  inputmode="numeric"
+                  aria-label="Quantity"
+                  data-pdp-qty-input
+                >
                 <button type="button" data-pdp-qty="1" aria-label="Increase quantity">+</button>
               </div>
             {%- endif -%}
@@ -218,9 +309,29 @@
               data-add-label="{{ s.add_label | default: 'Add to cart' | escape }}"
               data-added-label="{{ s.added_label | default: 'Added' | escape }}"
               data-soldout-label="{{ 'products.product.sold_out' | t | escape }}"
-              {% unless product.available %}disabled{% endunless %}>
-              <svg class="pdp__add-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-              <span class="pdp__add-label">{% if product.available %}{{ s.add_label | default: 'Add to cart' }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+              {% unless product.available %}
+                disabled
+              {% endunless %}
+            >
+              <svg
+                class="pdp__add-check"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M20 6L9 17l-5-5"/>
+              </svg>
+              <span class="pdp__add-label">
+                {%- if product.available -%}
+                  {{- s.add_label | default: 'Add to cart' -}}
+                {%- else -%}
+                  {{- 'products.product.sold_out' | t -}}
+                {%- endif -%}
+              </span>
             </button>
           </div>
         {%- endform -%}
@@ -231,14 +342,32 @@
           <ul class="pdp__meta">
             <li class="pdp__meta-item" data-pdp-avail>
               <span class="pdp__dot{% unless product.available %} is-out{% endunless %}" aria-hidden="true"></span>
-              <span data-pdp-avail-text data-in="{{ s.in_stock_text | default: 'In stock, ready to ship' | escape }}" data-out="{{ 'products.product.sold_out' | t | escape }}">{% if product.available %}{{ s.in_stock_text | default: 'In stock, ready to ship' }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+              <span
+                data-pdp-avail-text
+                data-in="{{ s.in_stock_text | default: 'In stock, ready to ship' | escape }}"
+                data-out="{{ 'products.product.sold_out' | t | escape }}"
+              >
+                {%- if product.available -%}
+                  {{- s.in_stock_text | default: 'In stock, ready to ship' -}}
+                {%- else -%}
+                  {{- 'products.product.sold_out' | t -}}
+                {%- endif -%}
+              </span>
             </li>
             {%- if s.show_sku -%}
-              <li class="pdp__meta-item"{% if variant.sku == blank %} hidden{% endif %} data-pdp-sku-row>
+              <li
+                class="pdp__meta-item"
+                {% if variant.sku == blank %}
+                  hidden
+                {% endif %}
+                data-pdp-sku-row
+              >
                 SKU: <span data-pdp-sku>{{ variant.sku }}</span>
               </li>
             {%- endif -%}
-            {%- if s.meta_note != blank -%}<li class="pdp__meta-item">{{ s.meta_note }}</li>{%- endif -%}
+            {%- if s.meta_note != blank -%}
+              <li class="pdp__meta-item">{{ s.meta_note }}</li>
+            {%- endif -%}
           </ul>
         {%- endif -%}
 
@@ -257,31 +386,51 @@
         {%- endif -%}
         {%- if show_share -%}
           <div class="pdp__share">
-            {%- if s.share_label != blank -%}<span class="pdp__share-label">{{ s.share_label }}</span>{%- endif -%}
+            {%- if s.share_label != blank -%}
+              <span class="pdp__share-label">{{ s.share_label }}</span>
+            {%- endif -%}
             <div class="pdp__share-btns">
               {%- if s.share_facebook -%}
                 <button type="button" class="pdp__share-btn" data-pdp-share="facebook" aria-label="Share on Facebook">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.87.24-1.46 1.5-1.46H17V4c-.3-.04-1.3-.13-2.46-.13-2.43 0-4.1 1.49-4.1 4.22V10H7.7v3h2.74v8h3.06z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.87.24-1.46 1.5-1.46H17V4c-.3-.04-1.3-.13-2.46-.13-2.43 0-4.1 1.49-4.1 4.22V10H7.7v3h2.74v8h3.06z"/>
+                  </svg>
                 </button>
               {%- endif -%}
               {%- if s.share_x -%}
                 <button type="button" class="pdp__share-btn" data-pdp-share="x" aria-label="Share on X">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 3H22l-7.06 8.06L23 21h-6.56l-5.14-6.72L5.4 21H2.3l7.55-8.63L2 3h6.72l4.65 6.15L18.9 3zm-1.15 16.13h1.7L7.34 4.77H5.5l12.25 14.36z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M18.9 3H22l-7.06 8.06L23 21h-6.56l-5.14-6.72L5.4 21H2.3l7.55-8.63L2 3h6.72l4.65 6.15L18.9 3zm-1.15 16.13h1.7L7.34 4.77H5.5l12.25 14.36z"/>
+                  </svg>
                 </button>
               {%- endif -%}
               {%- if s.share_pinterest -%}
                 <button type="button" class="pdp__share-btn" data-pdp-share="pinterest" aria-label="Save to Pinterest">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.3 2C6.9 2 4 5.5 4 9.2c0 1.7 1 3.86 2.5 4.55.23.11.35.06.4-.16.04-.16.24-.94.32-1.22a.33.33 0 0 0-.09-.37c-.5-.6-.8-1.36-.8-2.24 0-2.88 2.16-5.46 5.62-5.46 3.07 0 4.75 1.87 4.75 4.37 0 3.29-1.45 6.06-3.62 6.06-1.19 0-2.09-.99-1.8-2.2.34-1.45 1-3.01 1-4.06 0-.94-.5-1.72-1.54-1.72-1.22 0-2.2 1.26-2.2 2.95 0 1.08.36 1.8.36 1.8l-1.47 6.2c-.43 1.84-.06 4.09-.03 4.32.02.13.19.16.26.06.11-.14 1.5-1.86 1.97-3.58.13-.48.77-3 .77-3 .38.73 1.5 1.36 2.69 1.36 3.54 0 5.95-3.23 5.95-7.55C20.4 5.06 17.34 2 12.3 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12.3 2C6.9 2 4 5.5 4 9.2c0 1.7 1 3.86 2.5 4.55.23.11.35.06.4-.16.04-.16.24-.94.32-1.22a.33.33 0 0 0-.09-.37c-.5-.6-.8-1.36-.8-2.24 0-2.88 2.16-5.46 5.62-5.46 3.07 0 4.75 1.87 4.75 4.37 0 3.29-1.45 6.06-3.62 6.06-1.19 0-2.09-.99-1.8-2.2.34-1.45 1-3.01 1-4.06 0-.94-.5-1.72-1.54-1.72-1.22 0-2.2 1.26-2.2 2.95 0 1.08.36 1.8.36 1.8l-1.47 6.2c-.43 1.84-.06 4.09-.03 4.32.02.13.19.16.26.06.11-.14 1.5-1.86 1.97-3.58.13-.48.77-3 .77-3 .38.73 1.5 1.36 2.69 1.36 3.54 0 5.95-3.23 5.95-7.55C20.4 5.06 17.34 2 12.3 2z"/>
+                  </svg>
                 </button>
               {%- endif -%}
               {%- if s.share_whatsapp -%}
                 <button type="button" class="pdp__share-btn" data-pdp-share="whatsapp" aria-label="Share on WhatsApp">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.29-.77.96-.94 1.16-.17.2-.35.22-.64.07-1.63-.81-2.7-1.45-3.77-3.28-.29-.5.29-.46.82-1.53.09-.18.05-.34-.02-.48-.07-.15-.67-1.6-.92-2.19-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.29-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49 3.03 1.31 3.03.87 3.58.82.55-.05 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.34zM12 2C6.5 2 2 6.5 2 12c0 1.85.5 3.58 1.38 5.06L2 22l5.09-1.33A9.94 9.94 0 0 0 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.6 0-3.1-.43-4.38-1.19l-.31-.19-3.02.79.81-2.94-.2-.31A8.23 8.23 0 0 1 3.7 12c0-4.58 3.72-8.3 8.3-8.3s8.3 3.72 8.3 8.3-3.72 8.3-8.3 8.3z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M17.5 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.29-.77.96-.94 1.16-.17.2-.35.22-.64.07-1.63-.81-2.7-1.45-3.77-3.28-.29-.5.29-.46.82-1.53.09-.18.05-.34-.02-.48-.07-.15-.67-1.6-.92-2.19-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.29-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49 3.03 1.31 3.03.87 3.58.82.55-.05 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.34zM12 2C6.5 2 2 6.5 2 12c0 1.85.5 3.58 1.38 5.06L2 22l5.09-1.33A9.94 9.94 0 0 0 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.6 0-3.1-.43-4.38-1.19l-.31-.19-3.02.79.81-2.94-.2-.31A8.23 8.23 0 0 1 3.7 12c0-4.58 3.72-8.3 8.3-8.3s8.3 3.72 8.3 8.3-3.72 8.3-8.3 8.3z"/>
+                  </svg>
                 </button>
               {%- endif -%}
               {%- if s.share_copy -%}
                 <button type="button" class="pdp__share-btn" data-pdp-share="copy" aria-label="Copy link">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l2-2A5 5 0 0 0 12 4l-1.15 1.14"/><path d="M14 11a5 5 0 0 0-7.07 0l-2 2A5 5 0 0 0 12 20l1.14-1.14"/></svg>
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M10 13a5 5 0 0 0 7.07 0l2-2A5 5 0 0 0 12 4l-1.15 1.14"/><path d="M14 11a5 5 0 0 0-7.07 0l-2 2A5 5 0 0 0 12 20l1.14-1.14"/>
+                  </svg>
                   <span class="pdp__tip">Copied</span>
                 </button>
               {%- endif -%}
@@ -294,23 +443,26 @@
 
   {%- comment -%} ---- SEO: Product structured data ---- {%- endcomment -%}
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    "name": {{ product.title | json }},
-    "url": {{ shop.url | append: product.url | json }},
-    {% if product.featured_image %}"image": {{ product.featured_image | image_url: width: 1200 | prepend: 'https:' | json }},{% endif %}
-    "description": {{ product.description | strip_html | truncatewords: 60 | json }},
-    {% if product.vendor != blank %}"brand": { "@type": "Brand", "name": {{ product.vendor | json }} },{% endif %}
-    "offers": {
-      "@type": "Offer",
-      "priceCurrency": {{ cart.currency.iso_code | json }},
-      "price": {{ product.price | divided_by: 100.0 | json }},
-      "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
-      "url": {{ shop.url | append: product.url | json }}
+    {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": {{ product.title | json }},
+      "url": {{ shop.url | append: product.url | json }},
+      {% if product.featured_image %}"image": {{ product.featured_image | image_url: width: 1200 | prepend: 'https:' | json }},{% endif %}
+      "description": {{ product.description | strip_html | truncatewords: 60 | json }},
+      {% if product.vendor != blank %}"brand": { "@type": "Brand", "name": {{ product.vendor | json }} },{% endif %}
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": {{ cart.currency.iso_code | json }},
+        "price": {{ product.price | divided_by: 100.0 | json }},
+        "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+        "url": {{ shop.url | append: product.url | json }}
+      }
     }
-  }
   </script>
+
+  {%- comment -%} ---- Recently viewed: always-on product recording (localStorage) ---- {%- endcomment -%}
+  {%- render 'recently-viewed-record', product: product -%}
 </section>
 
 {% schema %}
@@ -324,7 +476,10 @@
 
     { "type": "header", "content": "Gallery" },
     {
-      "type": "select", "id": "image_ratio", "label": "Image shape", "default": "1/1",
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image shape",
+      "default": "1/1",
       "options": [
         { "value": "1/1", "label": "Square" },
         { "value": "4/5", "label": "Portrait (4:5)" },
@@ -334,7 +489,10 @@
       ]
     },
     {
-      "type": "select", "id": "image_fit", "label": "Image fit", "default": "contain",
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "default": "contain",
       "options": [
         { "value": "contain", "label": "Contain (show whole image)" },
         { "value": "cover", "label": "Cover (fill, may crop)" }
@@ -343,8 +501,19 @@
 
     { "type": "header", "content": "Details" },
     { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": true },
-    { "type": "checkbox", "id": "show_rating", "label": "Show rating (from product reviews metafield)", "default": true },
-    { "type": "text", "id": "description_heading", "label": "Description heading", "default": "Details", "info": "Small label shown above the description, below the buy box. Leave blank to hide." },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show rating (from product reviews metafield)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "description_heading",
+      "label": "Description heading",
+      "default": "Details",
+      "info": "Small label shown above the description, below the buy box. Leave blank to hide."
+    },
     { "type": "text", "id": "variant_label", "label": "Variant picker label", "default": "Options" },
     { "type": "checkbox", "id": "show_quantity", "label": "Show quantity selector", "default": true },
     { "type": "checkbox", "id": "update_url", "label": "Update page URL when a variant is selected", "default": true },
@@ -387,10 +556,46 @@
     { "type": "color", "id": "button_text", "label": "Add to cart text", "default": "#FDFBF5" },
 
     { "type": "header", "content": "Section" },
-    { "type": "range", "id": "corner_radius", "label": "Corner radius", "min": 0, "max": 28, "step": 1, "unit": "px", "default": 6 },
-    { "type": "range", "id": "padding_top", "label": "Top padding — desktop", "min": 60, "max": 220, "step": 4, "unit": "px", "default": 140 },
-    { "type": "range", "id": "padding_top_mobile", "label": "Top padding — mobile", "min": 40, "max": 180, "step": 4, "unit": "px", "default": 104 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 72 },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding — desktop",
+      "min": 60,
+      "max": 220,
+      "step": 4,
+      "unit": "px",
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding — mobile",
+      "min": 40,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 104
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
     { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "product" }
   ]
 }
