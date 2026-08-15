@@ -20,7 +20,7 @@
     --ease: cubic-bezier(0.16, 0.84, 0.36, 1);
     --serif: "Cardo", Georgia, serif;
     --display: "Fraunces", Georgia, serif;
-    --ui: "Manrope", system-ui, sans-serif;
+    --ui: "Cardo", Georgia, serif;
 
     /* Responsive breakpoint system
        2K  ≥2560 → container 1920px

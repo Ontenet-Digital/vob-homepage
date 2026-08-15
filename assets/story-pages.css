@@ -84,7 +84,6 @@
     line-height: 1.02;
     letter-spacing: -0.01em;
     color: var(--story-cream);
-    max-width: 12ch;
     margin: 0.95rem 0 0;
 }
 .story-hero__sub {
@@ -162,6 +161,10 @@
 .story-mission {
     background: var(--story-bg);
     padding-block: clamp(2rem, 4vw, 3.25rem);
+    height: 40dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .story-mission__inner {
     text-align: center;
