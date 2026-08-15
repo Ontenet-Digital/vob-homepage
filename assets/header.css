@@ -438,3 +438,9 @@ a.trust__link:hover {
         justify-content: flex-end;
     }
 }
+
+@media (min-width: 767px) and (max-width: 1279px) {
+    .moto {
+        margin-bottom: 0;
+    }
+}
