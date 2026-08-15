@@ -161,10 +161,11 @@
 .story-mission {
     background: var(--story-bg);
     padding-block: clamp(2rem, 4vw, 3.25rem);
-    height: 40dvh;
+    height: 50dvh;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-bottom: 0;
 }
 .story-mission__inner {
     text-align: center;
