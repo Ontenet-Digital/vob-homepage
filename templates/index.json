@@ -8,742 +8,701 @@
  * ------------------------------------------------------------
  */
 {
-  "sections": {
-    "hero": {
-      "type": "hero-banner",
-      "blocks": {
-        "trust_badge_feqPDY": {
-          "type": "trust_badge",
-          "settings": {
-            "label": "Trustpilot",
-            "link": "",
-            "icon_preset": "none",
-            "icon": "shopify://shop_images/trustpilot_colored_icon_b7d3e369-055f-48b9-9c0f-c9b028b7146d.svg",
-            "icon_url": "",
-            "show_stars": false,
-            "star_count": 5,
-            "rating_text": "Trustpilot"
-          }
+    "sections": {
+        "hero": {
+            "type": "hero-banner",
+            "blocks": {
+                "trust_badge_feqPDY": {
+                    "type": "trust_badge",
+                    "settings": {
+                        "label": "Trustpilot",
+                        "link": "",
+                        "icon_preset": "none",
+                        "icon": "shopify://shop_images/trustpilot_colored_icon_b7d3e369-055f-48b9-9c0f-c9b028b7146d.svg",
+                        "icon_url": "",
+                        "show_stars": false,
+                        "star_count": 5,
+                        "rating_text": "Trustpilot"
+                    }
+                },
+                "trust_badge_NPX3n4": {
+                    "type": "trust_badge",
+                    "settings": {
+                        "label": "Google",
+                        "link": "",
+                        "icon_preset": "none",
+                        "icon": "shopify://shop_images/google_colored_icon_85991d17-316c-4a51-ad65-25a7b0fdb20c.svg",
+                        "icon_url": "",
+                        "show_stars": false,
+                        "star_count": 5,
+                        "rating_text": "Google"
+                    }
+                },
+                "trust_badge_UnzH4W": {
+                    "type": "trust_badge",
+                    "settings": {
+                        "label": "Rating",
+                        "link": "",
+                        "icon_preset": "none",
+                        "icon_url": "",
+                        "show_stars": true,
+                        "star_count": 5,
+                        "rating_text": "4.9/5 rating"
+                    }
+                }
+            },
+            "block_order": [
+                "trust_badge_feqPDY",
+                "trust_badge_NPX3n4",
+                "trust_badge_UnzH4W"
+            ],
+            "name": "hero_section",
+            "settings": {
+                "moto_enable": true,
+                "moto_text": "THE WORD, MADE VIVID",
+                "moto_color": "#c4a574",
+                "moto_align": "inherit",
+                "moto_align_mobile": "inherit",
+                "title": "Where Bible stories inspire young minds and strengthen faith",
+                "subtitle": "",
+                "paragraph": "<p><br/>Vision of-the Bible brings the timeless stories and truths of Scripture to life & through vivid, faithful visual storytelling — made for the youngest hearts and the wisest ones alike.<br/></p>",
+                "trust_enable": true,
+                "trust_label": "TRUSTED BY FAMILIES ON",
+                "trust_label_color": "#c4a574",
+                "trust_text_color": "#3a3550",
+                "trust_star_color": "#f5b400",
+                "image_desktop_url": "",
+                "image_mobile_url": "",
+                "image_alt": "",
+                "image_position": "center",
+                "image_position_mobile": "center",
+                "image_fit": "cover",
+                "image_zoom": 100,
+                "image_blur": 0,
+                "image_brightness": 100,
+                "bg_parallax": false,
+                "bg_color": "#ffffff",
+                "bg_gradient_enable": false,
+                "bg_gradient_start": "#2a184c",
+                "bg_gradient_mid": "#3a2568",
+                "bg_gradient_end": "#ffffff",
+                "bg_gradient_angle": 150,
+                "bg_glow_1_color": "#ffffff",
+                "bg_glow_1_opacity": 22,
+                "bg_glow_2_color": "#7a57c0",
+                "bg_glow_2_opacity": 38,
+                "height_desktop": 100,
+                "height_mobile": 100,
+                "overlay_style": "none",
+                "overlay_style_mobile": "none",
+                "overlay_color": "#1b0f33",
+                "overlay_opacity": 55,
+                "overlay_opacity_mobile": 65,
+                "text_align": "center",
+                "text_align_mobile": "inherit",
+                "content_position": "middle",
+                "content_position_mobile": "middle",
+                "heading_width": 820,
+                "heading_width_mobile": 900,
+                "subtitle_width": 820,
+                "subtitle_width_mobile": 600,
+                "paragraph_width": 820,
+                "paragraph_width_mobile": 900,
+                "heading_tag": "h1",
+                "heading_font": "serif",
+                "heading_color": "#000000",
+                "heading_accent_color": "#000000",
+                "heading_size_desktop": 80,
+                "heading_size_mobile": 36,
+                "heading_lh_desktop": 100,
+                "heading_lh_mobile": 100,
+                "subtitle_color": "#000000",
+                "subtitle_size_desktop": 30,
+                "subtitle_size_mobile": 20,
+                "subtitle_lh_desktop": 140,
+                "subtitle_lh_mobile": 145,
+                "paragraph_color": "#2e2d2a",
+                "paragraph_size_desktop": 18,
+                "paragraph_size_mobile": 16,
+                "paragraph_lh_desktop": 140,
+                "paragraph_lh_mobile": 130,
+                "text_shadow": false,
+                "moto_pt": 0,
+                "moto_pt_mobile": 0,
+                "moto_gap": 18,
+                "moto_gap_mobile": 14,
+                "heading_pt": 0,
+                "heading_pt_mobile": 0,
+                "heading_gap": 22,
+                "heading_gap_mobile": 16,
+                "subtitle_pt": 0,
+                "subtitle_pt_mobile": 0,
+                "subtitle_gap": 20,
+                "subtitle_gap_mobile": 14,
+                "paragraph_pt": 0,
+                "paragraph_pt_mobile": 0,
+                "paragraph_gap": 28,
+                "paragraph_gap_mobile": 22,
+                "trust_pt": 8,
+                "trust_pt_mobile": 6,
+                "trust_gap": 14,
+                "trust_gap_mobile": 12,
+                "show_motes": true,
+                "show_motes_mobile": true,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "anchor_id": "hero"
+            }
         },
-        "trust_badge_NPX3n4": {
-          "type": "trust_badge",
-          "settings": {
-            "label": "Google",
-            "link": "",
-            "icon_preset": "none",
-            "icon": "shopify://shop_images/google_colored_icon_85991d17-316c-4a51-ad65-25a7b0fdb20c.svg",
-            "icon_url": "",
-            "show_stars": false,
-            "star_count": 5,
-            "rating_text": "Google"
-          }
+        "about_statement": {
+            "type": "about-statement",
+            "name": "Mission Statement",
+            "settings": {
+                "eyebrow": "THE WORD, MADE VIVID",
+                "eyebrow_color": "#c4a574",
+                "title": "Connecting people to God's Word through <em>stories</em> and learning.",
+                "accent_color": "#be9743",
+                "heading_color": "#251d3a",
+                "text_color": "#463c68",
+                "paragraph": "<p>We create faithful, vivid Bible experiences — animated stories, books, and learning tools — that help every generation know, love, and live the Word of God.</p>",
+                "verse": "",
+                "verse_ref": "",
+                "image": "",
+                "bg_color": "#ffffff",
+                "bg_color_2": "#f2e3c0",
+                "bg_angle": 180,
+                "glow_1_color": "#e4c56c",
+                "glow_1_opacity": 16,
+                "glow_2_color": "#f3e4c3",
+                "glow_2_opacity": 40,
+                "padding_top": 96,
+                "padding_bottom": 96,
+                "padding_top_mobile": 64,
+                "padding_bottom_mobile": 72,
+                "anchor_id": "about"
+            }
         },
-        "trust_badge_UnzH4W": {
-          "type": "trust_badge",
-          "settings": {
-            "label": "Rating",
-            "link": "",
-            "icon_preset": "none",
-            "icon_url": "",
-            "show_stars": true,
-            "star_count": 5,
-            "rating_text": "4.9/5 rating"
-          }
+        "about": {
+            "type": "about-panels",
+            "blocks": {
+                "panel_LPPLcU": {
+                    "type": "panel",
+                    "settings": {
+                        "eyebrow": "Our Story",
+                        "heading": "Bringing Scripture to life",
+                        "text": "Vision of the Bible is devoted to bringing the timeless stories and profound truths of the Bible to life.",
+                        "drop_cap": false,
+                        "image_url": "",
+                        "image_alt": ""
+                    }
+                },
+                "p1": {
+                    "type": "panel",
+                    "settings": {
+                        "eyebrow": "Our Story",
+                        "heading": "Bringing Scripture to life",
+                        "text": "Vision of the Bible is devoted to bringing the timeless stories and profound truths of the Bible to life. Through innovative digital experiences and stunning visual storytelling, we set out to inspire people and draw them close to the Word of God — not to sell a device, but to open a door.",
+                        "drop_cap": true,
+                        "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC_5847.jpg?v=1732482733&width=1300",
+                        "image_alt": "The Vision of the Bible collection in a warm home setting"
+                    }
+                },
+                "p2": {
+                    "type": "panel",
+                    "settings": {
+                        "eyebrow": "Our Vision",
+                        "heading": "A message that resonates",
+                        "text": "We envision a world where the Bible’s message resonates with hearts and minds — transforming lives and inspiring hope. Every scene we animate, every passage we narrate, is made to help that message land gently on a child at bedtime and just as fully on a grandparent in a quiet chair.",
+                        "drop_cap": false,
+                        "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC04805-2-_2.jpg?v=1785302144&width=1300",
+                        "image_alt": "A Kids Bible Stories tablet open like a book, showing an animated scene"
+                    }
+                },
+                "p3": {
+                    "type": "panel",
+                    "settings": {
+                        "eyebrow": "What we bring to life",
+                        "heading": "Seen, heard, and remembered",
+                        "text": "From the miracles and parables of Jesus to the courage of the disciples and the beauty of the Holy Land, we turn Scripture into something children can see and everyone can feel. Captivating visuals, gentle narration, easy-to-follow words — the Bible, experienced rather than merely read.",
+                        "drop_cap": false,
+                        "image_url": "https://visionofthebiblestore.com/cdn/shop/files/all.png?v=1732481756&width=1400",
+                        "image_alt": "The full range of Vision of the Bible tablets and books"
+                    }
+                }
+            },
+            "block_order": ["panel_LPPLcU", "p1", "p2", "p3"],
+            "disabled": true,
+            "settings": {
+                "eyebrow": "About Vision of the Bible",
+                "heading": "The greatest story, close enough to touch",
+                "rotator_lines": "“…that the Word of God would resonate in hearts and minds.”\n“…the timeless stories of the Bible, brought to life.”\n“…transforming lives and inspiring hope.”\n“…made for little hands and wise hearts alike.”",
+                "show_ornament": true,
+                "anchor_id": "about"
+            }
+        },
+        "video_banner": {
+            "type": "video-banner",
+            "settings": {
+                "video": "shopify://files/videos/Video Compress.mp4",
+                "video_mobile": "shopify://files/videos/Video Compress Mobile.mp4",
+                "video_url": "",
+                "poster_url": "",
+                "poster_alt": "",
+                "heading": "See Scripture come alive",
+                "subheading": "Vivid, faithful storytelling that holds a child’s attention and a grandparent’s heart alike.",
+                "button_label": "Watch the story",
+                "button_link": "shopify://pages/our-story",
+                "ratio": "21/9",
+                "ratio_mobile": "4/5",
+                "content_width": 560,
+                "padding_y": 64,
+                "padding_y_mobile": 32,
+                "heading_color": "#fdfbf3",
+                "heading_size": 44,
+                "heading_size_mobile": 32,
+                "subheading_color": "#f0eadc",
+                "subheading_size": 19,
+                "subheading_size_mobile": 15,
+                "overlay_color": "#1b0f33",
+                "overlay_opacity": 60,
+                "anchor_id": "video-banner"
+            }
+        },
+        "categories": {
+            "type": "category-collections",
+            "blocks": {
+                "c1": {
+                    "type": "category",
+                    "settings": {
+                        "image": "shopify://shop_images/tab_001.png",
+                        "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC04789-2-_1_-copy.jpg?v=1785302101&width=900",
+                        "title": "Tablet",
+                        "subtitle": "Animated Bible stories for little ones",
+                        "link_label": "Explore",
+                        "link": "https://visionofthebiblestore.com/collections/kids-stories"
+                    }
+                },
+                "c2": {
+                    "type": "category",
+                    "settings": {
+                        "image": "shopify://shop_images/blog_001.png",
+                        "image_url": "https://visionofthebiblestore.com/cdn/shop/files/digital-bible-2-_2.png?v=1757971890&width=900",
+                        "title": "Blog",
+                        "subtitle": "The Gospels and the Tanakh, brought to life",
+                        "link_label": "Explore",
+                        "link": "https://visionofthebiblestore.com/collections/digital-bible"
+                    }
+                },
+                "c3": {
+                    "type": "category",
+                    "settings": {
+                        "image": "shopify://shop_images/App.png",
+                        "image_url": "https://visionofthebiblestore.com/cdn/shop/files/travel.png?v=1732481053&width=900",
+                        "title": "App",
+                        "subtitle": "A visual pilgrimage from your chair",
+                        "link_label": "Explore",
+                        "link": "https://apps.apple.com/us/app/vision-of-the-bible/id1570619920"
+                    }
+                },
+                "c4": {
+                    "type": "category",
+                    "settings": {
+                        "image": "shopify://shop_images/game_001.png",
+                        "image_url": "https://visionofthebiblestore.com/cdn/shop/files/book_1.png?v=1733282144&width=900",
+                        "title": "Game",
+                        "subtitle": "A keepsake for the family shelf",
+                        "link_label": "Explore",
+                        "link": "https://visionofthebiblestore.com/collections/books"
+                    }
+                },
+                "c5": {
+                    "type": "category",
+                    "settings": {
+                        "image": "shopify://shop_images/shop_all.png",
+                        "image_url": "https://visionofthebiblestore.com/cdn/shop/files/book_1.png?v=1733282144&width=900",
+                        "title": "Shop All",
+                        "subtitle": "A keepsake for the family shelf",
+                        "link_label": "Explore",
+                        "link": "shopify://collections/all"
+                    }
+                }
+            },
+            "block_order": ["c1", "c2", "c3", "c4", "c5"],
+            "settings": {
+                "eyebrow": "Explore by collection",
+                "heading": "Find the right journey",
+                "subheading": "Four ways into the same story — choose the one that fits the hands it’s for.",
+                "anchor_id": "categories"
+            }
+        },
+        "featured_product_home": {
+            "type": "featured-product",
+            "blocks": {
+                "product_b9TVeW": {
+                    "type": "product",
+                    "settings": {
+                        "product": "tanakh-digital-visual-bible",
+                        "custom_description": ""
+                    }
+                },
+                "product_X836CC": {
+                    "type": "product",
+                    "settings": {
+                        "product": "kids-bible-stories™-new-testament-digital-tablet",
+                        "custom_description": ""
+                    }
+                },
+                "product_KDt7Az": {
+                    "type": "product",
+                    "settings": {
+                        "product": "the-four-gospels-digital-visual-bible-10-inch",
+                        "custom_description": ""
+                    }
+                }
+            },
+            "block_order": [
+                "product_b9TVeW",
+                "product_X836CC",
+                "product_KDt7Az"
+            ],
+            "settings": {
+                "collection": "kids-bible-stories™-new-testament-digital-tablet-1",
+                "products_limit": 6,
+                "eyebrow": "Featured",
+                "heading": "Take a closer look",
+                "subheading": "Explore the details, then swap to the next product.",
+                "heading_align": "left",
+                "show_vendor": false,
+                "add_label": "Add to cart",
+                "added_label": "Added",
+                "show_quantity": true,
+                "add_behavior": "stay",
+                "share_label": "Share",
+                "share_facebook": true,
+                "share_x": true,
+                "share_pinterest": true,
+                "share_whatsapp": false,
+                "share_copy": true,
+                "show_view_link": true,
+                "show_trust": true,
+                "trust_1": "Secure checkout",
+                "trust_2": "Fast delivery",
+                "trust_3": "Easy 7-day returns",
+                "image_ratio": "1/1",
+                "image_fit": "contain",
+                "bg_color": "#ffffff",
+                "text_color": "#463c68",
+                "heading_color": "#251d3a",
+                "muted_color": "#8b8398",
+                "price_color": "#72643f",
+                "compare_color": "#8b8398",
+                "border_color": "#ede6d6",
+                "surface_color": "#ffffff",
+                "accent_color": "#be9743",
+                "button_bg": "#000000",
+                "button_text": "#fdfbf5",
+                "corner_radius": 14,
+                "padding_top": 80,
+                "padding_bottom": 80,
+                "anchor_id": "featured-product"
+            }
+        },
+        "video-section": {
+            "type": "video-section",
+            "blocks": {
+                "v1": {
+                    "type": "video",
+                    "settings": {
+                        "video": "shopify://files/videos/04(1).mp4",
+                        "video_url": "",
+                        "poster": "shopify://shop_images/Artboard_6.png",
+                        "poster_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/hero_desktop.png?v=1786102606"
+                    }
+                },
+                "v2": {
+                    "type": "video",
+                    "settings": {
+                        "video": "shopify://files/videos/09.mp4",
+                        "video_url": "",
+                        "poster": "shopify://shop_images/Artboard_4.png",
+                        "poster_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/hero_desktop.png?v=1786102606"
+                    }
+                },
+                "v3": {
+                    "type": "video",
+                    "settings": {
+                        "video": "shopify://files/videos/08.mp4",
+                        "video_url": "",
+                        "poster": "shopify://shop_images/Artboard_2.png",
+                        "poster_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/hero_desktop.png?v=1786102606"
+                    }
+                },
+                "v4": {
+                    "type": "video",
+                    "settings": {
+                        "video": "shopify://files/videos/01(1).mp4",
+                        "video_url": "",
+                        "poster": "shopify://shop_images/Artboard_1.png",
+                        "poster_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/hero_desktop.png?v=1786102606"
+                    }
+                }
+            },
+            "block_order": ["v1", "v2", "v3", "v4"],
+            "name": "Video grid section",
+            "settings": {
+                "eyebrow": "See it come alive",
+                "heading": "Stories in motion",
+                "subheading": "A glimpse of Scripture brought to life — hover to watch.",
+                "anchor_id": "videos"
+            }
+        },
+        "best_seller_HPw8N7": {
+            "type": "best-seller",
+            "blocks": {
+                "tab_L9ijh8": {
+                    "type": "tab",
+                    "settings": {
+                        "label": "Tabs",
+                        "collection": "kids-bible-stories™-new-testament-digital-tablet-1",
+                        "products_to_show": 8
+                    }
+                },
+                "tab_NQhyhw": {
+                    "type": "tab",
+                    "settings": {
+                        "label": "Kids",
+                        "collection": "kids-bible-stories™-new-testament-digital-tablet",
+                        "products_to_show": 8
+                    }
+                }
+            },
+            "block_order": ["tab_L9ijh8", "tab_NQhyhw"],
+            "name": "Best sellers",
+            "settings": {
+                "eyebrow": "Loved by families",
+                "heading": "Best Sellers",
+                "subheading": "",
+                "heading_align": "center",
+                "show_tabs": false,
+                "tab_active_bg": "#251d3a",
+                "tab_active_text": "#fdfbf3",
+                "tab_inactive_bg": "#ffffff",
+                "tab_inactive_text": "#251d3a",
+                "tab_radius": 30,
+                "columns_desktop": 3,
+                "columns_tablet": 1,
+                "columns_mobile": 1,
+                "grid_gap": 24,
+                "grid_gap_mobile": 14,
+                "card_bg": "#ffffff",
+                "card_border_color": "#ecd8ac",
+                "card_radius": 10,
+                "image_ratio": "1/1",
+                "show_vendor": false,
+                "vendor_color": "#be9743",
+                "title_color": "#251d3a",
+                "title_size": 20,
+                "price_color": "#72643f",
+                "compare_price_color": "#8b8398",
+                "show_rating": true,
+                "rating_text_color": "#be9743",
+                "show_quick_view": true,
+                "quickview_icon_color": "#251d3a",
+                "quick_add_style": "hover",
+                "quick_add_bg_color": "#000000",
+                "quick_add_text_color": "#ffffff",
+                "quick_add_radius": 30,
+                "show_image_dots": false,
+                "dot_active_color": "#be9743",
+                "show_view_all": false,
+                "bg_color": "#ffffff",
+                "padding_top": 72,
+                "padding_bottom": 72,
+                "anchor_id": "best-sellers"
+            }
+        },
+        "testimonials": {
+            "type": "testimonial-section",
+            "blocks": {
+                "t1": {
+                    "type": "video",
+                    "settings": {
+                        "video_url": "https://youtube.com/shorts/oE6EbDu05FI?si=Jlqo94_InsBrwomz",
+                        "title": ""
+                    }
+                },
+                "t2": {
+                    "type": "video",
+                    "settings": {
+                        "video_url": "https://youtube.com/shorts/YeHYzxpzYeI?si=wCSkR5IP2hwgppS3",
+                        "title": ""
+                    }
+                },
+                "t3": {
+                    "type": "video",
+                    "settings": {
+                        "video_url": "https://youtube.com/shorts/XTaDHRAK9Tc?si=x7jfFaZkjL_N3dmu",
+                        "title": ""
+                    }
+                },
+                "t4": {
+                    "type": "video",
+                    "settings": {
+                        "video_url": "https://youtube.com/shorts/MSDvFvUdAD0?si=O3NLNKz0KJIiQLGh",
+                        "title": ""
+                    }
+                },
+                "t5": {
+                    "type": "video",
+                    "settings": {
+                        "video_url": "https://youtube.com/shorts/LwjkOpBhswI?si=fTiICHsjXqP26oqC",
+                        "title": ""
+                    }
+                }
+            },
+            "block_order": ["t1", "t2", "t3", "t4", "t5"],
+            "name": "testimonial_section",
+            "settings": {
+                "eyebrow": "Client Testimonial",
+                "heading": "Our Community",
+                "subheading": "",
+                "columns_desktop": 5,
+                "auto_titles": true,
+                "padding_top": 72,
+                "padding_bottom": 56,
+                "anchor_id": "testimonials"
+            }
+        },
+        "story-section": {
+            "type": "story-section",
+            "blocks": {
+                "j1": {
+                    "type": "post",
+                    "settings": {
+                        "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC04800-2-copy-2.jpg?v=1785302101&width=900",
+                        "tag": "Faith at home",
+                        "title": "Building a bedtime that plants Scripture",
+                        "text": "A gentle rhythm that turns the last minutes of the day into quiet wonder.",
+                        "link": "#"
+                    }
+                },
+                "j2": {
+                    "type": "post",
+                    "settings": {
+                        "image_url": "https://visionofthebiblestore.com/cdn/shop/files/preview_images/a0c5f11599484fa38f3e0a6eedcbc829.thumbnail.0000000000.jpg?v=1785303765&width=900",
+                        "tag": "Story behind the scene",
+                        "title": "Why we animated Jesus walking on water",
+                        "text": "The small choices that help a child feel courage rather than only see it.",
+                        "link": "#"
+                    }
+                },
+                "j3": {
+                    "type": "post",
+                    "settings": {
+                        "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC_5847.jpg?v=1732482733&width=900",
+                        "tag": "For grandparents",
+                        "title": "Passing faith across a generation",
+                        "text": "How a shared screen becomes a shared memory between the young and the wise.",
+                        "link": "#"
+                    }
+                }
+            },
+            "block_order": ["j1", "j2", "j3"],
+            "settings": {
+                "eyebrow": "From the journal",
+                "heading": "Stories, faith & family",
+                "subheading": "Reflections and ideas from the Vision of the Bible family.",
+                "blog": "",
+                "post_limit": 3,
+                "anchor_id": "story-section"
+            }
+        },
+        "app": {
+            "type": "app-promo",
+            "settings": {
+                "eyebrow": "The app we offer",
+                "heading": "Carry the Word in your pocket",
+                "text": "Explore the Bible like never before — captivating videos, powerful narration, and easy-to-follow subtitles, all in one gentle, distraction-free app. The same immersive storytelling that fills our tablets, ready wherever your family goes.",
+                "appstore_link": "https://apps.apple.com/us/app/vision-of-the-bible/id1570619920",
+                "googleplay_link": "https://play.google.com/store/apps/details?id=com.obs.oribible&hl=en_US&pli=1",
+                "phone_1": "shopify://shop_images/230x499bb_2.webp",
+                "phone_1_url": "https://visionofthebiblestore.com/cdn/shop/files/preview_images/a0c5f11599484fa38f3e0a6eedcbc829.thumbnail.0000000000.jpg?v=1785303765&width=800",
+                "phone_1_alt": "The immersive Bible app showing an animated New Testament scene",
+                "phone_2": "shopify://shop_images/230x499bb_1.webp",
+                "phone_2_url": "https://visionofthebiblestore.com/cdn/shop/files/preview_images/00dd48e8cfb3436fa8f2a335ca1ea471.thumbnail.0000000000.jpg?v=1765507606&width=800",
+                "phone_2_alt": "The immersive Bible app showing an animated Old Testament scene",
+                "anchor_id": "app"
+            }
+        },
+        "usp": {
+            "type": "usp",
+            "blocks": {
+                "u1": {
+                    "type": "usp",
+                    "settings": {
+                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/06-christian-values.png?v=1786112101",
+                        "label": "Christian Values"
+                    }
+                },
+                "u2": {
+                    "type": "usp",
+                    "settings": {
+                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/01-safe-screentime.png?v=1786112102",
+                        "label": "Safe Screentime"
+                    }
+                },
+                "u3": {
+                    "type": "usp",
+                    "settings": {
+                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/02-scripture-rooted.png?v=1786112102",
+                        "label": "Scripture-Rooted"
+                    }
+                },
+                "u4": {
+                    "type": "usp",
+                    "settings": {
+                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/03-biblical-learning.png?v=1786112101",
+                        "label": "Biblical Learning"
+                    }
+                },
+                "u5": {
+                    "type": "usp",
+                    "settings": {
+                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/04-faith-building.png?v=1786112101",
+                        "label": "Faith-Building"
+                    }
+                },
+                "u6": {
+                    "type": "usp",
+                    "settings": {
+                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/05-sacred-stories.png?v=1786112101",
+                        "label": "Sacred Stories"
+                    }
+                }
+            },
+            "block_order": ["u1", "u2", "u3", "u4", "u5", "u6"],
+            "settings": {
+                "eyebrow": "Why families choose us",
+                "heading": "Built for peace of mind",
+                "subheading": "Simple promises that travel with every order.",
+                "anchor_id": "usp"
+            }
         }
-      },
-      "block_order": [
-        "trust_badge_feqPDY",
-        "trust_badge_NPX3n4",
-        "trust_badge_UnzH4W"
-      ],
-      "name": "hero_section",
-      "settings": {
-        "moto_enable": true,
-        "moto_text": "THE WORD, MADE VIVID",
-        "moto_color": "#c4a574",
-        "moto_align": "inherit",
-        "moto_align_mobile": "inherit",
-        "title": "Where Bible stories inspire young minds and strengthen faith",
-        "subtitle": "",
-        "paragraph": "<p><br/>Vision of-the Bible brings the timeless stories and truths of Scripture to life & through vivid, faithful visual storytelling — made for the youngest hearts and the wisest ones alike.<br/></p>",
-        "trust_enable": true,
-        "trust_label": "TRUSTED BY FAMILIES ON",
-        "trust_label_color": "#c4a574",
-        "trust_text_color": "#3a3550",
-        "trust_star_color": "#f5b400",
-        "image_desktop_url": "",
-        "image_mobile_url": "",
-        "image_alt": "",
-        "image_position": "center",
-        "image_position_mobile": "center",
-        "image_fit": "cover",
-        "image_zoom": 100,
-        "image_blur": 0,
-        "image_brightness": 100,
-        "bg_parallax": false,
-        "bg_color": "#ffffff",
-        "bg_gradient_enable": false,
-        "bg_gradient_start": "#2a184c",
-        "bg_gradient_mid": "#3a2568",
-        "bg_gradient_end": "#ffffff",
-        "bg_gradient_angle": 150,
-        "bg_glow_1_color": "#ffffff",
-        "bg_glow_1_opacity": 22,
-        "bg_glow_2_color": "#7a57c0",
-        "bg_glow_2_opacity": 38,
-        "height_desktop": 100,
-        "height_mobile": 100,
-        "overlay_style": "none",
-        "overlay_style_mobile": "none",
-        "overlay_color": "#1b0f33",
-        "overlay_opacity": 55,
-        "overlay_opacity_mobile": 65,
-        "text_align": "center",
-        "text_align_mobile": "inherit",
-        "content_position": "middle",
-        "content_position_mobile": "middle",
-        "heading_width": 820,
-        "heading_width_mobile": 900,
-        "subtitle_width": 820,
-        "subtitle_width_mobile": 600,
-        "paragraph_width": 820,
-        "paragraph_width_mobile": 900,
-        "heading_tag": "h1",
-        "heading_font": "serif",
-        "heading_color": "#000000",
-        "heading_accent_color": "#000000",
-        "heading_size_desktop": 80,
-        "heading_size_mobile": 36,
-        "heading_lh_desktop": 100,
-        "heading_lh_mobile": 100,
-        "subtitle_color": "#000000",
-        "subtitle_size_desktop": 30,
-        "subtitle_size_mobile": 20,
-        "subtitle_lh_desktop": 140,
-        "subtitle_lh_mobile": 145,
-        "paragraph_color": "#2e2d2a",
-        "paragraph_size_desktop": 18,
-        "paragraph_size_mobile": 16,
-        "paragraph_lh_desktop": 140,
-        "paragraph_lh_mobile": 130,
-        "text_shadow": false,
-        "moto_pt": 0,
-        "moto_pt_mobile": 0,
-        "moto_gap": 18,
-        "moto_gap_mobile": 14,
-        "heading_pt": 0,
-        "heading_pt_mobile": 0,
-        "heading_gap": 22,
-        "heading_gap_mobile": 16,
-        "subtitle_pt": 0,
-        "subtitle_pt_mobile": 0,
-        "subtitle_gap": 20,
-        "subtitle_gap_mobile": 14,
-        "paragraph_pt": 0,
-        "paragraph_pt_mobile": 0,
-        "paragraph_gap": 28,
-        "paragraph_gap_mobile": 22,
-        "trust_pt": 8,
-        "trust_pt_mobile": 6,
-        "trust_gap": 14,
-        "trust_gap_mobile": 12,
-        "show_motes": true,
-        "show_motes_mobile": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0,
-        "anchor_id": "hero"
-      }
     },
-    "about_statement": {
-      "type": "about-statement",
-      "name": "Mission Statement",
-      "settings": {
-        "eyebrow": "THE WORD, MADE VIVID",
-        "eyebrow_color": "#c4a574",
-        "title": "Connecting people to God's Word through <em>stories</em> and learning.",
-        "accent_color": "#be9743",
-        "heading_color": "#251d3a",
-        "text_color": "#463c68",
-        "paragraph": "<p>We create faithful, vivid Bible experiences — animated stories, books, and learning tools — that help every generation know, love, and live the Word of God.</p>",
-        "verse": "",
-        "verse_ref": "",
-        "image_1": "shopify://shop_images/product.png",
-        "image_1_url": "https://cdn.shopify.com/s/files/1/0699/2075/1664/files/tanakh.webp?v=1786450673",
-        "image_1_alt": "Tanakh — Digital Visual Bible",
-        "image_2": "shopify://shop_images/02_Bible.png",
-        "image_2_url": "https://cdn.shopify.com/s/files/1/0699/2075/1664/files/DSC04789-2-_1_-copy.webp?v=1786450877",
-        "image_2_alt": "Vision of the Bible tablet",
-        "bg_color": "#ffffff",
-        "bg_color_2": "#f2e3c0",
-        "bg_angle": 180,
-        "glow_1_color": "#e4c56c",
-        "glow_1_opacity": 16,
-        "glow_2_color": "#f3e4c3",
-        "glow_2_opacity": 40,
-        "padding_top": 96,
-        "padding_bottom": 96,
-        "padding_top_mobile": 64,
-        "padding_bottom_mobile": 72,
-        "anchor_id": "about"
-      }
-    },
-    "about": {
-      "type": "about-panels",
-      "blocks": {
-        "panel_LPPLcU": {
-          "type": "panel",
-          "settings": {
-            "eyebrow": "Our Story",
-            "heading": "Bringing Scripture to life",
-            "text": "Vision of the Bible is devoted to bringing the timeless stories and profound truths of the Bible to life.",
-            "drop_cap": false,
-            "image_url": "",
-            "image_alt": ""
-          }
-        },
-        "p1": {
-          "type": "panel",
-          "settings": {
-            "eyebrow": "Our Story",
-            "heading": "Bringing Scripture to life",
-            "text": "Vision of the Bible is devoted to bringing the timeless stories and profound truths of the Bible to life. Through innovative digital experiences and stunning visual storytelling, we set out to inspire people and draw them close to the Word of God — not to sell a device, but to open a door.",
-            "drop_cap": true,
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC_5847.jpg?v=1732482733&width=1300",
-            "image_alt": "The Vision of the Bible collection in a warm home setting"
-          }
-        },
-        "p2": {
-          "type": "panel",
-          "settings": {
-            "eyebrow": "Our Vision",
-            "heading": "A message that resonates",
-            "text": "We envision a world where the Bible’s message resonates with hearts and minds — transforming lives and inspiring hope. Every scene we animate, every passage we narrate, is made to help that message land gently on a child at bedtime and just as fully on a grandparent in a quiet chair.",
-            "drop_cap": false,
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC04805-2-_2.jpg?v=1785302144&width=1300",
-            "image_alt": "A Kids Bible Stories tablet open like a book, showing an animated scene"
-          }
-        },
-        "p3": {
-          "type": "panel",
-          "settings": {
-            "eyebrow": "What we bring to life",
-            "heading": "Seen, heard, and remembered",
-            "text": "From the miracles and parables of Jesus to the courage of the disciples and the beauty of the Holy Land, we turn Scripture into something children can see and everyone can feel. Captivating visuals, gentle narration, easy-to-follow words — the Bible, experienced rather than merely read.",
-            "drop_cap": false,
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/all.png?v=1732481756&width=1400",
-            "image_alt": "The full range of Vision of the Bible tablets and books"
-          }
-        }
-      },
-      "block_order": [
-        "panel_LPPLcU",
-        "p1",
-        "p2",
-        "p3"
-      ],
-      "disabled": true,
-      "settings": {
-        "eyebrow": "About Vision of the Bible",
-        "heading": "The greatest story, close enough to touch",
-        "rotator_lines": "“…that the Word of God would resonate in hearts and minds.”\n“…the timeless stories of the Bible, brought to life.”\n“…transforming lives and inspiring hope.”\n“…made for little hands and wise hearts alike.”",
-        "show_ornament": true,
-        "anchor_id": "about"
-      }
-    },
-    "video_banner": {
-      "type": "video-banner",
-      "settings": {
-        "video": "shopify://files/videos/Video Compress.mp4",
-        "video_mobile": "shopify://files/videos/Video Compress Mobile.mp4",
-        "video_url": "",
-        "poster_url": "",
-        "poster_alt": "",
-        "heading": "See Scripture come alive",
-        "subheading": "Vivid, faithful storytelling that holds a child’s attention and a grandparent’s heart alike.",
-        "button_label": "Watch the story",
-        "button_link": "shopify://pages/our-story",
-        "ratio": "21/9",
-        "ratio_mobile": "4/5",
-        "content_width": 560,
-        "padding_y": 64,
-        "padding_y_mobile": 32,
-        "heading_color": "#fdfbf3",
-        "heading_size": 44,
-        "heading_size_mobile": 32,
-        "subheading_color": "#f0eadc",
-        "subheading_size": 19,
-        "subheading_size_mobile": 15,
-        "overlay_color": "#1b0f33",
-        "overlay_opacity": 60,
-        "anchor_id": "video-banner"
-      }
-    },
-    "categories": {
-      "type": "category-collections",
-      "blocks": {
-        "c1": {
-          "type": "category",
-          "settings": {
-            "image": "shopify://shop_images/tab_001.png",
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC04789-2-_1_-copy.jpg?v=1785302101&width=900",
-            "title": "Tablet",
-            "subtitle": "Animated Bible stories for little ones",
-            "link_label": "Explore",
-            "link": "https://visionofthebiblestore.com/collections/kids-stories"
-          }
-        },
-        "c2": {
-          "type": "category",
-          "settings": {
-            "image": "shopify://shop_images/blog_001.png",
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/digital-bible-2-_2.png?v=1757971890&width=900",
-            "title": "Blog",
-            "subtitle": "The Gospels and the Tanakh, brought to life",
-            "link_label": "Explore",
-            "link": "https://visionofthebiblestore.com/collections/digital-bible"
-          }
-        },
-        "c3": {
-          "type": "category",
-          "settings": {
-            "image": "shopify://shop_images/App.png",
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/travel.png?v=1732481053&width=900",
-            "title": "App",
-            "subtitle": "A visual pilgrimage from your chair",
-            "link_label": "Explore",
-            "link": "https://apps.apple.com/us/app/vision-of-the-bible/id1570619920"
-          }
-        },
-        "c4": {
-          "type": "category",
-          "settings": {
-            "image": "shopify://shop_images/game_001.png",
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/book_1.png?v=1733282144&width=900",
-            "title": "Game",
-            "subtitle": "A keepsake for the family shelf",
-            "link_label": "Explore",
-            "link": "https://visionofthebiblestore.com/collections/books"
-          }
-        },
-        "c5": {
-          "type": "category",
-          "settings": {
-            "image": "shopify://shop_images/shop_all.png",
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/book_1.png?v=1733282144&width=900",
-            "title": "Shop All",
-            "subtitle": "A keepsake for the family shelf",
-            "link_label": "Explore",
-            "link": "shopify://collections/all"
-          }
-        }
-      },
-      "block_order": [
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5"
-      ],
-      "settings": {
-        "eyebrow": "Explore by collection",
-        "heading": "Find the right journey",
-        "subheading": "Four ways into the same story — choose the one that fits the hands it’s for.",
-        "anchor_id": "categories"
-      }
-    },
-    "featured_product_home": {
-      "type": "featured-product",
-      "blocks": {
-        "product_b9TVeW": {
-          "type": "product",
-          "settings": {
-            "product": "tanakh-digital-visual-bible",
-            "custom_description": ""
-          }
-        },
-        "product_X836CC": {
-          "type": "product",
-          "settings": {
-            "product": "kids-bible-stories™-new-testament-digital-tablet",
-            "custom_description": ""
-          }
-        },
-        "product_KDt7Az": {
-          "type": "product",
-          "settings": {
-            "product": "the-four-gospels-digital-visual-bible-10-inch",
-            "custom_description": ""
-          }
-        }
-      },
-      "block_order": [
-        "product_b9TVeW",
-        "product_X836CC",
-        "product_KDt7Az"
-      ],
-      "settings": {
-        "collection": "kids-bible-stories™-new-testament-digital-tablet-1",
-        "products_limit": 6,
-        "eyebrow": "Featured",
-        "heading": "Take a closer look",
-        "subheading": "Explore the details, then swap to the next product.",
-        "heading_align": "left",
-        "show_vendor": false,
-        "add_label": "Add to cart",
-        "added_label": "Added",
-        "show_quantity": true,
-        "add_behavior": "stay",
-        "share_label": "Share",
-        "share_facebook": true,
-        "share_x": true,
-        "share_pinterest": true,
-        "share_whatsapp": false,
-        "share_copy": true,
-        "show_view_link": true,
-        "show_trust": true,
-        "trust_1": "Secure checkout",
-        "trust_2": "Fast delivery",
-        "trust_3": "Easy 7-day returns",
-        "image_ratio": "1/1",
-        "image_fit": "contain",
-        "bg_color": "#ffffff",
-        "text_color": "#463c68",
-        "heading_color": "#251d3a",
-        "muted_color": "#8b8398",
-        "price_color": "#72643f",
-        "compare_color": "#8b8398",
-        "border_color": "#ede6d6",
-        "surface_color": "#ffffff",
-        "accent_color": "#be9743",
-        "button_bg": "#000000",
-        "button_text": "#fdfbf5",
-        "corner_radius": 14,
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "anchor_id": "featured-product"
-      }
-    },
-    "video-section": {
-      "type": "video-section",
-      "blocks": {
-        "v1": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/04(1).mp4",
-            "video_url": "",
-            "poster": "shopify://shop_images/Artboard_6.png",
-            "poster_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/hero_desktop.png?v=1786102606"
-          }
-        },
-        "v2": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/09.mp4",
-            "video_url": "",
-            "poster": "shopify://shop_images/Artboard_4.png",
-            "poster_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/hero_desktop.png?v=1786102606"
-          }
-        },
-        "v3": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/08.mp4",
-            "video_url": "",
-            "poster": "shopify://shop_images/Artboard_2.png",
-            "poster_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/hero_desktop.png?v=1786102606"
-          }
-        },
-        "v4": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/01(1).mp4",
-            "video_url": "",
-            "poster": "shopify://shop_images/Artboard_1.png",
-            "poster_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/hero_desktop.png?v=1786102606"
-          }
-        }
-      },
-      "block_order": [
-        "v1",
-        "v2",
-        "v3",
-        "v4"
-      ],
-      "name": "Video grid section",
-      "settings": {
-        "eyebrow": "See it come alive",
-        "heading": "Stories in motion",
-        "subheading": "A glimpse of Scripture brought to life — hover to watch.",
-        "anchor_id": "videos"
-      }
-    },
-    "best_seller_HPw8N7": {
-      "type": "best-seller",
-      "blocks": {
-        "tab_L9ijh8": {
-          "type": "tab",
-          "settings": {
-            "label": "Tabs",
-            "collection": "kids-bible-stories™-new-testament-digital-tablet-1",
-            "products_to_show": 8
-          }
-        },
-        "tab_NQhyhw": {
-          "type": "tab",
-          "settings": {
-            "label": "Kids",
-            "collection": "kids-bible-stories™-new-testament-digital-tablet",
-            "products_to_show": 8
-          }
-        }
-      },
-      "block_order": [
-        "tab_L9ijh8",
-        "tab_NQhyhw"
-      ],
-      "name": "Best sellers",
-      "settings": {
-        "eyebrow": "Loved by families",
-        "heading": "Best Sellers",
-        "subheading": "",
-        "heading_align": "center",
-        "show_tabs": false,
-        "tab_active_bg": "#251d3a",
-        "tab_active_text": "#fdfbf3",
-        "tab_inactive_bg": "#ffffff",
-        "tab_inactive_text": "#251d3a",
-        "tab_radius": 30,
-        "columns_desktop": 3,
-        "columns_tablet": 1,
-        "columns_mobile": 1,
-        "grid_gap": 24,
-        "grid_gap_mobile": 14,
-        "card_bg": "#ffffff",
-        "card_border_color": "#ecd8ac",
-        "card_radius": 10,
-        "image_ratio": "1/1",
-        "show_vendor": false,
-        "vendor_color": "#be9743",
-        "title_color": "#251d3a",
-        "title_size": 20,
-        "price_color": "#72643f",
-        "compare_price_color": "#8b8398",
-        "show_rating": true,
-        "rating_text_color": "#be9743",
-        "show_quick_view": true,
-        "quickview_icon_color": "#251d3a",
-        "quick_add_style": "hover",
-        "quick_add_bg_color": "#000000",
-        "quick_add_text_color": "#ffffff",
-        "quick_add_radius": 30,
-        "show_image_dots": false,
-        "dot_active_color": "#be9743",
-        "show_view_all": false,
-        "bg_color": "#ffffff",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "anchor_id": "best-sellers"
-      }
-    },
-    "testimonials": {
-      "type": "testimonial-section",
-      "blocks": {
-        "t1": {
-          "type": "video",
-          "settings": {
-            "video_url": "https://youtube.com/shorts/oE6EbDu05FI?si=Jlqo94_InsBrwomz",
-            "title": ""
-          }
-        },
-        "t2": {
-          "type": "video",
-          "settings": {
-            "video_url": "https://youtube.com/shorts/YeHYzxpzYeI?si=wCSkR5IP2hwgppS3",
-            "title": ""
-          }
-        },
-        "t3": {
-          "type": "video",
-          "settings": {
-            "video_url": "https://youtube.com/shorts/XTaDHRAK9Tc?si=x7jfFaZkjL_N3dmu",
-            "title": ""
-          }
-        },
-        "t4": {
-          "type": "video",
-          "settings": {
-            "video_url": "https://youtube.com/shorts/MSDvFvUdAD0?si=O3NLNKz0KJIiQLGh",
-            "title": ""
-          }
-        },
-        "t5": {
-          "type": "video",
-          "settings": {
-            "video_url": "https://youtube.com/shorts/LwjkOpBhswI?si=fTiICHsjXqP26oqC",
-            "title": ""
-          }
-        }
-      },
-      "block_order": [
-        "t1",
-        "t2",
-        "t3",
-        "t4",
-        "t5"
-      ],
-      "name": "testimonial_section",
-      "settings": {
-        "eyebrow": "Client Testimonial",
-        "heading": "Our Community",
-        "subheading": "",
-        "columns_desktop": 5,
-        "auto_titles": true,
-        "padding_top": 72,
-        "padding_bottom": 56,
-        "anchor_id": "testimonials"
-      }
-    },
-    "story-section": {
-      "type": "story-section",
-      "blocks": {
-        "j1": {
-          "type": "post",
-          "settings": {
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC04800-2-copy-2.jpg?v=1785302101&width=900",
-            "tag": "Faith at home",
-            "title": "Building a bedtime that plants Scripture",
-            "text": "A gentle rhythm that turns the last minutes of the day into quiet wonder.",
-            "link": "#"
-          }
-        },
-        "j2": {
-          "type": "post",
-          "settings": {
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/preview_images/a0c5f11599484fa38f3e0a6eedcbc829.thumbnail.0000000000.jpg?v=1785303765&width=900",
-            "tag": "Story behind the scene",
-            "title": "Why we animated Jesus walking on water",
-            "text": "The small choices that help a child feel courage rather than only see it.",
-            "link": "#"
-          }
-        },
-        "j3": {
-          "type": "post",
-          "settings": {
-            "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC_5847.jpg?v=1732482733&width=900",
-            "tag": "For grandparents",
-            "title": "Passing faith across a generation",
-            "text": "How a shared screen becomes a shared memory between the young and the wise.",
-            "link": "#"
-          }
-        }
-      },
-      "block_order": [
-        "j1",
-        "j2",
-        "j3"
-      ],
-      "settings": {
-        "eyebrow": "From the journal",
-        "heading": "Stories, faith & family",
-        "subheading": "Reflections and ideas from the Vision of the Bible family.",
-        "blog": "",
-        "post_limit": 3,
-        "anchor_id": "story-section"
-      }
-    },
-    "app": {
-      "type": "app-promo",
-      "settings": {
-        "eyebrow": "The app we offer",
-        "heading": "Carry the Word in your pocket",
-        "text": "Explore the Bible like never before — captivating videos, powerful narration, and easy-to-follow subtitles, all in one gentle, distraction-free app. The same immersive storytelling that fills our tablets, ready wherever your family goes.",
-        "appstore_link": "https://apps.apple.com/us/app/vision-of-the-bible/id1570619920",
-        "googleplay_link": "https://play.google.com/store/apps/details?id=com.obs.oribible&hl=en_US&pli=1",
-        "phone_1": "shopify://shop_images/230x499bb_2.webp",
-        "phone_1_url": "https://visionofthebiblestore.com/cdn/shop/files/preview_images/a0c5f11599484fa38f3e0a6eedcbc829.thumbnail.0000000000.jpg?v=1785303765&width=800",
-        "phone_1_alt": "The immersive Bible app showing an animated New Testament scene",
-        "phone_2": "shopify://shop_images/230x499bb_1.webp",
-        "phone_2_url": "https://visionofthebiblestore.com/cdn/shop/files/preview_images/00dd48e8cfb3436fa8f2a335ca1ea471.thumbnail.0000000000.jpg?v=1765507606&width=800",
-        "phone_2_alt": "The immersive Bible app showing an animated Old Testament scene",
-        "anchor_id": "app"
-      }
-    },
-    "usp": {
-      "type": "usp",
-      "blocks": {
-        "u1": {
-          "type": "usp",
-          "settings": {
-            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/06-christian-values.png?v=1786112101",
-            "label": "Christian Values"
-          }
-        },
-        "u2": {
-          "type": "usp",
-          "settings": {
-            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/01-safe-screentime.png?v=1786112102",
-            "label": "Safe Screentime"
-          }
-        },
-        "u3": {
-          "type": "usp",
-          "settings": {
-            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/02-scripture-rooted.png?v=1786112102",
-            "label": "Scripture-Rooted"
-          }
-        },
-        "u4": {
-          "type": "usp",
-          "settings": {
-            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/03-biblical-learning.png?v=1786112101",
-            "label": "Biblical Learning"
-          }
-        },
-        "u5": {
-          "type": "usp",
-          "settings": {
-            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/04-faith-building.png?v=1786112101",
-            "label": "Faith-Building"
-          }
-        },
-        "u6": {
-          "type": "usp",
-          "settings": {
-            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/05-sacred-stories.png?v=1786112101",
-            "label": "Sacred Stories"
-          }
-        }
-      },
-      "block_order": [
-        "u1",
-        "u2",
-        "u3",
-        "u4",
-        "u5",
-        "u6"
-      ],
-      "settings": {
-        "eyebrow": "Why families choose us",
-        "heading": "Built for peace of mind",
-        "subheading": "Simple promises that travel with every order.",
-        "anchor_id": "usp"
-      }
-    }
-  },
-  "order": [
-    "hero",
-    "about_statement",
-    "about",
-    "video_banner",
-    "categories",
-    "featured_product_home",
-    "video-section",
-    "best_seller_HPw8N7",
-    "testimonials",
-    "story-section",
-    "app",
-    "usp"
-  ]
+    "order": [
+        "hero",
+        "about_statement",
+        "about",
+        "video_banner",
+        "categories",
+        "featured_product_home",
+        "video-section",
+        "best_seller_HPw8N7",
+        "testimonials",
+        "story-section",
+        "app",
+        "usp"
+    ]
 }

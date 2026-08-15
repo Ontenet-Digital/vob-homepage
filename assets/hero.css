@@ -180,7 +180,7 @@
 /* 750–1279px: scale the desktop editor sizes down so the hero text fits narrower
    laptops/tablets. Mobile editor sizes apply at ≤749px (section style block), so
    this range would otherwise be served the full desktop size. */
-@media (min-width: 750px) and (max-width: 1279px) {
+@media (min-width: 750px) and (max-width: 1600px) {
     .hero__title {
         font-size: min(calc(var(--hero-h1-size, 88px) * 0.72), 9.5vw);
     }
@@ -193,8 +193,8 @@
 }
 /* At ≥1280px the desktop size is capped against the viewport so a large setting
    cannot overflow a narrower laptop. */
-@media (min-width: 1280px) {
+/* @media (min-width: 1280px) {
     .hero__title {
         font-size: min(var(--hero-h1-size, 88px), 9.5vw);
     }
-}
+} */
