@@ -20,6 +20,15 @@
         "anchor_id": "story-hero"
       }
     },
+    "story_mission": {
+      "type": "story_mission",
+      "settings": {
+        "eyebrow": "Our Mission",
+        "heading": "Our Mission",
+        "text": "To inspire and educate through captivating visual storytelling, fostering a deeper understanding and appreciation of the Bible and its enduring message.",
+        "anchor_id": "story-mission"
+      }
+    },
     "story_intro": {
       "type": "story_intro",
       "settings": {
@@ -29,15 +38,6 @@
         "image": "shopify://shop_images/Screenshot_2024-12-17_at_7.19.20_PM_1c4010ce-604e-47f4-82b8-a0c5ccf326ad.png",
         "image_url": "",
         "anchor_id": "story-intro"
-      }
-    },
-    "story_mission": {
-      "type": "story_mission",
-      "settings": {
-        "eyebrow": "Our Mission",
-        "heading": "Our Mission",
-        "text": "To inspire and educate through captivating visual storytelling, fostering a deeper understanding and appreciation of the Bible and its enduring message.",
-        "anchor_id": "story-mission"
       }
     },
     "story_founder": {
@@ -52,6 +52,14 @@
         "anchor_id": "story-founder"
       }
     },
+    "story_quote": {
+      "type": "story_quote",
+      "settings": {
+        "text": "I’ve been using this digital Bible for a month now, and a great option to my physical copy. It’s very, very simple to use. It’s a truly inspiring tool for spiritual growth.",
+        "author": "Sarah M.",
+        "anchor_id": "story-quote"
+      }
+    },
     "story_cta": {
       "type": "story_cta",
       "settings": {
@@ -60,22 +68,14 @@
         "home_label": "Home",
         "anchor_id": "story-cta"
       }
-    },
-    "story_quote": {
-      "type": "story_quote",
-      "settings": {
-        "text": "I’ve been using this digital Bible for a month now, and a great option to my physical copy. It’s very, very simple to use. It’s a truly inspiring tool for spiritual growth.",
-        "author": "Sarah M.",
-        "anchor_id": "story-quote"
-      }
     }
   },
   "order": [
     "story_hero",
-    "story_intro",
     "story_mission",
+    "story_intro",
     "story_founder",
-    "story_cta",
-    "story_quote"
+    "story_quote",
+    "story_cta"
   ]
 }

@@ -7,7 +7,7 @@
     z-index: 60;
     background: #ffffff;
     backdrop-filter: blur(12px);
-    padding: 0.1rem 0;
+    padding: 0.3rem 0;
 }
 .nav {
     display: flex;
@@ -417,5 +417,24 @@ a.trust__link:hover {
     }
     .moto {
         margin-bottom: 0px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .nav {
+        display: grid;
+        grid-template-columns: 3fr 3fr 3fr;
+    }
+
+    .nav__links {
+        justify-content: center;
+    }
+
+    .nav__links a {
+        white-space: nowrap;
+    }
+
+    .nav__actions {
+        justify-content: flex-end;
     }
 }

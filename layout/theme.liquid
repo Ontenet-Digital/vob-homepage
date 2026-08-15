@@ -23,12 +23,15 @@
     {%- endif -%}
 
     {{ content_for_header }}
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&display=swap"
+      rel="stylesheet"
+    >
     <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-    
+
     {{ 'theme.css' | asset_url | stylesheet_tag }}
     {{ 'header.css' | asset_url | stylesheet_tag }}
     {{ 'hero.css' | asset_url | stylesheet_tag }}
@@ -54,8 +57,7 @@
     {{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
     {{ 'main-product.css' | asset_url | stylesheet_tag }}
 
-
-    <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js" defer></script> 
+    <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js" defer></script>
 
     <style>
       :root{
@@ -79,7 +81,6 @@
   </head>
 
   <body class="template-{{ request.page_type | handle }}">
-
     {% section 'header' %}
 
     {% section 'cart-drawer' %}
