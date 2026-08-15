@@ -20,7 +20,7 @@
         "show_sort": true,
         "show_price_filter": true,
         "columns_desktop": 4,
-        "columns_tablet": 1,
+        "columns_tablet": 2,
         "columns_mobile": 1,
         "grid_gap": 24,
         "grid_gap_mobile": 14,
