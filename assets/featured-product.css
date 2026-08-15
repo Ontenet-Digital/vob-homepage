@@ -30,7 +30,7 @@
     font-size: 0.72rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--fps-muted);
+    color: #c4a574;
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
@@ -271,7 +271,17 @@
     overflow-x: auto;
     padding-bottom: 4px;
     scroll-snap-type: x proximity;
-    scrollbar-width: thin;
+    scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.fps__thumbs::-webkit-scrollbar {
+    display: none;
+}
+.fps__thumbs.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
 }
 .fps__thumb {
     flex: 0 0 auto;
@@ -281,7 +291,7 @@
     border: 1px solid var(--fps-border);
     background: var(--fps-surface);
     overflow: hidden;
-    cursor: pointer;
+    cursor: grab;
     padding: 0;
     opacity: 0.68;
     scroll-snap-align: center;
@@ -294,6 +304,9 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    pointer-events: none;
+    -webkit-user-drag: none;
+    user-select: none;
 }
 .fps__thumb:hover {
     opacity: 1;
@@ -769,12 +782,6 @@
     }
     .fps__price-current {
         font-size: 1.1rem;
-    }
-    .fps__thumbs {
-        scrollbar-width: none;
-    }
-    .fps__thumbs::-webkit-scrollbar {
-        display: none;
     }
 }
 @media (prefers-reduced-motion: reduce) {

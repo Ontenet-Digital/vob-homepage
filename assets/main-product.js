@@ -21,6 +21,7 @@
         var thumbs = Array.prototype.slice.call(
             root.querySelectorAll("[data-pdp-thumb]"),
         );
+        var thumbsWrap = root.querySelector(".pdp__thumbs");
         var curEl = root.querySelector("[data-pdp-current]");
         var imgPrev = root.querySelector("[data-pdp-img-prev]");
         var imgNext = root.querySelector("[data-pdp-img-next]");
@@ -50,6 +51,7 @@
 
         thumbs.forEach(function (t) {
             t.addEventListener("click", function () {
+                if (thumbsWrap && thumbsWrap.__pdpDrag) return;
                 showSlide(parseInt(t.getAttribute("data-pdp-thumb"), 10));
             });
         });
@@ -61,6 +63,62 @@
             imgNext.addEventListener("click", function () {
                 showSlide(gi + 1);
             });
+
+        /* ----- Drag-to-scroll the thumbnail strip (mouse / desktop) -----
+           Keeps click-to-select: a small movement threshold turns the press
+           into a drag (scrolls the strip + suppresses the following click),
+           otherwise the press stays a normal click that selects the image. */
+        if (thumbsWrap) {
+            var dragState = null;
+
+            function onThumbDragMove(e) {
+                if (!dragState) return;
+                var dx = e.clientX - dragState.startX;
+                var dy = e.clientY - dragState.startY;
+                if (!dragState.active) {
+                    if (Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
+                    if (Math.abs(dx) <= Math.abs(dy)) {
+                        dragState.vertical = true;
+                        return;
+                    }
+                    dragState.active = true;
+                    thumbsWrap.classList.add("is-dragging");
+                }
+                if (dragState.vertical) return;
+                e.preventDefault();
+                thumbsWrap.scrollLeft = dragState.startScroll - dx;
+            }
+
+            function onThumbDragEnd() {
+                if (!dragState) return;
+                document.removeEventListener("mousemove", onThumbDragMove);
+                document.removeEventListener("mouseup", onThumbDragEnd);
+                var wasDragging = dragState.active;
+                thumbsWrap.classList.remove("is-dragging");
+                dragState = null;
+                if (wasDragging) {
+                    thumbsWrap.__pdpDrag = true;
+                    setTimeout(function () {
+                        thumbsWrap.__pdpDrag = false;
+                    }, 0);
+                }
+            }
+
+            thumbsWrap.addEventListener("mousedown", function (e) {
+                if (e.button !== 0) return;
+                if (thumbsWrap.scrollWidth <= thumbsWrap.clientWidth + 1)
+                    return;
+                dragState = {
+                    startX: e.clientX,
+                    startY: e.clientY,
+                    startScroll: thumbsWrap.scrollLeft,
+                    active: false,
+                    vertical: false,
+                };
+                document.addEventListener("mousemove", onThumbDragMove);
+                document.addEventListener("mouseup", onThumbDragEnd);
+            });
+        }
 
         /* Swipe the stage on touch */
         var stage = root.querySelector("[data-pdp-stage]");

@@ -129,7 +129,8 @@ section {
     font-size: 0.8rem;
     letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: var(--gold-deep);
+    /* color: var(--gold-deep); */
+    color: #c4a574;
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
@@ -339,4 +340,12 @@ h3 {
     html {
         scroll-behavior: auto;
     }
+}
+
+/* body div {
+    border: 1px solid red;
+} */
+
+.plist__toolbar-form .plist__sort-label {
+    display: none;
 }

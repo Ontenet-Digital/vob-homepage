@@ -33,13 +33,37 @@
     aria-label="{{ 'collections.toolbar.sort' | t }}"
   >
     <span class="csort__value" data-sort-current>{{ current_label }}</span>
-    <svg class="csort__chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg class="csort__chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+      <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </button>
-  <ul class="csort__menu" id="{{ menu_id }}" role="listbox" aria-label="{{ 'collections.toolbar.sort' | t }}" data-sort-menu>
-    <li role="option" id="{{ menu_id }}-opt-0" aria-selected="{% if current_value == '' %}true{% else %}false{% endif %}" data-sort-option="" tabindex="-1">{{ 'collections.sort.relevant' | t }}</li>
+  <ul
+    class="csort__menu"
+    id="{{ menu_id }}"
+    role="listbox"
+    aria-label="{{ 'collections.toolbar.sort' | t }}"
+    data-sort-menu
+  >
+    <li
+      role="option"
+      id="{{ menu_id }}-opt-0"
+      aria-selected="{% if current_value == '' %}true{% else %}false{% endif %}"
+      data-sort-option=""
+      tabindex="-1"
+    >
+      {{ 'collections.sort.relevant' | t }}
+    </li>
     {%- for pair in pairs -%}
       {%- assign parts = pair | split: ',' -%}
-      <li role="option" id="{{ menu_id }}-opt-{{ forloop.index }}" aria-selected="{% if current_value == parts[0] %}true{% else %}false{% endif %}" data-sort-option="{{ parts[0] }}" tabindex="-1">{{ 'collections.sort.' | append: parts[1] | t }}</li>
+      <li
+        role="option"
+        id="{{ menu_id }}-opt-{{ forloop.index }}"
+        aria-selected="{% if current_value == parts[0] %}true{% else %}false{% endif %}"
+        data-sort-option="{{ parts[0] }}"
+        tabindex="-1"
+      >
+        {{ 'collections.sort.' | append: parts[1] | t }}
+      </li>
     {%- endfor -%}
   </ul>
   <input type="hidden" name="sort_by" value="{{ current_value }}" data-sort-input>

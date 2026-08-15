@@ -33,6 +33,7 @@ section[id] {
 .brand__logo {
     height: 72px;
     width: auto;
+    object-fit: contain;
 }
 .brand__word {
     font-family: var(--display);
@@ -413,5 +414,8 @@ a.trust__link:hover {
     }
     .trust__link {
         font-size: 0.88rem;
+    }
+    .moto {
+        margin-bottom: 0px;
     }
 }

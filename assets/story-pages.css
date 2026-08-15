@@ -65,7 +65,7 @@
     font-size: 0.8rem;
     letter-spacing: 0.34em;
     text-transform: uppercase;
-    color: var(--story-gold);
+    color: #fff;
     display: inline-flex;
     align-items: center;
     gap: 0.7rem;
@@ -74,7 +74,8 @@
     content: "";
     width: 28px;
     height: 1px;
-    background: var(--story-gold);
+    /* background: var(--story-gold); */
+    background: #fff;
 }
 .story-hero__title {
     font-family: var(--display);
@@ -225,7 +226,11 @@
     text-align: center;
     color: var(--story-cream);
     background:
-        radial-gradient(70% 90% at 50% 0%, rgba(199, 164, 92, 0.18), transparent 60%),
+        radial-gradient(
+            70% 90% at 50% 0%,
+            rgba(199, 164, 92, 0.18),
+            transparent 60%
+        ),
         linear-gradient(160deg, #3d2e1c 0%, #2a1f14 52%, #1a130c 100%);
     border-radius: var(--story-radius);
     padding: clamp(3rem, 7vw, 5rem) clamp(1.5rem, 5vw, 4rem);

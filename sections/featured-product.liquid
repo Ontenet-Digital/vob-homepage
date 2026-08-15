@@ -303,6 +303,7 @@
     /* ----- Gallery ----- */
     var slides = Array.prototype.slice.call(panel.querySelectorAll("[data-slide]"));
     var thumbs = Array.prototype.slice.call(panel.querySelectorAll("[data-fps-thumb]"));
+    var thumbsWrap = panel.querySelector(".fps__thumbs");
     var curEl = panel.querySelector("[data-fps-current]");
     var imgPrev = panel.querySelector("[data-fps-img-prev]");
     var imgNext = panel.querySelector("[data-fps-img-next]");
@@ -327,11 +328,64 @@
 
     thumbs.forEach(function (t) {
       t.addEventListener("click", function () {
+        if (thumbsWrap && thumbsWrap.__fpsDrag) return;
         showSlide(parseInt(t.getAttribute("data-fps-thumb"), 10));
       });
     });
     if (imgPrev) imgPrev.addEventListener("click", function () { showSlide(gi - 1); });
     if (imgNext) imgNext.addEventListener("click", function () { showSlide(gi + 1); });
+
+    /* ----- Drag-to-scroll the thumbnail strip (mouse / desktop) -----
+       Keeps click-to-select: a small movement threshold turns the press into a
+       drag (scrolls the strip + suppresses the following click), otherwise the
+       press stays a normal click that selects the image. */
+    if (thumbsWrap) {
+      var dragState = null;
+
+      function onThumbDragMove(e) {
+        if (!dragState) return;
+        var dx = e.clientX - dragState.startX;
+        var dy = e.clientY - dragState.startY;
+        if (!dragState.active) {
+          if (Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
+          if (Math.abs(dx) <= Math.abs(dy)) { dragState.vertical = true; return; }
+          dragState.active = true;
+          thumbsWrap.classList.add("is-dragging");
+        }
+        if (dragState.vertical) return;
+        e.preventDefault();
+        thumbsWrap.scrollLeft = dragState.startScroll - dx;
+      }
+
+      function onThumbDragEnd() {
+        if (!dragState) return;
+        document.removeEventListener("mousemove", onThumbDragMove);
+        document.removeEventListener("mouseup", onThumbDragEnd);
+        var wasDragging = dragState.active;
+        thumbsWrap.classList.remove("is-dragging");
+        dragState = null;
+        if (wasDragging) {
+          thumbsWrap.__fpsDrag = true;
+          setTimeout(function () { thumbsWrap.__fpsDrag = false; }, 0);
+        }
+      }
+
+      thumbsWrap.addEventListener("mousedown", function (e) {
+        if (e.button !== 0) return;
+        /* Inactive panels are display:none at init (0 width), so overflow is
+           checked at press time, not when the section initialises. */
+        if (thumbsWrap.scrollWidth <= thumbsWrap.clientWidth + 1) return;
+        dragState = {
+          startX: e.clientX,
+          startY: e.clientY,
+          startScroll: thumbsWrap.scrollLeft,
+          active: false,
+          vertical: false
+        };
+        document.addEventListener("mousemove", onThumbDragMove);
+        document.addEventListener("mouseup", onThumbDragEnd);
+      });
+    }
 
     /* ----- Quantity stepper ----- */
     var qtyInput = panel.querySelector("[data-fps-qty-input]");

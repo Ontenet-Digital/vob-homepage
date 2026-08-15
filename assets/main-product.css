@@ -156,7 +156,17 @@
     overflow-x: auto;
     padding-bottom: 4px;
     scroll-snap-type: x proximity;
-    scrollbar-width: thin;
+    scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.pdp__thumbs::-webkit-scrollbar {
+    display: none;
+}
+.pdp__thumbs.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
 }
 .pdp__thumb {
     flex: 0 0 auto;
@@ -170,7 +180,7 @@
         var(--pdp-surface-2)
     );
     overflow: hidden;
-    cursor: pointer;
+    cursor: grab;
     padding: 0;
     opacity: 0.68;
     scroll-snap-align: center;
@@ -182,6 +192,9 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    pointer-events: none;
+    -webkit-user-drag: none;
+    user-select: none;
 }
 .pdp__thumb:hover {
     opacity: 1;
@@ -569,7 +582,7 @@
 /* ---------- Responsive ---------- */
 @media (max-width: 899px) {
     .pdp__grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: 26px;
     }
     .pdp__gallery {
