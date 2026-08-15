@@ -101,7 +101,7 @@
     display: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
     /* Swap to the mobile clip when one is set; otherwise the desktop video
        stays and simply fills the fullscreen banner (cropped). */
     .vbanner--has-mobile .vbanner__media--desktop {

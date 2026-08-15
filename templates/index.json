@@ -511,7 +511,7 @@
         "tab_inactive_text": "#251d3a",
         "tab_radius": 30,
         "columns_desktop": 3,
-        "columns_tablet": 1,
+        "columns_tablet": 2,
         "columns_mobile": 1,
         "grid_gap": 24,
         "grid_gap_mobile": 14,
