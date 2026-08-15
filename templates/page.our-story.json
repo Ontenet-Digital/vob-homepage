@@ -11,6 +11,7 @@
   "sections": {
     "story_hero": {
       "type": "story_hero",
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/Screenshot_2024-12-17_at_7.11.02_PM.png",
         "image_url": "",
