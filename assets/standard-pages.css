@@ -582,6 +582,10 @@ body.template-cart .fsbar {
     padding: 3rem 0;
 }
 
+.empty-state .brand__mark {
+    display: none;
+}
+
 @media (max-width: 1023px) {
     .product {
         grid-template-columns: 1fr;
