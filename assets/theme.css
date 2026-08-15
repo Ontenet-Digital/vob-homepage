@@ -349,3 +349,7 @@ h3 {
 .plist__toolbar-form .plist__sort-label {
     display: none;
 }
+
+body:has(.shopify-challenge__container) {
+    padding-top: 100px !important;
+}
