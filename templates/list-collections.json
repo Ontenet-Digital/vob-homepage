@@ -8,89 +8,99 @@
  * ------------------------------------------------------------
  */
 {
-    "sections": {
-        "main": {
-            "type": "main-list-collections",
-            "settings": {
-                "eyebrow": "",
-                "heading": "Collections",
-                "subheading": "Every way into the story — choose a collection to see what's inside.",
-                "heading_align": "left",
-                "show_breadcrumb": true,
-                "columns_desktop": 4,
-                "columns_tablet": 3,
-                "columns_mobile": 2,
-                "grid_gap": 24,
-                "grid_gap_mobile": 14,
-                "hide_empty": true,
-                "card_bg": "#ffffff",
-                "card_border_color": "#ede6d6",
-                "card_radius": 10,
-                "image_ratio": "1/1",
-                "title_color": "#251d3a",
-                "title_size": 18,
-                "show_count": true,
-                "count_color": "#be9743",
-                "link_label": "Explore",
-                "bg_color": "#ffffff",
-                "padding_top": 48,
-                "padding_bottom": 72
-            }
-        },
-        "usp": {
-            "type": "usp",
-            "blocks": {
-                "u1": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/06-christian-values.png?v=1786112101",
-                        "label": "Christian Values"
-                    }
-                },
-                "u2": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/01-safe-screentime.png?v=1786112102",
-                        "label": "Safe Screentime"
-                    }
-                },
-                "u3": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/02-scripture-rooted.png?v=1786112102",
-                        "label": "Scripture-Rooted"
-                    }
-                },
-                "u4": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/03-biblical-learning.png?v=1786112101",
-                        "label": "Biblical Learning"
-                    }
-                },
-                "u5": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/04-faith-building.png?v=1786112101",
-                        "label": "Faith-Building"
-                    }
-                },
-                "u6": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/05-sacred-stories.png?v=1786112101",
-                        "label": "Sacred Stories"
-                    }
-                }
-            },
-            "block_order": ["u1", "u2", "u3", "u4", "u5", "u6"],
-            "settings": {
-                "eyebrow": "Why families choose us",
-                "heading": "Built for peace of mind",
-                "subheading": "Simple promises that travel with every order.",
-                "anchor_id": "usp"
-            }
-        }
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Collections",
+        "subheading": "Every way into the story — choose a collection to see what's inside.",
+        "heading_align": "left",
+        "show_breadcrumb": true,
+        "columns_desktop": 4,
+        "columns_tablet": 2,
+        "columns_mobile": 2,
+        "grid_gap": 24,
+        "grid_gap_mobile": 14,
+        "hide_empty": true,
+        "card_bg": "#ffffff",
+        "card_border_color": "#ede6d6",
+        "card_radius": 10,
+        "image_ratio": "1/1",
+        "title_color": "#251d3a",
+        "title_size": 18,
+        "show_count": true,
+        "count_color": "#be9743",
+        "link_label": "Explore",
+        "bg_color": "#ffffff",
+        "padding_top": 48,
+        "padding_bottom": 72
+      }
     },
-    "order": ["main", "usp"]
+    "usp": {
+      "type": "usp",
+      "blocks": {
+        "u1": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/06-christian-values.png?v=1786112101",
+            "label": "Christian Values"
+          }
+        },
+        "u2": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/01-safe-screentime.png?v=1786112102",
+            "label": "Safe Screentime"
+          }
+        },
+        "u3": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/02-scripture-rooted.png?v=1786112102",
+            "label": "Scripture-Rooted"
+          }
+        },
+        "u4": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/03-biblical-learning.png?v=1786112101",
+            "label": "Biblical Learning"
+          }
+        },
+        "u5": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/04-faith-building.png?v=1786112101",
+            "label": "Faith-Building"
+          }
+        },
+        "u6": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/05-sacred-stories.png?v=1786112101",
+            "label": "Sacred Stories"
+          }
+        }
+      },
+      "block_order": [
+        "u1",
+        "u2",
+        "u3",
+        "u4",
+        "u5",
+        "u6"
+      ],
+      "settings": {
+        "eyebrow": "Why families choose us",
+        "heading": "Built for peace of mind",
+        "subheading": "Simple promises that travel with every order.",
+        "anchor_id": "usp"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "usp"
+  ]
 }
