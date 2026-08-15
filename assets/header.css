@@ -439,7 +439,7 @@ a.trust__link:hover {
     }
 }
 
-@media (min-width: 767px) and (max-width: 1279px) {
+@media (min-width: 767px) and (max-width: 1600px) {
     .moto {
         margin-bottom: 0;
     }
