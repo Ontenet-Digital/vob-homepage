@@ -1,7 +1,8 @@
 {%- comment -%}
   about-statement — warm mission section for the homepage.
-  Warm cream/gold surface with a soft golden glow behind two decorative
-  product images. Split layout: copy left, products right. Products not linked.
+  Warm cream/gold surface. Split layout: copy left, single image right.
+  The image is a plain flow element (no rotate, no absolute positioning);
+  its positioning is tuned in assets/about-statement.css.
   Styles in assets/about-statement.css.
 {%- endcomment -%}
 
@@ -68,43 +69,23 @@
       </div>
 
       <div class="about-statement__visual reveal">
-        <div class="about-statement__products">
-          {%- comment -%} Secondary product — offset behind, rotated {%- endcomment -%}
-          <div class="about-statement__product about-statement__product--secondary">
-            {%- if s.image_2 != blank -%}
-              <img
-                src="{{ s.image_2 | image_url: width: 640 }}"
-                width="{{ s.image_2.width }}"
-                height="{{ s.image_2.height }}"
-                alt="{{ s.image_2_alt | escape }}"
-                loading="lazy"
-                decoding="async">
-            {%- elsif s.image_2_url != blank -%}
-              <img src="{{ s.image_2_url }}" alt="{{ s.image_2_alt | escape }}" loading="lazy" decoding="async" width="640" height="640">
-            {%- endif -%}
-          </div>
-
-          {%- comment -%} Primary product — front and centre {%- endcomment -%}
-          <div class="about-statement__product about-statement__product--primary">
-            {%- if s.image_1 != blank -%}
-              <img
-                src="{{ s.image_1 | image_url: width: 900 }}"
-                srcset="{{ s.image_1 | image_url: width: 450 }} 450w,
-                        {{ s.image_1 | image_url: width: 900 }} 900w,
-                        {{ s.image_1 | image_url: width: 1300 }} 1300w"
-                sizes="(min-width: 768px) 520px, 76vw"
-                width="{{ s.image_1.width }}"
-                height="{{ s.image_1.height }}"
-                alt="{{ s.image_1_alt | escape }}"
-                loading="lazy"
-                decoding="async">
-            {%- elsif s.image_1_url != blank -%}
-              <img src="{{ s.image_1_url }}" alt="{{ s.image_1_alt | escape }}" loading="lazy" decoding="async" width="900" height="900">
-            {%- endif -%}
-          </div>
-        </div>
-
-        <span class="about-statement__ground" aria-hidden="true"></span>
+        {%- if s.image != blank -%}
+          <img
+            class="about-statement__image"
+            src="{{ s.image | image_url: width: 900 }}"
+            srcset="
+              {{ s.image | image_url: width: 450 }} 450w,
+              {{ s.image | image_url: width: 900 }} 900w,
+              {{ s.image | image_url: width: 1300 }} 1300w
+            "
+            sizes="(min-width: 768px) 520px, 76vw"
+            width="{{ s.image.width }}"
+            height="{{ s.image.height }}"
+            alt="{{ s.image.alt | escape }}"
+            loading="lazy"
+            decoding="async"
+          >
+        {%- endif -%}
       </div>
     </div>
   </div>
@@ -118,35 +99,126 @@
     { "type": "header", "content": "Content" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "OUR MISSION" },
     { "type": "color", "id": "eyebrow_color", "label": "Eyebrow colour", "default": "#BE9743" },
-    { "type": "inline_richtext", "id": "title", "label": "Heading", "info": "Use italics to highlight a word in the accent colour.", "default": "Connecting people to God's Word through stories and learning." },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Heading",
+      "info": "Use italics to highlight a word in the accent colour.",
+      "default": "Connecting people to God's Word through stories and learning."
+    },
     { "type": "color", "id": "accent_color", "label": "Accent colour (italic word)", "default": "#BE9743" },
     { "type": "color", "id": "heading_color", "label": "Heading colour", "default": "#251D3A" },
     { "type": "color", "id": "text_color", "label": "Paragraph colour", "default": "#463C68" },
-    { "type": "richtext", "id": "paragraph", "label": "Paragraph", "info": "Optional supporting copy. Supports bold, italics and links." },
-    { "type": "text", "id": "verse", "label": "Scripture verse", "default": "Your word is a lamp to my feet and a light to my path." },
+    {
+      "type": "richtext",
+      "id": "paragraph",
+      "label": "Paragraph",
+      "info": "Optional supporting copy. Supports bold, italics and links."
+    },
+    {
+      "type": "text",
+      "id": "verse",
+      "label": "Scripture verse",
+      "default": "Your word is a lamp to my feet and a light to my path."
+    },
     { "type": "text", "id": "verse_ref", "label": "Verse reference", "default": "Psalm 119:105" },
 
-    { "type": "header", "content": "Products" },
-    { "type": "image_picker", "id": "image_1", "label": "Primary product image", "info": "Shown front and centre on the right." },
-    { "type": "text", "id": "image_1_url", "label": "Primary image URL (fallback)", "info": "Used only if no image is uploaded above." },
-    { "type": "text", "id": "image_1_alt", "label": "Primary image alt text" },
-    { "type": "image_picker", "id": "image_2", "label": "Secondary product image", "info": "Shown behind, slightly rotated." },
-    { "type": "text", "id": "image_2_url", "label": "Secondary image URL (fallback)", "info": "Used only if no image is uploaded above." },
-    { "type": "text", "id": "image_2_alt", "label": "Secondary image alt text" },
+    { "type": "header", "content": "Image" },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Upload the merged image. Alt text is set on the image itself in the media library."
+    },
 
     { "type": "header", "content": "Background & rays" },
     { "type": "color", "id": "bg_color", "label": "Background colour (top)", "default": "#FFFFFF" },
     { "type": "color", "id": "bg_color_2", "label": "Background colour (bottom)", "default": "#F2E3C0" },
-    { "type": "range", "id": "bg_angle", "label": "Gradient angle", "min": 0, "max": 360, "step": 5, "unit": "°", "default": 180 },
-    { "type": "color", "id": "glow_1_color", "label": "Glow 1 colour", "default": "#E4C56C", "info": "Soft light in the top-left." },
-    { "type": "range", "id": "glow_1_opacity", "label": "Glow 1 opacity", "min": 0, "max": 60, "step": 2, "unit": "%", "default": 30 },
-    { "type": "color", "id": "glow_2_color", "label": "Glow 2 colour", "default": "#F3E4C3", "info": "Soft light in the bottom-right." },
-    { "type": "range", "id": "glow_2_opacity", "label": "Glow 2 opacity", "min": 0, "max": 60, "step": 2, "unit": "%", "default": 50 },
+    {
+      "type": "range",
+      "id": "bg_angle",
+      "label": "Gradient angle",
+      "min": 0,
+      "max": 360,
+      "step": 5,
+      "unit": "°",
+      "default": 180
+    },
+    {
+      "type": "color",
+      "id": "glow_1_color",
+      "label": "Glow 1 colour",
+      "default": "#E4C56C",
+      "info": "Soft light in the top-left."
+    },
+    {
+      "type": "range",
+      "id": "glow_1_opacity",
+      "label": "Glow 1 opacity",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "%",
+      "default": 30
+    },
+    {
+      "type": "color",
+      "id": "glow_2_color",
+      "label": "Glow 2 colour",
+      "default": "#F3E4C3",
+      "info": "Soft light in the bottom-right."
+    },
+    {
+      "type": "range",
+      "id": "glow_2_opacity",
+      "label": "Glow 2 opacity",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "%",
+      "default": 50
+    },
     { "type": "header", "content": "Layout" },
-    { "type": "range", "id": "padding_top", "label": "Top padding (desktop)", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 96 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (desktop)", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 96 },
-    { "type": "range", "id": "padding_top_mobile", "label": "Top padding (mobile)", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 64 },
-    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding (mobile)", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 72 },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding (desktop)",
+      "min": 0,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding (desktop)",
+      "min": 0,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding (mobile)",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding (mobile)",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
     { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "about" }
   ],
   "presets": [{ "name": "Mission statement" }]
