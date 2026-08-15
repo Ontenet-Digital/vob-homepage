@@ -292,7 +292,7 @@
         "c2": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/blog_001.png",
+            "image": "shopify://shop_images/category_blog.png",
             "image_url": "https://visionofthebiblestore.com/cdn/shop/files/digital-bible-2-_2.png?v=1757971890&width=900",
             "title": "Blog",
             "subtitle": "The Gospels and the Tanakh, brought to life",
@@ -303,7 +303,7 @@
         "c3": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/App.png",
+            "image": "shopify://shop_images/category_app.png",
             "image_url": "https://visionofthebiblestore.com/cdn/shop/files/travel.png?v=1732481053&width=900",
             "title": "App",
             "subtitle": "A visual pilgrimage from your chair",
@@ -314,7 +314,7 @@
         "c4": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/game_001.png",
+            "image": "shopify://shop_images/category_quiz.png",
             "image_url": "https://visionofthebiblestore.com/cdn/shop/files/book_1.png?v=1733282144&width=900",
             "title": "Game",
             "subtitle": "A keepsake for the family shelf",
@@ -325,7 +325,7 @@
         "c5": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/shop_all.png",
+            "image": "shopify://shop_images/category_shop_all.png",
             "image_url": "https://visionofthebiblestore.com/cdn/shop/files/book_1.png?v=1733282144&width=900",
             "title": "Shop All",
             "subtitle": "A keepsake for the family shelf",
