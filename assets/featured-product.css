@@ -767,6 +767,11 @@
     .fps__price-current {
         font-size: 1.1rem;
     }
+    /* Center the "View full details" link on mobile */
+    .fps__view {
+        align-self: center;
+        margin-top: 24px;
+    }
 }
 @media (prefers-reduced-motion: reduce) {
     .fps__product.is-sliding {
