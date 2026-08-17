@@ -169,8 +169,10 @@
 }
 .story-mission__inner {
     text-align: center;
-    max-width: 760px;
+    max-width: 943px;
+    padding-top:36px;
     margin-inline: auto;
+
 }
 .story-mission__inner .ornament {
     margin: 0 auto 1.3rem;
@@ -180,10 +182,14 @@
     margin: 0.85rem 0 0.9rem;
 }
 .story-mission__text {
-    color: var(--story-ink-soft);
-    font-size: 1.05rem;
-    max-width: 640px;
+    padding-top:8.45px;
+    font-style: italic;
+    font-size: clamp(1.05rem, 3vw, 1.95rem);
     margin-inline: auto;
+    font-family: var(--display);    
+    line-height: 1.42;
+    font-weight: 400;
+    font-optical-sizing: auto;
 }
 .story-mission__text p {
     margin-bottom: 0.9em;
