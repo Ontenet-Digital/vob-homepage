@@ -68,12 +68,12 @@
         color: var(--gold-deep);
     }
 }
-@media (max-width: 1023px) {
+/* @media (max-width: 1023px) {
     .usp__grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 1.6rem 1rem;
     }
-}
+} */
 @media (max-width: 767px) {
     .usp__grid {
         grid-template-columns: repeat(2, 1fr);
