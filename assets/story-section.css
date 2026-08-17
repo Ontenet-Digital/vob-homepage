@@ -59,6 +59,12 @@
 }
 @media (max-width: 1023px) {
     .story-section .blog__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .story-section .blog__grid {
         grid-template-columns: 1fr;
     }
 }

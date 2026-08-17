@@ -169,7 +169,7 @@
         "paragraph": "<p>We create faithful, vivid Bible experiences — animated stories, books, and learning tools — that help every generation know, love, and live the Word of God.</p>",
         "verse": "",
         "verse_ref": "",
-        "image": "shopify://shop_images/product_about.png",
+        "image": "shopify://shop_images/about_product.png",
         "bg_color": "#ffffff",
         "bg_color_2": "#f2e3c0",
         "bg_angle": 180,
@@ -297,7 +297,7 @@
             "title": "Blog",
             "subtitle": "The Gospels and the Tanakh, brought to life",
             "link_label": "Explore",
-            "link": "https://visionofthebiblestore.com/collections/digital-bible"
+            "link": "#"
           }
         },
         "c3": {
@@ -308,7 +308,7 @@
             "title": "App",
             "subtitle": "A visual pilgrimage from your chair",
             "link_label": "Explore",
-            "link": "https://apps.apple.com/us/app/vision-of-the-bible/id1570619920"
+            "link": "shopify://pages/the-app"
           }
         },
         "c4": {
@@ -319,7 +319,7 @@
             "title": "Game",
             "subtitle": "A keepsake for the family shelf",
             "link_label": "Explore",
-            "link": "https://visionofthebiblestore.com/collections/books"
+            "link": "#"
           }
         },
         "c5": {
@@ -511,7 +511,7 @@
         "tab_inactive_text": "#251d3a",
         "tab_radius": 30,
         "columns_desktop": 3,
-        "columns_tablet": 1,
+        "columns_tablet": 2,
         "columns_mobile": 1,
         "grid_gap": 24,
         "grid_gap_mobile": 14,

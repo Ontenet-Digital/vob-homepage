@@ -54,6 +54,13 @@
     flex-wrap: wrap;
     gap: 0.8rem;
 }
+
+@media (max-width: 1023px) {
+    .stores {
+        justify-content: center;
+    }
+}
+
 .store {
     display: inline-flex;
     align-items: center;

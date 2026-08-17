@@ -1,0 +1,98 @@
+{%- comment -%}
+  ============================================================
+  Recently viewed — product recorder (always on)
+  ------------------------------------------------------------
+  Records the current product into the visitor's browser
+  localStorage (key "vob:recently-viewed:v1", most-recent-first,
+  deduped by URL, capped at 20). Rendered inside the main product
+  section so it runs on EVERY product page view — independently of
+  whether the "Recently viewed" strip section is displayed. This
+  keeps the cart drawer's "Recently viewed" tab populated even
+  while the strip is hidden.
+
+  Also exposes a shared API for the recently-viewed section:
+    window.VOB_RV.current()  -> snapshot of the product on this page
+    window.VOB_RV.readList() -> the stored list
+    window.VOB_RV.record()   -> (re)writes the list for the current product
+  ============================================================
+{%- endcomment -%}
+
+<script type="application/json" data-rv-current>
+  {
+    "url": {{ product.url | json }},
+    "title": {{ product.title | json }},
+    "image": {{ product.featured_image | image_url: width: 600 | json }},
+    "image_alt": {{ product.featured_image.alt | default: product.title | json }},
+    "image_2": {% if product.media[1] %}{{ product.media[1] | image_url: width: 600 | json }}{% else %}null{% endif %},
+    "media_count": {{ product.media.size | json }},
+    "rating": {{ product.metafields.reviews.rating.value.rating | json }},
+    "price": {{ product.price | money | json }},
+    "compare": {% if product.compare_at_price > product.price %}{{ product.compare_at_price | money | json }}{% else %}null{% endif %},
+    "vendor": {{ product.vendor | json }},
+    "available": {{ product.available }},
+    "variant_id": {{ product.selected_or_first_available_variant.id | json }},
+    "multi_variant": {% if product.has_only_default_variant %}false{% else %}true{% endif %}
+  }
+</script>
+
+<script>
+  (function () {
+    'use strict';
+
+    var KEY = 'vob:recently-viewed:v1';
+    var CAP = 20;
+
+    function storageOK() {
+      try {
+        var k = '__rv_test__';
+        window.localStorage.setItem(k, '1');
+        window.localStorage.removeItem(k);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function readList() {
+      try {
+        var list = JSON.parse(window.localStorage.getItem(KEY)) || [];
+        return Array.isArray(list) ? list : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function current() {
+      var el = document.querySelector('[data-rv-current]');
+      if (!el) return null;
+      try {
+        return JSON.parse(el.textContent);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function record() {
+      if (!storageOK()) return;
+      var snapshot = current();
+      if (!snapshot || !snapshot.url) return;
+      var list = readList().filter(function (it) {
+        return it && it.url && it.url !== snapshot.url;
+      });
+      list.unshift(snapshot);
+      if (list.length > CAP) list = list.slice(0, CAP);
+      try {
+        window.localStorage.setItem(KEY, JSON.stringify(list));
+      } catch (e) {}
+    }
+
+    window.VOB_RV = window.VOB_RV || {
+      current: current,
+      readList: readList,
+      record: record,
+    };
+
+    if (document.readyState !== 'loading') record();
+    else document.addEventListener('DOMContentLoaded', record);
+  })();
+</script>

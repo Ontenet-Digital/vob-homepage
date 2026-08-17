@@ -101,25 +101,6 @@
   </div>
 
   <div class="rvp__grid" data-rv-grid role="list"></div>
-
-  {%- comment -%} Current product snapshot, recorded on load {%- endcomment -%}
-  <script type="application/json" data-rv-current>
-    {
-      "url": {{ product.url | json }},
-      "title": {{ product.title | json }},
-      "image": {{ product.featured_image | image_url: width: 600 | json }},
-      "image_alt": {{ product.featured_image.alt | default: product.title | json }},
-      "image_2": {% if product.media[1] %}{{ product.media[1] | image_url: width: 600 | json }}{% else %}null{% endif %},
-      "media_count": {{ product.media.size | json }},
-      "rating": {{ product.metafields.reviews.rating.value.rating | json }},
-      "price": {{ product.price | money | json }},
-      "compare": {% if product.compare_at_price > product.price %}{{ product.compare_at_price | money | json }}{% else %}null{% endif %},
-      "vendor": {{ product.vendor | json }},
-      "available": {{ product.available }},
-      "variant_id": {{ product.selected_or_first_available_variant.id | json }},
-      "multi_variant": {% if product.has_only_default_variant %}false{% else %}true{% endif %}
-    }
-  </script>
 </section>
 
 {% stylesheet %}
@@ -185,15 +166,6 @@
 {% javascript %}
   (function () {
     'use strict';
-
-    function readJSON(el) {
-      if (!el) return null;
-      try {
-        return JSON.parse(el.textContent);
-      } catch (e) {
-        return null;
-      }
-    }
 
     function storageOK() {
       try {
@@ -312,10 +284,12 @@
       root.__rvInit = true;
 
       var grid = root.querySelector('[data-rv-grid]');
-      var current = readJSON(root.querySelector('[data-rv-current]'));
+      /* Product snapshot + localStorage write are owned by the always-on
+         recorder (snippets/recently-viewed-record.liquid, rendered in
+         main-product), so this section is purely presentational. */
+      var current = window.VOB_RV ? window.VOB_RV.current() : null;
       var key = root.getAttribute('data-rv-key') || 'vob:recently-viewed:v1';
       var limit = parseInt(root.getAttribute('data-rv-limit'), 10) || 4;
-      var CAP = 20;
       var designMode = !!(window.Shopify && window.Shopify.designMode);
       var cfg = {
         showVendor: root.getAttribute('data-rv-show-vendor') !== 'false',
@@ -345,18 +319,6 @@
         list = [];
       }
       if (!Array.isArray(list)) list = [];
-
-      /* ---- Record current product (most-recent first, deduped, capped) ---- */
-      if (current && current.url) {
-        list = list.filter(function (it) {
-          return it && it.url && it.url !== current.url;
-        });
-        list.unshift(current);
-        if (list.length > CAP) list = list.slice(0, CAP);
-        try {
-          window.localStorage.setItem(key, JSON.stringify(list));
-        } catch (e) {}
-      }
 
       /* ---- Render (exclude the product being viewed) ---- */
       var toShow = list
