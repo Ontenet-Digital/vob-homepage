@@ -307,7 +307,6 @@
     color: var(--pdp-text);
     line-height: 1.75;
     font-size: 1.04rem;
-    max-width: 62ch;
 }
 .pdp__rte p {
     margin: 0 0 0.85em;

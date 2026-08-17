@@ -20,12 +20,6 @@
     flex-direction: column;
     gap: 1.25rem;
 }
-.cform__aside .eyebrow {
-    color: var(--gold-bright);
-}
-.cform__aside .eyebrow::before {
-    background: var(--gold-bright);
-}
 .cform__title {
     color: #fbf7ec;
     font-size: clamp(1.75rem, 3.2vw, 2.5rem);
