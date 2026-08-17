@@ -47,6 +47,38 @@
         facadeCache.delete(media);
     }
 
+    /* Fully stop a playing reel: back to its click-to-play facade + thumbnail
+       (same behaviour as when a new video starts). Called when the reel leaves
+       the viewport or is replaced by another video. */
+    function stopPlayback(media) {
+        if (!media || media !== playingMedia) return;
+        if (playObserver) playObserver.unobserve(media);
+        playingMedia = null;
+        // After a section re-render the node is detached — nothing to restore.
+        if (media.isConnected) restoreFacade(media);
+    }
+
+    /* Stop the playing reel the moment it leaves the viewport. Intersection is
+       measured against the viewport, so this covers BOTH vertical scroll (the
+       whole section scrolled away) and the horizontal carousel swipe on
+       ≤1100px, where the reel moves sideways out of view. */
+    var playObserver = null;
+    if ("IntersectionObserver" in window) {
+        playObserver = new IntersectionObserver(
+            function (entries) {
+                entries.forEach(function (entry) {
+                    if (
+                        !entry.isIntersecting &&
+                        entry.target === playingMedia
+                    ) {
+                        stopPlayback(entry.target);
+                    }
+                });
+            },
+            { threshold: 0 },
+        );
+    }
+
     document.addEventListener("click", function (e) {
         var facade = e.target.closest
             ? e.target.closest("[data-yt-facade]")
@@ -57,12 +89,8 @@
         if (!id || !media) return;
 
         // Stop any other video that is still playing (only one at a time).
-        if (
-            playingMedia &&
-            playingMedia !== media &&
-            playingMedia.isConnected
-        ) {
-            restoreFacade(playingMedia);
+        if (playingMedia && playingMedia !== media) {
+            stopPlayback(playingMedia);
         }
 
         facadeCache.set(media, {
@@ -85,6 +113,7 @@
         media.innerHTML = "";
         media.appendChild(iframe);
         playingMedia = media;
+        if (playObserver) playObserver.observe(media);
     });
 
     /* Cards left without a title borrow the video's own YouTube title */
