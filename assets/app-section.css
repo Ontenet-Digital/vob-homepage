@@ -3,16 +3,23 @@
     padding-block: 5rem;
 }
 .apps__panel {
-    background: linear-gradient(160deg, var(--violet-deep), #331e5b);
+    /* background: linear-gradient(160deg, var(--violet-deep), #331e5b); */
+    background:
+        radial-gradient(70% 90% at 50% 0%,
+            rgba(199, 164, 92, 0.18),
+            transparent 60%),
+        linear-gradient(290deg, #3d2e1c 0%, #2a1f14 52%, #1a130c 100%);
     border-radius: 26px;
     padding: clamp(2.4rem, 5vw, 4rem);
     overflow: hidden;
     position: relative;
 }
+
 .apps__panel::before {
     content: "";
     position: absolute;
     inset: 0;
+
     background:
         radial-gradient(
             50% 60% at 15% 0%,
@@ -26,6 +33,7 @@
         );
     pointer-events: none;
 }
+
 .apps__grid {
     display: grid;
     grid-template-columns: 1.05fr 1fr;

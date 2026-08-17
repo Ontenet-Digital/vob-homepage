@@ -512,7 +512,7 @@
         "columns_tablet": 2,
         "columns_mobile": 1,
         "grid_gap": 24,
-        "grid_gap_mobile": 14,
+        "grid_gap_mobile": 44,
         "card_bg": "#ffffff",
         "card_border_color": "#ecd8ac",
         "card_radius": 10,
