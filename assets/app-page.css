@@ -44,6 +44,13 @@
     max-width: 20ch;
     margin: 1.1rem auto 1.2rem;
 }
+
+@media (max-width: 1280px) {
+    .app-hero__title {
+        margin-top: 4rem;
+    }
+}
+
 .app-hero__text {
     color: var(--app-ink-soft);
     font-size: 1.15rem;
@@ -118,7 +125,7 @@
     flex-shrink: 0;
 }
 
-.app-phone:hover{
+.app-phone:hover {
     scale: 1.02;
     transition: all 0.3s ease-in-out;
 }

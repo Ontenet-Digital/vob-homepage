@@ -16,20 +16,22 @@
 
 <section class="contact-page">
   <div class="wrap">
-    {% comment %} {%- if section.settings.show_header -%}
-      <header class="contact-page__head contact-page__head--{{ section.settings.align }}">
-        {%- if section.settings.eyebrow != blank -%}
-          <span class="eyebrow{% if section.settings.align == 'center' %} center{% endif %}">{{ section.settings.eyebrow }}</span>
-        {%- endif -%}
+    {% comment %}
+      {%- if section.settings.show_header -%}
+        <header class="contact-page__head contact-page__head--{{ section.settings.align }}">
+          {%- if section.settings.eyebrow != blank -%}
+            <span class="eyebrow{% if section.settings.align == 'center' %} eyebrow-center{% else %} eyebrow-left{% endif %}">{{ section.settings.eyebrow }}</span>
+          {%- endif -%}
 
-        {%- assign heading = section.settings.title | default: page.title -%}
-        <h1 class="contact-page__title">{{ heading }}</h1>
+          {%- assign heading = section.settings.title | default: page.title -%}
+          <h1 class="contact-page__title">{{ heading }}</h1>
 
-        {%- if section.settings.subtitle != blank -%}
-          <div class="contact-page__subtitle rte">{{ section.settings.subtitle }}</div>
-        {%- endif -%}
-      </header>
-    {%- endif -%} {% endcomment %}
+          {%- if section.settings.subtitle != blank -%}
+            <div class="contact-page__subtitle rte">{{ section.settings.subtitle }}</div>
+          {%- endif -%}
+        </header>
+      {%- endif -%}
+    {% endcomment %}
 
     <div class="contact-page__form">
       {% render 'contact-form' %}

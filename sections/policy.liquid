@@ -14,10 +14,9 @@
 <section class="policy" id="{{ section.settings.anchor_id | default: 'policy' }}">
   <div class="wrap">
     <div class="policy__shell">
-
       <header class="policy__head reveal">
         {%- if section.settings.eyebrow != blank -%}
-          <span class="eyebrow center">{{ section.settings.eyebrow }}</span>
+          <span class="eyebrow eyebrow-center">{{ section.settings.eyebrow }}</span>
         {%- endif -%}
         <h1 class="policy__title">{{ page.title }}</h1>
         {%- if section.settings.show_updated and page.published_at != blank -%}
@@ -34,7 +33,16 @@
             <details class="policy__toc-card" open>
               <summary class="policy__toc-head">
                 <span class="policy__toc-kicker">Contents</span>
-                <svg class="policy__toc-chev" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <svg
+                  class="policy__toc-chev"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
                   <path d="M3 5l4 4 4-4"/>
                 </svg>
               </summary>
@@ -55,11 +63,12 @@
             {%- if section.settings.contact_text != blank -%}
               <p class="policy__contact-text">{{ section.settings.contact_text }}</p>
             {%- endif -%}
-            <a class="btn btn--primary" href="{{ section.settings.contact_url | default: '/pages/contact' }}">{{ section.settings.contact_label }}</a>
+            <a class="btn btn--primary" href="{{ section.settings.contact_url | default: '/pages/contact' }}">
+              {{- section.settings.contact_label -}}
+            </a>
           </div>
         </aside>
       {%- endif -%}
-
     </div>
   </div>
 </section>
@@ -79,7 +88,12 @@
     },
     { "type": "checkbox", "id": "show_contact", "label": "Show contact panel", "default": true },
     { "type": "text", "id": "contact_title", "label": "Panel heading", "default": "Questions about this policy?" },
-    { "type": "textarea", "id": "contact_text", "label": "Panel text", "default": "We’re here to help. Reach out and our team will gladly answer any questions." },
+    {
+      "type": "textarea",
+      "id": "contact_text",
+      "label": "Panel text",
+      "default": "We’re here to help. Reach out and our team will gladly answer any questions."
+    },
     { "type": "text", "id": "contact_label", "label": "Button label", "default": "Contact us" },
     { "type": "url", "id": "contact_url", "label": "Button link" },
     { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "policy" }
