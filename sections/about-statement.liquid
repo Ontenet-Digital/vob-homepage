@@ -21,7 +21,6 @@
     --as-bg-angle: {{ s.bg_angle }}deg;
     --as-glow-1: {{ glow_1 }};
     --as-glow-2: {{ glow_2 }};
-    --as-eyebrow-color: {{ s.eyebrow_color }};
     --as-accent: {{ s.accent_color }};
     --as-heading-color: {{ s.heading_color }};
     --as-text-color: {{ s.text_color }};
@@ -43,11 +42,7 @@
     <div class="about-statement__grid">
       <div class="about-statement__copy reveal">
         {%- if s.eyebrow != blank -%}
-          <p class="about-statement__eyebrow">
-            <span class="about-statement__line" aria-hidden="true"></span>
-            <span class="about-statement__eyebrow-text">{{ s.eyebrow | escape }}</span>
-            <span class="about-statement__line" aria-hidden="true"></span>
-          </p>
+          <span class="eyebrow">{{ s.eyebrow }}</span>
         {%- endif -%}
 
         {%- if s.title != blank -%}
@@ -98,7 +93,6 @@
   "settings": [
     { "type": "header", "content": "Content" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "OUR MISSION" },
-    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow colour", "default": "#BE9743" },
     {
       "type": "inline_richtext",
       "id": "title",

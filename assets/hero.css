@@ -127,6 +127,12 @@
 .hero__content {
     max-width: 100%;
 }
+/* The hero eyebrow uses the shared .eyebrow class (typography + colour are
+   code-only). Only its spacing comes from the editor's "Motto — spacing"
+   settings, via --hero-moto-pt / --hero-moto-gap. */
+.hero .eyebrow {
+    margin: var(--hero-moto-pt, 0) 0 var(--hero-moto-gap, 18px);
+}
 .hero__title {
     color: var(--hero-h1-color, #fdfbf3);
     font-family: var(--hero-h1-font, var(--display));

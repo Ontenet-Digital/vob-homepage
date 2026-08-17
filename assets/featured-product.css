@@ -24,27 +24,11 @@
 .fps__head-text {
     max-width: 640px;
 }
-.fps__eyebrow {
-    font-family: var(--ui, "Cardo", Georgia, serif);
-    font-weight: 700;
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: #c4a574;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
+.fps__head .eyebrow {
     margin-bottom: 0.85rem;
 }
-.fps__head--center .fps__eyebrow {
+.fps__head--center .eyebrow {
     justify-content: center;
-}
-.fps__eyebrow::before {
-    content: "";
-    width: 24px;
-    height: 1px;
-    background: currentColor;
-    opacity: 0.6;
 }
 .fps__heading {
     font-family: var(--display, "Fraunces", Georgia, serif);

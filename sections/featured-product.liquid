@@ -75,24 +75,50 @@
   data-fps
   data-fps-add-behavior="{{ s.add_behavior | default: 'stay' }}"
   data-cart-add-url="{{ routes.cart_add_url }}"
-  data-cart-url="{{ routes.cart_url }}">
-
+  data-cart-url="{{ routes.cart_url }}"
+>
   {%- if s.eyebrow != blank or s.heading != blank or s.subheading != blank or total > 1 -%}
     <div class="fps__head fps__head--{{ heading_align }}">
       <div class="fps__head-text">
-        {%- if s.eyebrow != blank -%}<span class="fps__eyebrow">{{ s.eyebrow }}</span>{%- endif -%}
-        {%- if s.heading != blank -%}<h2 class="fps__heading">{{ s.heading }}</h2>{%- endif -%}
-        {%- if s.subheading != blank -%}<p class="fps__sub">{{ s.subheading }}</p>{%- endif -%}
+        {%- if s.eyebrow != blank -%}
+          <span class="eyebrow{% if heading_align == 'center' %} center{% endif %}">{{ s.eyebrow }}</span>
+        {%- endif -%}
+        {%- if s.heading != blank -%}
+          <h2 class="fps__heading">{{ s.heading }}</h2>
+        {%- endif -%}
+        {%- if s.subheading != blank -%}
+          <p class="fps__sub">{{ s.subheading }}</p>
+        {%- endif -%}
       </div>
 
       {%- if total > 1 -%}
         <div class="fps__nav" role="group" aria-label="Browse products">
           <button type="button" class="fps__navbtn" data-fps-prev aria-label="Previous product">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
           </button>
           <span class="fps__counter"><b data-fps-index>1</b> / {{ total }}</span>
           <button type="button" class="fps__navbtn" data-fps-next aria-label="Next product">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M9 6l6 6-6 6"/>
+            </svg>
           </button>
         </div>
       {%- endif -%}
@@ -107,12 +133,13 @@
           {%- if block.settings.product == blank -%}{%- continue -%}{%- endif -%}
           {%- assign pos = pos | plus: 1 -%}
           {%- render 'featured-product-panel',
-              product: block.settings.product,
-              s: s,
-              uid: section.id,
-              index: pos,
-              custom_desc: block.settings.custom_description,
-              attrs: block.shopify_attributes -%}
+            product: block.settings.product,
+            s: s,
+            uid: section.id,
+            index: pos,
+            custom_desc: block.settings.custom_description,
+            attrs: block.shopify_attributes
+          -%}
         {%- endfor -%}
       {%- else -%}
         {%- for product in s.collection.products limit: s.products_limit -%}
@@ -124,451 +151,549 @@
     {%- if total > 1 -%}
       <div class="fps__dots" role="tablist" aria-label="Select product">
         {%- for i in (1..total) -%}
-          <button type="button" class="fps__dot{% if forloop.first %} is-active{% endif %}" data-fps-dot="{{ forloop.index }}" aria-label="Show product {{ forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}></button>
+          <button
+            type="button"
+            class="fps__dot{% if forloop.first %} is-active{% endif %}"
+            data-fps-dot="{{ forloop.index }}"
+            aria-label="Show product {{ forloop.index }}"
+            {% if forloop.first %}
+              aria-current="true"
+            {% endif %}
+          ></button>
         {%- endfor -%}
       </div>
     {%- endif -%}
   {%- else -%}
     <div class="fps__empty">
-      <p>Add a <strong>Product</strong> block (or choose a fallback collection) in the theme editor to show product details here.</p>
+      <p>
+        Add a <strong>Product</strong> block (or choose a fallback collection) in the theme editor to show product
+        details here.
+      </p>
     </div>
   {%- endif -%}
 </section>
 
 {% javascript %}
-(function () {
-  "use strict";
+  (function () {
+    'use strict';
 
-  function readJSON(el) {
-    if (!el) return null;
-    try { return JSON.parse(el.textContent); } catch (e) { return null; }
-  }
-
-  function initSection(root) {
-    if (!root || root.__fpsInit) return;
-    root.__fpsInit = true;
-
-    var panels = Array.prototype.slice.call(root.querySelectorAll("[data-fps-product]"));
-    if (!panels.length) return;
-
-    var dots = Array.prototype.slice.call(root.querySelectorAll("[data-fps-dot]"));
-    var indexEl = root.querySelector("[data-fps-index]");
-    var prevBtn = root.querySelector("[data-fps-prev]");
-    var nextBtn = root.querySelector("[data-fps-next]");
-    var viewport = root.querySelector("[data-fps-viewport]");
-    var current = 0;
-    var animating = false;
-    var pending = null;
-    var SLIDE_MS = 580; /* matches the .is-sliding transition (0.55s) */
-    var slideGap = 24; /* horizontal gap kept between slides during a swap */
-    if (viewport) {
-      var g = parseFloat(getComputedStyle(viewport).getPropertyValue("--fps-slide-gap"));
-      if (!isNaN(g)) slideGap = g;
+    function readJSON(el) {
+      if (!el) return null;
+      try {
+        return JSON.parse(el.textContent);
+      } catch (e) {
+        return null;
+      }
     }
 
-    panels.forEach(function (p, i) { if (p.classList.contains("is-active")) current = i; });
+    function initSection(root) {
+      if (!root || root.__fpsInit) return;
+      root.__fpsInit = true;
 
-    /* Reserve the tallest panel's height so the section and the pagination
+      var panels = Array.prototype.slice.call(root.querySelectorAll('[data-fps-product]'));
+      if (!panels.length) return;
+
+      var dots = Array.prototype.slice.call(root.querySelectorAll('[data-fps-dot]'));
+      var indexEl = root.querySelector('[data-fps-index]');
+      var prevBtn = root.querySelector('[data-fps-prev]');
+      var nextBtn = root.querySelector('[data-fps-next]');
+      var viewport = root.querySelector('[data-fps-viewport]');
+      var current = 0;
+      var animating = false;
+      var pending = null;
+      var SLIDE_MS = 580; /* matches the .is-sliding transition (0.55s) */
+      var slideGap = 24; /* horizontal gap kept between slides during a swap */
+      if (viewport) {
+        var g = parseFloat(getComputedStyle(viewport).getPropertyValue('--fps-slide-gap'));
+        if (!isNaN(g)) slideGap = g;
+      }
+
+      panels.forEach(function (p, i) {
+        if (p.classList.contains('is-active')) current = i;
+      });
+
+      /* Reserve the tallest panel's height so the section and the pagination
        dots don't jump when swapping between products of different heights. */
-    function measureHeights() {
-      return panels.map(function (p) {
-        p.classList.add("is-measuring");
-        var h = p.offsetHeight;
-        p.classList.remove("is-measuring");
-        return h;
-      });
-    }
-    function fixViewportHeight() {
-      if (!viewport) return;
-      var hs = measureHeights();
-      if (!hs.length) return;
-      var maxH = Math.max.apply(null, hs);
-      if (maxH > 0) viewport.style.height = maxH + "px";
-    }
-    fixViewportHeight();
-    window.addEventListener("load", fixViewportHeight);
-    var resizeTimer = null;
-    window.addEventListener("resize", function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(fixViewportHeight, 150);
-    });
-
-    function focusPanel(i) {
-      var h = panels[i].querySelector(".fps__title");
-      if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
-    }
-
-    function showProduct(target, focus) {
-      var count = panels.length;
-      if (!count) return;
-      var i = ((target % count) + count) % count;
-      if (i === current) {
-        if (focus) focusPanel(i);
-        return;
+      function measureHeights() {
+        return panels.map(function (p) {
+          p.classList.add('is-measuring');
+          var h = p.offsetHeight;
+          p.classList.remove('is-measuring');
+          return h;
+        });
       }
-      /* A tap during an active slide is queued and runs right after. */
-      if (animating) { pending = i; return; }
+      function fixViewportHeight() {
+        if (!viewport) return;
+        var hs = measureHeights();
+        if (!hs.length) return;
+        var maxH = Math.max.apply(null, hs);
+        if (maxH > 0) viewport.style.height = maxH + 'px';
+      }
+      fixViewportHeight();
+      window.addEventListener('load', fixViewportHeight);
+      var resizeTimer = null;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(fixViewportHeight, 150);
+      });
 
-      var out = panels[current];
-      var inn = panels[i];
+      function focusPanel(i) {
+        var h = panels[i].querySelector('.fps__title');
+        if (h) {
+          h.setAttribute('tabindex', '-1');
+          h.focus({ preventScroll: true });
+        }
+      }
 
-      /* Direction of travel: forward (right → left) or backward (left → right). */
-      var fwd = ((i - current) % count + count) % count;
-      var back = ((current - i) % count + count) % count;
-      var dir = fwd <= back ? 1 : -1;
+      function showProduct(target, focus) {
+        var count = panels.length;
+        if (!count) return;
+        var i = ((target % count) + count) % count;
+        if (i === current) {
+          if (focus) focusPanel(i);
+          return;
+        }
+        /* A tap during an active slide is queued and runs right after. */
+        if (animating) {
+          pending = i;
+          return;
+        }
 
-      /* The outgoing stays in flow (its height keeps the layout stable while
+        var out = panels[current];
+        var inn = panels[i];
+
+        /* Direction of travel: forward (right → left) or backward (left → right). */
+        var fwd = (((i - current) % count) + count) % count;
+        var back = (((current - i) % count) + count) % count;
+        var dir = fwd <= back ? 1 : -1;
+
+        /* The outgoing stays in flow (its height keeps the layout stable while
          sliding); the incoming is overlaid and slides in from the side. */
-      out.classList.add("is-sliding");
-      inn.classList.add("is-sliding", "is-enter");
-      if (viewport) viewport.classList.add("is-swapping");
+        out.classList.add('is-sliding');
+        inn.classList.add('is-sliding', 'is-enter');
+        if (viewport) viewport.classList.add('is-swapping');
 
-      /* Each panel over-travels by the gap, so the two slides stay visually
+        /* Each panel over-travels by the gap, so the two slides stay visually
          separated (a constant gap) as they cross instead of touching. */
-      var offIn = dir > 0
-        ? "translateX(calc(100% + " + slideGap + "px))"
-        : "translateX(calc(-100% - " + slideGap + "px))";
-      var offOut = dir > 0
-        ? "translateX(calc(-100% - " + slideGap + "px))"
-        : "translateX(calc(100% + " + slideGap + "px))";
+        var offIn =
+          dir > 0 ? 'translateX(calc(100% + ' + slideGap + 'px))' : 'translateX(calc(-100% - ' + slideGap + 'px))';
+        var offOut =
+          dir > 0 ? 'translateX(calc(-100% - ' + slideGap + 'px))' : 'translateX(calc(100% + ' + slideGap + 'px))';
 
-      out.style.transform = "translateX(0px)";
-      inn.style.transform = offIn;
-      void out.offsetWidth; /* reflow so the starting positions apply */
+        out.style.transform = 'translateX(0px)';
+        inn.style.transform = offIn;
+        void out.offsetWidth; /* reflow so the starting positions apply */
 
-      out.style.transform = offOut;
-      inn.style.transform = "translateX(0px)";
+        out.style.transform = offOut;
+        inn.style.transform = 'translateX(0px)';
 
-      dots.forEach(function (d, idx) {
-        d.classList.toggle("is-active", idx === i);
-        d.setAttribute("aria-current", idx === i ? "true" : "false");
-      });
-      if (indexEl) indexEl.textContent = i + 1;
-      current = i;
-      animating = true;
+        dots.forEach(function (d, idx) {
+          d.classList.toggle('is-active', idx === i);
+          d.setAttribute('aria-current', idx === i ? 'true' : 'false');
+        });
+        if (indexEl) indexEl.textContent = i + 1;
+        current = i;
+        animating = true;
 
-      window.setTimeout(function () {
-        out.classList.remove("is-active", "is-sliding");
-        inn.classList.add("is-active");
-        inn.classList.remove("is-enter", "is-sliding");
-        out.style.transform = "";
-        inn.style.transform = "";
-        if (viewport) viewport.classList.remove("is-swapping");
-        animating = false;
-        if (pending !== null) {
-          var p = pending; pending = null;
-          showProduct(p, focus);
-        } else if (focus) {
-          focusPanel(i);
-        }
-      }, SLIDE_MS);
-    }
-
-    root.__fpsShow = showProduct;
-
-    if (prevBtn) prevBtn.addEventListener("click", function () { showProduct(current - 1, true); });
-    if (nextBtn) nextBtn.addEventListener("click", function () { showProduct(current + 1, true); });
-    dots.forEach(function (d) {
-      d.addEventListener("click", function () {
-        showProduct(parseInt(d.getAttribute("data-fps-dot"), 10) - 1, true);
-      });
-    });
-
-    /* Swipe to change product on touch */
-    var vp = root.querySelector("[data-fps-viewport]");
-    if (vp) {
-      var x0 = null, y0 = null;
-      vp.addEventListener("touchstart", function (e) {
-        if (e.target.closest(".fps__thumbs")) { x0 = null; return; }
-        x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
-      }, { passive: true });
-      vp.addEventListener("touchend", function (e) {
-        if (x0 === null) return;
-        var dx = e.changedTouches[0].clientX - x0;
-        var dy = e.changedTouches[0].clientY - y0;
-        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) {
-          showProduct(dx < 0 ? current + 1 : current - 1);
-        }
-        x0 = null; y0 = null;
-      }, { passive: true });
-    }
-
-    panels.forEach(initPanel);
-  }
-
-  function initPanel(panel) {
-    if (panel.__fpsPanel) return;
-    panel.__fpsPanel = true;
-
-    /* ----- Gallery ----- */
-    var slides = Array.prototype.slice.call(panel.querySelectorAll("[data-slide]"));
-    var thumbs = Array.prototype.slice.call(panel.querySelectorAll("[data-fps-thumb]"));
-    var thumbsWrap = panel.querySelector(".fps__thumbs");
-    var curEl = panel.querySelector("[data-fps-current]");
-    var imgPrev = panel.querySelector("[data-fps-img-prev]");
-    var imgNext = panel.querySelector("[data-fps-img-next]");
-    var gi = 0;
-
-    function showSlide(n) {
-      if (!slides.length) return;
-      n = (n + slides.length) % slides.length;
-      slides.forEach(function (sl, i) { sl.classList.toggle("is-active", i === n); });
-      thumbs.forEach(function (t, i) {
-        t.classList.toggle("is-active", i === n);
-        t.setAttribute("aria-current", i === n ? "true" : "false");
-      });
-      if (curEl) curEl.textContent = n + 1;
-      gi = n;
-      var active = thumbs[n];
-      if (active && active.scrollIntoView) {
-        active.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+        window.setTimeout(function () {
+          out.classList.remove('is-active', 'is-sliding');
+          inn.classList.add('is-active');
+          inn.classList.remove('is-enter', 'is-sliding');
+          out.style.transform = '';
+          inn.style.transform = '';
+          if (viewport) viewport.classList.remove('is-swapping');
+          animating = false;
+          if (pending !== null) {
+            var p = pending;
+            pending = null;
+            showProduct(p, focus);
+          } else if (focus) {
+            focusPanel(i);
+          }
+        }, SLIDE_MS);
       }
-    }
-    panel.__showSlide = showSlide;
 
-    thumbs.forEach(function (t) {
-      t.addEventListener("click", function () {
-        if (thumbsWrap && thumbsWrap.__fpsDrag) return;
-        showSlide(parseInt(t.getAttribute("data-fps-thumb"), 10));
+      root.__fpsShow = showProduct;
+
+      if (prevBtn)
+        prevBtn.addEventListener('click', function () {
+          showProduct(current - 1, true);
+        });
+      if (nextBtn)
+        nextBtn.addEventListener('click', function () {
+          showProduct(current + 1, true);
+        });
+      dots.forEach(function (d) {
+        d.addEventListener('click', function () {
+          showProduct(parseInt(d.getAttribute('data-fps-dot'), 10) - 1, true);
+        });
       });
-    });
-    if (imgPrev) imgPrev.addEventListener("click", function () { showSlide(gi - 1); });
-    if (imgNext) imgNext.addEventListener("click", function () { showSlide(gi + 1); });
 
-    /* ----- Drag-to-scroll the thumbnail strip (mouse / desktop) -----
+      /* Swipe to change product on touch */
+      var vp = root.querySelector('[data-fps-viewport]');
+      if (vp) {
+        var x0 = null,
+          y0 = null;
+        vp.addEventListener(
+          'touchstart',
+          function (e) {
+            if (e.target.closest('.fps__thumbs')) {
+              x0 = null;
+              return;
+            }
+            x0 = e.touches[0].clientX;
+            y0 = e.touches[0].clientY;
+          },
+          { passive: true }
+        );
+        vp.addEventListener(
+          'touchend',
+          function (e) {
+            if (x0 === null) return;
+            var dx = e.changedTouches[0].clientX - x0;
+            var dy = e.changedTouches[0].clientY - y0;
+            if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+              showProduct(dx < 0 ? current + 1 : current - 1);
+            }
+            x0 = null;
+            y0 = null;
+          },
+          { passive: true }
+        );
+      }
+
+      panels.forEach(initPanel);
+    }
+
+    function initPanel(panel) {
+      if (panel.__fpsPanel) return;
+      panel.__fpsPanel = true;
+
+      /* ----- Gallery ----- */
+      var slides = Array.prototype.slice.call(panel.querySelectorAll('[data-slide]'));
+      var thumbs = Array.prototype.slice.call(panel.querySelectorAll('[data-fps-thumb]'));
+      var thumbsWrap = panel.querySelector('.fps__thumbs');
+      var curEl = panel.querySelector('[data-fps-current]');
+      var imgPrev = panel.querySelector('[data-fps-img-prev]');
+      var imgNext = panel.querySelector('[data-fps-img-next]');
+      var gi = 0;
+
+      function showSlide(n) {
+        if (!slides.length) return;
+        n = (n + slides.length) % slides.length;
+        slides.forEach(function (sl, i) {
+          sl.classList.toggle('is-active', i === n);
+        });
+        thumbs.forEach(function (t, i) {
+          t.classList.toggle('is-active', i === n);
+          t.setAttribute('aria-current', i === n ? 'true' : 'false');
+        });
+        if (curEl) curEl.textContent = n + 1;
+        gi = n;
+        var active = thumbs[n];
+        if (active && active.scrollIntoView) {
+          active.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+        }
+      }
+      panel.__showSlide = showSlide;
+
+      thumbs.forEach(function (t) {
+        t.addEventListener('click', function () {
+          if (thumbsWrap && thumbsWrap.__fpsDrag) return;
+          showSlide(parseInt(t.getAttribute('data-fps-thumb'), 10));
+        });
+      });
+      if (imgPrev)
+        imgPrev.addEventListener('click', function () {
+          showSlide(gi - 1);
+        });
+      if (imgNext)
+        imgNext.addEventListener('click', function () {
+          showSlide(gi + 1);
+        });
+
+      /* ----- Drag-to-scroll the thumbnail strip (mouse / desktop) -----
        Keeps click-to-select: a small movement threshold turns the press into a
        drag (scrolls the strip + suppresses the following click), otherwise the
        press stays a normal click that selects the image. */
-    if (thumbsWrap) {
-      var dragState = null;
+      if (thumbsWrap) {
+        var dragState = null;
 
-      function onThumbDragMove(e) {
-        if (!dragState) return;
-        var dx = e.clientX - dragState.startX;
-        var dy = e.clientY - dragState.startY;
-        if (!dragState.active) {
-          if (Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
-          if (Math.abs(dx) <= Math.abs(dy)) { dragState.vertical = true; return; }
-          dragState.active = true;
-          thumbsWrap.classList.add("is-dragging");
+        function onThumbDragMove(e) {
+          if (!dragState) return;
+          var dx = e.clientX - dragState.startX;
+          var dy = e.clientY - dragState.startY;
+          if (!dragState.active) {
+            if (Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
+            if (Math.abs(dx) <= Math.abs(dy)) {
+              dragState.vertical = true;
+              return;
+            }
+            dragState.active = true;
+            thumbsWrap.classList.add('is-dragging');
+          }
+          if (dragState.vertical) return;
+          e.preventDefault();
+          thumbsWrap.scrollLeft = dragState.startScroll - dx;
         }
-        if (dragState.vertical) return;
-        e.preventDefault();
-        thumbsWrap.scrollLeft = dragState.startScroll - dx;
-      }
 
-      function onThumbDragEnd() {
-        if (!dragState) return;
-        document.removeEventListener("mousemove", onThumbDragMove);
-        document.removeEventListener("mouseup", onThumbDragEnd);
-        var wasDragging = dragState.active;
-        thumbsWrap.classList.remove("is-dragging");
-        dragState = null;
-        if (wasDragging) {
-          thumbsWrap.__fpsDrag = true;
-          setTimeout(function () { thumbsWrap.__fpsDrag = false; }, 0);
+        function onThumbDragEnd() {
+          if (!dragState) return;
+          document.removeEventListener('mousemove', onThumbDragMove);
+          document.removeEventListener('mouseup', onThumbDragEnd);
+          var wasDragging = dragState.active;
+          thumbsWrap.classList.remove('is-dragging');
+          dragState = null;
+          if (wasDragging) {
+            thumbsWrap.__fpsDrag = true;
+            setTimeout(function () {
+              thumbsWrap.__fpsDrag = false;
+            }, 0);
+          }
         }
-      }
 
-      thumbsWrap.addEventListener("mousedown", function (e) {
-        if (e.button !== 0) return;
-        /* Inactive panels are display:none at init (0 width), so overflow is
+        thumbsWrap.addEventListener('mousedown', function (e) {
+          if (e.button !== 0) return;
+          /* Inactive panels are display:none at init (0 width), so overflow is
            checked at press time, not when the section initialises. */
-        if (thumbsWrap.scrollWidth <= thumbsWrap.clientWidth + 1) return;
-        dragState = {
-          startX: e.clientX,
-          startY: e.clientY,
-          startScroll: thumbsWrap.scrollLeft,
-          active: false,
-          vertical: false
-        };
-        document.addEventListener("mousemove", onThumbDragMove);
-        document.addEventListener("mouseup", onThumbDragEnd);
+          if (thumbsWrap.scrollWidth <= thumbsWrap.clientWidth + 1) return;
+          dragState = {
+            startX: e.clientX,
+            startY: e.clientY,
+            startScroll: thumbsWrap.scrollLeft,
+            active: false,
+            vertical: false,
+          };
+          document.addEventListener('mousemove', onThumbDragMove);
+          document.addEventListener('mouseup', onThumbDragEnd);
+        });
+      }
+
+      /* ----- Quantity stepper ----- */
+      var qtyInput = panel.querySelector('[data-fps-qty-input]');
+      panel.querySelectorAll('[data-fps-qty]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (!qtyInput) return;
+          var v = (parseInt(qtyInput.value, 10) || 1) + parseInt(btn.getAttribute('data-fps-qty'), 10);
+          if (v < 1) v = 1;
+          qtyInput.value = v;
+        });
       });
+
+      /* ----- Variant select ----- */
+      var select = panel.querySelector('[data-fps-variant]');
+      var variants = readJSON(panel.querySelector('[data-fps-variant-json]'));
+      var priceEl = panel.querySelector('[data-fps-price]');
+      var addBtn = panel.querySelector('[data-fps-add]');
+      if (select && variants) {
+        select.addEventListener('change', function () {
+          var v = null;
+          for (var k = 0; k < variants.length; k++) {
+            if (String(variants[k].id) === String(select.value)) {
+              v = variants[k];
+              break;
+            }
+          }
+          if (!v) return;
+          if (priceEl) {
+            var html = '';
+            if (v.compare_raw && v.compare_raw > v.price_raw) {
+              html += '<s class="fps__price-compare">' + v.compare + '</s>';
+            }
+            html += '<span class="fps__price-current">' + v.price + '</span>';
+            priceEl.innerHTML = html;
+          }
+          if (addBtn) {
+            var lbl = addBtn.querySelector('.fps__add-label');
+            if (v.available) {
+              addBtn.disabled = false;
+              if (lbl) lbl.textContent = addBtn.getAttribute('data-add-label') || 'Add to cart';
+            } else {
+              addBtn.disabled = true;
+              if (lbl) lbl.textContent = addBtn.getAttribute('data-soldout-label') || 'Sold out';
+            }
+          }
+          if (v.media && panel.__showSlide) panel.__showSlide(v.media - 1);
+        });
+      }
+
+      /* ----- Share ----- */
+      panel.querySelectorAll('[data-fps-share]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          share(btn.getAttribute('data-fps-share'), panel, btn);
+        });
+      });
+
+      /* ----- Add to cart ----- */
+      var form = panel.querySelector('.fps__form');
+      if (form) form.addEventListener('submit', onAddSubmit);
     }
 
-    /* ----- Quantity stepper ----- */
-    var qtyInput = panel.querySelector("[data-fps-qty-input]");
-    panel.querySelectorAll("[data-fps-qty]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        if (!qtyInput) return;
-        var v = (parseInt(qtyInput.value, 10) || 1) + parseInt(btn.getAttribute("data-fps-qty"), 10);
-        if (v < 1) v = 1;
-        qtyInput.value = v;
-      });
-    });
+    function onAddSubmit(e) {
+      var form = e.currentTarget;
+      var root = form.closest('[data-fps]');
+      if (!root) return; // let it submit normally
+      e.preventDefault();
 
-    /* ----- Variant select ----- */
-    var select = panel.querySelector("[data-fps-variant]");
-    var variants = readJSON(panel.querySelector("[data-fps-variant-json]"));
-    var priceEl = panel.querySelector("[data-fps-price]");
-    var addBtn = panel.querySelector("[data-fps-add]");
-    if (select && variants) {
-      select.addEventListener("change", function () {
-        var v = null;
-        for (var k = 0; k < variants.length; k++) {
-          if (String(variants[k].id) === String(select.value)) { v = variants[k]; break; }
-        }
-        if (!v) return;
-        if (priceEl) {
-          var html = "";
-          if (v.compare_raw && v.compare_raw > v.price_raw) {
-            html += '<s class="fps__price-compare">' + v.compare + "</s>";
+      var addUrl = root.getAttribute('data-cart-add-url') || '/cart/add';
+      if (!/\.js(\?|$)/.test(addUrl)) addUrl += '.js';
+
+      var btn = form.querySelector('[data-fps-add]');
+      var msg = form.parentNode.querySelector('[data-fps-error]');
+      if (msg) {
+        msg.hidden = true;
+        msg.textContent = '';
+      }
+      setState(btn, 'loading');
+
+      fetch(addUrl, {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+        body: new FormData(form),
+      })
+        .then(function (r) {
+          return r.json().then(function (j) {
+            return { ok: r.ok, body: j };
+          });
+        })
+        .then(function (res) {
+          if (!res.ok) throw new Error((res.body && res.body.description) || 'Sorry, this item could not be added.');
+          var behavior = root.getAttribute('data-fps-add-behavior') || 'stay';
+          if (behavior === 'cart') {
+            updateCartCount(root);
+            document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+            document.dispatchEvent(new CustomEvent('cart:open', { bubbles: true }));
+            return;
           }
-          html += '<span class="fps__price-current">' + v.price + "</span>";
-          priceEl.innerHTML = html;
-        }
-        if (addBtn) {
-          var lbl = addBtn.querySelector(".fps__add-label");
-          if (v.available) {
-            addBtn.disabled = false;
-            if (lbl) lbl.textContent = addBtn.getAttribute("data-add-label") || "Add to cart";
-          } else {
-            addBtn.disabled = true;
-            if (lbl) lbl.textContent = addBtn.getAttribute("data-soldout-label") || "Sold out";
-          }
-        }
-        if (v.media && panel.__showSlide) panel.__showSlide(v.media - 1);
-      });
-    }
-
-    /* ----- Share ----- */
-    panel.querySelectorAll("[data-fps-share]").forEach(function (btn) {
-      btn.addEventListener("click", function () { share(btn.getAttribute("data-fps-share"), panel, btn); });
-    });
-
-    /* ----- Add to cart ----- */
-    var form = panel.querySelector(".fps__form");
-    if (form) form.addEventListener("submit", onAddSubmit);
-  }
-
-  function onAddSubmit(e) {
-    var form = e.currentTarget;
-    var root = form.closest("[data-fps]");
-    if (!root) return; // let it submit normally
-    e.preventDefault();
-
-    var addUrl = root.getAttribute("data-cart-add-url") || "/cart/add";
-    if (!/\.js(\?|$)/.test(addUrl)) addUrl += ".js";
-
-    var btn = form.querySelector("[data-fps-add]");
-    var msg = form.parentNode.querySelector("[data-fps-error]");
-    if (msg) { msg.hidden = true; msg.textContent = ""; }
-    setState(btn, "loading");
-
-    fetch(addUrl, {
-      method: "POST",
-      headers: { Accept: "application/json", "X-Requested-With": "XMLHttpRequest" },
-      body: new FormData(form)
-    })
-      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
-      .then(function (res) {
-        if (!res.ok) throw new Error((res.body && res.body.description) || "Sorry, this item could not be added.");
-        var behavior = root.getAttribute("data-fps-add-behavior") || "stay";
-        if (behavior === "cart") {
+          setState(btn, 'added');
           updateCartCount(root);
-          document.dispatchEvent(new CustomEvent("cart:refresh", { bubbles: true }));
-          document.dispatchEvent(new CustomEvent("cart:open", { bubbles: true }));
-          return;
-        }
-        setState(btn, "added");
-        updateCartCount(root);
-        document.dispatchEvent(new CustomEvent("cart:refresh", { bubbles: true }));
-        setTimeout(function () { setState(btn, "idle"); }, 2200);
-      })
-      .catch(function (err) {
-        setState(btn, "idle");
-        if (msg) { msg.hidden = false; msg.textContent = err.message; }
-      });
-  }
-
-  function setState(btn, state) {
-    if (!btn) return;
-    var lbl = btn.querySelector(".fps__add-label");
-    if (!btn.__label && lbl) btn.__label = lbl.textContent;
-    btn.classList.remove("is-loading", "is-added");
-    if (state === "loading") { btn.classList.add("is-loading"); btn.disabled = true; }
-    else if (state === "added") {
-      btn.classList.add("is-added"); btn.disabled = false;
-      if (lbl) lbl.textContent = btn.getAttribute("data-added-label") || "Added";
-    } else {
-      btn.disabled = false;
-      if (lbl && btn.__label) lbl.textContent = btn.__label;
+          document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+          setTimeout(function () {
+            setState(btn, 'idle');
+          }, 2200);
+        })
+        .catch(function (err) {
+          setState(btn, 'idle');
+          if (msg) {
+            msg.hidden = false;
+            msg.textContent = err.message;
+          }
+        });
     }
-  }
 
-  function updateCartCount(root) {
-    fetch((root.getAttribute("data-cart-url") || "/cart") + ".js", { headers: { Accept: "application/json" } })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (cart) {
-        if (!cart) return;
-        document.querySelectorAll("[data-cart-count]").forEach(function (el) { el.textContent = cart.item_count; });
-      })
-      .catch(function () {});
-  }
-
-  function share(network, panel, btn) {
-    var url = panel.getAttribute("data-fps-url");
-    var title = panel.getAttribute("data-fps-title") || document.title;
-    var img = panel.getAttribute("data-fps-image") || "";
-    if (img.indexOf("//") === 0) img = "https:" + img;
-
-    if (network === "copy") { copyLink(url, btn); return; }
-    if (network === "native" && navigator.share) {
-      navigator.share({ title: title, url: url }).catch(function () {});
-      return;
-    }
-    var map = {
-      facebook: "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url),
-      x: "https://twitter.com/intent/tweet?url=" + encodeURIComponent(url) + "&text=" + encodeURIComponent(title),
-      pinterest: "https://pinterest.com/pin/create/button/?url=" + encodeURIComponent(url) + "&media=" + encodeURIComponent(img) + "&description=" + encodeURIComponent(title),
-      whatsapp: "https://api.whatsapp.com/send?text=" + encodeURIComponent(title + " " + url)
-    };
-    var u = map[network];
-    if (u) window.open(u, "_blank", "noopener,noreferrer,width=620,height=540");
-  }
-
-  function copyLink(url, btn) {
-    function done() {
+    function setState(btn, state) {
       if (!btn) return;
-      btn.classList.add("is-copied");
-      setTimeout(function () { btn.classList.remove("is-copied"); }, 1600);
+      var lbl = btn.querySelector('.fps__add-label');
+      if (!btn.__label && lbl) btn.__label = lbl.textContent;
+      btn.classList.remove('is-loading', 'is-added');
+      if (state === 'loading') {
+        btn.classList.add('is-loading');
+        btn.disabled = true;
+      } else if (state === 'added') {
+        btn.classList.add('is-added');
+        btn.disabled = false;
+        if (lbl) lbl.textContent = btn.getAttribute('data-added-label') || 'Added';
+      } else {
+        btn.disabled = false;
+        if (lbl && btn.__label) lbl.textContent = btn.__label;
+      }
     }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(done).catch(fallback);
-    } else { fallback(); }
-    function fallback() {
-      var t = document.createElement("textarea");
-      t.value = url; t.setAttribute("readonly", "");
-      t.style.position = "absolute"; t.style.left = "-9999px";
-      document.body.appendChild(t); t.select();
-      try { document.execCommand("copy"); done(); } catch (e) {}
-      document.body.removeChild(t);
-    }
-  }
 
-  function boot() {
-    document.querySelectorAll("[data-fps]").forEach(initSection);
-  }
-  if (document.readyState !== "loading") boot();
-  else document.addEventListener("DOMContentLoaded", boot);
-
-  /* Shopify theme editor */
-  document.addEventListener("shopify:section:load", function (e) {
-    var el = e.target.querySelector ? e.target.querySelector("[data-fps]") : null;
-    if (e.target.matches && e.target.matches("[data-fps]")) el = e.target;
-    initSection(el);
-  });
-  document.addEventListener("shopify:block:select", function (e) {
-    var panel = e.target.closest ? e.target.closest("[data-fps-product]") : null;
-    if (!panel) return;
-    var root = panel.closest("[data-fps]");
-    if (root && root.__fpsShow) {
-      var panels = Array.prototype.slice.call(root.querySelectorAll("[data-fps-product]"));
-      root.__fpsShow(panels.indexOf(panel));
+    function updateCartCount(root) {
+      fetch((root.getAttribute('data-cart-url') || '/cart') + '.js', { headers: { Accept: 'application/json' } })
+        .then(function (r) {
+          return r.ok ? r.json() : null;
+        })
+        .then(function (cart) {
+          if (!cart) return;
+          document.querySelectorAll('[data-cart-count]').forEach(function (el) {
+            el.textContent = cart.item_count;
+          });
+        })
+        .catch(function () {});
     }
-  });
-})();
+
+    function share(network, panel, btn) {
+      var url = panel.getAttribute('data-fps-url');
+      var title = panel.getAttribute('data-fps-title') || document.title;
+      var img = panel.getAttribute('data-fps-image') || '';
+      if (img.indexOf('//') === 0) img = 'https:' + img;
+
+      if (network === 'copy') {
+        copyLink(url, btn);
+        return;
+      }
+      if (network === 'native' && navigator.share) {
+        navigator.share({ title: title, url: url }).catch(function () {});
+        return;
+      }
+      var map = {
+        facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url),
+        x: 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(title),
+        pinterest:
+          'https://pinterest.com/pin/create/button/?url=' +
+          encodeURIComponent(url) +
+          '&media=' +
+          encodeURIComponent(img) +
+          '&description=' +
+          encodeURIComponent(title),
+        whatsapp: 'https://api.whatsapp.com/send?text=' + encodeURIComponent(title + ' ' + url),
+      };
+      var u = map[network];
+      if (u) window.open(u, '_blank', 'noopener,noreferrer,width=620,height=540');
+    }
+
+    function copyLink(url, btn) {
+      function done() {
+        if (!btn) return;
+        btn.classList.add('is-copied');
+        setTimeout(function () {
+          btn.classList.remove('is-copied');
+        }, 1600);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(done).catch(fallback);
+      } else {
+        fallback();
+      }
+      function fallback() {
+        var t = document.createElement('textarea');
+        t.value = url;
+        t.setAttribute('readonly', '');
+        t.style.position = 'absolute';
+        t.style.left = '-9999px';
+        document.body.appendChild(t);
+        t.select();
+        try {
+          document.execCommand('copy');
+          done();
+        } catch (e) {}
+        document.body.removeChild(t);
+      }
+    }
+
+    function boot() {
+      document.querySelectorAll('[data-fps]').forEach(initSection);
+    }
+    if (document.readyState !== 'loading') boot();
+    else document.addEventListener('DOMContentLoaded', boot);
+
+    /* Shopify theme editor */
+    document.addEventListener('shopify:section:load', function (e) {
+      var el = e.target.querySelector ? e.target.querySelector('[data-fps]') : null;
+      if (e.target.matches && e.target.matches('[data-fps]')) el = e.target;
+      initSection(el);
+    });
+    document.addEventListener('shopify:block:select', function (e) {
+      var panel = e.target.closest ? e.target.closest('[data-fps-product]') : null;
+      if (!panel) return;
+      var root = panel.closest('[data-fps]');
+      if (root && root.__fpsShow) {
+        var panels = Array.prototype.slice.call(root.querySelectorAll('[data-fps-product]'));
+        root.__fpsShow(panels.indexOf(panel));
+      }
+    });
+  })();
 {% endjavascript %}
 
 {% schema %}
@@ -578,16 +703,35 @@
   "class": "section-featured-product",
   "settings": [
     { "type": "header", "content": "Products" },
-    { "type": "paragraph", "content": "Add Product blocks to hand-pick and order products. If no blocks are added, the fallback collection below is used." },
+    {
+      "type": "paragraph",
+      "content": "Add Product blocks to hand-pick and order products. If no blocks are added, the fallback collection below is used."
+    },
     { "type": "collection", "id": "collection", "label": "Fallback collection" },
-    { "type": "range", "id": "products_limit", "label": "Max products from fallback", "min": 2, "max": 12, "step": 1, "default": 6 },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "Max products from fallback",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
 
     { "type": "header", "content": "Heading" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Featured" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Take a closer look" },
-    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Browse the details, then swap to the next product." },
     {
-      "type": "select", "id": "heading_align", "label": "Heading alignment", "default": "left",
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Browse the details, then swap to the next product."
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading alignment",
+      "default": "left",
       "options": [
         { "value": "left", "label": "Left" },
         { "value": "center", "label": "Center" }
@@ -600,7 +744,10 @@
     { "type": "text", "id": "added_label", "label": "Added confirmation label", "default": "Added" },
     { "type": "checkbox", "id": "show_quantity", "label": "Show quantity selector", "default": true },
     {
-      "type": "select", "id": "add_behavior", "label": "After adding to cart", "default": "stay",
+      "type": "select",
+      "id": "add_behavior",
+      "label": "After adding to cart",
+      "default": "stay",
       "options": [
         { "value": "stay", "label": "Stay on page (show \"Added\")" },
         { "value": "cart", "label": "Open cart drawer" }
@@ -624,7 +771,10 @@
 
     { "type": "header", "content": "Gallery" },
     {
-      "type": "select", "id": "image_ratio", "label": "Image shape", "default": "1/1",
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image shape",
+      "default": "1/1",
       "options": [
         { "value": "1/1", "label": "Square" },
         { "value": "4/5", "label": "Portrait (4:5)" },
@@ -634,7 +784,10 @@
       ]
     },
     {
-      "type": "select", "id": "image_fit", "label": "Image fit", "default": "contain",
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "default": "contain",
       "options": [
         { "value": "contain", "label": "Contain (show whole image)" },
         { "value": "cover", "label": "Cover (fill, may crop)" }
@@ -655,9 +808,36 @@
     { "type": "color", "id": "button_text", "label": "Button text", "default": "#FFFFFF" },
 
     { "type": "header", "content": "Section" },
-    { "type": "range", "id": "corner_radius", "label": "Corner radius", "min": 0, "max": 28, "step": 1, "unit": "px", "default": 14 },
-    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
     { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "featured-product" }
   ],
   "blocks": [
@@ -666,7 +846,12 @@
       "name": "Product",
       "settings": [
         { "type": "product", "id": "product", "label": "Product" },
-        { "type": "richtext", "id": "custom_description", "label": "Custom description", "info": "Optional. Overrides the product's own description in this section." }
+        {
+          "type": "richtext",
+          "id": "custom_description",
+          "label": "Custom description",
+          "info": "Optional. Overrides the product's own description in this section."
+        }
       ]
     }
   ],
@@ -674,10 +859,7 @@
   "presets": [
     {
       "name": "Featured product",
-      "blocks": [
-        { "type": "product" },
-        { "type": "product" }
-      ]
+      "blocks": [{ "type": "product" }, { "type": "product" }]
     }
   ]
 }
