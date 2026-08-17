@@ -1,19 +1,29 @@
 <div class="page-shell wrap">
   <div class="page-head">
-    <span class="eyebrow">Order {{ order.name }}</span>
+    <span class="eyebrow eyebrow-left">Order {{ order.name }}</span>
     <h1>{{ order.name }}</h1>
-    <p class="form-note">Placed {{ order.created_at | date: '%B %-d, %Y' }} &middot; {{ order.financial_status_label }}</p>
+    <p class="form-note">
+      Placed {{ order.created_at | date: '%B %-d, %Y' }} &middot; {{ order.financial_status_label }}
+    </p>
   </div>
 
   <div style="overflow-x:auto">
     <table style="width:100%;border-collapse:collapse;font-family:var(--ui);font-size:.96rem">
-      <thead><tr style="text-align:left;color:var(--ink-soft)">
-        <th style="padding:.6rem">Item</th><th style="padding:.6rem">Qty</th><th style="padding:.6rem">Price</th>
-      </tr></thead>
+      <thead>
+        <tr style="text-align:left;color:var(--ink-soft)">
+          <th style="padding:.6rem">Item</th>
+          <th style="padding:.6rem">Qty</th>
+          <th style="padding:.6rem">Price</th>
+        </tr>
+      </thead>
       <tbody>
         {%- for line_item in order.line_items -%}
           <tr style="border-top:1px solid var(--parchment-line)">
-            <td style="padding:.6rem"><a href="{{ line_item.product.url }}" style="color:var(--violet-deep);font-weight:700">{{ line_item.title }}</a></td>
+            <td style="padding:.6rem">
+              <a href="{{ line_item.product.url }}" style="color:var(--violet-deep);font-weight:700">
+                {{- line_item.title -}}
+              </a>
+            </td>
             <td style="padding:.6rem">{{ line_item.quantity }}</td>
             <td style="padding:.6rem">{{ line_item.final_line_price | money }}</td>
           </tr>
@@ -28,5 +38,7 @@
     <div class="subtotal">Total: {{ order.total_price | money }}</div>
   </div>
 
-  <p class="form-note" style="margin-top:2rem"><a href="{{ routes.account_url }}" style="color:var(--violet-deep);font-weight:700">&larr; Back to account</a></p>
+  <p class="form-note" style="margin-top:2rem">
+    <a href="{{ routes.account_url }}" style="color:var(--violet-deep);font-weight:700">&larr; Back to account</a>
+  </p>
 </div>

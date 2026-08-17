@@ -1,13 +1,21 @@
 <div class="page-shell page-shell--narrow wrap">
   <div class="page-head" style="text-align:center">
-    <span class="eyebrow center">Activate account</span>
+    <span class="eyebrow eyebrow-center">Activate account</span>
     <h1>Set your password</h1>
   </div>
 
   {%- form 'activate_customer_password', class: 'auth-form' -%}
-    {%- if form.errors -%}<div class="errors">{{ form.errors | default_errors }}</div>{%- endif -%}
+    {%- if form.errors -%}
+      <div class="errors">{{ form.errors | default_errors }}</div>
+    {%- endif -%}
     <input type="password" name="customer[password]" placeholder="Password" autocomplete="new-password" required>
-    <input type="password" name="customer[password_confirmation]" placeholder="Confirm password" autocomplete="new-password" required>
+    <input
+      type="password"
+      name="customer[password_confirmation]"
+      placeholder="Confirm password"
+      autocomplete="new-password"
+      required
+    >
     <button type="submit" class="btn btn--primary">Activate account</button>
     <button type="submit" name="decline" class="btn btn--ghost">Decline invitation</button>
   {%- endform -%}

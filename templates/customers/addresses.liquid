@@ -1,8 +1,10 @@
 <div class="page-shell page-shell--narrow wrap">
   <div class="page-head">
-    <span class="eyebrow">Account</span>
+    <span class="eyebrow eyebrow-left">Account</span>
     <h1>Your addresses</h1>
-    <p class="form-note"><a href="{{ routes.account_url }}" style="color:var(--violet-deep);font-weight:700">&larr; Back to account</a></p>
+    <p class="form-note">
+      <a href="{{ routes.account_url }}" style="color:var(--violet-deep);font-weight:700">&larr; Back to account</a>
+    </p>
   </div>
 
   <h2 style="font-family:var(--display);margin:1rem 0">Add a new address</h2>
@@ -22,8 +24,17 @@
       <div style="border:1px solid var(--parchment-line);border-radius:var(--radius-md);padding:1.2rem;margin-bottom:1rem">
         <div class="rte">{{ address | format_address }}</div>
         <p class="form-note" style="margin-top:.6rem">
-          <a href="{{ address.url }}" data-form-id="{{ address.id }}" style="color:var(--violet-deep);font-weight:700">Edit</a> &middot;
-          <a href="{{ address.url }}" data-target="delete" data-confirm-message="Are you sure?" style="color:#8a2b2b;font-weight:700">Delete</a>
+          <a href="{{ address.url }}" data-form-id="{{ address.id }}" style="color:var(--violet-deep);font-weight:700"
+            >Edit</a
+          >
+          &middot;
+          <a
+            href="{{ address.url }}"
+            data-target="delete"
+            data-confirm-message="Are you sure?"
+            style="color:#8a2b2b;font-weight:700"
+            >Delete</a
+          >
         </p>
       </div>
     {%- endfor -%}

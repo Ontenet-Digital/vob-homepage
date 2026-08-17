@@ -383,7 +383,9 @@
   <div class="hero__inner wrap">
     <div class="hero__content">
       {%- if s.moto_enable and s.moto_text != blank -%}
-        <span class="eyebrow{% if moto_align == 'center' %} center{% endif %}">{{ s.moto_text | escape }}</span>
+        <span class="eyebrow{% if moto_align == 'center' %} eyebrow-center{% else %} eyebrow-left{% endif %}">
+          {{- s.moto_text | escape -}}
+        </span>
       {%- endif -%}
 
       {%- if s.title != blank -%}

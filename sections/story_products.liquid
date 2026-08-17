@@ -8,7 +8,7 @@
   <div class="wrap">
     <div class="sec-head reveal">
       {%- if section.settings.eyebrow != blank -%}
-        <span class="eyebrow center">{{ section.settings.eyebrow }}</span>
+        <span class="eyebrow eyebrow-center">{{ section.settings.eyebrow }}</span>
       {%- endif -%}
       {%- if section.settings.heading != blank -%}
         <h2>{{ section.settings.heading }}</h2>
@@ -40,7 +40,12 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our Products" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Our Products" },
-    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Three immersive ways to bring the Bible to life." },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro",
+      "default": "Three immersive ways to bring the Bible to life."
+    },
     { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "story-products" }
   ],
   "blocks": [

@@ -128,6 +128,20 @@
         margin-inline: auto;
         text-align: center;
     }
+    /* The eyebrow becomes centred on tablet/mobile (text-align:center above), so
+       give it the trailing line to show BOTH flanking lines — the same look as
+       the shared .eyebrow-center. Width matches the leading line below ≤767px. */
+    .about-statement .eyebrow-left {
+        justify-content: center;
+    }
+    .about-statement .eyebrow-left::after {
+        content: "";
+        width: min(52px, 12vw);
+        height: 1px;
+        background: currentColor;
+        opacity: 0.85;
+        flex: none;
+    }
 }
 
 @media (max-width: 767px) {
@@ -139,5 +153,9 @@
     }
     .about-statement__verse p {
         font-size: 1.16rem;
+    }
+    /* Keep the trailing line the same width as the leading line on phones. */
+    .about-statement .eyebrow-left::after {
+        width: min(36px, 10vw);
     }
 }

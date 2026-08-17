@@ -1,6 +1,6 @@
 <div class="page-shell wrap">
   <div class="page-head">
-    <span class="eyebrow">Your basket</span>
+    <span class="eyebrow eyebrow-left">Your basket</span>
     <h1>{{ 'cart.general.title' | t }}</h1>
   </div>
 
@@ -14,7 +14,13 @@
             <div class="cart-line" data-cart-page-line="{{ item.key }}">
               <a class="cart-line__thumb" href="{{ item.url }}" tabindex="-1" aria-hidden="true">
                 {%- if item.image -%}
-                  <img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.title | escape }}" width="120" height="120" loading="lazy">
+                  <img
+                    src="{{ item.image | image_url: width: 240 }}"
+                    alt="{{ item.title | escape }}"
+                    width="120"
+                    height="120"
+                    loading="lazy"
+                  >
                 {%- else -%}
                   {{ 'product-1' | placeholder_svg_tag: 'cart-line__thumb-ph' }}
                 {%- endif -%}
@@ -29,12 +35,46 @@
                 {%- endunless -%}
                 <div class="cart-line__bottom">
                   <div class="cart-line__qty">
-                    <button type="button" class="cart-line__qty-btn" data-cart-page-qty data-id="{{ item.key }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="{{ 'cart.general.quantity' | t }} -">&minus;</button>
+                    <button
+                      type="button"
+                      class="cart-line__qty-btn"
+                      data-cart-page-qty
+                      data-id="{{ item.key }}"
+                      data-qty="{{ item.quantity | minus: 1 }}"
+                      aria-label="{{ 'cart.general.quantity' | t }} -"
+                    >
+                      &minus;
+                    </button>
                     <span class="cart-line__qty-num">{{ item.quantity }}</span>
-                    <button type="button" class="cart-line__qty-btn" data-cart-page-qty data-id="{{ item.key }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="{{ 'cart.general.quantity' | t }} +">+</button>
+                    <button
+                      type="button"
+                      class="cart-line__qty-btn"
+                      data-cart-page-qty
+                      data-id="{{ item.key }}"
+                      data-qty="{{ item.quantity | plus: 1 }}"
+                      aria-label="{{ 'cart.general.quantity' | t }} +"
+                    >
+                      +
+                    </button>
                   </div>
-                  <a class="cart-line__remove" href="{{ item.url_to_remove }}" data-cart-page-remove data-key="{{ item.key }}" aria-label="{{ 'cart.general.remove' | t }}">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6"/></svg>
+                  <a
+                    class="cart-line__remove"
+                    href="{{ item.url_to_remove }}"
+                    data-cart-page-remove
+                    data-key="{{ item.key }}"
+                    aria-label="{{ 'cart.general.remove' | t }}"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6"/>
+                    </svg>
                   </a>
                 </div>
               </div>
@@ -50,8 +90,12 @@
               <strong>{{ cart.total_price | money }}</strong>
             </div>
             <p class="cart-summary__note">{{ 'cart.general.shipping_note' | t }}</p>
-            <button type="submit" name="checkout" class="btn btn--gold cart-summary__checkout">{{ 'cart.general.checkout' | t }}</button>
-            <a class="cart-summary__continue" href="{{ routes.all_products_collection_url }}">{{ 'cart.general.continue_shopping' | t }}</a>
+            <button type="submit" name="checkout" class="btn btn--gold cart-summary__checkout">
+              {{ 'cart.general.checkout' | t }}
+            </button>
+            <a class="cart-summary__continue" href="{{ routes.all_products_collection_url }}">
+              {{- 'cart.general.continue_shopping' | t -}}
+            </a>
           </div>
         </aside>
       </div>
@@ -59,7 +103,9 @@
   {%- else -%}
     <div class="empty-state">
       <p class="rte">{{ 'cart.general.empty' | t }}</p>
-      <a class="btn btn--gold" href="{{ routes.all_products_collection_url }}" style="margin-top:1.2rem">{{ 'cart.general.continue_shopping' | t }}</a>
+      <a class="btn btn--gold" href="{{ routes.all_products_collection_url }}" style="margin-top:1.2rem">
+        {{- 'cart.general.continue_shopping' | t -}}
+      </a>
     </div>
   {%- endif -%}
 </div>

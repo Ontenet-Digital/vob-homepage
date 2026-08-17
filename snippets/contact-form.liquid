@@ -9,11 +9,11 @@
 {%- form 'contact', class: 'cform', data-contact-form: '' -%}
   <div class="cform__card">
     <div class="cform__aside">
-      <span class="eyebrow">Get in touch</span>
+      <span class="eyebrow eyebrow-left">Get in touch</span>
       <h2 class="cform__title">We'd love to hear from you</h2>
       <p class="cform__intro">
-        A question about a title, an order, or a story just for you? Send us a
-        note and our team will reply within one business day.
+        A question about a title, an order, or a story just for you? Send us a note and our team will reply within one
+        business day.
       </p>
 
       <ul class="cform__meta">
@@ -52,7 +52,8 @@
             value="{{ form.name | escape }}"
             autocomplete="name"
             placeholder="Jane Doe"
-            required>
+            required
+          >
         </label>
         <label class="cform__field">
           <span class="cform__label">Email <em>*</em></span>
@@ -62,7 +63,8 @@
             value="{{ form.email | escape }}"
             autocomplete="email"
             placeholder="jane@example.com"
-            required>
+            required
+          >
         </label>
       </div>
 
@@ -73,7 +75,8 @@
           name="contact[phone]"
           value="{{ form.phone | escape }}"
           autocomplete="tel"
-          placeholder="+1 (555) 000-0000">
+          placeholder="+1 (555) 000-0000"
+        >
       </label>
 
       <label class="cform__field">
@@ -82,7 +85,8 @@
           type="text"
           name="contact[subject]"
           value="{{ form.subject | escape }}"
-          placeholder="How can we help?">
+          placeholder="How can we help?"
+        >
       </label>
 
       <label class="cform__field">
@@ -91,7 +95,8 @@
           name="contact[body]"
           rows="5"
           placeholder="Tell us a little more…"
-          required>{{ form.body | escape }}</textarea>
+          required
+        >{{ form.body | escape }}</textarea>
       </label>
 
       <div class="cform__actions">

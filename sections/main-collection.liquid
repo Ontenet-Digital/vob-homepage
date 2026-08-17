@@ -86,7 +86,9 @@
 
   <div class="plist__head plist__head--{{ s.heading_align }} reveal">
     {%- if s.eyebrow != blank -%}
-      <span class="eyebrow{% if s.heading_align == 'center' %} center{% endif %}">{{ s.eyebrow }}</span>
+      <span class="eyebrow{% if s.heading_align == 'center' %} eyebrow-center{% else %} eyebrow-left{% endif %}">
+        {{- s.eyebrow -}}
+      </span>
     {%- endif -%}
     <h1>{{ collection.title }}</h1>
     {%- if s.show_description and collection.description != blank -%}
@@ -95,7 +97,10 @@
     {%- if s.show_count and collection.all_products_count > 0 -%}
       <p class="plist__count">
         {%- if collection.products_count != collection.all_products_count -%}
-          {{ 'collections.toolbar.results_filtered' | t: count: collection.products_count, total: collection.all_products_count }}
+          {{
+            'collections.toolbar.results_filtered'
+            | t: count: collection.products_count, total: collection.all_products_count
+          }}
         {%- else -%}
           {{ 'collections.toolbar.results' | t: count: collection.products_count }}
         {%- endif -%}
@@ -133,9 +138,18 @@
   "name": "Collection page",
   "settings": [
     { "type": "header", "content": "Heading" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Collection", "info": "The page title always comes from the collection itself." },
     {
-      "type": "select", "id": "heading_align", "label": "Heading alignment", "default": "left",
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Collection",
+      "info": "The page title always comes from the collection itself."
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading alignment",
+      "default": "left",
       "options": [
         { "value": "left", "label": "Left" },
         { "value": "center", "label": "Center" }
@@ -147,21 +161,81 @@
 
     { "type": "header", "content": "Sort & filter" },
     { "type": "checkbox", "id": "show_sort", "label": "Show sort", "default": true },
-    { "type": "checkbox", "id": "show_price_filter", "label": "Show price filter", "default": true, "info": "Requires the Price filter to be enabled in Shopify admin → Search & Discovery → Filters." },
+    {
+      "type": "checkbox",
+      "id": "show_price_filter",
+      "label": "Show price filter",
+      "default": true,
+      "info": "Requires the Price filter to be enabled in Shopify admin → Search & Discovery → Filters."
+    },
 
     { "type": "header", "content": "Grid" },
-    { "type": "range", "id": "columns_desktop", "label": "Columns — desktop", "min": 2, "max": 5, "step": 1, "default": 4 },
-    { "type": "range", "id": "columns_tablet", "label": "Columns — tablet", "min": 1, "max": 4, "step": 1, "default": 1 },
-    { "type": "range", "id": "columns_mobile", "label": "Columns — mobile", "min": 1, "max": 4, "step": 1, "default": 1 },
-    { "type": "range", "id": "grid_gap", "label": "Grid gap — desktop", "min": 8, "max": 48, "step": 2, "unit": "px", "default": 24 },
-    { "type": "range", "id": "grid_gap_mobile", "label": "Grid gap — mobile", "min": 4, "max": 32, "step": 2, "unit": "px", "default": 14 },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns — desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "label": "Columns — tablet",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columns — mobile",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Grid gap — desktop",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "grid_gap_mobile",
+      "label": "Grid gap — mobile",
+      "min": 4,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
 
     { "type": "header", "content": "Card" },
     { "type": "color", "id": "card_bg", "label": "Card background", "default": "#FFFFFF" },
     { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#EDE6D6" },
-    { "type": "range", "id": "card_radius", "label": "Card corner radius", "min": 0, "max": 32, "step": 1, "unit": "px", "default": 10 },
     {
-      "type": "select", "id": "image_ratio", "label": "Image ratio", "default": "1/1",
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "default": "1/1",
       "options": [
         { "value": "1/1", "label": "Square" },
         { "value": "4/5", "label": "Portrait (4:5)" },
@@ -175,11 +249,24 @@
     { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": true },
     { "type": "color", "id": "vendor_color", "label": "Vendor colour", "default": "#BE9743" },
     { "type": "color", "id": "title_color", "label": "Title colour", "default": "#251D3A" },
-    { "type": "range", "id": "title_size", "label": "Title size — desktop", "min": 13, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size — desktop",
+      "min": 13,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
     { "type": "color", "id": "price_color", "label": "Price colour", "default": "#251D3A" },
     { "type": "color", "id": "compare_price_color", "label": "Compare-at price colour", "default": "#8B8398" },
 
-    { "type": "header", "content": "Rating badge", "info": "Shown automatically when a product has a review rating (e.g. via a reviews app)." },
+    {
+      "type": "header",
+      "content": "Rating badge",
+      "info": "Shown automatically when a product has a review rating (e.g. via a reviews app)."
+    },
     { "type": "checkbox", "id": "show_rating", "label": "Show rating badge", "default": true },
     { "type": "color", "id": "rating_text_color", "label": "Badge text & star colour", "default": "#BE9743" },
 
@@ -189,7 +276,10 @@
 
     { "type": "header", "content": "Quick add" },
     {
-      "type": "select", "id": "quick_add_style", "label": "Add to cart button", "default": "hover",
+      "type": "select",
+      "id": "quick_add_style",
+      "label": "Add to cart button",
+      "default": "hover",
       "options": [
         { "value": "hover", "label": "Show on hover (always on touch devices)" },
         { "value": "always", "label": "Always visible" },
@@ -198,16 +288,48 @@
     },
     { "type": "color", "id": "quick_add_bg_color", "label": "Button background", "default": "#251D3A" },
     { "type": "color", "id": "quick_add_text_color", "label": "Button text", "default": "#FDFBF3" },
-    { "type": "range", "id": "quick_add_radius", "label": "Button corner radius", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 30 },
+    {
+      "type": "range",
+      "id": "quick_add_radius",
+      "label": "Button corner radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
 
-    { "type": "header", "content": "Image dots", "info": "A decorative indicator shown when a product has more than one image." },
+    {
+      "type": "header",
+      "content": "Image dots",
+      "info": "A decorative indicator shown when a product has more than one image."
+    },
     { "type": "checkbox", "id": "show_image_dots", "label": "Show image dots", "default": true },
     { "type": "color", "id": "dot_active_color", "label": "Active dot colour", "default": "#BE9743" },
 
     { "type": "header", "content": "Section" },
     { "type": "color", "id": "bg_color", "label": "Background colour", "default": "#FFFFFF" },
-    { "type": "range", "id": "padding_top", "label": "Extra top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 48, "info": "Added on top of the space reserved for the fixed header." },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 }
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Extra top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "info": "Added on top of the space reserved for the fixed header."
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    }
   ]
 }
 {% endschema %}

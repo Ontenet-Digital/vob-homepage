@@ -49,13 +49,14 @@
         text-align: center;
     }
     /* Balance the eyebrow's trailing line when it is centered without the
-     `.center` modifier (i.e. when the desktop align is left). */
+     `.eyebrow-center` modifier (i.e. when the desktop align is left). */
     .contact-page__head .eyebrow::after {
         content: "";
-        width: min(36px, 10vw);
+        width: min(52px, 12vw);
         height: 1px;
         background: currentColor;
         opacity: 0.85;
+        flex: none;
     }
     .contact-page__subtitle {
         margin-inline: auto;
@@ -69,6 +70,10 @@
     }
     .contact-page__subtitle {
         font-size: 1rem;
+    }
+    /* Keep the trailing line the same width as the leading line on phones. */
+    .contact-page__head .eyebrow::after {
+        width: min(36px, 10vw);
     }
 }
 

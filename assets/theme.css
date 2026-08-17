@@ -150,7 +150,20 @@ section {
     opacity: 0.85;
     flex: none;
 }
-.eyebrow.center::after {
+/* Alignment modifiers: `.eyebrow-center` = centred with BOTH flanking lines;
+   `.eyebrow-left` = left-aligned with the leading line only. Sections that flip
+   alignment at a breakpoint override these in their own media query
+   (e.g. about-statement centres the eyebrow on tablet/mobile). */
+.eyebrow-left {
+    justify-content: flex-start;
+}
+.eyebrow-left::after {
+    content: none;
+}
+.eyebrow-center {
+    justify-content: center;
+}
+.eyebrow-center::after {
     content: "";
     width: min(52px, 12vw);
     height: 1px;
@@ -164,7 +177,7 @@ section {
         letter-spacing: 0.18em;
     }
     .eyebrow::before,
-    .eyebrow.center::after {
+    .eyebrow-center::after {
         width: min(36px, 10vw);
     }
 }
