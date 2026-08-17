@@ -1,77 +1,78 @@
 /* ============ CONTACT PAGE (customizable header + native contact form) ============ */
 .contact-page {
-  padding-block: 8rem 4rem;
+    padding-block: 8rem 4rem;
 }
 @media (max-width: 1023px) {
-  .contact-page {
-    padding-top: 5.5rem;
-  }
+    .contact-page {
+        padding-top: 5.5rem;
+    }
 }
 @media (max-width: 767px) {
-  .contact-page {
-    padding-top: 4rem;
-    padding-bottom: 3rem;
-  }
+    .contact-page {
+        padding-top: 4rem;
+        padding-bottom: 3rem;
+    }
 }
 
 .contact-page__head {
-  margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 .contact-page__head .eyebrow {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 .contact-page__title {
-  font-size: clamp(2.6rem, 5vw, 4rem);
-  margin: 0;
+    font-size: clamp(2.6rem, 5vw, 4rem);
+    margin: 0;
 }
 .contact-page__subtitle {
-  font-size: 1.1rem;
-  color: var(--ink-soft);
-  line-height: 1.7;
-  max-width: 46rem;
-  margin: 1.1rem 0 0;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    max-width: 46rem;
+    margin: 1.1rem 0 0;
 }
 
 .contact-page__head--center {
-  text-align: center;
+    text-align: center;
 }
 .contact-page__head--center .eyebrow {
-  justify-content: center;
+    justify-content: center;
 }
 .contact-page__head--center .contact-page__subtitle {
-  margin-inline: auto;
+    margin-inline: auto;
 }
 
 /* Tablet & mobile: force the header centered to align with the site's
    breakpoints, regardless of the desktop align choice. */
 @media (max-width: 1023px) {
-  .contact-page__head {
-    text-align: center;
-  }
-  /* Balance the eyebrow's trailing gold line when it is centered without the
+    .contact-page__head {
+        text-align: center;
+    }
+    /* Balance the eyebrow's trailing line when it is centered without the
      `.center` modifier (i.e. when the desktop align is left). */
-  .contact-page__head .eyebrow::after {
-    content: "";
-    width: 26px;
-    height: 1px;
-    background: var(--gold);
-  }
-  .contact-page__subtitle {
-    margin-inline: auto;
-  }
+    .contact-page__head .eyebrow::after {
+        content: "";
+        width: min(36px, 10vw);
+        height: 1px;
+        background: currentColor;
+        opacity: 0.85;
+    }
+    .contact-page__subtitle {
+        margin-inline: auto;
+    }
 }
 
 /* Mobile: scale the heading down so it sits comfortably at small sizes */
 @media (max-width: 767px) {
-  .contact-page__title {
-    font-size: clamp(2.1rem, 8vw, 2.9rem);
-  }
-  .contact-page__subtitle {
-    font-size: 1rem;
-  }
+    .contact-page__title {
+        font-size: clamp(2.1rem, 8vw, 2.9rem);
+    }
+    .contact-page__subtitle {
+        font-size: 1rem;
+    }
 }
 
 /* The native form card sits below the header; keep its top margin tidy */
 .contact-page .cform {
-  margin-top: 1.5rem;
+    margin-top: 1.5rem;
 }

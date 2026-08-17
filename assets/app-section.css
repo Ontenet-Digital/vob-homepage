@@ -33,12 +33,6 @@
     align-items: center;
     position: relative;
 }
-.apps__text .eyebrow {
-    color: var(--gold-bright);
-}
-.apps__text .eyebrow::before {
-    background: var(--gold-bright);
-}
 .apps__text h2 {
     color: #fbf7ec;
     font-size: clamp(1.9rem, 3.4vw, 2.8rem);

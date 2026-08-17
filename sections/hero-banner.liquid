@@ -383,8 +383,7 @@
   <div class="hero__inner wrap">
     <div class="hero__content">
       {%- if s.moto_enable and s.moto_text != blank -%}
-        {%- capture moto_class -%}hero__moto hero__moto--m-{{ moto_align_mobile }}{%- endcapture -%}
-        {% render 'moto', text: s.moto_text, color: s.moto_color, class: moto_class, align: moto_align %}
+        <span class="eyebrow{% if moto_align == 'center' %} center{% endif %}">{{ s.moto_text | escape }}</span>
       {%- endif -%}
 
       {%- if s.title != blank -%}
@@ -412,7 +411,6 @@
     { "type": "header", "content": "Motto" },
     { "type": "checkbox", "id": "moto_enable", "label": "Show motto", "default": true },
     { "type": "text", "id": "moto_text", "label": "Motto text", "default": "THE WORD, MADE VIVID" },
-    { "type": "color", "id": "moto_color", "label": "Motto colour", "default": "#C4A574" },
     {
       "type": "select",
       "id": "moto_align",
