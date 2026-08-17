@@ -308,7 +308,7 @@
             "title": "App",
             "subtitle": "A visual pilgrimage from your chair",
             "link_label": "Explore",
-            "link": "https://apps.apple.com/us/app/vision-of-the-bible/id1570619920"
+            "link": "shopify://pages/the-app"
           }
         },
         "c4": {
@@ -319,7 +319,7 @@
             "title": "Game",
             "subtitle": "A keepsake for the family shelf",
             "link_label": "Explore",
-            "link": "https://visionofthebiblestore.com/collections/books"
+            "link": "#"
           }
         },
         "c5": {
