@@ -56,24 +56,6 @@
 .about-statement__copy {
     max-width: 643px;
 }
-.about-statement__eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.9rem;
-    font-family: var(--ui);
-    font-weight: 700;
-    font-size: 0.78rem;
-    letter-spacing: 0.26em;
-    text-transform: uppercase;
-    color: var(--as-eyebrow-color, var(--gold));
-    margin: 0;
-}
-.about-statement__line {
-    width: 34px;
-    height: 1px;
-    background: currentColor;
-    opacity: 0.55;
-}
 .about-statement__title {
     font-family: var(--display);
     font-weight: 400;
