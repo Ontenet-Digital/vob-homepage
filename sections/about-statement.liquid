@@ -46,7 +46,7 @@
         {%- endif -%}
 
         {%- if s.title != blank -%}
-          <h2 class="about-statement__title">{{ s.title }}</h2>
+          <h2 class="about-statement__title">{{ s.title | newline_to_br }}</h2>
         {%- endif -%}
 
         {%- if s.paragraph != blank -%}
@@ -94,10 +94,10 @@
     { "type": "header", "content": "Content" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "OUR MISSION" },
     {
-      "type": "inline_richtext",
+      "type": "text",
       "id": "title",
       "label": "Heading",
-      "info": "Use italics to highlight a word in the accent colour.",
+      "info": "Press Enter to start a new line.",
       "default": "Connecting people to God's Word through stories and learning."
     },
     { "type": "color", "id": "accent_color", "label": "Accent colour (italic word)", "default": "#BE9743" },
