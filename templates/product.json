@@ -152,6 +152,7 @@
         },
         "usp_zBCUyH": {
           "type": "usp",
+          "disabled": true,
           "settings": {
             "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/02-scripture-rooted.png?v=1786112102",
             "label": "Scripture-Rooted"
@@ -173,6 +174,7 @@
         },
         "usp_fFFMd7": {
           "type": "usp",
+          "disabled": true,
           "settings": {
             "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/05-sacred-stories.png?v=1786112101",
             "label": "Sacred Stories"

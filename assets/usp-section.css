@@ -7,6 +7,8 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 1.8rem 1rem;
     align-items: start;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 .usp__item {
     display: flex;
