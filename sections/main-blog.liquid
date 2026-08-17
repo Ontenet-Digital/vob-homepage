@@ -1,6 +1,6 @@
 <div class="page-shell wrap">
   <div class="page-head">
-    <span class="eyebrow">From the journal</span>
+    <span class="eyebrow eyebrow-left">From the journal</span>
     <h1>{{ blog.title }}</h1>
   </div>
   {%- paginate blog.articles by 9 -%}
@@ -9,11 +9,17 @@
         <a class="post reveal in" href="{{ article.url }}">
           <div class="post__media">
             {%- if article.image -%}
-              <img src="{{ article.image | image_url: width: 900 }}" alt="{{ article.image.alt | default: article.title | escape }}" loading="lazy">
+              <img
+                src="{{ article.image | image_url: width: 900 }}"
+                alt="{{ article.image.alt | default: article.title | escape }}"
+                loading="lazy"
+              >
             {%- endif -%}
           </div>
           <div class="post__body">
-            {%- if article.tags.size > 0 -%}<span class="post__tag">{{ article.tags.first }}</span>{%- endif -%}
+            {%- if article.tags.size > 0 -%}
+              <span class="post__tag">{{ article.tags.first }}</span>
+            {%- endif -%}
             <h3>{{ article.title }}</h3>
             <p>{{ article.excerpt_or_content | strip_html | truncatewords: 22 }}</p>
           </div>

@@ -70,10 +70,14 @@
 
   <div class="plist__head plist__head--{{ s.heading_align }} reveal">
     {%- if s.eyebrow != blank -%}
-      <span class="eyebrow{% if s.heading_align == 'center' %} center{% endif %}">{{ s.eyebrow }}</span>
+      <span class="eyebrow{% if s.heading_align == 'center' %} eyebrow-center{% else %} eyebrow-left{% endif %}">
+        {{- s.eyebrow -}}
+      </span>
     {%- endif -%}
     <h1>{{ s.heading | default: 'Products' }}</h1>
-    {%- if s.subheading != blank -%}<p class="plist__sub">{{ s.subheading }}</p>{%- endif -%}
+    {%- if s.subheading != blank -%}
+      <p class="plist__sub">{{ s.subheading }}</p>
+    {%- endif -%}
   </div>
 
   {%- assign shown = 0 -%}
@@ -102,7 +106,8 @@
               alt="{{ image.alt | default: collection.title | escape }}"
               width="{{ image.width }}"
               height="{{ image.height }}"
-              loading="lazy">
+              loading="lazy"
+            >
           {%- else -%}
             <div class="ccard__img ccard__img--placeholder" aria-hidden="true"></div>
           {%- endif -%}
@@ -118,7 +123,9 @@
           {%- if s.link_label != blank -%}
             <span class="ccard__link">
               {{ s.link_label }}
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6"/>
+              </svg>
             </span>
           {%- endif -%}
         </div>
@@ -140,9 +147,17 @@
     { "type": "header", "content": "Heading" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Explore" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Products" },
-    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Every way into the story — choose a collection to see what's inside." },
     {
-      "type": "select", "id": "heading_align", "label": "Heading alignment", "default": "left",
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Every way into the story — choose a collection to see what's inside."
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading alignment",
+      "default": "left",
       "options": [
         { "value": "left", "label": "Left" },
         { "value": "center", "label": "Center" }
@@ -151,19 +166,73 @@
     { "type": "checkbox", "id": "show_breadcrumb", "label": "Show breadcrumb", "default": true },
 
     { "type": "header", "content": "Grid" },
-    { "type": "range", "id": "columns_desktop", "label": "Columns — desktop", "min": 2, "max": 5, "step": 1, "default": 4 },
-    { "type": "range", "id": "columns_tablet", "label": "Columns — tablet", "min": 2, "max": 4, "step": 1, "default": 3 },
-    { "type": "range", "id": "columns_mobile", "label": "Columns — mobile", "min": 2, "max": 4, "step": 1, "default": 2 },
-    { "type": "range", "id": "grid_gap", "label": "Grid gap — desktop", "min": 8, "max": 48, "step": 2, "unit": "px", "default": 24 },
-    { "type": "range", "id": "grid_gap_mobile", "label": "Grid gap — mobile", "min": 4, "max": 32, "step": 2, "unit": "px", "default": 14 },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns — desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "label": "Columns — tablet",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columns — mobile",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Grid gap — desktop",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "grid_gap_mobile",
+      "label": "Grid gap — mobile",
+      "min": 4,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
     { "type": "checkbox", "id": "hide_empty", "label": "Hide empty collections", "default": true },
 
     { "type": "header", "content": "Card" },
     { "type": "color", "id": "card_bg", "label": "Card background", "default": "#FFFFFF" },
     { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#EDE6D6" },
-    { "type": "range", "id": "card_radius", "label": "Card corner radius", "min": 0, "max": 32, "step": 1, "unit": "px", "default": 10 },
     {
-      "type": "select", "id": "image_ratio", "label": "Image ratio", "default": "1/1",
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "default": "1/1",
       "options": [
         { "value": "1/1", "label": "Square" },
         { "value": "4/5", "label": "Portrait (4:5)" },
@@ -173,15 +242,49 @@
       ]
     },
     { "type": "color", "id": "title_color", "label": "Title colour", "default": "#251D3A" },
-    { "type": "range", "id": "title_size", "label": "Title size — desktop", "min": 14, "max": 30, "step": 1, "unit": "px", "default": 18 },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size — desktop",
+      "min": 14,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
     { "type": "checkbox", "id": "show_count", "label": "Show product count", "default": true },
     { "type": "color", "id": "count_color", "label": "Product count colour", "default": "#BE9743" },
-    { "type": "text", "id": "link_label", "label": "Link label", "default": "Explore", "info": "Leave empty to hide it." },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "Explore",
+      "info": "Leave empty to hide it."
+    },
 
     { "type": "header", "content": "Section" },
     { "type": "color", "id": "bg_color", "label": "Background colour", "default": "#FFFFFF" },
-    { "type": "range", "id": "padding_top", "label": "Extra top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 48, "info": "Added on top of the space reserved for the fixed header." },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 }
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Extra top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "info": "Added on top of the space reserved for the fixed header."
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    }
   ]
 }
 {% endschema %}

@@ -103,7 +103,7 @@
 
 @media (max-width: 1023px) {
     /* Swap to the mobile clip when one is set; otherwise the desktop video
-       stays and simply fills the fullscreen banner (cropped). */
+       stays and is shown as the strip below. */
     .vbanner--has-mobile .vbanner__media--desktop {
         display: none;
     }
@@ -111,11 +111,17 @@
         display: block;
     }
 
-    /* Fullscreen banner. svh = small viewport height: it stays put when the
-       mobile browser bar hides, so the section never jumps. vh is the fallback. */
+    /* Fullscreen banner keeps its current total height. svh = small viewport
+       height: it stays put when the mobile browser bar hides, so the section
+       never jumps. vh is the fallback. */
     .vbanner {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
         height: 100vh;
         min-height: 100vh;
+        /* No dark box behind the text — it sits on the page background. */
+        background: transparent;
     }
     @supports (height: 100svh) {
         .vbanner {
@@ -123,9 +129,44 @@
             min-height: calc(100svh - 70px);
         }
     }
-    /* The ratio pseudo-element previously sized the height; neutralize it so
-       the explicit height above wins. The media is absolute inset:0 + cover. */
-    .vbanner::before {
+
+    /* Tablet/mobile layout: the text is taken OFF the video. The VIDEO is the
+       main highlight — it fills ~68% of the screen (full width, cover), while
+       the text block sits below it in the remaining ~32%. */
+    .vbanner__media,
+    .vbanner__media--mobile {
+        position: relative;
+        inset: auto;
+        width: 100%;
         height: auto;
+        flex: 0 0 68%;
+        min-height: 60%;
+        object-fit: cover;
+    }
+    /* The ratio pseudo-element no longer sizes the section. */
+    .vbanner::before {
+        display: none;
+    }
+    /* No gradient overlay needed once the text sits on the solid dark bg. */
+    .vbanner__overlay {
+        display: none;
+    }
+    /* Text block: fill the remaining height and centre the copy. */
+    .vbanner__inner {
+        grid-area: auto;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    /* The text sits directly on the page background (no dark section colour),
+       so switch the light-over-video colours to the theme's dark ink. */
+    .vbanner__title {
+        color: var(--ink, #251d3a);
+    }
+    .vbanner__sub {
+        color: var(--ink-soft, #463c68);
     }
 }

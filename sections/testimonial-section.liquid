@@ -14,9 +14,15 @@
     style="--testi-cols:{{ section.settings.columns_desktop }};--testi-pt:{{ section.settings.padding_top }}px;--testi-pb:{{ section.settings.padding_bottom }}px;"
   >
     <div class="sec-head reveal">
-      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow center">{{ section.settings.eyebrow }}</span>{%- endif -%}
-      {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
-      {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow eyebrow-center">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2>{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p>{{ section.settings.subheading }}</p>
+      {%- endif -%}
     </div>
 
     <div class="testi__grid">
@@ -65,7 +71,9 @@
               <img
                 class="testi__thumb"
                 src="{{ thumb }}"
-                {% if thumb_fallbacks != blank %}data-yt-fallbacks="{{ thumb_fallbacks }}"{% endif %}
+                {% if thumb_fallbacks != blank %}
+                  data-yt-fallbacks="{{ thumb_fallbacks }}"
+                {% endif %}
                 alt="{{ block.settings.poster.alt | default: label | escape }}"
                 loading="lazy"
                 decoding="async"
@@ -81,7 +89,9 @@
                 aria-label="Play video: {{ label | escape }}"
               >
                 <span class="testi__play" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
                 </span>
               </button>
             </div>
@@ -96,7 +106,9 @@
           <article class="testi__card reveal" {{ block.shopify_attributes }}>
             <div class="testi__media testi__media--empty">
               <span class="testi__play" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
               </span>
             </div>
             <h3 class="testi__title">{{ block.settings.title | default: 'Paste a YouTube link' }}</h3>
@@ -114,7 +126,12 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "In their words" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Client Testimonial" },
-    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Short clips from the families living with Vision of the Bible." },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Short clips from the families living with Vision of the Bible."
+    },
     {
       "type": "range",
       "id": "columns_desktop",
@@ -132,8 +149,26 @@
       "default": true,
       "info": "Used only where a card's title is left empty. Titles are read from YouTube in the visitor's browser."
     },
-    { "type": "range", "id": "padding_top", "min": 0, "max": 140, "step": 4, "unit": "px", "label": "Padding top", "default": 72 },
-    { "type": "range", "id": "padding_bottom", "min": 0, "max": 140, "step": 4, "unit": "px", "label": "Padding bottom", "default": 56 },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 56
+    },
     { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "testimonials" }
   ],
   "blocks": [
@@ -147,7 +182,12 @@
           "label": "YouTube link",
           "info": "Paste the share link — Shorts (youtube.com/shorts/…), youtu.be/… and watch?v=… all work. Vertical reels look best."
         },
-        { "type": "text", "id": "title", "label": "Title", "info": "Leave empty to use the video's own YouTube title." },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "info": "Leave empty to use the video's own YouTube title."
+        },
         {
           "type": "image_picker",
           "id": "poster",
