@@ -7,7 +7,7 @@
     z-index: 60;
     background: #ffffff;
     backdrop-filter: blur(12px);
-    padding: 0.3rem 0;
+    padding: 0.7rem 0;
 }
 .nav {
     display: flex;
@@ -359,6 +359,31 @@ a.trust__link:hover {
     .site-header .brand__word {
         display: none;
     }
+
+    /* Tablet: smaller logo. Icons are sized by their SVG (not by the
+       link/button box) so the menu, account and cart icons match exactly. */
+    .brand__logo {
+        height: 62px;
+    }
+    .nav__icon,
+    .nav__toggle {
+        display: inline-grid;
+        place-items: center;
+        width: auto;
+        height: auto;
+        scale: none;
+    }
+    .nav__icon svg {
+        width: 30px;
+        height: 30px;
+    }
+    .nav__toggle svg {
+        width: 32px;
+        height: 32px;
+    }
+    .nav__actions {
+        gap: 1rem;
+    }
 }
 
 @media (max-width: 767px) {
@@ -367,6 +392,9 @@ a.trust__link:hover {
     }
     .trust__link {
         font-size: 0.88rem;
+    }
+    .brand__logo {
+        height: 52px;
     }
 }
 
