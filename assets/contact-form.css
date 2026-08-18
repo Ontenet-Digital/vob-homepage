@@ -21,6 +21,7 @@
     --button-border-radius: 4px;
     --forms-focus-outline-color: rgba(122, 87, 192, 0.35);
     --forms-focus-outline-width: 3px;
+    --inline-container-max-width: 99%;
 }
 
 /* Contact intro card — recreates the native form's violet "Get in touch"
@@ -47,7 +48,7 @@
     border-radius: 0;
 }
 .contact-intro__form {
-    padding: clamp(2.25rem, 4.5vw, 4rem);
+    padding: 2.5rem;
     background: #fff;
 }
 /* The Shopify Forms app block fills the right panel; strip the standalone
