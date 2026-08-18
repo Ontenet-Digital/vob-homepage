@@ -160,14 +160,14 @@
       "name": "Mission Statement",
       "settings": {
         "eyebrow": "THE WORD, MADE VIVID",
-        "title": "Connecting people to God's Word through <em>stories</em> and learning.",
+        "title": "Learn. Connect. Grow in God’s Word.",
         "accent_color": "#be9743",
         "heading_color": "#251d3a",
         "text_color": "#463c68",
         "paragraph": "<p>We create faithful, vivid Bible experiences — animated stories, books, and learning tools — that help every generation know, love, and live the Word of God.</p>",
         "verse": "",
         "verse_ref": "",
-        "image": "shopify://shop_images/about_product.png",
+        "image": "shopify://shop_images/WW_05.png",
         "bg_color": "#ffffff",
         "bg_color_2": "#f2e3c0",
         "bg_angle": 180,
@@ -190,7 +190,7 @@
           "settings": {
             "eyebrow": "Our Story",
             "heading": "Bringing Scripture to life",
-            "text": "Vision of the Bible is devoted to bringing the timeless stories and profound truths of the Bible to life.",
+            "text": "Vision of the Bible stories is devoted to bringing the timeless stories and profound truths of the Bible to life.",
             "drop_cap": false,
             "image_url": "",
             "image_alt": ""
@@ -201,10 +201,10 @@
           "settings": {
             "eyebrow": "Our Story",
             "heading": "Bringing Scripture to life",
-            "text": "Vision of the Bible is devoted to bringing the timeless stories and profound truths of the Bible to life. Through innovative digital experiences and stunning visual storytelling, we set out to inspire people and draw them close to the Word of God — not to sell a device, but to open a door.",
+            "text": "Vision of the Bible stories is devoted to bringing the timeless stories and profound truths of the Bible to life. Through innovative digital experiences and stunning visual storytelling, we set out to inspire people and draw them close to the Word of God — not to sell a device, but to open a door.",
             "drop_cap": true,
             "image_url": "https://visionofthebiblestore.com/cdn/shop/files/DSC_5847.jpg?v=1732482733&width=1300",
-            "image_alt": "The Vision of the Bible collection in a warm home setting"
+            "image_alt": "The Vision of the Bible stories collection in a warm home setting"
           }
         },
         "p2": {
@@ -226,7 +226,7 @@
             "text": "From the miracles and parables of Jesus to the courage of the disciples and the beauty of the Holy Land, we turn Scripture into something children can see and everyone can feel. Captivating visuals, gentle narration, easy-to-follow words — the Bible, experienced rather than merely read.",
             "drop_cap": false,
             "image_url": "https://visionofthebiblestore.com/cdn/shop/files/all.png?v=1732481756&width=1400",
-            "image_alt": "The full range of Vision of the Bible tablets and books"
+            "image_alt": "The full range of Vision of the Bible stories tablets and books"
           }
         }
       },
@@ -238,7 +238,7 @@
       ],
       "disabled": true,
       "settings": {
-        "eyebrow": "About Vision of the Bible",
+        "eyebrow": "About Vision of the Bible stories",
         "heading": "The greatest story, close enough to touch",
         "rotator_lines": "“…that the Word of God would resonate in hearts and minds.”\n“…the timeless stories of the Bible, brought to life.”\n“…transforming lives and inspiring hope.”\n“…made for little hands and wise hearts alike.”",
         "show_ornament": true,
@@ -640,7 +640,7 @@
       "settings": {
         "eyebrow": "From the journal",
         "heading": "Stories, faith & family",
-        "subheading": "Reflections and ideas from the Vision of the Bible family.",
+        "subheading": "Reflections and ideas from the Vision of the Bible stories family.",
         "blog": "",
         "post_limit": 3,
         "anchor_id": "story-section"
@@ -682,6 +682,7 @@
         },
         "u3": {
           "type": "usp",
+          "disabled": true,
           "settings": {
             "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/02-scripture-rooted.png?v=1786112102",
             "label": "Scripture-Rooted"
@@ -703,6 +704,7 @@
         },
         "u6": {
           "type": "usp",
+          "disabled": true,
           "settings": {
             "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/05-sacred-stories.png?v=1786112101",
             "label": "Sacred Stories"

@@ -37,6 +37,7 @@
     margin-inline: auto;
     padding-inline: var(--gutter-mobile);
     padding-block: var(--vb-pad-y, 64px);
+    padding-top: 0;
 }
 @media (min-width: 768px) {
     .vbanner__inner {
@@ -137,11 +138,12 @@
     .vbanner__media--mobile {
         position: relative;
         inset: auto;
-        width: 100%;
+        /* width: 100%; */
         height: auto;
-        flex: 0 0 68%;
+        /* flex: 0 0 68%; */
         min-height: 60%;
         object-fit: cover;
+        aspect-ratio: 4 / 5;
     }
     /* The ratio pseudo-element no longer sizes the section. */
     .vbanner::before {

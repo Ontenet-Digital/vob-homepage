@@ -4,9 +4,11 @@
 }
 .usp__grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.8rem 1rem;
     align-items: start;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 .usp__item {
     display: flex;
@@ -68,12 +70,12 @@
         color: var(--gold-deep);
     }
 }
-@media (max-width: 1023px) {
+/* @media (max-width: 1023px) {
     .usp__grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 1.6rem 1rem;
     }
-}
+} */
 @media (max-width: 767px) {
     .usp__grid {
         grid-template-columns: repeat(2, 1fr);

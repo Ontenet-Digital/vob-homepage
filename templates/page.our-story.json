@@ -8,75 +8,75 @@
  * ------------------------------------------------------------
  */
 {
-  "sections": {
-    "story_hero": {
-      "type": "story_hero",
-      "disabled": true,
-      "settings": {
-        "image": "shopify://shop_images/Screenshot_2024-12-17_at_7.11.02_PM.png",
-        "image_url": "",
-        "kicker": "About",
-        "heading": "Vision of The Bible",
-        "subtitle": "A journey through light, imagery and faith.",
-        "anchor_id": "story-hero"
-      }
+    "sections": {
+        "story_hero": {
+            "type": "story_hero",
+            "disabled": true,
+            "settings": {
+                "image": "shopify://shop_images/Screenshot_2024-12-17_at_7.11.02_PM.png",
+                "image_url": "",
+                "kicker": "About",
+                "heading": "Vision of The Bible stories",
+                "subtitle": "A journey through light, imagery and faith.",
+                "anchor_id": "story-hero"
+            }
+        },
+        "story_mission": {
+            "type": "story_mission",
+            "settings": {
+                "eyebrow": "Our Mission",
+                "heading": "",
+                "text": "To inspire and educate through captivating visual storytelling, fostering a deeper understanding and appreciation of the Bible and its enduring message.",
+                "anchor_id": "story-mission"
+            }
+        },
+        "story_intro": {
+            "type": "story_intro",
+            "settings": {
+                "eyebrow": "Our Story",
+                "heading": "",
+                "text": "Vision of The Bible stories is a company born from the profound artistic journey of Emilio Roso. Driven by a lifelong passion to capture the essence of Israel and its profound spiritual significance, Emilio’s photography transcends mere imagery. Each photograph is a window into history, a reflection of the present, and an invitation for viewers to connect with the divine.\n\nFounded on this vision, Vision of The Bible stories offers a collection of immersive digital experiences designed to bring the Bible to life. From the breathtaking landscapes of the Holy Land to the profound narratives of the Gospels, our products invite you to embark on a journey of faith and discovery.",
+                "image": "shopify://shop_images/Screenshot_2024-12-17_at_7.19.20_PM_1c4010ce-604e-47f4-82b8-a0c5ccf326ad.png",
+                "image_url": "",
+                "anchor_id": "story-intro"
+            }
+        },
+        "story_founder": {
+            "type": "story_founder",
+            "settings": {
+                "eyebrow": "About Emilio Roso",
+                "heading": "A Journey Through Light and Legacy",
+                "subheading": "",
+                "text": "My artistic journey has been fueled by a passion to convey the indescribable beauty and spiritual resonance of Israel to audiences worldwide. Every photograph is a bridge to the past, a mirror of the present, and a beacon for divine contemplation.\n\nThis collection is not just a series of images but a passage to enlightenment, beckoning viewers to embark on their own voyage of discovery and inspiration, illuminated by the diverse hues and historical depth of this sacred land. Each snapshot is a testament to Israel’s timeless legacy.\n\nWandering through its landscapes, I sought to capture the sacred interplay of light and shadow, the vibrant palette of seasons, and the quiet whispers of history echoing through the air. It stands as a celebration of unity and spirituality, presenting a curated collection of photographs that offer a sanctuary for the soul and a feast for the eyes.",
+                "image": "shopify://shop_images/OIP.jpg",
+                "image_url": "",
+                "anchor_id": "story-founder"
+            }
+        },
+        "story_quote": {
+            "type": "story_quote",
+            "settings": {
+                "text": "I’ve been using this digital Bible for a month now, and a great option to my physical copy. It’s very, very simple to use. It’s a truly inspiring tool for spiritual growth.",
+                "author": "Sarah M.",
+                "anchor_id": "story-quote"
+            }
+        },
+        "story_cta": {
+            "type": "story_cta",
+            "settings": {
+                "heading": "Join us on this journey of faith and discovery.",
+                "title": "Vision of The Bible stories",
+                "home_label": "Home",
+                "anchor_id": "story-cta"
+            }
+        }
     },
-    "story_mission": {
-      "type": "story_mission",
-      "settings": {
-        "eyebrow": "Our Mission",
-        "heading": "",
-        "text": "To inspire and educate through captivating visual storytelling, fostering a deeper understanding and appreciation of the Bible and its enduring message.",
-        "anchor_id": "story-mission"
-      }
-    },
-    "story_intro": {
-      "type": "story_intro",
-      "settings": {
-        "eyebrow": "Our Story",
-        "heading": "",
-        "text": "Vision of The Bible is a company born from the profound artistic journey of Emilio Roso. Driven by a lifelong passion to capture the essence of Israel and its profound spiritual significance, Emilio’s photography transcends mere imagery. Each photograph is a window into history, a reflection of the present, and an invitation for viewers to connect with the divine.\n\nFounded on this vision, Vision of The Bible offers a collection of immersive digital experiences designed to bring the Bible to life. From the breathtaking landscapes of the Holy Land to the profound narratives of the Gospels, our products invite you to embark on a journey of faith and discovery.",
-        "image": "shopify://shop_images/Screenshot_2024-12-17_at_7.19.20_PM_1c4010ce-604e-47f4-82b8-a0c5ccf326ad.png",
-        "image_url": "",
-        "anchor_id": "story-intro"
-      }
-    },
-    "story_founder": {
-      "type": "story_founder",
-      "settings": {
-        "eyebrow": "About Emilio Roso",
-        "heading": "A Journey Through Light and Legacy",
-        "subheading": "",
-        "text": "My artistic journey has been fueled by a passion to convey the indescribable beauty and spiritual resonance of Israel to audiences worldwide. Every photograph is a bridge to the past, a mirror of the present, and a beacon for divine contemplation.\n\nThis collection is not just a series of images but a passage to enlightenment, beckoning viewers to embark on their own voyage of discovery and inspiration, illuminated by the diverse hues and historical depth of this sacred land. Each snapshot is a testament to Israel’s timeless legacy.\n\nWandering through its landscapes, I sought to capture the sacred interplay of light and shadow, the vibrant palette of seasons, and the quiet whispers of history echoing through the air. It stands as a celebration of unity and spirituality, presenting a curated collection of photographs that offer a sanctuary for the soul and a feast for the eyes.",
-        "image": "shopify://shop_images/OIP.jpg",
-        "image_url": "",
-        "anchor_id": "story-founder"
-      }
-    },
-    "story_quote": {
-      "type": "story_quote",
-      "settings": {
-        "text": "I’ve been using this digital Bible for a month now, and a great option to my physical copy. It’s very, very simple to use. It’s a truly inspiring tool for spiritual growth.",
-        "author": "Sarah M.",
-        "anchor_id": "story-quote"
-      }
-    },
-    "story_cta": {
-      "type": "story_cta",
-      "settings": {
-        "heading": "Join us on this journey of faith and discovery.",
-        "title": "Vision of The Bible",
-        "home_label": "Home",
-        "anchor_id": "story-cta"
-      }
-    }
-  },
-  "order": [
-    "story_hero",
-    "story_mission",
-    "story_intro",
-    "story_founder",
-    "story_quote",
-    "story_cta"
-  ]
+    "order": [
+        "story_hero",
+        "story_mission",
+        "story_intro",
+        "story_founder",
+        "story_quote",
+        "story_cta"
+    ]
 }

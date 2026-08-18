@@ -12,7 +12,8 @@
     "main": {
       "type": "contact-page",
       "settings": {
-        "eyebrow": "Vision of the Bible",
+        "show_header": true,
+        "eyebrow": "Vision of the Bible stories",
         "title": "Contact",
         "subtitle": "",
         "align": "left"
@@ -37,6 +38,7 @@
         },
         "usp_QMUJTU": {
           "type": "usp",
+          "disabled": true,
           "settings": {
             "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/02-scripture-rooted.png?v=1786112102",
             "label": "Scripture-Rooted"
@@ -58,6 +60,7 @@
         },
         "usp_QC74dm": {
           "type": "usp",
+          "disabled": true,
           "settings": {
             "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/05-sacred-stories.png?v=1786112101",
             "label": "Sacred Stories"
