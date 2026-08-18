@@ -8,99 +8,106 @@
  * ------------------------------------------------------------
  */
 {
-    "sections": {
-        "contact_intro": {
-            "type": "contact-intro",
-            "blocks": {
-                "forms_inline_7hmdAk": {
-                    "type": "shopify://apps/forms/blocks/inline/8744a304-fcb1-4347-b211-bb6b4759a76a",
-                    "settings": {
-                        "form_id": "1110624",
-                        "text_color": "#251D3A",
-                        "button_background_color": "#BE9743",
-                        "button_label_color": "#3A2A06",
-                        "links_color": "#7A57C0",
-                        "errors_color": "#8A2B2B",
-                        "text_alignment": "left",
-                        "form_alignment": "left",
-                        "padding_top": 0,
-                        "padding_bottom": 24,
-                        "padding_right": 0,
-                        "padding_left": 0
-                    }
-                }
-            },
-            "block_order": ["forms_inline_7hmdAk"],
-            "settings": {
-                "eyebrow": "Get in touch",
-                "title": "We'd love to hear from you",
-                "intro": "A question about a title, an order, or a story just for you? Send us a note and our team will reply within one business day.",
-                "email": "info@visionofthebiblestore.com",
-                "response_time": "Within 1 business day"
-            }
-        },
-        "usp_GQ9HER": {
-            "type": "usp",
-            "blocks": {
-                "usp_BAKcyN": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/06-christian-values.png?v=1786112101",
-                        "label": "Christian Values"
-                    }
-                },
-                "usp_z7R6Dm": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/01-safe-screentime.png?v=1786112102",
-                        "label": "Safe Screentime"
-                    }
-                },
-                "usp_QMUJTU": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/02-scripture-rooted.png?v=1786112102",
-                        "label": "Scripture-Rooted"
-                    }
-                },
-                "usp_bexmck": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/03-biblical-learning.png?v=1786112101",
-                        "label": "Biblical Learning"
-                    }
-                },
-                "usp_ydmX6n": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/04-faith-building.png?v=1786112101",
-                        "label": "Faith-Building"
-                    }
-                },
-                "usp_QC74dm": {
-                    "type": "usp",
-                    "settings": {
-                        "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/05-sacred-stories.png?v=1786112101",
-                        "label": "Sacred Stories"
-                    }
-                }
-            },
-            "block_order": [
-                "usp_BAKcyN",
-                "usp_z7R6Dm",
-                "usp_QMUJTU",
-                "usp_bexmck",
-                "usp_ydmX6n",
-                "usp_QC74dm"
-            ],
-            "name": "USP",
-            "settings": {
-                "eyebrow": "Why families choose us",
-                "heading": "Built for peace of mind",
-                "subheading": "Simple promises that travel with every order.",
-                "anchor_id": "usp"
-            }
+  "sections": {
+    "contact_intro": {
+      "type": "contact-intro",
+      "blocks": {
+        "forms_inline_7hmdAk": {
+          "type": "shopify://apps/forms/blocks/inline/8744a304-fcb1-4347-b211-bb6b4759a76a",
+          "settings": {
+            "form_id": "1110624",
+            "text_color": "#251d3a",
+            "button_background_color": "#be9743",
+            "button_label_color": "#3a2a06",
+            "links_color": "#7a57c0",
+            "errors_color": "#8a2b2b",
+            "text_alignment": "left",
+            "form_alignment": "left",
+            "padding_top": 0,
+            "padding_bottom": 24,
+            "padding_right": 0,
+            "padding_left": 0
+          }
         }
+      },
+      "block_order": [
+        "forms_inline_7hmdAk"
+      ],
+      "settings": {
+        "eyebrow": "Get in touch",
+        "title": "We'd love to hear from you",
+        "intro": "A question about a title, an order, or a story just for you? Send us a note and our team will reply within one business day.",
+        "email": "info@visionofthebiblestore.com",
+        "response_time": "Within 1 business day"
+      }
     },
-    "order": ["contact_intro", "usp_GQ9HER"]
+    "usp_GQ9HER": {
+      "type": "usp",
+      "blocks": {
+        "usp_BAKcyN": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/06-christian-values.png?v=1786112101",
+            "label": "Christian Values"
+          }
+        },
+        "usp_z7R6Dm": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/01-safe-screentime.png?v=1786112102",
+            "label": "Safe Screentime"
+          }
+        },
+        "usp_QMUJTU": {
+          "type": "usp",
+          "disabled": true,
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/02-scripture-rooted.png?v=1786112102",
+            "label": "Scripture-Rooted"
+          }
+        },
+        "usp_bexmck": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/03-biblical-learning.png?v=1786112101",
+            "label": "Biblical Learning"
+          }
+        },
+        "usp_ydmX6n": {
+          "type": "usp",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/04-faith-building.png?v=1786112101",
+            "label": "Faith-Building"
+          }
+        },
+        "usp_QC74dm": {
+          "type": "usp",
+          "disabled": true,
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/05-sacred-stories.png?v=1786112101",
+            "label": "Sacred Stories"
+          }
+        }
+      },
+      "block_order": [
+        "usp_BAKcyN",
+        "usp_z7R6Dm",
+        "usp_QMUJTU",
+        "usp_bexmck",
+        "usp_ydmX6n",
+        "usp_QC74dm"
+      ],
+      "name": "USP",
+      "settings": {
+        "eyebrow": "Why families choose us",
+        "heading": "Built for peace of mind",
+        "subheading": "Simple promises that travel with every order.",
+        "anchor_id": "usp"
+      }
+    }
+  },
+  "order": [
+    "contact_intro",
+    "usp_GQ9HER"
+  ]
 }
