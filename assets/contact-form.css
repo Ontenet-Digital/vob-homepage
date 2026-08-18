@@ -23,29 +23,82 @@
     --forms-focus-outline-width: 3px;
 }
 
-/* Contact intro panel — recreates the native form's violet "Get in touch"
-   aside (snippets/contact-form.liquid) as a standalone panel above the form.
-   The padding-top clears the fixed site header (mirrors the old
-   .contact-page padding-block). */
+/* Contact intro card — recreates the native form's violet "Get in touch"
+   aside (snippets/contact-form.liquid) as the LEFT panel of a two-column
+   contact card. The Shopify Forms app block renders in the RIGHT panel, so the
+   whole page matches the native design. The padding-top clears the fixed site
+   header (mirrors the old .contact-page padding-block). */
 .contact-intro {
     padding-top: 8rem;
 }
-.contact-intro .cform__aside {
+.contact-intro__card {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
     border-radius: var(--radius-lg);
+    border: 1px solid var(--parchment-line);
+    background: #fff;
+    overflow: hidden;
     max-width: 1160px;
     margin-inline: auto;
+}
+.contact-intro__aside {
+    margin: 0;
+    max-width: none;
+    border-radius: 0;
+}
+.contact-intro__form {
+    padding: clamp(2.25rem, 4.5vw, 4rem);
+    background: #fff;
+}
+/* The Shopify Forms app block fills the right panel; strip the standalone
+   container's own max-width / margins / gutters inside the card. */
+.contact-intro__form [data-form-root="true"] {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+/* Style the app's shadow-DOM form to match the native .cform__field look:
+   cream inputs, gold outline, violet focus, ink text. Custom properties pierce
+   the shadow boundary; any that the app ignores simply fall back to its
+   defaults (progressive enhancement). The gold button + dark label come from
+   the block's own settings. */
+.contact-intro__form shopify-forms-embed {
+    --forms-input-background-color: #fdfbf5;
+    --forms-input-border-color: var(--parchment-line);
+    --forms-input-border-width: 1.5px;
+    --forms-input-border-radius: var(--radius-sm);
+    --forms-input-text-color: var(--ink);
+    --forms-input-padding: 1rem 1.15rem;
+    --forms-input-font-size: 1.02rem;
+    --forms-label-color: var(--ink-soft);
+    --forms-text-color: var(--ink);
+    --forms-link-color: var(--violet);
+    --forms-error-color: #8a2b2b;
+    --forms-focus-outline-color: rgba(122, 87, 192, 0.35);
+    --forms-focus-outline-width: 3px;
+    --forms-focus-outline-style: solid;
+    --button-border-radius: var(--radius-sm);
+    --forms-button-border-radius: var(--radius-sm);
 }
 @media (max-width: 1023px) {
     .contact-intro {
         padding-top: 5.5rem;
+    }
+    .contact-intro__card {
+        grid-template-columns: 1fr;
+    }
+    .contact-intro__aside,
+    .contact-intro__form {
+        padding: 2rem 1.75rem;
     }
 }
 @media (max-width: 767px) {
     .contact-intro {
         padding-top: 4rem;
     }
-    .contact-intro .cform__aside {
-        padding: 2rem 1.5rem;
+    .contact-intro__aside,
+    .contact-intro__form {
+        padding: 1.5rem 1.25rem;
     }
 }
 
