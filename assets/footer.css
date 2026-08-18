@@ -139,6 +139,13 @@
 .copy a {
     color: #000;
 }
+
+.back-to-top a {
+    color: #c4a574;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
 @media (max-width: 1023px) {
     .fgrid {
         grid-template-columns: 1fr;

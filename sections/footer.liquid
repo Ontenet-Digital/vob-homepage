@@ -3,61 +3,29 @@
     {%- if section.settings.verse != blank -%}
       <div class="verse reveal">
         <p>{{ section.settings.verse }}</p>
-        {%- if section.settings.verse_ref != blank -%}<cite>{{ section.settings.verse_ref }}</cite>{%- endif -%}
+        {%- if section.settings.verse_ref != blank -%}
+          <cite>{{ section.settings.verse_ref }}</cite>
+        {%- endif -%}
       </div>
     {%- endif -%}
 
     <div class="fgrid">
-      {% comment %} <div class="fbrand">
-        <a class="brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }} home">
-          {%- if section.settings.logo != blank -%}
-            {%- assign logo_width = section.settings.logo_width | default: 220 -%}
-            {%- assign logo_height = logo_width | divided_by: section.settings.logo.aspect_ratio | round -%}
-            {%- assign logo_width_2x = logo_width | times: 2 -%}
-            <img
-              class="fbrand__logo"
-              src="{{ section.settings.logo | image_url: width: logo_width }}"
-              srcset="{{ section.settings.logo | image_url: width: logo_width }} 1x, {{ section.settings.logo | image_url: width: logo_width_2x }} 2x"
-              alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
-              width="{{ logo_width }}"
-              height="{{ logo_height }}"
-              style="width: {{ logo_width }}px"
-              loading="lazy">
-          {%- else -%}
-            {% render 'emblem', class: 'brand__mark' %}
-            <span class="brand__word">
-              <span class="a">{{ section.settings.brand_line_1 | default: 'Vision of the' }}</span>
-              <span class="b">{{ section.settings.brand_line_2 | default: 'Bible' }}</span>
-              {%- if section.settings.brand_tagline != blank -%}
-                <small>{{ section.settings.brand_tagline }}</small>
-              {%- endif -%}
-            </span>
-          {%- endif -%}
-        </a>
-        {%- if section.settings.brand_text != blank -%}<p>{{ section.settings.brand_text }}</p>{%- endif -%}
-      </div> {% endcomment %}
-
-      {% comment %} <div class="fcol">
-        <h5>{{ section.settings.links_title | default: 'Explore' }}</h5>
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'link' -%}
-            <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
-          {%- endif -%}
-        {%- endfor -%}
-      </div> {% endcomment %}
-
       <div class="fcol">
         <h5>{{ section.settings.quick_links_title | default: 'Quick Links' }}</h5>
         {%- for block in section.blocks -%}
           {%- if block.type == 'quick_link' -%}
-            <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+            <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
+              {{- block.settings.label -}}
+            </a>
           {%- endif -%}
         {%- endfor -%}
       </div>
 
       <div class="fcol news">
         <h5>{{ section.settings.news_title | default: 'Stay in the loop' }}</h5>
-        {%- if section.settings.news_text != blank -%}<p>{{ section.settings.news_text }}</p>{%- endif -%}
+        {%- if section.settings.news_text != blank -%}
+          <p>{{ section.settings.news_text }}</p>
+        {%- endif -%}
         {%- form 'customer', class: 'news__form' -%}
           <input type="hidden" name="contact[tags]" value="newsletter">
           <input
@@ -65,7 +33,8 @@
             name="contact[email]"
             aria-label="{{ 'general.newsletter_form.email_placeholder' | t }}"
             placeholder="{{ section.settings.news_placeholder | default: 'Your email address' }}"
-            required>
+            required
+          >
           <button class="btn btn--gold" type="submit">{{ 'general.newsletter_form.submit' | t }}</button>
         {%- endform -%}
         {%- if form.posted_successfully? -%}
@@ -75,8 +44,14 @@
     </div>
 
     <div class="copy">
-      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}{% if section.settings.contact_email != blank %} &middot; {{ section.settings.contact_email }}{% endif %}</span>
-      <span><a href="#top">{{ section.settings.top_label | default: 'Back to top ↑' }}</a></span>
+      <span
+        >&copy; {{ 'now' | date: '%Y' }}
+        {{ shop.name -}}
+        {%- if section.settings.contact_email != blank %} &middot; {{ section.settings.contact_email }}{% endif -%}
+      </span>
+      <span class="back-to-top"
+        ><a href="#top">{{ section.settings.top_label | default: 'Back to top ↑' }}</a></span
+      >
     </div>
   </div>
 </footer>
@@ -86,22 +61,51 @@
   "name": "Footer",
   "settings": [
     { "type": "header", "content": "Scripture verse" },
-    { "type": "textarea", "id": "verse", "label": "Verse", "default": "“Train up a child in the way he should go, and when he is old he will not depart from it.”" },
+    {
+      "type": "textarea",
+      "id": "verse",
+      "label": "Verse",
+      "default": "“Train up a child in the way he should go, and when he is old he will not depart from it.”"
+    },
     { "type": "text", "id": "verse_ref", "label": "Reference", "default": "Proverbs 22:6" },
     { "type": "header", "content": "Brand" },
-    { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Replaces the wordmark below. If empty, the text logo and emblem are used instead." },
-    { "type": "range", "id": "logo_width", "label": "Logo width", "unit": "px", "min": 80, "max": 400, "step": 10, "default": 220 },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Replaces the wordmark below. If empty, the text logo and emblem are used instead."
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo width",
+      "unit": "px",
+      "min": 80,
+      "max": 400,
+      "step": 10,
+      "default": 220
+    },
     { "type": "text", "id": "brand_line_1", "label": "Brand line 1", "default": "Vision of the" },
     { "type": "text", "id": "brand_line_2", "label": "Brand line 2 (accent)", "default": "Bible" },
     { "type": "text", "id": "brand_tagline", "label": "Tagline", "default": "Sacred stories brought to life" },
-    { "type": "textarea", "id": "brand_text", "label": "Description", "default": "Bringing the timeless stories and profound truths of the Bible to life — for the youngest hearts, the wisest ones, and the whole family in between." },
+    {
+      "type": "textarea",
+      "id": "brand_text",
+      "label": "Description",
+      "default": "Bringing the timeless stories and profound truths of the Bible to life — for the youngest hearts, the wisest ones, and the whole family in between."
+    },
     { "type": "header", "content": "Links column" },
     { "type": "text", "id": "links_title", "label": "Column title", "default": "Explore" },
     { "type": "header", "content": "Quick Links column" },
     { "type": "text", "id": "quick_links_title", "label": "Column title", "default": "Quick Links" },
     { "type": "header", "content": "Newsletter" },
     { "type": "text", "id": "news_title", "label": "Title", "default": "Stay in the loop" },
-    { "type": "textarea", "id": "news_text", "label": "Text", "default": "Join our weekly letter for stories, scripture, and gentle encouragement." },
+    {
+      "type": "textarea",
+      "id": "news_text",
+      "label": "Text",
+      "default": "Join our weekly letter for stories, scripture, and gentle encouragement."
+    },
     { "type": "text", "id": "news_placeholder", "label": "Input placeholder", "default": "Your email address" },
     { "type": "header", "content": "Bottom bar" },
     { "type": "text", "id": "contact_email", "label": "Contact email", "default": "info@visionofthebiblestore.com" },
