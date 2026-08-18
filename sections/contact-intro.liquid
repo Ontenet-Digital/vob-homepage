@@ -1,34 +1,50 @@
 {%- comment -%}
-  contact-intro — recreates the violet "Get in touch" aside from the former
-  native contact form (snippets/contact-form.liquid) as a standalone panel that
-  sits above the Shopify Forms inline form on the contact page.
+  contact-intro — recreates the violet "Get in touch" aside from the native
+  contact form (snippets/contact-form.liquid) as the LEFT panel of a single
+  two-column contact card. The Shopify Forms app block (added in the theme
+  editor as an app block on this section) renders in the RIGHT panel, so the
+  whole page matches the native design: purple aside + white form, side by side.
 
   - Reuses the .cform__aside / .cform__meta styles from assets/contact-form.css
     so it matches the original native design exactly.
   - Copy is editable in the theme editor.
+  - To attach the form: theme editor → "Add block" → the Forms app inline block.
 {%- endcomment -%}
 
 <section class="contact-intro">
   <div class="wrap">
-    <div class="cform__aside contact-intro__panel">
-      <span class="eyebrow">{{ section.settings.eyebrow | default: 'Get in touch' }}</span>
-      <h2 class="cform__title">{{ section.settings.title | default: "We'd love to hear from you" }}</h2>
-      {%- if section.settings.intro != blank -%}
-        <p class="cform__intro">{{ section.settings.intro }}</p>
-      {%- endif -%}
-
-      <ul class="cform__meta">
-        {%- if section.settings.email != blank -%}
-          <li>
-            <span class="cform__meta-label">Email</span>
-            <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
-          </li>
+    <div class="contact-intro__card">
+      <div class="cform__aside contact-intro__aside">
+        <span class="eyebrow">{{ section.settings.eyebrow | default: 'Get in touch' }}</span>
+        <h2 class="cform__title">{{ section.settings.title | default: "We'd love to hear from you" }}</h2>
+        {%- if section.settings.intro != blank -%}
+          <p class="cform__intro">{{ section.settings.intro }}</p>
         {%- endif -%}
-        <li>
-          <span class="cform__meta-label">Response time</span>
-          {{ section.settings.response_time | default: 'Within 1 business day' }}
-        </li>
-      </ul>
+
+        <ul class="cform__meta">
+          {%- if section.settings.email != blank -%}
+            <li>
+              <span class="cform__meta-label">Email</span>
+              <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
+            </li>
+          {%- endif -%}
+          <li>
+            <span class="cform__meta-label">Response time</span>
+            {{ section.settings.response_time | default: 'Within 1 business day' }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="contact-intro__form">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when '@app' -%}
+              <div class="contact-intro__app" {{ block.shopify_attributes }}>
+                {%- render block -%}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
     </div>
   </div>
 </section>
@@ -70,6 +86,12 @@
       "default": "Within 1 business day"
     }
   ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "max_blocks": 1,
   "presets": [
     {
       "name": "Contact intro"
