@@ -37,7 +37,7 @@
           >
           <button class="btn btn--gold" type="submit">{{ 'general.newsletter_form.submit' | t }}</button>
         {%- endform -%}
-        {%- if form.posted_successfully? -%}
+        {%- if form.posted_successfully? or request.query.customer_posted == 'true' -%}
           <p class="news__note">{{ 'general.newsletter_form.confirmation' | t }}</p>
         {%- endif -%}
       </div>
