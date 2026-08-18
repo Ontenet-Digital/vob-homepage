@@ -11,26 +11,16 @@
   "sections": {
     "contact_intro": {
       "type": "contact-intro",
-      "settings": {
-        "eyebrow": "Get in touch",
-        "title": "We'd love to hear from you",
-        "intro": "A question about a title, an order, or a story just for you? Send us a note and our team will reply within one business day.",
-        "email": "info@visionofthebiblestore.com",
-        "response_time": "Within 1 business day"
-      }
-    },
-    "1786970352fe5c0c70": {
-      "type": "apps",
       "blocks": {
         "forms_inline_7hmdAk": {
           "type": "shopify://apps/forms/blocks/inline/8744a304-fcb1-4347-b211-bb6b4759a76a",
           "settings": {
             "form_id": "1110624",
-            "text_color": "#251D3A",
-            "button_background_color": "#BE9743",
-            "button_label_color": "#3A2A06",
-            "links_color": "#7A57C0",
-            "errors_color": "#8A2B2B",
+            "text_color": "#251d3a",
+            "button_background_color": "#be9743",
+            "button_label_color": "#3a2a06",
+            "links_color": "#7a57c0",
+            "errors_color": "#8a2b2b",
             "text_alignment": "left",
             "form_alignment": "left",
             "padding_top": 0,
@@ -43,7 +33,13 @@
       "block_order": [
         "forms_inline_7hmdAk"
       ],
-      "settings": {}
+      "settings": {
+        "eyebrow": "Get in touch",
+        "title": "We'd love to hear from you",
+        "intro": "A question about a title, an order, or a story just for you? Send us a note and our team will reply within one business day.",
+        "email": "info@visionofthebiblestore.com",
+        "response_time": "Within 1 business day"
+      }
     },
     "usp_GQ9HER": {
       "type": "usp",
@@ -64,6 +60,7 @@
         },
         "usp_QMUJTU": {
           "type": "usp",
+          "disabled": true,
           "settings": {
             "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/02-scripture-rooted.png?v=1786112102",
             "label": "Scripture-Rooted"
@@ -85,6 +82,7 @@
         },
         "usp_QC74dm": {
           "type": "usp",
+          "disabled": true,
           "settings": {
             "image_url": "https://cdn.shopify.com/s/files/1/0695/6249/9138/files/05-sacred-stories.png?v=1786112101",
             "label": "Sacred Stories"
@@ -110,7 +108,6 @@
   },
   "order": [
     "contact_intro",
-    "1786970352fe5c0c70",
     "usp_GQ9HER"
   ]
 }

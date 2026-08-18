@@ -64,7 +64,7 @@
         "moto_align_mobile": "inherit",
         "title": "Where Bible stories inspire young minds and strengthen faith",
         "subtitle": "",
-        "paragraph": "<p><br/>Vision of-the Bible brings the timeless stories and truths of Scripture to life & through vivid, faithful visual storytelling — made for the youngest hearts and the wisest ones alike.<br/></p>",
+        "paragraph": "<p><br/>Vision of-the Bible Stories brings the timeless stories and truths of Scripture to life & through vivid, faithful visual storytelling — made for the youngest hearts and the wisest ones alike.<br/></p>",
         "trust_enable": true,
         "trust_label": "TRUSTED BY FAMILIES ON",
         "trust_label_color": "#c4a574",
@@ -160,7 +160,7 @@
       "name": "Mission Statement",
       "settings": {
         "eyebrow": "THE WORD, MADE VIVID",
-        "title": "Learn. Connect. Grow in God’s Word.",
+        "title": "Learn. Connect. Grow \nin God’s Word.",
         "accent_color": "#be9743",
         "heading_color": "#251d3a",
         "text_color": "#463c68",
@@ -640,7 +640,7 @@
       "settings": {
         "eyebrow": "From the journal",
         "heading": "Stories, faith & family",
-        "subheading": "Reflections and ideas from the Vision of the Bible stories family.",
+        "subheading": "Reflections and ideas from the Vision of the Bible Stories family.",
         "blog": "",
         "post_limit": 3,
         "anchor_id": "story-section"
