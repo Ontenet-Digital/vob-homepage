@@ -1,4 +1,54 @@
 /* ============ CONTACT FORM ============ */
+
+/* ============ SHOPIFY FORMS INLINE FORM ============ */
+/* Styling to match the native hard-coded contact form that this replaces:
+   - Centered container, 1160px max-width, 3rem top margin (mirrors .cform)
+   - Gold submit button, ink text, violet focus (colors come from the block
+     settings via data attributes on [data-form-root]) */
+[data-form-root="true"] {
+    max-width: 1160px;
+    margin: 1.5rem auto 3rem;
+    padding-left: var(--gutter-mobile, 16px);
+    padding-right: var(--gutter-mobile, 16px);
+}
+@media (min-width: 768px) {
+    [data-form-root="true"] {
+        padding-left: var(--gutter-tab, 24px);
+        padding-right: var(--gutter-tab, 24px);
+    }
+}
+[data-form-root="true"] shopify-forms-embed {
+    --button-border-radius: 4px;
+    --forms-focus-outline-color: rgba(122, 87, 192, 0.35);
+    --forms-focus-outline-width: 3px;
+}
+
+/* Contact intro panel — recreates the native form's violet "Get in touch"
+   aside (snippets/contact-form.liquid) as a standalone panel above the form.
+   The padding-top clears the fixed site header (mirrors the old
+   .contact-page padding-block). */
+.contact-intro {
+    padding-top: 8rem;
+}
+.contact-intro .cform__aside {
+    border-radius: var(--radius-lg);
+    max-width: 1160px;
+    margin-inline: auto;
+}
+@media (max-width: 1023px) {
+    .contact-intro {
+        padding-top: 5.5rem;
+    }
+}
+@media (max-width: 767px) {
+    .contact-intro {
+        padding-top: 4rem;
+    }
+    .contact-intro .cform__aside {
+        padding: 2rem 1.5rem;
+    }
+}
+
 .cform {
     margin-top: 3rem;
     max-width: 1160px;
@@ -19,6 +69,12 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+}
+.cform__aside .eyebrow {
+    color: var(--gold-bright);
+}
+.cform__aside .eyebrow::before {
+    background: var(--gold-bright);
 }
 .cform__title {
     color: #fbf7ec;
