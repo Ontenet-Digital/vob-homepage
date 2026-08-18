@@ -1,0 +1,79 @@
+{%- comment -%}
+  contact-intro — recreates the violet "Get in touch" aside from the former
+  native contact form (snippets/contact-form.liquid) as a standalone panel that
+  sits above the Shopify Forms inline form on the contact page.
+
+  - Reuses the .cform__aside / .cform__meta styles from assets/contact-form.css
+    so it matches the original native design exactly.
+  - Copy is editable in the theme editor.
+{%- endcomment -%}
+
+<section class="contact-intro">
+  <div class="wrap">
+    <div class="cform__aside contact-intro__panel">
+      <span class="eyebrow">{{ section.settings.eyebrow | default: 'Get in touch' }}</span>
+      <h2 class="cform__title">{{ section.settings.title | default: "We'd love to hear from you" }}</h2>
+      {%- if section.settings.intro != blank -%}
+        <p class="cform__intro">{{ section.settings.intro }}</p>
+      {%- endif -%}
+
+      <ul class="cform__meta">
+        {%- if section.settings.email != blank -%}
+          <li>
+            <span class="cform__meta-label">Email</span>
+            <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
+          </li>
+        {%- endif -%}
+        <li>
+          <span class="cform__meta-label">Response time</span>
+          {{ section.settings.response_time | default: 'Within 1 business day' }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact intro",
+  "tag": "section",
+  "class": "contact-intro-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Get in touch"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "We'd love to hear from you"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "A question about a title, an order, or a story just for you? Send us a note and our team will reply within one business day."
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Contact email",
+      "default": "info@visionofthebiblestore.com"
+    },
+    {
+      "type": "text",
+      "id": "response_time",
+      "label": "Response time text",
+      "default": "Within 1 business day"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact intro"
+    }
+  ]
+}
+{% endschema %}
